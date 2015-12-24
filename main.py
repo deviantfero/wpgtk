@@ -56,8 +56,6 @@ class mainWindow( Gtk.Window ):
         self.option_combo.pack_start( self.renderer_text, True )
         self.option_combo.add_attribute( self.renderer_text, "text", 0 )
         self.option_combo.set_entry_text_column( 0 )
-        self.add_text = Gtk.Entry()
-        self.add_text.set_text( "/path/to/image" )
 
         self.set_border_width( 10 )
         self.grid = Gtk.Grid()
@@ -74,11 +72,10 @@ class mainWindow( Gtk.Window ):
         self.add_button = Gtk.Button( label = "Add" )
         self.set_button = Gtk.Button( label = "Set" )
         self.rm_button = Gtk.Button( label = "Remove" )
-        self.grid.attach( self.add_text, 1, 1, 2, 1 )
-        self.grid.attach( self.option_combo, 1, 2, 1, 1 ) #adds to first cell in grid
-        self.grid.attach( self.add_button, 3, 1, 1, 1 )
-        self.grid.attach( self.set_button, 2, 2, 1, 1 )
-        self.grid.attach( self.rm_button, 3, 2, 1, 1 )
+        self.grid.attach( self.option_combo, 1, 1, 1, 1 ) #adds to first cell in grid
+        self.grid.attach( self.add_button, 1, 2, 3, 1 )
+        self.grid.attach( self.set_button, 2, 1, 1, 1 )
+        self.grid.attach( self.rm_button, 3, 1, 1, 1 )
         self.grid.attach( self.preview, 1, 3, 3, 1 )
         self.grid.attach( self.sample, 1, 4, 3, 1 )
         self.add_button.connect( "clicked", self.on_add_clicked )
@@ -90,14 +87,24 @@ class mainWindow( Gtk.Window ):
 
     def on_add_clicked( self, widget ):
         print( "Add" )
-        filepath = self.add_text.get_text()
-        call( [ "wp", "add", filepath ] )
-        option_list = Gtk.ListStore( str )
-        current_walls = fileList( filepath )
-        for elem in list(current_walls.files):
-            option_list.append( [elem] )
-        self.option_combo.set_model( option_list )
-        self.option_combo.set_entry_text_column( 0 )
+        filechooser = Gtk.FileChooserDialog( "Select an Image", self, Gtk.FileChooserAction.OPEN,
+                (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                 Gtk.STOCK_OPEN, Gtk.ResponseType.OK) )
+        response = filechooser.run()
+
+        if response == Gtk.ResponseType.OK:
+            print( "Open Clicked" )
+            filepath = filechooser.get_filename()
+            call( [ "wp", "add", filepath ] )
+            option_list = Gtk.ListStore( str )
+            current_walls = fileList( filepath )
+
+            for elem in list(current_walls.files):
+                option_list.append( [elem] )
+            self.option_combo.set_model( option_list )
+            self.option_combo.set_entry_text_column( 0 )
+
+        filechooser.destroy()
 
     def on_set_clicked( self, widget ):
         print( "Set" )
@@ -105,6 +112,7 @@ class mainWindow( Gtk.Window ):
         current_walls = fileList( "/home/" + getuser() + "/.wallpapers" )
         filepath = current_walls.file_names_only[x]
         call( [ "wp", "change", filepath ] )
+        call( [ "sh", "-c", "echo \"wp change "+ filepath +"\" > ~/.wallpapers/wp_init.sh" ] )
 
     def on_rm_clicked( self, widget ):
         print( "rm" )
