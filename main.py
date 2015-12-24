@@ -22,6 +22,7 @@ class fileList():
         self.files = [ elem for elem in self.files if not ".sample" in elem ]
         self.files = [ elem for elem in self.files if not ".colors" in elem ]
         self.files = [ elem for elem in self.files if not ".current" in elem ]
+        self.files = [ elem for elem in self.files if not ".sh" in elem ]
         # filter function goes up there
         self.file_names_only = self.files
 
