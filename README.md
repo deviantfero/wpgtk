@@ -4,8 +4,9 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 
 it can take a little while to generate the color pallete though, be warned
 
+Examples
 ![Example Image](http://i.imgur.com/HXIm9v4.png?1)
-
+![Another Example](http://i.imgur.com/1AdvJ8h.png?1)
 ### Version
 1.0.2
 
@@ -16,6 +17,15 @@ wpg has some dependencies:
 * python2-pillow ( on arch )
 * feh
 * you need to use urxvt or xterm for it to work
+
+Arch
+```sh
+# pacman -S python2-pillow feh
+```
+*buntu
+```sh
+# apt-get install feh pip && pip install Pillow
+```
 
 if you need a pair of colors predefined, just specify them on your .Xresources
 i.e background and foreground
