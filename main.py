@@ -2,6 +2,7 @@
 from gi import require_version
 require_version( "Gtk", "3.0" )
 from os import walk
+from subprocess import call
 import os.path #fetch filenames
 from getpass import getuser #findout the username so the route is absolute
 #making sure it uses v3.0
@@ -20,13 +21,9 @@ class fileList():
         self.files = [ elem for elem in self.files if not ".Xres" in elem ]
         self.files = [ elem for elem in self.files if not ".sample" in elem ]
         self.files = [ elem for elem in self.files if not ".colors" in elem ]
+        self.files = [ elem for elem in self.files if not ".current" in elem ]
         # filter function goes up there
         self.file_names_only = self.files
-
-        for elem in self.files:
-            number_list.append( elem_counter )
-            elem_counter += 1
-        self.files = list( zip( number_list, self.files ) )
 
     def show_list( self ):
         print( self.files )
@@ -38,7 +35,7 @@ class fileList():
 class mainWindow( Gtk.Window ):
 
     def __init__( self ):
-        Gtk.Window.__init__( self, title = "WP - Wallpaper Manager" )
+        Gtk.Window.__init__( self, title = "wpcolors" )
         
         filepath = "/home/" + getuser() + "/.wallpapers/"
         current_walls = fileList( filepath )
@@ -51,11 +48,16 @@ class mainWindow( Gtk.Window ):
         file_name = route_list[4]
         sample_name = filepath + "." + file_name + ".sample.png"
 
-        option_list = Gtk.ListStore( int, str )
-        for x in range( 0, len(current_walls.files) ):
-            option_list.append( list( current_walls.files[x] ) )
-        option_combo = Gtk.ComboBox.new_with_model_and_entry( option_list )
-        option_combo.set_entry_text_column( 1 )
+        option_list = Gtk.ListStore( str )
+        for elem in list(current_walls.files):
+            option_list.append( [elem] )
+        self.option_combo = Gtk.ComboBox.new_with_model( option_list )
+        self.renderer_text = Gtk.CellRendererText()
+        self.option_combo.pack_start( self.renderer_text, True )
+        self.option_combo.add_attribute( self.renderer_text, "text", 0 )
+        self.option_combo.set_entry_text_column( 0 )
+        self.add_text = Gtk.Entry()
+        self.add_text.set_text( "/path/to/image" )
 
         self.set_border_width( 10 )
         self.grid = Gtk.Grid()
@@ -71,26 +73,63 @@ class mainWindow( Gtk.Window ):
         self.sample.set_from_pixbuf( self.pixbuf_sample )
         self.add_button = Gtk.Button( label = "Add" )
         self.set_button = Gtk.Button( label = "Set" )
-        self.grid.add( self.add_button ) #adds to first cell in grid
-        #self.grid.attach( self.set_button, 0, 1, 2, 1 )
-        self.grid.attach( self.preview, 0, 1, 2, 1 )
-        self.grid.attach( self.sample, 0, 2, 2, 1 )
+        self.rm_button = Gtk.Button( label = "Remove" )
+        self.grid.attach( self.add_text, 1, 1, 2, 1 )
+        self.grid.attach( self.option_combo, 1, 2, 1, 1 ) #adds to first cell in grid
+        self.grid.attach( self.add_button, 3, 1, 1, 1 )
+        self.grid.attach( self.set_button, 2, 2, 1, 1 )
+        self.grid.attach( self.rm_button, 3, 2, 1, 1 )
+        self.grid.attach( self.preview, 1, 3, 3, 1 )
+        self.grid.attach( self.sample, 1, 4, 3, 1 )
         self.add_button.connect( "clicked", self.on_add_clicked )
         self.set_button.connect( "clicked", self.on_set_clicked )
+        self.rm_button.connect( "clicked", self.on_rm_clicked )
+        self.option_combo.connect( "changed", self.combo_box_change )
         self.entry = Gtk.Entry()
         self.current_walls = Gtk.ComboBox()
-        self.grid.attach( option_combo, 1, 0, 1, 1 )
 
     def on_add_clicked( self, widget ):
         print( "Add" )
-        current_walls = fileList( "/home/fernando/.wallpapers" )
-        filepath = "/home/fernando/.wallpapers/" + current_walls.file_names_only[0]
-        self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale( filepath, width=500, height=333, preserve_aspect_ratio=False )
-        self.preview.set_from_pixbuf( self.pixbuf_preview )
-        
+        filepath = self.add_text.get_text()
+        call( [ "wp", "add", filepath ] )
+        option_list = Gtk.ListStore( str )
+        current_walls = fileList( filepath )
+        for elem in list(current_walls.files):
+            option_list.append( [elem] )
+        self.option_combo.set_model( option_list )
+        self.option_combo.set_entry_text_column( 0 )
 
     def on_set_clicked( self, widget ):
         print( "Set" )
+        x = self.option_combo.get_active()
+        current_walls = fileList( "/home/" + getuser() + "/.wallpapers" )
+        filepath = current_walls.file_names_only[x]
+        call( [ "wp", "change", filepath ] )
+
+    def on_rm_clicked( self, widget ):
+        print( "rm" )
+        x = self.option_combo.get_active()
+        current_walls = fileList( "/home/" + getuser() + "/.wallpapers" )
+        filepath = current_walls.file_names_only[x]
+        call( [ "wp", "rm", filepath ] )
+        option_list = Gtk.ListStore( str )
+        current_walls = fileList( filepath )
+        for elem in list(current_walls.files):
+            option_list.append( [elem] )
+        self.option_combo.set_model( option_list )
+        self.option_combo.set_entry_text_column( 0 )
+
+    def combo_box_change( self, widget ):
+        x = self.option_combo.get_active()
+        current_walls = fileList( "/home/" + getuser() + "/.wallpapers" )
+        selected_file = current_walls.file_names_only[x]
+        selected_sample = "." + selected_file + ".sample.png"
+        filepath = "/home/" + getuser() + "/.wallpapers/" + selected_file
+        samplepath = "/home/" + getuser() + "/.wallpapers/" + selected_sample
+        self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale( filepath, width=500, height=333, preserve_aspect_ratio=False )
+        self.preview.set_from_pixbuf( self.pixbuf_preview )
+        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( samplepath, width=500, height=500 )
+        self.sample.set_from_pixbuf( self.pixbuf_sample )
 
 if __name__ == "__main__":
     win = mainWindow()
