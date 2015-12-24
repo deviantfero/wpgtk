@@ -2,6 +2,8 @@
 
 wpg is a little programm to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
+it can take a little while to generate the color pallete though, be warned
+
   - Simple wallpaper management\
 [Example Image](/img/screenshot.png)
 
@@ -14,6 +16,10 @@ wpg has some dependencies:
 
 * python2-pillow ( on arch )
 * feh
+* you need to use urxvt or xterm for it to work
+
+if you need a pair of colors predefined, just specify them on your .Xresources
+i.e background and foreground
 
 also you need to uninstall any other wallpaper manager as it will override this one at startup
 
