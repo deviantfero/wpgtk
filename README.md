@@ -4,9 +4,11 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 
 it can take a little while to generate the color pallete though, be warned
 
-Examples
+### Examples
+
 ![Example Image](http://i.imgur.com/HXIm9v4.png?1)
 ![Another Example](http://i.imgur.com/1AdvJ8h.png?1)
+
 ### Version
 1.0.2
 
@@ -20,11 +22,11 @@ wpg has some dependencies:
 
 Arch
 ```sh
-# pacman -S python2-pillow feh
+$ sudo pacman -S python2-pillow feh
 ```
 *buntu
 ```sh
-# apt-get install feh pip && pip install Pillow
+$ sudo apt-get install feh pip && pip install Pillow
 ```
 
 if you need a pair of colors predefined, just specify them on your .Xresources
