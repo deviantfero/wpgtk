@@ -114,7 +114,7 @@ class mainWindow( Gtk.Window ):
         filepath = current_walls.file_names_only[x]
         call( [ "wp", "change", filepath ] )
         call( [ "sh", "-c", "echo \"wp change "+ filepath +"\" > ~/.wallpapers/wp_init.sh" ] )
-        call( [ "chmod", "+x", "~/.wallpapers/wp_init.sh" ] )
+        call( [ "chmod", "+x", "/home/" + getuser() + "/.wallpapers/wp_init.sh" ] )
 
     def on_rm_clicked( self, widget ):
         print( "rm" )
