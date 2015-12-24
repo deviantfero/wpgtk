@@ -4,11 +4,6 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 
 it can take a little while to generate the color pallete though, be warned
 
-<<<<<<< HEAD
-  - Simple wallpaper management\
-=======
-  - Simple wallpaper management
->>>>>>> 985a29530d7923a24b64197b75c6e0c8bd5789ed
 [Example Image](http://imgur.com/HXIm9v4)
 
 ### Version
