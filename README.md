@@ -1,11 +1,11 @@
 # wpg
 
-wpg is a little programm to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
+wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
 it can take a little while to generate the color pallete though, be warned
 
   - Simple wallpaper management\
-[Example Image](/img/screenshot.png)
+[Example Image](http://imgur.com/HXIm9v4)
 
 ### Version
 1.0.1
