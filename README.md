@@ -4,7 +4,7 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 
 it can take a little while to generate the color pallete though, be warned
 
-[Example Image](http://imgur.com/HXIm9v4)
+![Example Image](http://imgur.com/HXIm9v4)
 
 ### Version
 1.0.2
