@@ -7,7 +7,7 @@ it can take a little while to generate the color pallete though, be warned
 [Example Image](http://imgur.com/HXIm9v4)
 
 ### Version
-1.0.1
+1.0.2
 
 ### Dependencies
 
