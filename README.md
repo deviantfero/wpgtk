@@ -4,8 +4,8 @@ wpg is a little programm to manage your wallpapers in a simple way, it integrate
 
 it can take a little while to generate the color pallete though, be warned
 
-  - Simple wallpaper management\
-[Example Image](/img/screenshot.png)
+  - Simple wallpaper management
+[Example Image](http://imgur.com/HXIm9v4)
 
 ### Version
 1.0.1
