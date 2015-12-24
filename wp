@@ -1,0 +1,250 @@
+#!/bin/bash
+
+function main {
+
+  # Snippet from SO user Dave Dopson http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+  SOURCE="${BASH_SOURCE[0]}"
+  # resolve $SOURCE until the file is no longer a symlink
+  while [ -h "$SOURCE" ]; do
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    SOURCE="$(readlink "$SOURCE")"
+    # if $SOURCE was a relative symlink, we need to resolve it
+    # relative to the path where the symlink file was located
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+  done
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  K_MEANS=16
+  WALLPAPER_DIR=${WALLPAPER_DIR:-~/.wallpapers/}
+
+  while test $# -gt 0; do
+      case "$1" in
+          usage | -h | --help)
+              shift
+              usage
+              ;;
+          n | -n)
+              shift
+              K_MEANS=$1
+              shift
+              ;;
+          add | -a | --add)
+              shift
+              add $*
+              ;;
+          rm | remove | -rm | --remove)
+              shift
+              remove $*
+              ;;
+          change)
+              shift
+              change $*
+              ;;
+          current)
+              shift
+              current $*
+              ;;
+          ls | list | -l | --list)
+              shift
+              list $*
+              ;;
+          colors)
+              shift
+              colors
+              ;;
+          slideshow)
+              shift
+              slideshow $*
+              ;;
+          *)
+              shift
+              indent "$1 is not a recognised directive"
+              ;;
+      esac
+  done
+}
+
+#:: Prety print function
+function indent {
+  echo ":: $*"
+}
+
+#:: Confirm user input
+function confirm {
+  indent $1
+  read -sn 1 ans
+  case "$ans" in
+    y|Y|yes|YES|Yes) return 0 ;;
+    *)  return 1 ;;
+  esac
+}
+
+#:: Directives
+
+function add {
+  if [ 0 = $# ]; then
+    indent "No file argument provided"
+    exit 1
+  fi
+
+  files=$*
+
+  for file in $files; do
+    if [ ! -f $file ]; then
+      indent "File '$file' doesn't exist"
+      exit 1
+    fi
+  done
+
+  cp $files $WALLPAPER_DIR
+  cd $WALLPAPER_DIR
+
+  for file in $*; do
+    echo ":: Generating .$file.colors and .$file.Xres in $PWD"
+    python2 $DIR/py/color_detect.py $file $K_MEANS
+  done
+}
+
+function remove {
+  if [ 0 = $# ]; then
+    if confirm "Delete current background? [Y/n]"; then
+      remove $(basename $(get_current))
+    else
+      echo "exiting"
+      exit 1
+    fi
+  fi
+
+  for file in $*; do
+    indent "Removing $file"
+    rm ${WALLPAPER_DIR}/${file}
+    rm ${WALLPAPER_DIR}/.${file}.{colors,Xres}
+  done
+}
+
+function change {
+  #:: Select a random background from WALLPAPER_DIR, or use the passed background
+  if [ -z $1 ]; then
+    background=$(find $WALLPAPER_DIR -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n1)
+  else
+    background=$WALLPAPER_DIR/$1
+
+    if [ ! -f $background ]; then
+      indent "$1 does not exist in $WALLPAPER_DIR"
+      exit 1
+    fi
+  fi
+
+  if [ -f ${background}.Xres ] || [ -f ${background}.colors ]; then
+    indent "Could not find ${background}.Xres or ${background}.colors"
+    exit 1
+  fi
+
+  filename=$(basename $background)
+  dirname=$(dirname $background)
+
+  #:: Set the background
+  feh --bg-fill $background
+
+  #:: Record the current background
+  set_current $background
+
+  if [ $? -ne 0 ]; then
+    indent "Failed to set $background as background"
+  else
+    indent "Set $background as background"
+
+    #:: Set the colorscheme
+    ln -f ${dirname}/.${filename}.colors ~/.colors
+    xrdb -merge ${dirname}/.${filename}.Xres
+  fi
+}
+
+function slideshow {
+  if [ -z $2 ]; then
+    PAPERS=$(list)
+  elif [ -e $2 ]; then
+    PAPERS=$(cat $2)
+  else
+    PAPERS=$2
+  fi
+
+  for img in $PAPERS; do
+    change $img
+    if [ ! -z "$1" ]; then
+        /bin/bash -c "$1"
+    fi
+    sleep 7
+  done
+}
+
+function current {
+  indent $(get_current)
+}
+
+function get_current {
+  readlink -f $WALLPAPER_DIR/.current
+}
+
+function set_current {
+  ln -sf $1  $WALLPAPER_DIR/.current
+}
+
+function list {
+  ls $* $WALLPAPER_DIR
+}
+
+function colors {
+  # Original: http://frexx.de/xterm-256-notes/
+  #           http://frexx.de/xterm-256-notes/data/colortable16.sh
+  # Modified by Aaron Griffin
+  # and further by Kazuo Teramoto
+  FGNAMES=(' black ' '  red  ' ' green ' ' yellow' '  blue ' 'magenta' '  cyan ' ' white ')
+  BGNAMES=('DFT' 'BLK' 'RED' 'GRN' 'YEL' 'BLU' 'MAG' 'CYN' 'WHT')
+
+  echo "     ┌──────────────────────────────────────────────────────────────────────────┐"
+  for b in {0..8}; do
+    ((b>0)) && bg=$((b+39))
+
+    echo -en "\033[0m ${BGNAMES[b]} │ "
+
+    for f in {0..7}; do
+      echo -en "\033[${bg}m\033[$((f+30))m ${FGNAMES[f]} "
+    done
+
+    echo -en "\033[0m │"
+    echo -en "\033[0m\n\033[0m     │ "
+
+    for f in {0..7}; do
+      echo -en "\033[${bg}m\033[1;$((f+30))m ${FGNAMES[f]} "
+    done
+
+    echo -en "\033[0m │"
+    echo -e "\033[0m"
+
+    ((b<8)) &&
+    echo "     ├──────────────────────────────────────────────────────────────────────────┤"
+  done
+  echo "     └──────────────────────────────────────────────────────────────────────────┘"
+}
+
+function usage {
+  printf "%b" "  $0 [action] [options]
+
+Actions
+- usage:                Print this help message.
+- n [number]   :        Number of colors to gather.
+- add [file]...:        Add file, or files, to the wallpaper database.
+- rm  [file]...:        Remove file, or files, from the wallpaper database.
+- change [file]:        Set the wallpaper to file, or a random wallpaper
+                        from the wallpaper database.
+- slideshow [cmd file]: Rotate through wallpapers, optionally
+                        running cmd each time and using only
+                        wallpapers listed in the file.
+- current:              List the current background
+- ls:                   List all wallpapers in the database.
+- colors:               Display the current set of colors.
+"
+}
+
+#:: End function declaration, begin executing
+main $*
