@@ -4,9 +4,8 @@ require_version( "Gtk", "3.0" )
 from os import walk
 from subprocess import call
 import os.path #fetch filenames
-from getpass import getuser #findout the username so the route is absolute
 #making sure it uses v3.0
-from gi.repository import Gtk, GdkPixbuf
+from gi.repository import Gtk, GdkPixbuf, GLib
 
 class fileList():
 
@@ -15,7 +14,7 @@ class fileList():
         self.file_names_only = []
         number_list = []
         elem_counter = 1
-        for( dirpath, dirnames, filenames ) in walk( "/home/" + getuser() + "/.wallpapers" ):
+        for( dirpath, dirnames, filenames ) in walk( GLib.get_home_dir() + "/.wallpapers" ):
             self.files.extend( filenames )
 
         self.files = [ elem for elem in self.files if not ".Xres" in elem ]
@@ -38,7 +37,7 @@ class mainWindow( Gtk.Window ):
     def __init__( self ):
         Gtk.Window.__init__( self, title = "wpcolors" )
         
-        filepath = "/home/" + getuser() + "/.wallpapers/"
+        filepath = GLib.get_home_dir() + "/.wallpapers/"
         current_walls = fileList( filepath )
         current_walls.show_files_only()
         image_name = filepath + ".current"
@@ -111,16 +110,16 @@ class mainWindow( Gtk.Window ):
     def on_set_clicked( self, widget ):
         print( "Set" )
         x = self.option_combo.get_active()
-        current_walls = fileList( "/home/" + getuser() + "/.wallpapers" )
+        current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         filepath = current_walls.file_names_only[x]
         call( [ "wp", "change", filepath ] )
         call( [ "sh", "-c", "echo \"wp change "+ filepath +"\" > ~/.wallpapers/wp_init.sh" ] )
-        call( [ "chmod", "+x", "/home/" + getuser() + "/.wallpapers/wp_init.sh" ] )
+        call( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
 
     def on_rm_clicked( self, widget ):
         print( "rm" )
         x = self.option_combo.get_active()
-        current_walls = fileList( "/home/" + getuser() + "/.wallpapers" )
+        current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         filepath = current_walls.file_names_only[x]
         call( [ "wp", "rm", filepath ] )
         option_list = Gtk.ListStore( str )
@@ -132,11 +131,11 @@ class mainWindow( Gtk.Window ):
 
     def combo_box_change( self, widget ):
         x = self.option_combo.get_active()
-        current_walls = fileList( "/home/" + getuser() + "/.wallpapers" )
+        current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         selected_file = current_walls.file_names_only[x]
         selected_sample = "." + selected_file + ".sample.png"
-        filepath = "/home/" + getuser() + "/.wallpapers/" + selected_file
-        samplepath = "/home/" + getuser() + "/.wallpapers/" + selected_sample
+        filepath = GLib.get_home_dir() + "/.wallpapers/" + selected_file
+        samplepath = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
         self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale( filepath, width=500, height=333, preserve_aspect_ratio=False )
         self.preview.set_from_pixbuf( self.pixbuf_preview )
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( samplepath, width=500, height=500 )
