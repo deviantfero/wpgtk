@@ -23,7 +23,7 @@ i.e background and foreground
 also you need to uninstall any other wallpaper manager as it will override this one at startup
 
 ### Credit
-I found the script by other means, but i found out that the author of the color script that i made
+I found the script by other means, but i found out the author of the color script that i made
 the GUI for, i'll leave the link to the original repo down below 
 
 it's http://github.com/everett1992/wp
