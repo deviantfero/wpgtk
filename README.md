@@ -40,7 +40,7 @@ the GUI for, i'll leave the link to the original repo down below
 
 it's http://github.com/everett1992/wp
 
-### Instalation
+### Installation
 do the following
 ```sh
 $ git clone http://github.com/deviantfero/wpgtk
@@ -53,7 +53,7 @@ $ wpg
 ```
 this will take care of placing the files where they are meant to be in /usr/local/bin/
 ### Loading at Startup
-to load your new wallpaper at startup along with the colors add the following to your startup script or simply add it into your startup apps in your DE of choice
+to load your new wallpaper at startup along with the colors add the following to your startup script or simply add it into your startup apps in your DE of choice, if you already use feh as your wallpaper manager, remember to remove it from your start up config.
 ```sh
 ~/.wallpapers/wp_init.sh
 ```
