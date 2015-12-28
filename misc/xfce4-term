@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# load generated colors into vars COLOR[0...15]
+source ~/.colors
+
+# This might be a different location on other systems
+terminalrc=~/.config/xfce4/terminal/terminalrc
+
+function 6_to_12 {
+  echo $* | sed 's/#\(..\)\(..\)\(..\)/#\1\1\2\2\3\3/'
+}
+
+# Build color string
+
+# Change the order of these colors to change which termcolor is which color
+colors="$COLOR1 $COLOR2 $COLOR3 $COLOR4 $COLOR5 $COLOR6 $COLOR7 $COLOR8 $COLOR9 $COLOR10 $COLOR11 $COLOR12 $COLOR13 $COLOR14 $COLOR15"
+color_string="ColorPalette="
+for color in $colors; do
+  color_string="$color_string$(6_to_12 $color);"
+done
+# Add black to the end
+color_string="$color_string$(6_to_12 "#000000")"
+
+# Find this line
+line_match="^ColorPalette=.*$"
+
+# Replace it with this
+line_replace="$color_string"
+
+
+sed -i "s/$line_match/$line_replace/" $terminalrc
