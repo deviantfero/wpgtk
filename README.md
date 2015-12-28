@@ -26,7 +26,7 @@ $ sudo pacman -S python2-pillow feh
 ```
 *buntu
 ```sh
-$ sudo apt-get install feh pip && pip install Pillow
+$ sudo apt-get install feh python-pip && sudo apt-get build-dep python-imaging && sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev && pip install Pillow
 ```
 
 if you need a pair of colors predefined, just specify them on your .Xresources
