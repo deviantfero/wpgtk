@@ -26,8 +26,9 @@ $ sudo pacman -S python2-pillow feh
 ```
 *buntu
 ```sh
-$ sudo apt-get install feh python-pip && sudo apt-get build-dep python-imaging && sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev && pip install Pillow
+$ sudo apt-get install feh python-pip build-dep python-imaging libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev && pip install Pillow
 ```
+although you may already have most of these installed by default, i put them on here just in case.
 
 if you need a pair of colors predefined, just specify them on your .Xresources
 i.e background and foreground
