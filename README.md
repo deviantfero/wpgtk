@@ -1,16 +1,9 @@
-# wp
+# wpg
 
-wp is a small tool I use to generate color schemes from images, and manage desktop wallpapers.
+wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
-The color extraction scripts were taken from [this blog post](http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/)
- with normalization reddit user radiosilence.
+it can take a little while to generate the color pallete though, be warned
 
-<<<<<<< HEAD
-## Dependencies
-
-As far as I know this only relies on PIL, python image library. I was able to fulfill this dependency with the `python-pillow` package on Arch Linux.
-On other systems, `pip install Pillow`.
-=======
 ### Examples
 
 ![Example Image](http://i.imgur.com/HXIm9v4.png?1)
@@ -18,18 +11,15 @@ On other systems, `pip install Pillow`.
 
 ### Version
 1.0.2
->>>>>>> 955b1de142ce105bef7cf8fbdc40dea8a5713502
 
-## Usage
+### Dependencies
 
-```
-$ wp add [file]
-```
+wpg has some dependencies:
 
-<<<<<<< HEAD
-Generates color files .[file].colors and .[file].Xres which can be sourced by shell
-scripts and xrdb respectivly. The color files and the image are added to the backgrounds directory.
-=======
+* python2-pillow ( on arch )
+* feh
+* you need to use urxvt or xterm for it to work
+
 Arch
 ```sh
 $ sudo pacman -S python2-pillow feh
@@ -42,42 +32,29 @@ although you may already have most of these installed by default, i put them on 
 
 if you need a pair of colors predefined, just specify them on your .Xresources
 i.e background and foreground
->>>>>>> 955b1de142ce105bef7cf8fbdc40dea8a5713502
 
-```
-$ wp change [file]
-```
+also you need to uninstall any other wallpaper manager as it will override this one at startup
 
-Changes the background image to a random image from the ~/.wallpapers directory, or the file passed, and  loads the .Xres file
-into xrdb so xterm or urxvt will use the colors. It also links a script to ~/.colors. If you `source ~/.colors` in a script 
-you can use the generated colors with `$COLOR0`, `$COLOR1`, ...
+### Credit
+I found the script by other means, but i found out the author of the color script that i made
+the GUI for, i'll leave the link to the original repo down below 
 
+it's http://github.com/everett1992/wp
 
-<<<<<<< HEAD
-=======
 ### Installation
 do the following
 ```sh
 $ git clone http://github.com/deviantfero/wpgtk
 $ cd ~/wpgtk
 $ sh ./install.sh
->>>>>>> 955b1de142ce105bef7cf8fbdc40dea8a5713502
 ```
-$ wp rm [file]
+now to actually run the program just
+```sh
+$ wpg
 ```
-<<<<<<< HEAD
-
-Removes the image and it's color files from the backgrounds directory.
-
-=======
 this will take care of placing the files where they are meant to be in /usr/local/bin/
 ### Loading at Startup
 to load your new wallpaper at startup along with the colors add the following to your startup script or simply add it into your startup apps in your DE of choice, if you already use feh as your wallpaper manager, remember to remove it from your start up config.
 ```sh
 ~/.wallpapers/wp_init.sh
->>>>>>> 955b1de142ce105bef7cf8fbdc40dea8a5713502
 ```
-$ wp ls
-```
-
-Lists the images in the backgrounds folder.
