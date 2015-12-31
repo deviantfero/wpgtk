@@ -8,7 +8,7 @@ it can take a little while to generate the color pallete though, be warned
 
 ![Example Image](http://i.imgur.com/HXIm9v4.png?1)
 ![Another Example](http://i.imgur.com/1AdvJ8h.png?1)
-![video on howto](http://s1.webmshare.com/Eogaa.webm)
+
 
 ### Version
 1.0.2
