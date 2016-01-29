@@ -19,11 +19,12 @@ wpg has some dependencies:
 
 * python2-pillow ( on arch )
 * feh
+* python-gobject
 * you need to use urxvt or xterm for it to work
 
 Arch
 ```sh
-$ sudo pacman -S python2-pillow feh
+$ sudo pacman -S python2-pillow feh python-gobject
 ```
 *buntu
 ```sh
