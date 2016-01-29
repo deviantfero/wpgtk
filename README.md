@@ -7,7 +7,7 @@ it can take a little while to generate the color pallete though, be warned
 ### Examples
 
 ![Example Image](http://i.imgur.com/LktnkQh.png)
-![Another Example](http://i.imgur.com/1AdvJ8h.png?1)
+![Another Example](http://i.imgur.com/pBwTumC.png)
 
 
 ### Version
