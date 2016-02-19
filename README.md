@@ -9,9 +9,15 @@ it can take a little while to generate the color pallete though, be warned
 ![Example Image](http://i.imgur.com/LktnkQh.png)
 ![Another Example](http://i.imgur.com/pBwTumC.png)
 
+### New Feature
+![IMG 2](http://i.imgur.com/uy3ZNuL.png)
+![IMG 1](http://i.imgur.com/r39E6Fl.png)
+
+You can now choose a colorscheme generated for a wallpaper in whichever wallpaper you'd like!
+
 
 ### Version
-1.0.2
+1.2
 
 ### Dependencies
 
