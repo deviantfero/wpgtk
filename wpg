@@ -57,6 +57,13 @@ class mainWindow( Gtk.Window ):
         self.option_combo.add_attribute( self.renderer_text, "text", 0 )
         self.option_combo.set_entry_text_column( 0 )
 
+        self.textbox = Gtk.Label()
+        self.textbox.set_text( "Select colorscheme" )
+        self.colorscheme = Gtk.ComboBox.new_with_model( option_list )
+        self.colorscheme.pack_start( self.renderer_text, True )
+        self.colorscheme.add_attribute( self.renderer_text, "text", 0 )
+        self.colorscheme.set_entry_text_column( 0 )
+
         self.set_border_width( 10 )
         self.grid = Gtk.Grid()
         self.grid.set_column_homogeneous( 1 )
@@ -73,16 +80,18 @@ class mainWindow( Gtk.Window ):
         self.add_button = Gtk.Button( label = "Add" )
         self.set_button = Gtk.Button( label = "Set" )
         self.rm_button = Gtk.Button( label = "Remove" )
-        self.grid.attach( self.option_combo, 1, 1, 1, 1 ) #adds to first cell in grid
-        self.grid.attach( self.add_button, 1, 2, 3, 1 )
-        self.grid.attach( self.set_button, 2, 1, 1, 1 )
-        self.grid.attach( self.rm_button, 3, 1, 1, 1 )
-        self.grid.attach( self.preview, 1, 3, 3, 1 )
-        self.grid.attach( self.sample, 1, 4, 3, 1 )
+        self.grid.attach( self.option_combo, 1, 1, 2, 1 ) #adds to first cell in grid
+        self.grid.attach( self.colorscheme, 1, 2, 2, 1 )
+        self.grid.attach( self.set_button, 3, 1, 1, 1 )
+        self.grid.attach( self.add_button, 3, 2, 2, 1 )
+        self.grid.attach( self.rm_button, 4, 1, 1, 1 )
+        self.grid.attach( self.preview, 1, 3, 4, 1 )
+        self.grid.attach( self.sample, 1, 4, 4, 1 )
         self.add_button.connect( "clicked", self.on_add_clicked )
         self.set_button.connect( "clicked", self.on_set_clicked )
         self.rm_button.connect( "clicked", self.on_rm_clicked )
         self.option_combo.connect( "changed", self.combo_box_change )
+        self.colorscheme.connect( "changed", self.colorscheme_box_change )
         self.entry = Gtk.Entry()
         self.current_walls = Gtk.ComboBox()
 
@@ -104,16 +113,23 @@ class mainWindow( Gtk.Window ):
                 option_list.append( [elem] )
             self.option_combo.set_model( option_list )
             self.option_combo.set_entry_text_column( 0 )
+            self.colorscheme.set_model( option_list )
+            self.colorscheme.set_entry_text_column( 0 )
 
         filechooser.destroy()
 
     def on_set_clicked( self, widget ):
         print( "Set" )
         x = self.option_combo.get_active()
-        current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
+        y = self.colorscheme.get_active()
+        path = GLib.get_home_dir() + "/.wallpapers/"
+        current_walls = fileList( path )
         filepath = current_walls.file_names_only[x]
+        colorscheme = current_walls.file_names_only[y]
         call( [ "wp", "change", filepath ] )
-        call( [ "sh", "-c", "echo \"wp change "+ filepath +"\" > ~/.wallpapers/wp_init.sh" ] )
+        call( [ "xrdb", "-merge", GLib.get_home_dir() + "/.wallpapers/." + colorscheme + ".Xres" ] )
+        call( [ "sh", "-c", "echo -n \"wp change "+ filepath +" && \" > ~/.wallpapers/wp_init.sh" ] )
+        call( [ "sh", "-c", "echo \"xrdb -merge "+ path + "." + colorscheme + ".Xres" + "\" >> ~/.wallpapers/wp_init.sh" ] )
         call( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
 
     def on_rm_clicked( self, widget ):
@@ -128,9 +144,12 @@ class mainWindow( Gtk.Window ):
             option_list.append( [elem] )
         self.option_combo.set_model( option_list )
         self.option_combo.set_entry_text_column( 0 )
+        self.colorscheme.set_model( option_list )
+        self.colorscheme.set_entry_text_column( 0 )
 
     def combo_box_change( self, widget ):
         x = self.option_combo.get_active()
+        self.colorscheme.set_active( x )
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         selected_file = current_walls.file_names_only[x]
         selected_sample = "." + selected_file + ".sample.png"
@@ -138,6 +157,13 @@ class mainWindow( Gtk.Window ):
         samplepath = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
         self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale( filepath, width=500, height=333, preserve_aspect_ratio=False )
         self.preview.set_from_pixbuf( self.pixbuf_preview )
+
+    def colorscheme_box_change( self, widget ):
+        x = self.colorscheme.get_active()
+        current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
+        selected_file = current_walls.file_names_only[x]
+        selected_sample = "." + selected_file + ".sample.png"
+        samplepath = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( samplepath, width=500, height=500 )
         self.sample.set_from_pixbuf( self.pixbuf_sample )
 
