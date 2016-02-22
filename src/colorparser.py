@@ -79,18 +79,32 @@ def change_colors_ob( active, inactive ):
             print( line.replace( "2C4448".lower(), inactive ), end='' )
     call( ["openbox", "--reconfigure"] )
 
-if __name__ == "__main__":
-    base_color = read_color_in_line( argv[1] )
+def change_colors_gtk2( active, inactive ):
+    backupdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc.base"
+    realdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc"
+    call( ["cp", backupdir, realdir] )
+    with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
+        for line in file:
+            print( line.replace( "4A838F", active ), end='' )
+    call( ["sh","./refreshgtk2.sh"] )
+
+def execute_gcolorchange( image_name ):
+    base_color = read_color_in_line( image_name )
     if( base_color == "4A838F" ):
         base_redux = 0
         inact_redux = 50
     else:
         base_redux = 30
-        inact_redux = 78
+        inact_redux = 70
     active = reduce_brightness( base_color, base_redux )
     inactive = reduce_brightness( base_color, inact_redux )
     print( active )
     print( inactive )
     change_colors_ob( active, inactive )
     change_colors_tint2( active, inactive )
+    change_colors_gtk2( active, inactive )
     print( "SUCCESS" )
+
+if __name__ == "__main__":
+    image_name = argv[1]
+    execute_gcolorchange( image_name )
