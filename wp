@@ -118,7 +118,7 @@ function remove {
   for file in $*; do
     indent "Removing $file"
     rm ${WALLPAPER_DIR}/${file}
-    rm ${WALLPAPER_DIR}/.${file}.{colors,Xres}
+    rm ${WALLPAPER_DIR}/.${file}.{colors,Xres,sample}*
   done
 }
 
