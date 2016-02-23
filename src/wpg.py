@@ -7,6 +7,7 @@ import os.path #fetch filenames
 #making sure it uses v3.0
 from gi.repository import Gtk, GdkPixbuf, GLib
 from colorparser import execute_gcolorchange
+from time import sleep
 
 class fileList():
 
@@ -106,7 +107,8 @@ class mainWindow( Gtk.Window ):
         if response == Gtk.ResponseType.OK:
             print( "Open Clicked" )
             filepath = filechooser.get_filename()
-            call( [ "wp", "add", filepath ] )
+            filechooser.destroy()
+            call( "wp add " + filepath, shell=True )
             option_list = Gtk.ListStore( str )
             current_walls = fileList( filepath )
 
@@ -117,7 +119,6 @@ class mainWindow( Gtk.Window ):
             self.colorscheme.set_model( option_list )
             self.colorscheme.set_entry_text_column( 0 )
 
-        filechooser.destroy()
 
     def on_set_clicked( self, widget ):
         print( "Set" )
