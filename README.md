@@ -13,7 +13,7 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 
 ### New Features
 
-![IMG 1](http://i.imgur.com/r39E6Fl.png)
+![IMG 1](http://i.imgur.com/xXIB7QH.png)
 ![IMG 1](http://i.imgur.com/fpbmtPi.png)
 
 You can now choose a colorscheme generated for a wallpaper in whichever wallpaper you'd like!
