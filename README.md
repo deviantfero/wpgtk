@@ -17,7 +17,14 @@ You can now choose a colorscheme generated for a wallpaper in whichever wallpape
 
 
 ### Version
-1.2
+2.0
+
+### Features added
+
+* Now your window borders change with your wallpaper
+* Now your Icon set changes with your wallpaper
+* It also changes a special GKT theme automatically
+* it uses random colors from the image, so you can repeat until you're satisfied
 
 ### Dependencies
 
@@ -26,7 +33,7 @@ wpg has some dependencies:
 * python2-pillow ( on arch )
 * feh
 * python-gobject
-* you need to use urxvt or xterm for it to work
+* you need to use urxvt or xterm for it to work on your terminal colors
 
 Arch
 ```sh
@@ -49,13 +56,29 @@ the GUI for, i'll leave the link to the original repo down below
 
 it's http://github.com/everett1992/wp
 
-### Installation
+### Installation 
 do the following
+
+```sh
+$ git clone http://github.com/deviantfero/wpgtk
+$ cd ~/wpgtk
+$ sh ./installcolor.sh
+```
+do this if you want a dynamic theme.
+
+after doing this there just a few more steps to get a dynamic theme going
+* Select colorbamboo or colorbamboo_nb (no_borders) as your openbox window theme
+* Select Flatcolor as your GTK theme
+* Select flattrcolor as your Icon theme
+* you're good to go!
+
 ```sh
 $ git clone http://github.com/deviantfero/wpgtk
 $ cd ~/wpgtk
 $ sh ./install.sh
 ```
+do this is if you don't want a dynamic theme.
+
 now to actually run the program just
 ```sh
 $ wpg
