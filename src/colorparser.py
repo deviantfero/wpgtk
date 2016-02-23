@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/python
 import fileinput
 from subprocess import call
 from sys import argv
