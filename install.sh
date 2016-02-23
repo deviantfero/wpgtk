@@ -19,7 +19,8 @@ function install_color {
 	echo "INSTALLING::GTK-THEME"
 	sudo cp -r ./themes/FlatColor ~/.themes/
 	echo "DONE - SET YOUR THEMES AND RUN wpg"
-	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wp
+	sudo chmod +x /usr/local/bin/wpg
+	sudo chmod +x /usr/local/bin/wp
 }
 
 install_color

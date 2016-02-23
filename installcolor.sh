@@ -9,7 +9,7 @@ function tint2support {
 	echo
 	echo -n "do you want to continue[Y/n]: "
 	read election
-	if [[ $election == "y" || $election == "Y" ]]; then
+	if [[ "$election" == "y" || "$election" == "Y" ]]; then
 		echo -n "INSTALLING::TINT2-THEME"
 		cp ./themes/tint2rc ~/.config/tint2/
 		cp ./themes/tint2rc.base ~/.config/tint2/
