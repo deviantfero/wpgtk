@@ -1,7 +1,9 @@
 # wpg
 ### An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK.
 
-![See What it can do - WEBM](http://s1.webmshare.com/Za7d0.webm)
+See What it can do!
+
+http://s1.webmshare.com/Za7d0.webm
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
