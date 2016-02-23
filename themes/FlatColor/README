@@ -1,0 +1,14 @@
+Iris Dark is a modern looking flat theme for Gtk. The theme is compatible with GTK 3.10 and GTK 3.12. It also includes a GTK 2.0 theme using Murrine engine.
+
+---
+
+Installation Instructions:
+
+Extract the zip file to the themes directory i.e. "/usr/share/themes/"
+Alternatively, extract it to the ".themes" directory in your home folder if you want the theme to be applied only to you user.
+
+Use a theme changer such as Gnome Tweak Tool, Ubuntu Tweak or LXappearance to change the the theme to Iris Dark
+
+---
+
+License: GPL-3.0+

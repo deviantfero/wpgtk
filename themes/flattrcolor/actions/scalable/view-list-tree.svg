@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.49 r12742"
+   viewBox="0 0 13.546666 13.546668"
+   sodipodi:docname="view-list-tree.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8.9002327"
+     inkscape:cx="29.296943"
+     inkscape:cy="28.214611"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:showpageshadow="false"
+     borderlayer="true"
+     units="px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     showguides="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="718"
+     inkscape:window-x="-2"
+     inkscape:window-y="23"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="-6.6748425e-06,47.999999"
+       orientation="47.999977,0"
+       id="guide3279" />
+    <sodipodi:guide
+       position="-6.6748425e-06,2.2810037e-05"
+       orientation="0,48.000004"
+       id="guide3281" />
+    <sodipodi:guide
+       position="47.999997,47.999999"
+       orientation="0,-48.000004"
+       id="guide3285" />
+    <sodipodi:guide
+       position="8.9999822,39.000078"
+       orientation="30.000026,0"
+       id="guide3287" />
+    <sodipodi:guide
+       position="8.9999822,9.0000522"
+       orientation="0,29.999999"
+       id="guide3289" />
+    <sodipodi:guide
+       position="38.999981,9.0000522"
+       orientation="-30.000026,0"
+       id="guide3291" />
+    <sodipodi:guide
+       position="38.999981,39.000078"
+       orientation="0,-29.999999"
+       id="guide3293" />
+    <sodipodi:guide
+       position="16.499935,27.999261"
+       orientation="0,-3.9999935"
+       id="guide4127" />
+    <sodipodi:guide
+       position="12.499941,27.999261"
+       orientation="8.0000141,0"
+       id="guide4129" />
+    <sodipodi:guide
+       position="12.499941,19.999247"
+       orientation="0,3.9999935"
+       id="guide4131" />
+    <sodipodi:guide
+       position="16.499935,19.999247"
+       orientation="-8.0000141,0"
+       id="guide4133" />
+    <sodipodi:guide
+       position="12.499941,16.499842"
+       orientation="3.999953,0"
+       id="guide4145" />
+    <sodipodi:guide
+       position="12.499941,12.499889"
+       orientation="0,15.500034"
+       id="guide4147" />
+    <sodipodi:guide
+       position="27.999975,12.499889"
+       orientation="-3.999953,0"
+       id="guide4149" />
+    <sodipodi:guide
+       position="27.999975,16.499842"
+       orientation="0,-15.500034"
+       id="guide4151" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(38.119153,-397.84494)">
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;stroke:none"
+       d="M 9 9 L 9 20 L 12.5 20 L 12.5 31.5 L 12.5 35.5 L 28 35.5 L 28 39 L 39 39 L 39 28 L 35.5 28 L 35.5 20 L 39 20 L 39 9 L 28 9 L 28 20 L 31.5 20 L 31.5 28 L 28 28 L 28 31.5 L 16.5 31.5 L 16.5 20 L 20 20 L 20 9 L 9 9 z "
+       transform="matrix(0.28222225,0,0,0.28222225,-38.119154,397.84494)"
+       id="rect4067" />
+  </g>
+</svg>

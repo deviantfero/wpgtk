@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48+devel r12677"
+   sodipodi:docname="skype.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8.4028079"
+     inkscape:cx="40.519091"
+     inkscape:cy="24.932096"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="718"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="false"
+     borderlayer="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3850" />
+    <sodipodi:guide
+       position="8.9499998,39.000017"
+       orientation="30,0"
+       id="guide3263" />
+    <sodipodi:guide
+       position="8.9499998,9.0000174"
+       orientation="0,30.099999"
+       id="guide3265" />
+    <sodipodi:guide
+       position="39.049999,9.0000174"
+       orientation="-30,0"
+       id="guide3267" />
+    <sodipodi:guide
+       position="39.049999,39.000017"
+       orientation="0,-30.099999"
+       id="guide3269" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <rect
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3271"
+       width="2"
+       height="2"
+       x="0"
+       y="1027.3622"
+       ry="1" />
+    <rect
+       ry="1"
+       y="1027.3622"
+       x="46"
+       height="2"
+       width="2"
+       id="rect3273"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    <rect
+       ry="2"
+       y="22"
+       x="-1052.3622"
+       height="4"
+       width="4"
+       id="rect3275"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       transform="matrix(0,-1,1,0,0,0)" />
+    <rect
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3277"
+       width="4"
+       height="4"
+       x="-1008.3622"
+       y="22"
+       ry="2"
+       transform="matrix(0,-1,1,0,0,0)" />
+    <rect
+       transform="matrix(0,-1,1,0,0,0)"
+       ry="20"
+       y="4"
+       x="-1048.3622"
+       height="40"
+       width="40"
+       id="rect3279"
+       style="fill:#52beea;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    <rect
+       style="fill:#52beea;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3285"
+       width="18"
+       height="18"
+       x="-1026.3622"
+       y="2"
+       ry="9"
+       transform="matrix(0,-1,1,0,0,0)" />
+    <rect
+       transform="matrix(0,-1,1,0,0,0)"
+       ry="9"
+       y="28"
+       x="-1048.3622"
+       height="18"
+       width="18"
+       id="rect3287"
+       style="fill:#52beea;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;display:inline"
+       d="m 33.279651,1037.1032 c -0.830689,1.1778 -2.059741,2.1101 -3.651923,2.7717 -1.576391,0.6556 -3.46624,0.9873 -5.617551,0.9873 -2.582439,0 -4.747663,-0.4535 -6.436874,-1.3496 -1.20773,-0.6529 -2.204425,-1.5356 -2.960454,-2.6268 -0.763434,-1.1023 -1.150727,-2.1944 -1.150727,-3.2489 0,-0.6593 0.25293,-1.2299 0.750344,-1.6971 0.492774,-0.4635 1.123722,-0.6978 1.875934,-0.6978 0.617858,0 1.150725,0.185 1.583801,0.5504 0.413475,0.3512 0.769048,0.8699 1.053699,1.5401 0.319214,0.7298 0.666404,1.3458 1.0332,1.8311 0.352803,0.4669 0.859566,0.8587 1.507268,1.1659 0.652419,0.3091 1.530617,0.4648 2.611395,0.4648 1.486774,0 2.705651,-0.3174 3.622148,-0.9437 0.89495,-0.6105 1.329749,-1.3442 1.329749,-2.243 0,-0.7102 -0.227648,-1.267 -0.694312,-1.7046 -0.489932,-0.4573 -1.133822,-0.8142 -1.918806,-1.0586 -0.81655,-0.2538 -1.926278,-0.5294 -3.297319,-0.8168 -1.865613,-0.3993 -3.451359,-0.8732 -4.712207,-1.4102 -1.288895,-0.5476 -2.328537,-1.308 -3.088302,-2.2602 -0.771814,-0.965 -1.162848,-2.1776 -1.162848,-3.6025 0,-1.3584 0.410635,-2.5825 1.22075,-3.6384 0.803533,-1.0487 1.977674,-1.8638 3.489585,-2.4226 1.492311,-0.5516 3.266575,-0.8315 5.274102,-0.8315 1.606093,0 3.017234,0.1858 4.196089,0.5525 1.184244,0.3686 2.183925,0.8673 2.968758,1.48 0.790592,0.6183 1.378598,1.2786 1.748087,1.9647 0.373299,0.6943 0.561968,1.3831 0.561968,2.0512 0,0.642 -0.247392,1.2265 -0.737251,1.7342 -0.492845,0.5125 -1.113545,0.7727 -1.846156,0.7727 -0.665512,0 -1.187161,-0.1632 -1.548347,-0.4831 -0.336942,-0.2969 -0.686004,-0.7618 -1.073372,-1.4281 -0.448862,-0.852 -0.991082,-1.5231 -1.613575,-1.9965 -0.603865,-0.46 -1.613727,-0.693 -3.001526,-0.693 -1.2889,0 -2.336014,0.2589 -3.114412,0.7688 -0.750344,0.4917 -1.114369,1.0566 -1.114369,1.7239 0,0.4094 0.116713,0.7512 0.358415,1.046 0.255702,0.3117 0.615986,0.5859 1.071428,0.814 0.472274,0.2379 0.959438,0.4263 1.4466,0.5605 0.500252,0.1394 1.33925,0.3447 2.488102,0.6107 1.455057,0.3117 2.792432,0.6616 3.974954,1.0398 1.196508,0.3832 2.231429,0.8555 3.07439,1.4045 0.861362,0.5608 1.543702,1.2806 2.027051,2.141 0.485363,0.8622 0.730741,1.9278 0.730741,3.1654 -2.25e-4,1.4806 -0.422901,2.831 -1.258228,4.0118 z"
+       id="path857"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

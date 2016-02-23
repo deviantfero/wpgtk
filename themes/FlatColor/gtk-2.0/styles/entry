@@ -1,0 +1,108 @@
+style "entry"			= "default"
+{
+  xthickness            			= 3
+  ythickness            			= 3 
+  GtkWidget::interior_focus	= 0
+  base[INSENSITIVE] = shade (0.95, @bg_color)
+  text[INSENSITIVE] = mix (0.3, @base_color, @text_color)
+  engine "pixmap"
+  {
+    image
+    {
+      function			= FOCUS
+      recolorable		= TRUE
+      file			= "Shadows/entry-shadow-in.png"
+      border			= { 1,1,1,1 }
+      stretch			= TRUE
+    }	
+ image
+    {
+      function			= BOX
+      recolorable		= TRUE
+	 shadow			= IN
+      state			= NORMAL
+      file			= "Shadows/entry-shadow-in.png"
+      border			= { 1,1,1,1 }
+      stretch			= TRUE
+    }	
+image
+    {
+      function			= BOX
+      recolorable		= TRUE
+	 shadow			= OUT
+      state			= NORMAL
+      file			= "Shadows/text-entry.png"
+      border			= { 1,1,1,1 }
+      stretch			= TRUE
+    } 
+  image
+   {
+     function			= SHADOW
+     detail			= "entry"
+     shadow			= IN
+     recolorable		= FALSE
+     file			= "Shadows/text-entry.png"
+      border			= { 1,1,1,1 }
+     stretch			= TRUE
+    }
+  }
+}
+style "entry-notebook"			= "default"
+{
+  xthickness            			= 5
+  ythickness            			= 5 
+  GtkWidget::interior_focus	= 0
+  base[INSENSITIVE] = shade (0.95, @bg_color)
+  text[INSENSITIVE] = mix (0.3, @base_color, @text_color)
+  engine "pixmap"
+  {
+    image
+    {
+      function			= FOCUS
+      recolorable		= TRUE
+      file			= "Shadows/entry-shadow-in-notebook.png"
+      border			= { 1,1,1,1 }
+      stretch			= TRUE
+    }	
+ image
+    {
+      function			= BOX
+      recolorable		= TRUE
+	 shadow			= IN
+      state			= NORMAL
+      file			= "Shadows/entry-shadow-in-notebook.png"
+      border			= { 1,1,1,1 }
+      stretch			= TRUE
+    }	
+image
+    {
+      function			= BOX
+      recolorable		= TRUE
+	 shadow			= OUT
+      state			= NORMAL
+      file			= "Shadows/text-entry-notebook.png"
+      border			= { 1,1,1,1 }
+      stretch			= TRUE
+    } 
+  image
+   {
+     function			= SHADOW
+     detail			= "entry"
+     shadow			= IN
+     recolorable		= FALSE
+     file			= "Shadows/text-entry-notebook.png"
+      border			= { 1,1,1,1 }
+     stretch			= TRUE
+    }
+  }
+}
+style "xfce-heading-style" { base[NORMAL] = @bg_color }
+class "XfceHeading" style "xfce-heading-style"
+class "GtkEntry"           		style "entry"
+class "GtkOldEditable" 			style "entry"
+class "GtkEditable" 			style "entry"
+widget_class "*<GtkNotebook>*<GtkEntry>*"	style "entry-notebook"
+widget_class "*<GtkNotebook>*<GtkOldEditable>*"	style "entry-notebook"
+widget_class "*<GtkNotebook>*<GtkEditable>*"	style "entry-notebook"
+widget_class "*<GimpToolOptionsEditor>*<GtkViewport>*<GtkEntry>*"	style "entry"
+widget_class "*<GimpToolOptionsEditor>*<GtkViewport>*<GtkEditable>*"	style "entry"

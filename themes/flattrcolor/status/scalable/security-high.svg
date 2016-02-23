@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.4pt" height="38.4pt">
+<defs/>
+<g id="layer1">
+  <path id="shield" transform="translate(12.6502, 9.00002)" fill="#2ecc71" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M23.5348 1.52649C14.8695 -0.752491 7.20575 -0.249703 0.00037816 1.52649C-0.0728412 19.7355 10.5094 26.4617 11.7676 26.4835C13.0258 26.5053 23.5563 19.6517 23.5348 1.52649Z"/>
+  <path id="path4149" transform="translate(20.7089, 13.8478)" fill="#f2f2f2" fill-rule="evenodd" d="M9.44226 0L0 9.09975L2.80382 11.9036L12.2461 2.80382Z"/>
+  <rect id="rect3339" transform="matrix(0.707107 -0.707107 0.707107 0.707107 17.037 19.4221)" fill="#f2f2f2" fill-rule="evenodd" width="3.20000000000pt" height="6.98239976000pt"/>
+ </g>
+</svg>

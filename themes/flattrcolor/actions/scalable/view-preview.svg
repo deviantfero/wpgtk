@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg7384"
+   height="48"
+   width="48"
+   version="1.1"
+   inkscape:version="0.48+devel r12820"
+   sodipodi:docname="view-preview.svg"
+   inkscape:export-filename="/home/uri/Descargas/NITRUX-KDE/NITRUX-KDE/16x16/actions/view-preview.png"
+   inkscape:export-xdpi="30"
+   inkscape:export-ydpi="30">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="673"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="4.0074349"
+     inkscape:cx="-14.386883"
+     inkscape:cy="24.05896"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gnome Symbolic Icon Theme</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <title
+     id="title9167">Gnome Symbolic Icon Theme</title>
+  <path
+     style="fill:#4d4d4d;stroke:none"
+     d="M 9 9 L 9 39 L 39 39 L 39 32 L 39 9 L 9 9 z M 11 11 L 37 11 L 37 32 L 35.5 32 L 30 23 L 27.054688 27.818359 L 21.054688 18 L 12.5 32 L 11 32 L 11 11 z M 30.369141 14.261719 C 28.50286 14.261719 27 15.764578 27 17.630859 C 27 19.49714 28.50286 21 30.369141 21 C 32.235422 21 33.738281 19.49714 33.738281 17.630859 C 33.738281 15.764578 32.235422 14.261719 30.369141 14.261719 z "
+     id="rect2983" />
+</svg>

@@ -1,0 +1,21 @@
+GtkPopover .button {
+    color: @theme_fg_color;
+    border: 1px solid shade(@theme_bg_color, 1.0);
+}
+
+GtkPopover .button:hover,
+GtkPopover .button:active:hover {
+    transition: color 200ms ease-in;
+    color: @theme_selected_fg_color;
+    background-color: transparent;
+}
+
+GtkPopover .button:active {
+    color: @theme_selected_fg_color;
+    background-color: transparent;
+    border: 1px solid shade(@theme_bg_color, 0.7);
+}
+
+.budgie-panel *:active {
+    background-color: transparent;
+}

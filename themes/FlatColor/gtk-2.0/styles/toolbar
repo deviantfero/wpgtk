@@ -1,0 +1,103 @@
+style "toolbar"
+{
+
+    xthickness=3
+    ythickness=4
+    engine "pixmap"
+    {
+        image
+        {
+	        function=BOX
+	        file="/Toolbar/toolbar.png"
+	        border={2,2,2,2}
+	        stretch=TRUE
+        }
+    }
+}
+widget_class "*HandleBox"		style "toolbar"
+class "*HandleBox"			style "toolbar"
+widget_class "*Toolbar"			style "toolbar"
+class "*Toolbar"			style "toolbar"
+#widget	"MozillaGtkWidget*Toolbar*"	style	"toolbar"
+style "toolbuttons"="default"
+{
+xthickness=5
+ythickness=5
+	fg[NORMAL] = @fg_color
+	fg[PRELIGHT] = @selected_fg_color
+	fg[ACTIVE] = @fg_color
+	fg[INSENSITIVE] = mix (0.3, @base_color, @text_color)
+GtkWidget::focus_padding=2
+engine "pixmap" {
+      
+image
+		{
+			function        		= BOX
+			recolorable     		= TRUE
+			state					= NORMAL
+			file            			= "Toolbar/toolbutton-normal.png"
+			border          		= { 5, 5, 5, 5 }
+			stretch         		= TRUE
+		}
+		image
+		{
+			function		= BOX
+			recolorable		= TRUE
+			state			= PRELIGHT
+			shadow			= IN
+			file			= "Toolbar/toolbutton-pressed.png"
+			border			= { 5, 5, 5, 5 }
+			stretch			= TRUE
+		}
+		image
+		{
+			function		= BOX
+			recolorable		= TRUE
+			state			= PRELIGHT
+			shadow			= OUT
+			file			= "Toolbar/toolbutton-prelight.png"
+			border			= { 5, 5, 5, 5 }
+			stretch			= TRUE
+		}
+image
+		{
+			function        		= BOX
+			recolorable     		= TRUE
+			state					= ACTIVE
+			file            			= "Toolbar/toolbutton-pressed.png"
+			border          		= { 5, 5, 5, 5 }
+			stretch         		= TRUE
+		} 
+image
+		{
+			function        		= BOX
+			recolorable     		= TRUE
+			state					= INSENSITIVE
+			file            			= "Toolbar/toolbutton-insensitive.png"
+			border          		= { 5, 5, 5, 5 }
+			stretch         		= TRUE
+		}  
+	}
+}
+widget_class	"*<GtkToolbar>*<GtkButton>*" style "toolbuttons"
+#widget	"MozillaGtkWidget.GtkFixed.GtkButton"	style	"toolbuttons"
+
+style "chrome-gtk-frame"
+{
+	ChromeGtkFrame::frame-color = @bg_color
+	ChromeGtkFrame::inactive-frame-color = @bg_color
+
+	ChromeGtkFrame::frame-gradient-size = 1
+	ChromeGtkFrame::frame-gradient-color = @bg_color
+
+	ChromeGtkFrame::incognito-frame-color = @bg_color
+	ChromeGtkFrame::incognito-inactive-frame-color = @bg_color
+
+	ChromeGtkFrame::incognito-frame-gradient-color = @bg_color
+
+	ChromeGtkFrame::scrollbar-trough-color = shade(0.98, @bg_color)
+	ChromeGtkFrame::scrollbar-slider-prelight-color = @selected_fg_color
+	ChromeGtkFrame::scrollbar-slider-normal-color = shade(0.9, @bg_color)
+}
+
+class "ChromeGtkFrame" 	style "chrome-gtk-frame"

@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.4pt" height="38.4pt">
+<defs/>
+<g id="layer1">
+  <rect id="shape0" transform="translate(18.6852, 8.70176)" fill="#bdc3c7" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260185242" width="8.27086080080pt" height="19.35333517991pt" rx="4.13543040040pt" ry="5.23910045570pt"/>
+  <path id="shape01" transform="translate(16.6698, 42.942)" fill="#34495e" fill-rule="evenodd" stroke="#4c4c4c" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M0 3.34357L14.4175 3.39142C10.6819 -1.15464 3.83662 -1.09035 0 3.34357Z"/>
+  <rect id="shape01" transform="translate(22.3506, 37.8078)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260185242" width="2.47898734177pt" height="4.24081981031pt"/>
+  <path id="line" transform="translate(18.6837, 14.1152)" fill="#7f8c8d" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M0.0757482 0L6.53571 0.00200914L6.53571 1.77367L0.00359629 1.76582C0.0080506 1.23422 -0.0316009 0.830931 0.0757482 0Z"/>
+  <path id="line1" transform="translate(18.6835, 17.8691)" fill="#7f8c8d" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M0 0.00938327L6.50553 0L6.50553 1.77166L0 1.76761Z"/>
+  <path id="line2" transform="translate(18.6835, 21.6666)" fill="#7f8c8d" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M0 0.0055858L6.53591 0L6.53591 1.77166L0.00379747 1.77521Z"/>
+  <path id="shape02" transform="translate(12.83, 27.6152)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M0 0.0143056L3.24091 0C3.85772 10.5442 18.1809 10.4685 18.7346 0L22.0268 0.0193159C21.0937 15.2659 0.628167 14.7098 0 0.0143056Z"/>
+ </g>
+</svg>

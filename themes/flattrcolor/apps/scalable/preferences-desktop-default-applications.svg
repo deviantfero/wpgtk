@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.4pt" height="38.4pt">
+<defs/>
+<g id="layer1">
+  <rect id="rect3289" transform="translate(22, 0)" fill="none" width="3.20000000000pt" height="3.20000000000pt" rx="1.60000000000pt" ry="1.60000000000pt"/>
+  <rect id="rect3291" transform="translate(22, 44)" fill="none" width="3.20000000000pt" height="3.20000000000pt" rx="1.60000000000pt" ry="1.60000000000pt"/>
+  <rect id="rect3304" transform="translate(4, 4)" fill="#d4a275" fill-rule="evenodd" width="32.00000000000pt" height="32.00000000000pt"/>
+  <path id="rect3340" transform="translate(5.90039, 4)" fill="#c89766" fill-rule="evenodd" d="M0 0L0 40L0.199219 40L0.199219 0ZM2 0L2 40L2.19922 40L2.19922 0ZM4 0L4 40L4.19922 40L4.19922 0ZM6 0L6 40L6.19922 40L6.19922 0ZM8 0L8 40L8.19922 40L8.19922 0ZM10 0L10 40L10.1992 40L10.1992 0ZM12 0L12 40L12.1992 40L12.1992 0ZM14 0L14 40L14.1992 40L14.1992 0ZM16 0L16 40L16.1992 40L16.1992 0ZM18 0L18 40L18.1992 40L18.1992 0ZM20 0L20 40L20.1992 40L20.1992 0ZM22 0L22 40L22.1992 40L22.1992 0ZM24 0L24 40L24.1992 40L24.1992 0ZM26 0L26 40L26.1992 40L26.1992 0ZM28 0L28 40L28.1992 40L28.1992 0ZM30 0L30 40L30.1992 40L30.1992 0ZM32 0L32 40L32.1992 40L32.1992 0ZM34 0L34 40L34.1992 40L34.1992 0ZM36 0L36 40L36.1992 40L36.1992 0Z"/>
+  <path id="path3331" transform="translate(15, 15)" fill="#201810" d="M8.99609 3.08957e-08C6.63974 0.000200031 4.29778 0.970619 2.63281 2.63672C0.967848 4.30282 0 6.644 0 9C0 11.356 0.967848 13.6972 2.63281 15.3633C4.29778 17.0294 6.63974 17.9998 8.99609 18C11.3525 18.0002 13.6942 17.0294 15.3613 15.3633C17.0284 13.6972 18 11.3563 18 9C18 6.6437 17.0284 4.30282 15.3613 2.63672C13.6942 0.970619 11.3525 -0.000199969 8.99609 3.08957e-08ZM8.99609 2C12.6615 1.9998 16 5.3347 16 9C16 12.6653 12.6615 16.0002 8.99609 16C5.33065 15.9998 2 12.665 2 9C2 5.335 5.33065 2.0002 8.99609 2Z"/>
+  <rect id="rect3287" transform="translate(44, 22)" fill="none" width="3.20000000000pt" height="3.20000000000pt" rx="1.60000000000pt" ry="1.60000000000pt"/>
+  <rect id="rect3285" transform="translate(0, 22)" fill="none" width="3.20000000000pt" height="3.20000000000pt" rx="1.60000000000pt" ry="1.60000000000pt"/>
+  <rect id="rect3327" transform="translate(23, 15)" fill="none" width="1.60000000000pt" height="1.60000000000pt" rx="0.80000000000pt" ry="0.80000000000pt"/>
+  <rect id="rect3334" transform="translate(23, 17)" fill="none" width="1.60000000000pt" height="1.60000000000pt" rx="0.80000000000pt" ry="0.80000000000pt"/>
+  <rect id="rect3336" transform="translate(23, 31)" fill="none" width="1.60000000000pt" height="1.60000000000pt" rx="0.80000000000pt" ry="0.80000000000pt"/>
+  <rect id="rect3338" transform="translate(23, 29)" fill="none" width="1.60000000000pt" height="1.60000000000pt" rx="0.80000000000pt" ry="0.80000000000pt"/>
+  <rect id="rect4206" transform="translate(20.5, 39.9997)" fill="#dbb797" fill-rule="evenodd" width="5.60000000000pt" height="3.20000080000pt"/>
+  <rect id="rect4223" transform="translate(20.5, 4)" fill="#dbb797" fill-rule="evenodd" width="5.60000000000pt" height="3.20000080000pt"/>
+  <path id="shape0" transform="translate(18.4264, 18.0665)" fill="#000000" fill-opacity="0.88627450980" fill-rule="evenodd" stroke="#000000" stroke-opacity="0.80784313725" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260191180" d="M9.15783 10.9674L5.65985 9.09395L2.16187 10.9674L2.82993 6.99938L0 4.18919L3.91086 3.61026L5.65985 0L7.40881 3.61026L11.3197 4.18919L8.48973 6.99938Z"/>
+ </g>
+</svg>

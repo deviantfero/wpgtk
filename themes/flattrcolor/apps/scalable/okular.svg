@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48.000004"
+   height="48.000004"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.49 r12742"
+   sodipodi:docname="okular.svg">
+  <metadata
+     id="metadata13">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="718"
+     id="namedview11"
+     showgrid="false"
+     inkscape:zoom="4.9166663"
+     inkscape:cx="15.219599"
+     inkscape:cy="18.23858"
+     inkscape:window-x="-2"
+     inkscape:window-y="23"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:showpageshadow="false"
+     borderlayer="true"
+     units="px">
+    <sodipodi:guide
+       position="1.9073486e-06,48.000002"
+       orientation="47.999998,0"
+       id="guide4064" />
+    <sodipodi:guide
+       position="1.9073486e-06,3.8146973e-06"
+       orientation="0,47.999998"
+       id="guide4066" />
+    <sodipodi:guide
+       position="48,3.8146973e-06"
+       orientation="-47.999998,0"
+       id="guide4068" />
+    <sodipodi:guide
+       position="48,48.000002"
+       orientation="0,-47.999998"
+       id="guide4070" />
+    <sodipodi:guide
+       position="7.0000019,44.000002"
+       orientation="39.999998,0"
+       id="guide4072" />
+    <sodipodi:guide
+       position="7.0000019,4.0000038"
+       orientation="0,33.999998"
+       id="guide4074" />
+    <sodipodi:guide
+       position="41,4.0000038"
+       orientation="-39.999998,0"
+       id="guide4076" />
+    <sodipodi:guide
+       position="41,44.000002"
+       orientation="0,-33.999998"
+       id="guide4078" />
+    <sodipodi:guide
+       position="7.0000019,33.000002"
+       orientation="17.999998,0"
+       id="guide4080" />
+    <sodipodi:guide
+       position="15.000002,33.000002"
+       orientation="17.999998,0"
+       id="guide4073" />
+    <sodipodi:guide
+       position="15.000002,15.000004"
+       orientation="0,17.999998"
+       id="guide4075" />
+    <sodipodi:guide
+       position="33,15.000004"
+       orientation="-17.999998,0"
+       id="guide4077" />
+    <sodipodi:guide
+       position="33,33.000002"
+       orientation="0,-17.999998"
+       id="guide4079" />
+    <sodipodi:guide
+       position="19,33.000002"
+       orientation="17.999998,0"
+       id="guide4234" />
+    <sodipodi:guide
+       position="19,15.000004"
+       orientation="0,18"
+       id="guide4236" />
+    <sodipodi:guide
+       position="37,15.000004"
+       orientation="-17.999998,0"
+       id="guide4238" />
+    <sodipodi:guide
+       position="37,33.000002"
+       orientation="0,-18"
+       id="guide4240" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4" />
+  <rect
+     ry="0"
+     y="4.000001"
+     x="7.0000029"
+     height="40"
+     width="34"
+     id="rect4119"
+     style="fill:#ecf0f1;fill-opacity:1;stroke:none" />
+  <rect
+     style="fill:#7a4522;fill-opacity:1;stroke:none"
+     id="rect4141"
+     width="7.9999967"
+     height="40"
+     x="7.0000029"
+     y="4.000001"
+     ry="0" />
+  <path
+     style="fill:#2c89c4;fill-opacity:1;stroke:none"
+     d="M 33,4 41,4 41,15 37,12.00002 33,15 Z"
+     id="rect4153"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccccc" />
+  <path
+     d="m 36.62129,20.696441 c 0.245045,-0.529502 0.378713,-1.059001 0.378713,-1.565497 0,-0.897819 -0.378713,-1.634513 -1.136139,-2.210072 -0.801976,-0.62162 -1.938116,-0.920873 -3.40842,-0.920873 -0.289594,0 -0.60148,0.02299 -0.891085,0.04587 -2.472775,0.207185 -4.900992,1.174068 -7.284651,2.946758 -2.138621,1.588561 -3.586636,3.246129 -4.366341,5.018816 -0.601479,1.381313 -0.913364,2.624503 -0.913364,3.752569 0,2.555433 1.603962,4.09788 3.94307,4.213001 0.334154,0.02299 0.646038,0.02299 0.935644,0.02299 3.631184,0 6.905938,-1.358314 9.824256,-4.051828 1.893566,-1.749686 2.851489,-3.591432 2.851489,-5.502251 0,-0.437432 -0.06682,-0.874813 -0.178217,-1.266195 l 0.245045,-0.483282 z m -0.534651,-0.207184 c -0.623767,-1.174125 -1.715349,-1.956878 -3.274751,-2.348252 -0.846535,-0.207192 -1.559412,-0.299261 -2.138624,-0.299261 -0.646037,0 -1.314344,0.115123 -2.004942,0.345321 -0.02225,0.02299 -0.04458,0.04588 -0.04458,0.06906 0,0.04588 0.400993,0.09214 1.180698,0.115115 0.935644,0.02299 1.626232,0.0921 2.049503,0.207194 0.824256,0.253252 1.537124,0.644623 2.138613,1.19713 0.690599,0.621619 1.09158,1.358314 1.202968,2.210121 -0.512369,0.644625 -1.292077,1.427379 -2.339108,2.371256 l -1.247521,1.059002 c -0.512375,0.437431 -0.712871,0.644625 -0.579203,0.644625 0.02224,0 0.0891,-0.02299 0.178216,-0.04587 1.893567,-1.197132 3.230193,-2.233128 4.009899,-3.130957 -0.155937,1.588512 -1.180688,3.246079 -3.074255,4.995707 -2.829209,2.601503 -5.836637,3.821688 -8.977722,3.6375 -1.982674,-0.115125 -2.962877,-1.197132 -2.962877,-3.200059 0,-1.243191 0.400995,-2.67051 1.225249,-4.259072 1.113859,-2.187071 2.628714,-3.959762 4.544559,-5.34107 2.071777,-1.496443 4.210395,-2.233126 6.460395,-2.233126 1.626232,0 2.740094,0.460434 3.386141,1.381307 0.334154,0.483497 0.490091,0.966941 0.490091,1.496442 0,0.368211 -0.06681,0.736528 -0.222766,1.12791 z"
+     style="font-size:44.13499832px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2c89c4;fill-opacity:1;stroke:none;font-family:Alex Brush;-inkscape-font-specification:Alex Brush"
+     id="path4211-3"
+     inkscape:connector-curvature="0" />
+</svg>

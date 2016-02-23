@@ -1,0 +1,126 @@
+/****************
+ * content view *
+ ****************/
+.content-view.view {
+    background-color: @theme_base_color;
+}
+
+.content-view.view:prelight {
+    background-color: alpha(@theme_selected_bg_color, 0.6);
+}
+
+.content-view.view:selected,
+.content-view.view:active {
+    background-color: @theme_selected_bg_color;
+}
+
+.content-view.view:insensitive {
+    background-color: shade(@theme_base_color, 0.9);
+}
+
+GdMainIconView.content-view {
+    -GdMainIconView-icon-size: 40;
+}
+
+GtkIconView.content-view.check {
+    background-color: transparent;
+}
+
+GtkIconView.content-view.check:active {
+    background-color: transparent;
+}
+
+.content-view.view.check,
+.content-view.view.check:active {
+    background-color: transparent;
+}
+
+GtkIconView.content-view.check:prelight,
+GtkIconView.content-view.check:insensitive,
+GtkIconView.content-view.check:selected {
+    background-color: @theme_selected_bg_color;
+}
+
+.content-view-window {
+    border-width: 1px;
+    border-style: solid;
+    border-color: shade(@theme_base_color, 0.8);
+    border-radius: 0px;
+    background-color:@theme_base_color;
+    background-image: none;
+    color: @theme_text_color;
+}
+
+.content-view,
+.content-view GtkViewport {
+    background-color: @theme_base_color;
+    background-image: none;
+}
+
+.content-view * {
+    background-color: transparent;
+    background-image: none;
+}
+
+.content-view .entry {
+    background-color: @theme_base_color;
+    background-image: none;
+    color: @theme_text_color;
+}
+
+.content-view .button {
+    border-width: 1px;
+    border-style: solid;
+    border-color: shade(@theme_base_color, 0.8);
+    border-radius: 0px;
+    background-color: shade(@theme_base_color, 1.08);
+    background-image: none;
+    color: @theme_text_color;
+}
+
+.content-view .button:hover {
+    border-color: shade(@theme_base_color, 0.7);
+    background-color: shade(@theme_base_color, 1.10);
+    background-image: none;
+    color: @theme_selected_fg_color;
+}
+
+.content-view .button:active {
+    border-color: shade(@theme_base_color, 0.8);
+    background-color: shade(@theme_base_color, 0.95);
+    background-image: none;
+}
+
+.content-view .button:active:hover {
+    border-color: shade(@theme_base_color, 0.7);
+    color: shade(@theme_text_color, 0.7);
+}
+
+.content-view .button:insensitive {
+    background-color: shade(@theme_base_color, 0.9);
+    background-image: none;
+}
+
+.content-view .help_button * {
+    color: @theme_text_color;
+}   
+
+.content-view .toolbar {
+    -GtkWidget-window-dragging: true;
+
+    padding: 1px;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: shade(@theme_base_color, 0.8);
+    background-color: @theme_base_color;
+    background-image: none;
+}
+
+.content-view .menu {
+    padding: 0;
+    border-radius: 0;
+    border-style: none;
+    background-color: @menu_bg_color;
+    background-image: none;
+    color: @menu_fg_color; 
+}

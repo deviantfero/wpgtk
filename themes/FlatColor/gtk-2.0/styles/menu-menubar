@@ -1,0 +1,184 @@
+style "menu"="default"
+{
+xthickness=0
+ythickness=0
+
+  bg[NORMAL] = @text_color
+
+  engine "pixmap"
+  {
+    image
+    {
+      function			= BOX
+   #   recolorable    	= TRUE
+      detail				= "menu"
+      file				= "Menu-Menubar/menu.png"
+      border			= { 1, 1, 1, 1 }
+      stretch			= TRUE
+    }
+  }
+}
+
+style "menuitem"
+{
+ xthickness				= 0
+ ythickness            			= 4
+ fg[NORMAL] = @bg_color
+ text[NORMAL] = @bg_color
+	fg[PRELIGHT] = "#f65c6a"
+	fg[SELECTED] = "#f65c6a"
+	text[SELECTED] = "#f65c6a"
+	text[PRELIGHT]	= "#f65c6a"
+   engine "pixmap"
+  {
+    image
+    {
+      function			= BOX
+      recolorable		= TRUE
+      file				= "Menu-Menubar/menuitem.png"
+      border			= { 5, 5, 5, 5 }
+      stretch			= TRUE
+    }
+    image
+    {
+      function				= ARROW
+      recolorable			= TRUE
+      state					= NORMAL
+      overlay_file			= "Menu-Menubar/arrow-right.png"
+      overlay_stretch	= FALSE
+      arrow_direction	= RIGHT
+    }
+  image
+    {
+      function				= ARROW
+      recolorable			= TRUE
+      state					= PRELIGHT
+      overlay_file			= "Menu-Menubar/arrow-right-prelight.png"
+      overlay_stretch	= FALSE
+      arrow_direction	= RIGHT
+    }
+  image 
+	{
+		function			= HLINE
+	 	recolorable		= TRUE
+	 	file				= "Menu-Menubar/menuline.png"
+		border			= { 0, 0, 1, 0 }
+		stretch			= TRUE
+	}
+  }
+} 
+style "tearoffmenuitem"	= "menuitem"
+{
+        
+  engine "pixmap"
+  {
+    image
+    {
+      function				= ARROW
+      file					= "Arrows/arrow-left.png"
+      stretch				= TRUE
+      arrow_direction	= LEFT
+    }
+  }
+}
+
+style "menubar"		
+
+{
+	bg[NORMAL] = @text_color
+    text[NORMAL] = @bg_color
+	text[PRELIGHT] = @bg_color
+	text[SELECTED] = @bg_color
+	fg[NORMAL] = @bg_color
+	fg[PRELIGHT] = @bg_color
+	fg[SELECTED] = @bg_color
+  xthickness			= 1
+  ythickness			= 1
+	engine "pixmap"
+	{
+		image
+		{
+			function	= BOX
+			state = NORMAL
+			file		= "Menu-Menubar/menubar.png"
+			border	= { 0, 0, 0, 1 }
+			stretch	= TRUE
+    		}
+
+		image
+		{
+			function	= BOX
+			state = ACTIVE
+			file		= "Menu-Menubar/menubar.png"
+			border	= { 0, 0, 0, 1 }
+			stretch	= TRUE
+    		}
+
+		image
+		{
+			function	= BOX
+			state = INSENSITIVE
+			file		= "Menu-Menubar/menubar.png"
+			border	= { 0, 0, 0, 1 }
+			stretch	= TRUE
+    		}
+
+  image
+    {
+      function			= BOX
+      recolorable		= TRUE
+			state = PRELIGHT
+     file				= "Menu-Menubar/menubar-item.png"
+
+      border			= { 5, 5, 0, 0 }
+      stretch			= TRUE
+    }
+
+ 	}
+}
+
+style "menubar-item"		
+
+{
+    text[NORMAL] = @bg_color
+	text[PRELIGHT] = @bg_color
+	text[SELECTED] = @bg_color
+	fg[NORMAL] = @bg_color
+	fg[PRELIGHT] = @bg_color
+	fg[SELECTED] = @bg_color
+  xthickness			= 1
+  ythickness			= 1
+}
+
+style "chrome_menu"
+{
+        bg[NORMAL] = @text_color
+}
+
+style "chrome_menu_item"
+{
+        bg[NORMAL] = @text_color
+        fg[NORMAL] = @bg_color
+        bg[SELECTED] = @text_color
+        bg[INSENSITIVE] = shade (1.08, @text_color)
+        fg[SELECTED] = @bg_color
+        fg[INSENSITIVE] = shade (1.08, @text_color)
+        xthickness			= 4
+        ythickness			= 4
+
+        engine "murrine" {
+
+        }
+}
+
+widget_class "*<GtkSeparatorMenuItem>*" style "menuitem"
+class "GtkMenu"       			style "menu"
+widget_class "*<GtkMenu>*"              style "menu"
+widget_class "*<GtkMenuItem>*"		style "menuitem"
+class "GtkMenuItem"           		style "menuitem"
+class "GtkTearoffMenuItem"		style "menuitem"
+class "GtkMenuBar*" 		     	style "menubar"
+widget_class "*<GtkMenuBar>*"		style "menubar"
+widget_class "*<GtkMenuBar>.<GtkMenuItem>*"	style "menubar-item"
+widget_class "*<GtkCustomMenu>*" style "chrome_menu"
+widget_class "*<GtkCustomMenu>*<GtkCustomMenuItem>*" style "chrome_menu_item"

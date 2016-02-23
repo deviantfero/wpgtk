@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48+devel r12662"
+   sodipodi:docname="synapse-panel.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8.8946447"
+     inkscape:cx="34.236831"
+     inkscape:cy="24.065113"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="714"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     showguides="true">
+    <sodipodi:guide
+       position="9,39.000017"
+       orientation="30,0"
+       id="guide3272" />
+    <sodipodi:guide
+       position="9,9.0000174"
+       orientation="0,30"
+       id="guide3274" />
+    <sodipodi:guide
+       position="39,9.0000174"
+       orientation="-30,0"
+       id="guide3276" />
+    <sodipodi:guide
+       position="39,39.000017"
+       orientation="0,-30"
+       id="guide3278" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <rect
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3260"
+       width="30"
+       height="30"
+       x="9"
+       y="1013.3622" />
+    <rect
+       y="1032.3622"
+       x="9"
+       height="11"
+       width="11"
+       id="rect4080"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    <rect
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect4082"
+       width="15"
+       height="15"
+       x="24"
+       y="1013.3622" />
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="M 14.498047 28 C 11.618054 28.000171 9 30.620439 9 33.5 C 9 36.379561 11.618054 38.999829 14.498047 39 C 17.37804 39.000171 20 36.379882 20 33.5 C 20 30.620118 17.37804 27.999829 14.498047 28 z M 14.498047 30 C 16.33077 29.999891 18 31.667348 18 33.5 C 18 35.332652 16.33077 37.000109 14.498047 37 C 12.665324 36.999891 11 35.332448 11 33.5 C 11 31.667552 12.665324 30.000109 14.498047 30 z "
+       transform="translate(0,1004.3622)"
+       id="path4084" />
+    <path
+       d="m 15.5,1042.3622 a 1.0006928,1.0000308 0 1 1 0,0 1.0006928,1.0000308 0 1 1 0,0 z"
+       sodipodi:ry="1.0000308"
+       sodipodi:rx="1.0006928"
+       sodipodi:cy="1042.3622"
+       sodipodi:cx="14.499307"
+       id="path4086"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       sodipodi:type="arc" />
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="M 31.496094 9 C 27.56883 9.0002328 24 12.573326 24 16.5 C 24 20.426674 27.56883 23.999767 31.496094 24 C 35.423357 24.000233 39 20.427112 39 16.5 C 39 12.572888 35.423357 8.9997672 31.496094 9 z M 31.498047 13 C 33.33077 12.999891 35 14.667348 35 16.5 C 35 18.332652 33.33077 20.000109 31.498047 20 C 29.665324 19.999891 28 18.332448 28 16.5 C 28 14.667552 29.665324 13.000109 31.498047 13 z "
+       transform="translate(0,1004.3622)"
+       id="path4091" />
+    <path
+       d="m 33.500001,1026.3622 a 2.0013857,2.0000615 0 1 1 0,0 2.0013857,2.0000615 0 1 1 0,0 z"
+       sodipodi:ry="2.0000615"
+       sodipodi:rx="2.0013857"
+       sodipodi:cy="1026.3622"
+       sodipodi:cx="31.498615"
+       id="path4093"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       sodipodi:type="arc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="path4100"
+       sodipodi:cx="14.499307"
+       sodipodi:cy="1033.3622"
+       sodipodi:rx="1.0006928"
+       sodipodi:ry="1.0000308"
+       d="m 15.5,1033.3622 a 1.0006928,1.0000308 0 1 1 0,0 1.0006928,1.0000308 0 1 1 0,0 z" />
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="M 23.994141 9 C 20.066877 9.0002328 16.165567 10.617701 13.390625 13.394531 C 10.615683 16.171361 9 20.073326 9 24 C 9 26.093706 9.4708154 28.175049 10.320312 30.087891 C 11.203717 29.028433 12.436489 28.25883 13.792969 28.058594 C 13.280256 26.769526 13 25.387827 13 24 C 13 21.120439 14.183793 18.258999 16.21875 16.222656 C 18.253707 14.186314 21.114147 13.000171 23.994141 13 C 24.307822 12.999981 24.621345 13.019216 24.933594 13.046875 C 25.738505 11.610591 27.006235 10.421131 28.488281 9.7109375 C 27.035764 9.2508728 25.518145 8.9999097 23.994141 9 z M 38.289062 19.505859 C 37.578844 20.988882 36.389954 22.256334 34.953125 23.0625 C 34.98074 23.374082 35 23.686981 35 24 C 35 26.879882 33.812945 29.742944 31.775391 31.779297 C 29.737836 33.81565 26.874134 35.000171 23.994141 35 C 22.608132 34.999918 21.228527 34.719043 19.941406 34.207031 C 19.740682 35.562893 18.969567 36.796205 17.910156 37.679688 C 19.821517 38.528836 21.901578 38.999876 23.994141 39 C 27.921404 39.000233 31.825033 37.384266 34.603516 34.607422 C 37.381999 31.830578 39 27.927112 39 24 C 39 22.476013 38.749656 20.958265 38.289062 19.505859 z "
+       transform="translate(0,1004.3622)"
+       id="path4115" />
+  </g>
+</svg>

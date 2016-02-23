@@ -1,0 +1,144 @@
+/*******
+ * CSD *
+ *******/
+.titlebar {
+    border-radius: 0 0 0 0;
+    background-image: none;
+    background-color: @menubar_bg_color;
+    color: @menubar_fg_color;
+}
+
+.titlebar:insensitive {
+    border-radius: 0 0 0 0;
+    background-image: none;
+    background-color: @menubar_bg_color;
+    color: @menubar_fg_color;
+    text-shadow: none;
+}
+
+/* this is the default titlebar that is added by GTK
+ * when client-side decorations are in use and the application
+ * did not set a custom titlebar.
+ */
+.titlebar.default-decoration {
+    border: none;
+    box-shadow: none;
+    padding: 2px 2px;
+}
+
+.titlebar.default-decoration {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.titlebar .title {
+    font: bold;
+}
+
+.titlebar:backdrop {
+    background-image: none;
+    background-color: @menubar_bg_color;
+    color: mix(@menubar_fg_color, @wm_bg, 0.4);
+    text-shadow: none;
+}
+
+.titlebar:backdrop:insensitive {
+    background-image: none;
+    background-color: @menubar_bg_color;
+    color: mix(@menubar_fg_color, @wm_bg, 0.4);
+    text-shadow: none;
+}
+
+.titlebar .titlebutton {
+    padding: 6px 6px;
+    border-style: none;
+    background: none;
+    color: @menubar_fg_color;
+    icon-shadow: none;
+}
+
+.titlebar .titlebutton:hover,
+.titlebar .titlebutton:hover:focus {
+    background: none;
+    color: @menu_selected_fg_color;
+}
+
+.titlebar .titlebutton:active,
+.titlebar .titlebutton:active:hover {
+    background: none;
+    color: @menu_selected_fg_color;
+    box-shadow: none;
+}
+
+/*
+.titlebar .right .titlebutton:first-child {
+    border-left: 1px solid shade(wm_bg, 0.9);
+}
+
+.titlebar .right .titlebutton:last-child {
+}
+
+.titlebar .left .titlebutton:last-child {
+    border-right: 1px solid shade(wm_bg, 0.9);
+}
+
+.titlebar .left .titlebutton:first-child {
+}
+*/
+
+.titlebar .titlebutton:backdrop {
+    background-image: none;
+    color: shade(@menubar_fg_color, 1.75);
+    icon-shadow: none;
+}
+
+.titlebar .button,
+.maximized .header-bar .button {
+    padding: 6px 6px;
+    background-color: @wm_bg; /*makes it practically transparent*/
+    color: @wm_title_focused;
+}
+
+.titlebar .button:hover,
+.maximized .header-bar .button:hover {
+    background-color: @wm_bg;
+    color: @menu_selected_fg_color;
+}
+
+.titlebar .button:active:hover,
+.maximized .header-bar .button:active:hover {
+    background-color: @wm_bg;
+    color: shade(@menu_selected_fg_color, 0.87);
+}
+
+.titlebar .button:active,
+.titlebar .button:checked,
+.maximized .header-bar .button:active,
+.maximized .header-bar .button:checked {
+    background-color: @wm_bg;
+    color: @menu_selected_fg_color;
+}
+
+.titlebar .separator,
+.maximized .header-bar .separator {
+    border-color: shade(@menubar_bg_color, 0.87);
+    color: shade(@menubar_bg_color, 0.87);
+}
+
+.window-frame {
+    border: none;
+    /*box-shadow: 0 3px 7px 1px alpha(black, 0.7),
+                0 0 0 1px mix(shade(wm_bg, 0.7), @wm_title_focused, 0.21);
+
+    this is used for the resize cursor area */
+
+    box-shadow: 0 2px 6px alpha(@dark_shadow, 0.75);
+
+    margin: 10px;
+}
+
+.window-frame:backdrop {
+    box-shadow: 0 3px 4px 1px alpha(black, 0.4);
+}
+

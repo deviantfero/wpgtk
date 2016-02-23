@@ -1,0 +1,31 @@
+/***********
+* calendar *
+************/
+GtkCalendar {
+    padding: 2px;
+}
+
+GtkCalendar:inconsistent {
+    color: mix(@theme_fg_color, @theme_bg_color, 0.5);
+}
+
+GtkCalendar.view,
+GtkCalendar.header,
+GtkCalendar.button,
+GtkCalendar.button:hover,
+GtkCalendar.button:insensitive {
+    border-width: 0;
+    background-color: transparent;
+    background-image: none;
+}
+
+.highlight,
+GtkCalendar.highlight {
+    border-width: 0;
+    background-color: transparent;
+    color: @theme_selected_bg_color;
+}
+
+GtkCalendar.day.marked {
+	color: @theme_selected_bg_color;
+}

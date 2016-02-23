@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.4pt" height="38.4pt">
+<defs/>
+<g id="layer1">
+  <path id="shape01" transform="matrix(0.213788 -0.97688 0.97688 0.213788 35.8575 35.3029)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260185242" d="M0 0.0487904C0.0243016 3.49564 2.56453 6.27189 5.68175 6.25846C8.79897 6.24502 11.3196 3.44695 11.3196 -1.10127e-17"/>
+  <path id="shape11" transform="matrix(-0.213788 -0.97688 -0.97688 0.213788 11.8813 35.0611)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M0 0.0487904C0.0243016 3.49564 2.56453 6.27189 5.68175 6.25846C8.79897 6.24502 11.3196 3.44695 11.3196 4.22668e-16"/>
+  <rect id="shape011" transform="matrix(0.977366 -0.211555 0.211555 0.977366 8.97943 21.9192)" fill="#001424" fill-rule="evenodd" stroke="#34495e" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260185242" width="4.77478174948pt" height="12.61406891887pt" rx="1.94664179017pt" ry="1.85707125750pt"/>
+  <rect id="shape1" transform="matrix(-0.977366 -0.211555 -0.211555 0.977366 38.7744 22.1555)" fill="#001424" fill-rule="evenodd" stroke="#34495e" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" width="4.83157043255pt" height="12.61406891887pt" rx="1.96979409943pt" ry="1.85707125750pt"/>
+  <path id="shape02" transform="matrix(-1 0 0 -1 43.1291 27.4536)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M0.552262 0L3.75691 2.90676C2.58423 9.4809 7.83809 20.3641 19.4936 20.8308C30.0515 20.3381 36.0693 11.7586 34.6835 2.93719L38.0164 0.0859269C40.1892 11.8464 33.9832 23.8629 19.9797 24.4232C3.05163 24.5195 -1.78742 7.49045 0.552262 0Z"/>
+ </g>
+</svg>

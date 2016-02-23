@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="48"
+   height="48"
+   id="svg2"
+   style="display:inline"
+   inkscape:version="0.48+devel r"
+   sodipodi:docname="gpm-primary-080-charging.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="668"
+     id="namedview26"
+     showgrid="true"
+     inkscape:zoom="14.454958"
+     inkscape:cx="18.56979"
+     inkscape:cy="24.053539"
+     inkscape:window-x="-2"
+     inkscape:window-y="23"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4104" />
+    <sodipodi:guide
+       position="9,39"
+       orientation="30,0"
+       id="guide4108" />
+    <sodipodi:guide
+       position="9,9"
+       orientation="0,30"
+       id="guide4110" />
+    <sodipodi:guide
+       position="39,9"
+       orientation="-30,0"
+       id="guide4112" />
+    <sodipodi:guide
+       position="39,39"
+       orientation="0,-30"
+       id="guide4114" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4081">
+      <stop
+         id="stop4083"
+         style="stop-color:#aaaaaa;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop4085"
+         style="stop-color:#f0f0f0;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       x1="39"
+       y1="72"
+       x2="39.196381"
+       y2="24.266857"
+       id="linearGradient3763"
+       xlink:href="#linearGradient4081"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       x1="44"
+       y1="66"
+       x2="44"
+       y2="30.942904"
+       id="linearGradient3636"
+       xlink:href="#linearGradient4081"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient4081-3">
+      <stop
+         offset="0"
+         style="stop-color:#aaaaaa;stop-opacity:1"
+         id="stop4083-2" />
+      <stop
+         offset="1"
+         style="stop-color:#f0f0f0;stop-opacity:1"
+         id="stop4085-3" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3295-9-7">
+      <stop
+         offset="0"
+         style="stop-color:#559829;stop-opacity:1"
+         id="stop3297-2-1" />
+      <stop
+         offset="1"
+         style="stop-color:#86c837;stop-opacity:1"
+         id="stop3299-0-9" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(0,-74)"
+       gradientUnits="userSpaceOnUse"
+       xlink:href="#linearGradient3295-9-7"
+       id="linearGradient2891"
+       y2="28"
+       x2="39"
+       y1="68"
+       x1="39" />
+    <linearGradient
+       id="linearGradient4081-0">
+      <stop
+         offset="0"
+         style="stop-color:#aaaaaa;stop-opacity:1"
+         id="stop4083-4" />
+      <stop
+         offset="1"
+         style="stop-color:#f0f0f0;stop-opacity:1"
+         id="stop4085-8" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3295-9-7-1">
+      <stop
+         offset="0"
+         style="stop-color:#559829;stop-opacity:1"
+         id="stop3297-2-1-0" />
+      <stop
+         offset="1"
+         style="stop-color:#86c837;stop-opacity:1"
+         id="stop3299-0-9-4" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4081-8">
+      <stop
+         offset="0"
+         style="stop-color:#aaaaaa;stop-opacity:1"
+         id="stop4083-0" />
+      <stop
+         offset="1"
+         style="stop-color:#f0f0f0;stop-opacity:1"
+         id="stop4085-5" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4081-3-4">
+      <stop
+         id="stop4083-2-9"
+         style="stop-color:#aaaaaa;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop4085-3-5"
+         style="stop-color:#f0f0f0;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3295-9-7-2">
+      <stop
+         id="stop3297-2-1-06"
+         style="stop-color:#559829;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop3299-0-9-2"
+         style="stop-color:#86c837;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     style="opacity:1;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:2.79999995;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.55026455"
+     d="M 24 9 C 15.69 9 9 15.69 9 24 C 9 32.31 15.69 39 24 39 C 32.31 39 39 32.31 39 24 C 39 15.69 32.31 9 24 9 z M 24 13 C 30.094 13 35 17.906 35 24 C 35 30.094 30.094 35 24 35 C 17.906 35 13 30.094 13 24 C 13 17.906 17.906 13 24 13 z M 18 18 L 18 23 L 20 23 L 20 18 L 18 18 z M 28 18 L 28 23 L 30 23 L 30 18 L 28 18 z M 21.5 29 L 21.5 31 L 26.5 31 L 26.5 29 L 21.5 29 z "
+     id="rect4116" />
+  <g
+     style="display:inline"
+     id="g4293">
+    <path
+       sodipodi:nodetypes="csssccssscc"
+       inkscape:connector-curvature="0"
+       id="path4219"
+       d="M 10.478516,17.519531 C 9.5405101,19.48128 9,21.672791 9,24 c 0,8.31 6.69,15 15,15 8.31,0 15,-6.69 15,-15 0,-2.327209 -0.54051,-4.51872 -1.478516,-6.480469 l -4.634765,0 C 34.211321,19.336081 35,21.569809 35,24 35,30.094 30.094,35 24,35 17.906,35 13,30.094 13,24 c 0,-2.430191 0.788679,-4.663919 2.113281,-6.480469 z"
+       style="opacity:1;fill:#2ecc71;fill-opacity:1;stroke:none;stroke-width:2.79999995;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.55026455" />
+  </g>
+</svg>

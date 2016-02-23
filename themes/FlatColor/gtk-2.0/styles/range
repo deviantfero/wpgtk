@@ -1,0 +1,36 @@
+style "range"			= "default"
+{
+	xthickness = 0
+	ythickness = 0
+	bg[NORMAL] = @bg_color
+	bg[ACTIVE] = shade (0.96, @bg_color)
+	bg[SELECTED] = @selected_fg_color
+	bg[INSENSITIVE] = shade (0.95, @bg_color)        
+  engine "murrine"
+  {
+		animation = FALSE
+		border_shades = { 0.747, 0.747 } # gradient to draw on border
+		contrast = 0.6 # overal contrast with borders
+		focusstyle = 1 # 0 = none, 1 = grey dotted, 2 = colored with fill, 3 = colored glow
+		glazestyle = 0 # 0 = flat highlight, 1 = curved highlight, 2 = concave, 3 = top curved highlight, 4 = beryl highlight
+		glowstyle = 0 # 0 = glow on top, 1 = glow on bottom, 2 = glow on top and bottom, 3 = glow on middle vertically, 4 = glow on middle horizontally, 5 = glow on all sides
+		glow_shade = 1.0 # amount of glow
+		gradient_shades = { 0.747, 0.747, 0.747, 0.747 } # gradient to draw on widgets
+		highlight_shade = 1.0 # amount of highlight
+		lightborder_shade = 1.0 # amount of inset light border
+		lightborderstyle = 0 # 0 = lightborder on top side, 1 = lightborder on all sides
+		progressbarstyle = 0 # 0 = none, 1 = diagonal striped, 2 = vertical striped
+		reliefstyle = 0 # 0 = flat, 1 = inset, 2 = shadow, 3 = shadow with gradient, 4 = stronger shadow with gradient
+		roundness = 8 # roundness of widgets
+		scrollbarstyle = 0 # 0 = none, 1 = circles, 2 = handles, 3 = diagonal stripes, 4 = diagonal stripes and handles, 5 = horizontal stripes, 6 = horizontal stripes and handles
+		sliderstyle = 0 # 0 = none, 1 = handles
+		stepperstyle = 1 # 0 = standard, 1 = integrated stepper handles
+		toolbarstyle = 0 # 0 = flat, 1 = glassy, 2 = gradient
+		trough_border_shades = { 1.0, 1.0 }
+  }
+}
+
+class "GtkScale" style "range"
+class "GtkVScale" style "range"
+class "GtkHScale" style "range"
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.4pt" height="38.4pt">
+<defs/>
+<g id="layer1">
+  <rect id="shape0" transform="matrix(0.619604 -0.790086 0.665706 0.751773 37.2299 23.268)" fill="#c4cbcf" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260185242" width="5.15591509765pt" height="5.00469758173pt"/>
+  <rect id="shape1" transform="translate(4.15606, 15.4558)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260185242" width="7.58650733057pt" height="12.53877551020pt"/>
+  <path id="shape01" transform="translate(36.5387, 22.8391)" fill="#a8b2b8" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M8.84124 0.0481025L0 0L4.86797 5.13735Z"/>
+  <rect id="shape2" transform="translate(13.5304, 17.8503)" fill="#c4cbcf" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" width="12.51116582920pt" height="8.35920217687pt"/>
+  <rect id="shape3" transform="translate(29.1481, 19.2795)" fill="#f1c40f" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" width="8.21871627479pt" height="6.07255533066pt"/>
+  <rect id="shape4" transform="translate(32.1363, 17.8503)" fill="#c4cbcf" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" width="3.46103169170pt" height="8.35920217687pt"/>
+  <rect id="shape21" transform="translate(13.5091, 22.8027)" fill="#a8b2b8" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" width="12.51116582920pt" height="4.35374149660pt"/>
+  <rect id="shape41" transform="translate(32.115, 22.8027)" fill="#a8b2b8" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" width="3.46103169170pt" height="4.35374149660pt"/>
+ </g>
+</svg>

@@ -1,0 +1,27 @@
+.header-bar,
+.header-bar:insensitive {
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: shade(@menubar_bg_color, 0.90);
+
+	background-color: @menubar_bg_color;
+    padding: 6px 6px;
+}
+
+.header-bar .button.text-button {
+	padding: 6px 6px;
+}
+
+.header-bar .button.image-button {
+	padding: 6px 6px;
+}
+
+.header-bar .title {
+	font: Bold 10;
+    color: @menubar_fg_color;
+}
+
+.header-bar .subtitle {
+	font: 9;
+    color: @menubar_fg_color;
+}

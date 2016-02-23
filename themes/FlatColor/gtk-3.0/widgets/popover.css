@@ -1,0 +1,87 @@
+/************
+ * popovers *
+ ************/
+GtkPopover {
+    margin: 10px;
+    padding: 2px;
+    border-radius: 1px;
+    border-color: shade(@theme_bg_color, 0.8);
+    border-width: 1px;
+    border-style: solid;
+    background-clip: border-box;
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+    box-shadow: 0 0 2px alpha(black, 0.75);
+}
+
+GtkPopover.osd {
+    box-shadow: 0 2px 7px 3px alpha(black, 0.5);
+}
+
+.popover .button {
+    background-color: transparent;
+    border: solid 1px @theme_bg_color;
+}
+
+GtkPopover > .list,
+GtkPopover > .view,
+GtkPopover > .toolbar {
+    background-color: transparent;
+}
+
+GtkPopover.osd > .toolbar .button {
+    border-radius: 0;
+    border-width: 0;
+    background-image: none;
+    background-color: transparent;
+}
+
+GtkPopover .separator {
+    border: 0;
+    background-color: transparent;
+    color: alpha(currentColor, 0.5);
+    font-size: 80%;
+    font-weight: bold;
+}
+
+GtkPopover .list-row.button {
+    color: @theme_fg_color;
+}
+
+GtkPopover .list-row.button:hover {
+    transition: color 200ms ease-in;
+    color: shade(@theme_selected_fg_color, 1.15);
+    background-color: transparent;
+}
+
+GtkPopover .list-row.button:active,
+GtkPopover .list-row.button:checked,
+GtkPopover .list-row.button:active:hover,
+GtkPopover .list-row.button:checked:hover {
+    transition: color 200ms ease-in;
+    color: shade(@theme_selected_fg_color, 0.92);
+    background-color: transparent;
+    border: none;
+}
+
+GtkModelButton.button,
+GtkModelButton.button:active,
+GtkModelButton.button:checked,
+GtkModelButton.button:insensitive,
+GtkModelButton.button:active:insensitive {
+    background-color: @theme_selected_bg_color;
+    background-image: none;
+    box-shadow: none;
+    color: @theme_fg_color;
+    border: none;
+}
+
+GtkModelButton.button:active:hover,
+GtkModelButton.button:checked:hover,
+GtkModelButton.button:hover,
+GtkModelButton.button:selected {
+    background-color: @theme_selected_bg_color;
+    background-image: none;
+    color: @theme_selected_fg_color;
+    border: none;
+}

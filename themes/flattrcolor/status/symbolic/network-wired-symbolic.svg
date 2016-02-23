@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="network-wired-symbolic.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.95535"
+     inkscape:cx="-6.2890904"
+     inkscape:cy="10.363141"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="839"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3013"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       position="9,39.000017"
+       orientation="30,0"
+       id="guide3265" />
+    <sodipodi:guide
+       position="9,9.0000174"
+       orientation="0,30"
+       id="guide3267" />
+    <sodipodi:guide
+       position="39,9.0000174"
+       orientation="-30,0"
+       id="guide3269" />
+    <sodipodi:guide
+       position="39,39.000017"
+       orientation="0,-30"
+       id="guide3271" />
+    <sodipodi:guide
+       position="9,20.000017"
+       orientation="11,0"
+       id="guide3352" />
+    <sodipodi:guide
+       position="9,9.0000174"
+       orientation="0,11"
+       id="guide3354" />
+    <sodipodi:guide
+       position="20,9.0000174"
+       orientation="-11,0"
+       id="guide3356" />
+    <sodipodi:guide
+       position="20,20.000017"
+       orientation="0,-11"
+       id="guide3358" />
+    <sodipodi:guide
+       position="28,39.000017"
+       orientation="11,0"
+       id="guide3366" />
+    <sodipodi:guide
+       position="28,28.000017"
+       orientation="0,11"
+       id="guide3368" />
+    <sodipodi:guide
+       position="39,28.000017"
+       orientation="-11,0"
+       id="guide3370" />
+    <sodipodi:guide
+       position="39,39.000017"
+       orientation="0,-11"
+       id="guide3372" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <path
+       style="fill:#bebebd;fill-opacity:1;fill-rule:evenodd;stroke:none;opacity:1"
+       d="m 3.8314531,1042.9004 c -1.5595971,1.5596 -1.5595971,4.0707 0,5.6303 1.5595964,1.5597 4.0707167,1.5597 5.6303133,0 l 2.6274796,-2.6274 c 1.559597,-1.5596 1.559597,-4.0707 0,-5.6304 -1.559597,-1.5595 -4.0707164,-1.5595 -5.6303135,0 l -2.6274794,2.6275 z m 1.5006837,1.5696 2.6963927,-2.6963 c 0.7089076,-0.7089 1.850392,-0.7082 2.5593005,0 0.708908,0.7088 0.708907,1.8496 0,2.5586 l -2.696393,2.6963 c -0.7089079,0.7089 -1.8496589,0.7089 -2.558567,0 -0.7089078,-0.7089 -0.709641,-1.8504 -7.338e-4,-2.5593 z"
+       id="rect3336"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#bebebd;fill-opacity:1;fill-rule:evenodd;stroke:none;opacity:1"
+       id="rect3346"
+       width="2.1233242"
+       height="6.1348143"
+       x="743.0708"
+       y="-743.07379"
+       ry="0"
+       transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+    <rect
+       transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)"
+       ry="0"
+       y="-728.81067"
+       x="743.0708"
+       height="6.1348143"
+       width="2.1233242"
+       id="rect3360"
+       style="fill:#bebebd;fill-opacity:1;fill-rule:evenodd;stroke:none;opacity:1" />
+  </g>
+</svg>

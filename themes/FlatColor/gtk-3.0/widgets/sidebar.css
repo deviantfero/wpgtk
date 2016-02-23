@@ -1,0 +1,28 @@
+/***********
+ * sidebar *
+ ***********/
+.sidebar,
+.sidebar.view,
+.sidebar .view {
+    background-color: shade(@theme_bg_color, 0.98);
+    font-weight: bold;
+    color: @theme_fg_color;
+}
+
+.sidebar .image:selected {
+    color: @theme_fg_color;
+}
+
+.sidebar .image:selected:focus,
+.sidebar .image:selected:hover {
+    color: @theme_selected_fg_color;
+}
+
+.sidebar .cell:selected,
+.sidebar .cell:selected:focus {
+    color: @theme_selected_fg_color;
+}
+
+.sidebar .frame {
+    border-width: 0;
+}

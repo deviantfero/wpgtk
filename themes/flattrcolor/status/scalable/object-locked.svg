@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48+devel r12859"
+   sodipodi:docname="object-locked.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.0341167"
+     inkscape:cx="15.715966"
+     inkscape:cy="36.392845"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="673"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <g
+       id="layer1-6"
+       inkscape:label="Capa 1"
+       transform="translate(0.00242376,4.8138809e-5)">
+      <rect
+         ry="0"
+         y="1013.3622"
+         x="9"
+         height="30"
+         width="30"
+         id="rect3260"
+         style="fill:none;stroke:none" />
+      <rect
+         style="fill:#f1c40f;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="rect3272"
+         width="22"
+         height="15"
+         x="13"
+         y="1028.3622"
+         ry="0" />
+      <ellipse
+         style="fill:none;stroke:none"
+         id="path3282"
+         cx="12.497575"
+         cy="1028.3622"
+         rx="3.502425"
+         ry="3.5001078"
+         d="m 16,1028.3622 a 3.502425,3.5001078 0 0 1 -3.502425,3.5001 3.502425,3.5001078 0 0 1 -3.5024251,-3.5001 3.502425,3.5001078 0 0 1 3.5024251,-3.5001 A 3.502425,3.5001078 0 0 1 16,1028.3622 Z" />
+      <ellipse
+         id="path3274"
+         style="fill:none;stroke:none"
+         cx="10.998614"
+         cy="1028.3622"
+         rx="2.0013857"
+         ry="2.0000615"
+         d="m 13,1028.3622 a 2.0013857,2.0000615 0 0 1 -2.001386,2 2.0013857,2.0000615 0 0 1 -2.0013854,-2 2.0013857,2.0000615 0 0 1 2.0013854,-2.0001 A 2.0013857,2.0000615 0 0 1 13,1028.3622 Z" />
+      <ellipse
+         id="path3280"
+         style="fill:none;stroke:none"
+         cx="35.497578"
+         cy="1028.3622"
+         rx="3.502425"
+         ry="3.5001078"
+         d="m 39.000003,1028.3622 a 3.502425,3.5001078 0 0 1 -3.502425,3.5001 3.502425,3.5001078 0 0 1 -3.502425,-3.5001 3.502425,3.5001078 0 0 1 3.502425,-3.5001 3.502425,3.5001078 0 0 1 3.502425,3.5001 z" />
+      <ellipse
+         style="fill:none;stroke:none"
+         id="path3276"
+         cx="36.998615"
+         cy="1028.3622"
+         rx="2.0013857"
+         ry="2.0000615"
+         d="m 39.000001,1028.3622 a 2.0013857,2.0000615 0 0 1 -2.001386,2 2.0013857,2.0000615 0 0 1 -2.001385,-2 2.0013857,2.0000615 0 0 1 2.001385,-2.0001 2.0013857,2.0000615 0 0 1 2.001386,2.0001 z" />
+      <path
+         id="rect3278"
+         transform="translate(0,1004.3622)"
+         d="M 23.5,9 C 19.345,9 16,12.345 16,16.5 l 0,7.5 4,0 0,-6.980469 0.002,0 C 20.001921,17.012848 20,17.006691 20,17 c 0,-2.216 1.784002,-4 4,-4 2.215998,0 4,1.784 4,4 0,0.0067 -0.0019,0.01285 -0.002,0.01953 l 0.002,0 0,6.98047 4,0 0,-7.5 C 32,12.345 28.655,9 24.5,9 l -1,0 z"
+         style="fill:#95a5a6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <ellipse
+         id="path3286"
+         style="fill:none;stroke:none"
+         cx="23.99861"
+         cy="1015.3622"
+         rx="2.0013857"
+         ry="2.0000615"
+         d="m 25.999995,1015.3622 a 2.0013857,2.0000615 0 0 1 -2.001385,2 2.0013857,2.0000615 0 0 1 -2.001386,-2 2.0013857,2.0000615 0 0 1 2.001386,-2.0001 2.0013857,2.0000615 0 0 1 2.001385,2.0001 z" />
+    </g>
+  </g>
+</svg>

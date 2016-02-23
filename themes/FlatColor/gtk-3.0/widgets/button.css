@@ -1,0 +1,308 @@
+/**********
+ * button *
+ **********/
+
+.button {
+    -GtkWidget-focus-padding: 1;
+    -GtkWidget-focus-line-width: 0;
+
+    padding: 4px 12px;
+}
+
+.button *{
+	transition: 150ms ease-in;
+}
+
+BackgroundBox .button {
+    color: @theme_text_color;
+    border-style: solid;
+    border-width: 1px;
+}
+
+BackgroundBox .button:hover {
+    transition: none; /*stop weird glitchiness*/
+    color: @theme_selected_fg_color;
+    border-color: shade(@theme_bg_color, 0.87);
+    background-color: @theme_selected_bg_color;
+}
+
+BackgroundBox .button:active {
+    transition: 100ms linear;
+    color: shade(@theme_selected_fg_color, 1.0);
+    background-color: @theme_selected_bg_color;
+    border-color: @theme_fg_color;
+}
+
+.button {
+    border-style: none;
+    border-radius: 0;
+    background-color: @button_bg_color;
+    background-image: none;
+    color: @theme_text_color;
+}
+
+.button:hover {
+    transition: 150ms ease-in;
+    background-color: shade(@theme_selected_bg_color, 0.68);
+    background-image: none;
+}
+
+.button:active,
+.button:checked {
+    background-color: shade(@theme_selected_bg_color, 0.9);
+    background-image: none;
+    color: shade(mix(#ff0000, @theme_selected_fg_color, 0.75), 1.35);
+}
+
+.button:active:hover {
+    background-color: shade(@theme_selected_bg_color, 1.00);
+    background-image: none;
+    color: @theme_fg_color;
+}
+
+.button:active:insensitive {
+    color: shade (@button_bg_color, 1.15);
+}
+
+/* default button */
+.button.default {
+    border-color: shade(@theme_selected_fg_color, 0.8);
+    background-color: shade(@theme_selected_fg_color, 1.08);
+    color: @theme_base_color;
+}
+
+.button.default:hover {
+    border-color: shade(@theme_selected_fg_color, 0.7);
+    background-color: @theme_selected_fg_color;
+    color: shade(@theme_base_color, 0.9);
+}
+
+.button.default:active {
+    border-color: shade(@theme_selected_fg_color, 0.8);
+    background-color: shade(@theme_selected_fg_color, 0.95);
+    color: @theme_base_color;
+}
+
+.button.default:active:hover {
+    border-color: shade(@theme_selected_fg_color, 0.7);
+    background-color: shade(@theme_selected_fg_color, 0.97);
+    color: shade(@theme_base_color, 0.9);
+}
+
+/*Fix for Evince*/
+
+EvSidebar GtkToggleButton.button { 
+    color: @theme_fg_color;
+    background-color: @theme_bg_color;
+}
+
+
+EvSidebar GtkToggleButton.button:hover {
+    color: shade(@theme_selected_fg_color, 1.15);
+    background-color: @theme_bg_color;
+}
+
+EvSidebar GtkToggleButton.button:active {
+    color: @theme_selected_fg_color;
+    background-color: @theme_bg_color;
+}
+
+/****************
+* "flat" button *
+*****************/
+
+.button.flat,
+.action-bar .button,
+.osd .button,
+.osd.button,
+NautilusProgressInfoWidget .button {
+    border: none;
+    background-color: transparent;
+    background-image: none;
+    color: @theme_fg_color;
+}
+
+.button.flat:hover,
+.action-bar .button:hover,
+NautilusProgressInfoWidget .button:hover {
+    transition: color 150ms ease-in;
+    border: none;
+    color: shade(@theme_selected_fg_color, 1.15);
+}
+
+.toolbar .button.flat,
+.toolbar .button.flat:focus {
+    transition: all 150ms linear;
+    border: solid 1px @toolbar_bg_color;
+    background-color: @toolbar_bg_color;
+}
+
+.toolbar .button.flat:hover {
+    transition: all 150ms linear;
+    background-color: shade(@toolbar_bg_color, 0.96);
+    border: solid 1px @toolbar_bg_color;
+    box-shadow: inset 1px 1px shade(@toolbar_bg_color, 0.76),
+                inset -1px -1px shade(@toolbar_bg_color, 0.76);
+    color: @theme_text_color;
+}
+
+.button.flat:active,
+.button.flat:active:focus,
+.button.flat:active:checked,
+.button.flat:active:checked:focus,
+.action-bar .button:active,
+.action-bar .button:active:focus,
+.action-bar .button:checked,
+.action-bar .button:checked:focus,
+NautilusProgressInfoWidget .button:active,
+NautilusProgressInfoWidget .button:active:focus,
+NautilusProgressInfoWidget .button:checked
+NautilusProgressInfoWidget .button:checked:focus {
+    transition: color 150ms ease-in;
+    border: none;
+    color: shade(@theme_selected_fg_color, 0.97);
+    background-color: transparent;
+}
+
+.button.flat:active:hover,
+.action-bar .button:active:hover,
+NautilusProgressInfoWidget .button:active:hover {
+    transition: color 150ms ease-in;
+    border: none;
+    color: shade (@theme_selected_fg_color, 1.15);
+}
+
+.toolbar .button.flat:active,
+.toolbar .button.flat:active:focus,
+.toolbar .button.flat:checked,
+.toolbar .button.flat:active:checked:focus,
+.toolbar .button.flat:active:hover {
+    transition: all 150ms linear;
+    border: solid 1px @toolbar_bg_color;
+    box-shadow: inset 1px 1px shade(@toolbar_bg_color, 0.76),
+                inset -1px -1px shade(@toolbar_bg_color, 0.76);
+    background-color: shade(@toolbar_bg_color, 0.92);
+    color: @theme_text_color;
+}
+
+.button.flat:insensitive,
+.toolbar .button.flat:insensitive,
+.action-bar .button:insensitive,
+NautilusProgressInfoWidget .button:insensitive {
+    transition: color 150ms ease-in;
+    border: none;
+    color: shade (@theme_bg_color, 0.5);
+}
+
+/****************
+* linked button *
+*****************/
+
+/* middle button */
+.linked .entry,
+.linked .button,
+.linked .button:active,
+.linked .button:active:hover,
+.linked .button:focus,
+.linked .button:focus:active,
+.linked .button:insensitive {
+    border-width: 1px;
+    border-right-width: 0;
+    border-radius: 0;
+    
+}
+
+/* leftmost button */
+.linked .entry:first-child,
+.linked .button:first-child,
+.linked .button:active:first-child,
+.linked .button:active:hover:first-child,
+.linked .button:focus:first-child,
+.linked .button:focus:active:first-child,
+.linked .button:insensitive:first-child {
+    border-width: 1px;
+    border-right-width: 0;
+    border-radius: 0px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* rightmost button */
+.linked .entry:last-child,
+.linked .button:last-child,
+.linked .button:active:last-child,
+.linked .button:active:hover:last-child,
+.linked .button:focus:last-child,
+.linked .button:focus:active:last-child,
+.linked .button:insensitive:last-child {
+    border-width: 1px;
+    border-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+/* linked single button */
+.linked .entry:only-child,
+.linked .button:only-child,
+.linked .button:active:only-child,
+.linked .button:active:hover:only-child,
+.linked .button:focus:only-child,
+.linked .button:focus:active:only-child,
+.linked .button:insensitive:only-child {
+    border-width: 1px;
+    border-radius: 0px;
+}
+
+/* middle button (vertical) */
+.linked.vertical .entry,
+.linked.vertical .button,
+.linked.vertical .button:active,
+.linked.vertical .button:active:hover,
+.linked.vertical .button:focus,
+.linked.vertical .button:focus:active,
+.linked.vertical .button:insensitive {
+    border-width: 1px;
+    border-bottom-width: 0;
+    border-radius: 0;
+}
+
+/* leftmost button (vertical) */
+.linked.vertical .entry:first-child,
+.linked.vertical .button:first-child,
+.linked.vertical .button:active:first-child,
+.linked.vertical .button:active:hover:first-child,
+.linked.vertical .button:focus:first-child,
+.linked.vertical .button:focus:active:first-child,
+.linked.vertical .button:insensitive:first-child {
+    border-width: 1px;
+    border-bottom-width: 0;
+    border-radius: 0px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* rightmost button (vertical) */
+.linked.vertical .entry:last-child,
+.linked.vertical .button:last-child,
+.linked.vertical .button:active:last-child,
+.linked.vertical .button:active:hover:last-child,
+.linked.vertical .button:focus:last-child,
+.linked.vertical .button:focus:active:last-child,
+.linked.vertical .button:insensitive:last-child {
+    border-width: 1px;
+    border-radius: 0px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* linked single button (vertical) */
+.linked.vertical .entry:only-child,
+.linked.vertical .button:only-child,
+.linked.vertical .button:active:only-child,
+.linked.vertical .button:active:hover:only-child,
+.linked.vertical .button:focus:only-child,
+.linked.vertical .button:focus:active:only-child,
+.linked.vertical .button:insensitive:only-child {
+    border-width: 1px;
+    border-radius: 0px;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.4pt" height="38.4pt">
+<defs/>
+<g id="layer1">
+  <path id="shape0" transform="translate(12.0033, 4.10795)" fill="#a8b2b8" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.73805L0.00527207 37.1869C1.64034 39.0751 19.9569 39.3991 22.0341 37.0849L21.9675 1.83998C19.9123 -0.626784 1.51205 -0.565806 0 1.73805Z"/>
+  <path id="shape01" transform="translate(11.9962, 4.55363)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.7037L0.00527546 36.4519C1.6414 38.3027 19.9698 38.6204 22.0482 36.3519L21.9816 1.80361C19.9251 -0.614395 1.51302 -0.554623 0 1.7037Z"/>
+  <path id="shape1" transform="translate(12.4256, 8.415)" fill="#2980b9" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M0 0L0 29.1696L21.1468 29.0886L21.0881 0.0810268Z"/>
+  <path id="shape11" transform="translate(12.4218, 34.8497)" fill="#001424" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M0 0L0 2.74142L21.156 2.68604L21.1698 0.0553822Z"/>
+  <path id="shape12" transform="translate(12.4158, 8.40091)" fill="#001424" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M0 0L0 1.22187L21.0991 1.21245L21.1129 0.0444047Z"/>
+  <circle id="shape01" transform="translate(30.9285, 5.97608)" r="0.42519758700pt" cx="0.42519758700pt" cy="0.42519758700pt" fill="#2980b9" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.01260185242"/>
+  <path id="shape0" transform="translate(20.381, 4.55796)" fill="#001424" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" d="M0 0.0406785C1.78173 -0.0114201 3.55369 -0.0244167 5.29932 0.0678894L4.41108 0.747745L0.880354 0.733314Z"/>
+ </g>
+</svg>

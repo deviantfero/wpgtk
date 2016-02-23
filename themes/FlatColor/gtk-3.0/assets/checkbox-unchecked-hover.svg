@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 16 16"
+   id="svg5248"
+   version="1.1"
+   inkscape:version="0.91+devel r13718 custom"
+   width="100%"
+   height="100%"
+   sodipodi:docname="checkbox-unchecked-hover.svg">
+  <metadata
+     id="metadata5260">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs5258" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1440"
+     inkscape:window-height="841"
+     id="namedview5256"
+     showgrid="false"
+     inkscape:zoom="43.617942"
+     inkscape:cx="7.5084494"
+     inkscape:cy="7.6197632"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5248" />
+  <path
+     style="opacity:1;fill:#f2535e;fill-opacity:1;stroke:none;stroke-width:0.93526953;stroke-opacity:1"
+     d="m 37.07795,-1.3496095 c -4.432,0 -8,3.568 -8,8 0,4.4320005 3.568,8.0000005 8,8.0000005 4.432,0 8,-3.568 8,-8.0000005 0,-4.432 -3.568,-8 -8,-8 z m 0,1.00000003 c 3.878,0 7,3.12199997 7,6.99999997 0,3.8780005 -3.122,7.0000005 -7,7.0000005 -3.878,0 -7,-3.122 -7,-7.0000005 0,-3.878 3.122,-6.99999997 7,-6.99999997 z"
+     id="rect2993"
+     inkscape:connector-curvature="0" />
+  <rect
+     style="opacity:1;fill:#fafafa;fill-opacity:1;stroke:#f2535e;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect4717"
+     width="15"
+     height="15"
+     x="0.5"
+     y="0.5"
+     rx="0.98922724"
+     ry="0.98922724" />
+</svg>
