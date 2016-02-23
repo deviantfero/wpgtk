@@ -36,7 +36,7 @@ class fileList():
 class mainWindow( Gtk.Window ):
 
     def __init__( self ):
-        Gtk.Window.__init__( self, title = "wpgtk v1.1" )
+        Gtk.Window.__init__( self, title = "wpgtk v2.0" )
         
         filepath = GLib.get_home_dir() + "/.wallpapers/"
         current_walls = fileList( filepath )

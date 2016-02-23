@@ -1,3 +1,3 @@
 #!/usr/bin/bash
 
-python /usr/local/bin/src/wpg.py && rm temp.sgv
+python /usr/local/bin/src/wpg.py

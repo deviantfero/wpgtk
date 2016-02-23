@@ -79,7 +79,7 @@ def change_colors_ob( active, inactive ):
                 print( line.replace( "2C4448", inactive ), end='' )
     call( ["openbox", "--reconfigure"] )
 
-def change_colors_icons( active, inactive ):
+def change_colors_icons( active, inactive, glyph ):
     backupdir = homedir + "/.icons/flattrcolor/scripts/replace_folder_file.sh.base"
     realdir = homedir + "/.icons/flattrcolor/scripts/replace_folder_file.sh"
     xsl_file = homedir + "/.icons/flattrcolor/scripts/change_folder_colors.xslt"
@@ -88,10 +88,13 @@ def change_colors_icons( active, inactive ):
         call( ["cp", backupdir, realdir] )
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
-                print( line.replace( "34495d", active ), end='' )
+                print( line.replace( "34495d", inactive ), end='' )
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
-                print( line.replace( "1abc9c", inactive ), end='' )
+                print( line.replace( "1abc9c", active ), end='' )
+        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
+            for line in file:
+                print( line.replace( "304050", glyph ), end='' )
         call( executable, shell=True )
 
 def change_colors_tint2( active, inactive ):
@@ -135,8 +138,9 @@ def execute_gcolorchange( image_name ):
         inact_redux = 75
     active = reduce_brightness( base_color, base_redux )
     inactive = reduce_brightness( base_color, inact_redux )
-    fg_icon = add_brightness( base_color, 10 )
-    bg_icon = base_color
+    fg_icon = base_color
+    bg_icon = reduce_brightness( base_color, 40 )
+    glyph = reduce_brightness( base_color, 70 )
     print( active )
     print( inactive )
     print( "CHANGING::OPENBOX" )
@@ -147,7 +151,7 @@ def execute_gcolorchange( image_name ):
     change_colors_gtk2( active, inactive )
     change_colors_gtk3( active, inactive )
     print( "CHANGING::ICONS" )
-    change_colors_icons( fg_icon, bg_icon )
+    change_colors_icons( fg_icon, bg_icon, glyph )
     print( "SUCCESS" )
 
 if __name__ == "__main__":
