@@ -107,8 +107,17 @@ class mainWindow( Gtk.Window ):
         if response == Gtk.ResponseType.OK:
             print( "Open Clicked" )
             filepath = filechooser.get_filename()
+            if( " " in filepath ):
+                filepath = filepath.replace( " ", "\ " )
+                filename = filepath.split( "/", len(filepath) )
+                filename = filename.pop()
+                call( "cp " + filepath + " ./" + filename, shell=True )
+                call( "wp add " + "./" + filename, shell=True )
+                call( "rm ./" + filename, shell=True )
+                filechooser.destroy()
+            else:
+                call( "wp add " + filepath, shell=True )
             filechooser.destroy()
-            call( "wp add " + filepath, shell=True )
             option_list = Gtk.ListStore( str )
             current_walls = fileList( filepath )
 
