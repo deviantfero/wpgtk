@@ -1,19 +1,24 @@
 # wpg
+## An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK.
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
-it can take a little while to generate the color pallete though, be warned
+* it can take a little while to generate the color pallete though, be warned
 
 ### Examples
+![Dynamic themes](http://i.imgur.com/MGPtHXs.png)
+![Dynamic bar](http://i.imgur.com/1d8ragK.png)
+![Dynamic theme2](http://i.imgur.com/wzBV8nV.png)
+![Dynamic bar2](http://i.imgur.com/ucBAOXT.png)
 
-![Example Image](http://i.imgur.com/LktnkQh.png)
-![Another Example](http://i.imgur.com/pBwTumC.png)
+### New Features
 
-### New Feature
-![IMG 2](http://i.imgur.com/uy3ZNuL.png)
 ![IMG 1](http://i.imgur.com/r39E6Fl.png)
+![IMG 1](http://i.imgur.com/fpbmtPi.png)
 
 You can now choose a colorscheme generated for a wallpaper in whichever wallpaper you'd like!
+
+And it will affect your windows, bar and GTK theme too!
 
 
 ### Version
@@ -47,6 +52,9 @@ although you may already have most of these installed by default, i put them on 
 
 if you need a pair of colors predefined, just specify them on your .Xresources
 i.e background and foreground
+
+If you want the background color that wp gives you, on your terminal set your bg color to 0
+or don't specify any at all on .Xresources
 
 also you need to uninstall any other wallpaper manager as it will override this one at startup
 
@@ -86,6 +94,7 @@ $ wpg
 this will take care of placing the files where they are meant to be in /usr/local/bin/
 ### Loading at Startup
 to load your new wallpaper at startup along with the colors add the following to your startup script or simply add it into your startup apps in your DE of choice, if you already use feh as your wallpaper manager, remember to remove it from your start up config.
+
 ```sh
 ~/.wallpapers/wp_init.sh
 ```
