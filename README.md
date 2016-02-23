@@ -30,6 +30,8 @@ And it will affect your windows, bar and GTK theme too!
 * Now your Icon set changes with your wallpaper
 * It also changes a special GKT theme automatically
 * it uses random colors from the image, so you can repeat until you're satisfied
+* It comes with special themes solely for this task of being dynamic, so no need for any complicated configuration
+* you can modify the themes to a certain degree. So feel free to do it!
 
 ### Dependencies
 
