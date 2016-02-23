@@ -1,37 +1,9 @@
 # wpg
-## An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK.
+### An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK.
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
 * it can take a little while to generate the color pallete though, be warned
-
-### Examples
-![Dynamic themes](http://i.imgur.com/MGPtHXs.png)
-![Dynamic bar](http://i.imgur.com/1d8ragK.png)
-![Dynamic theme2](http://i.imgur.com/wzBV8nV.png)
-![Dynamic bar2](http://i.imgur.com/ucBAOXT.png)
-
-### New Features
-
-![IMG 1](http://i.imgur.com/xXIB7QH.png)
-![IMG 1](http://i.imgur.com/fpbmtPi.png)
-
-You can now choose a colorscheme generated for a wallpaper in whichever wallpaper you'd like!
-
-And it will affect your windows, bar and GTK theme too!
-
-
-### Version
-2.0
-
-### Features added
-
-* Now your window borders change with your wallpaper
-* Now your Icon set changes with your wallpaper
-* It also changes a special GKT theme automatically
-* it uses random colors from the image, so you can repeat until you're satisfied
-* It comes with special themes solely for this task of being dynamic, so no need for any complicated configuration
-* you can modify the themes to a certain degree. So feel free to do it!
 
 ### Dependencies
 
@@ -94,9 +66,38 @@ now to actually run the program just
 $ wpg
 ```
 this will take care of placing the files where they are meant to be in /usr/local/bin/
+
 ### Loading at Startup
 to load your new wallpaper at startup along with the colors add the following to your startup script or simply add it into your startup apps in your DE of choice, if you already use feh as your wallpaper manager, remember to remove it from your start up config.
 
 ```sh
 ~/.wallpapers/wp_init.sh
 ```
+
+### Version
+2.0
+
+### Features added
+
+* Now your window borders change with your wallpaper
+* Now your Icon set changes with your wallpaper
+* It also changes a special GKT theme automatically
+* it uses random colors from the image, so you can repeat until you're satisfied
+* It comes with special themes solely for this task of being dynamic, so no need for any complicated configuration
+* you can modify the themes to a certain degree. So feel free to do it!
+
+### Examples
+![Dynamic themes](http://i.imgur.com/MGPtHXs.png)
+![Dynamic bar](http://i.imgur.com/1d8ragK.png)
+![Dynamic theme2](http://i.imgur.com/wzBV8nV.png)
+![Dynamic bar2](http://i.imgur.com/ucBAOXT.png)
+
+### New features images
+
+![IMG 1](http://i.imgur.com/xXIB7QH.png)
+![IMG 1](http://i.imgur.com/fpbmtPi.png)
+
+You can now choose a colorscheme generated for a wallpaper in whichever wallpaper you'd like!
+
+And it will affect your windows, bar and GTK theme too!
+
