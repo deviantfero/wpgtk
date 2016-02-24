@@ -107,6 +107,8 @@ class mainWindow( Gtk.Window ):
         if response == Gtk.ResponseType.OK:
             print( "Open Clicked" )
             filepath = filechooser.get_filename()
+            if( "\\" in filepath ):
+                filepath = filepath.replace( "\\", "\\\\" )
             if( " " in filepath ):
                 filepath = filepath.replace( " ", "\ " )
                 filename = filepath.split( "/", len(filepath) )
