@@ -9,6 +9,36 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 
 * it can take a little while to generate the color pallete though, be warned
 
+### Installation 
+if you are in ubuntu, debian or Arch linux, the installer will take care of dependencies on it's own.
+
+do the following
+```sh
+$ git clone http://github.com/deviantfero/wpgtk
+$ cd ~/wpgtk
+$ sh ./installcolor.sh
+```
+do this if you want a dynamic theme.
+
+after doing this there just a few more steps to get a dynamic theme going
+* Select colorbamboo or colorbamboo_nb (no_borders) as your openbox window theme
+* Select Flatcolor as your GTK theme
+* Select flattrcolor as your Icon theme
+* you're good to go!
+
+```sh
+$ git clone http://github.com/deviantfero/wpgtk
+$ cd ~/wpgtk
+$ sh ./install.sh
+```
+do this is if you don't want a dynamic theme.
+
+now to actually run the program just
+```sh
+$ wpg
+```
+this will take care of placing the files where they are meant to be in /usr/local/bin/
+
 ### Dependencies
 
 wpg has some dependencies:
@@ -41,35 +71,6 @@ I found the script by other means, but i found out the author of the color scrip
 the GUI for, i'll leave the link to the original repo down below 
 
 it's http://github.com/everett1992/wp
-
-### Installation 
-do the following
-
-```sh
-$ git clone http://github.com/deviantfero/wpgtk
-$ cd ~/wpgtk
-$ sh ./installcolor.sh
-```
-do this if you want a dynamic theme.
-
-after doing this there just a few more steps to get a dynamic theme going
-* Select colorbamboo or colorbamboo_nb (no_borders) as your openbox window theme
-* Select Flatcolor as your GTK theme
-* Select flattrcolor as your Icon theme
-* you're good to go!
-
-```sh
-$ git clone http://github.com/deviantfero/wpgtk
-$ cd ~/wpgtk
-$ sh ./install.sh
-```
-do this is if you don't want a dynamic theme.
-
-now to actually run the program just
-```sh
-$ wpg
-```
-this will take care of placing the files where they are meant to be in /usr/local/bin/
 
 ### Loading at Startup
 to load your new wallpaper at startup along with the colors add the following to your startup script or simply add it into your startup apps in your DE of choice, if you already use feh as your wallpaper manager, remember to remove it from your start up config.
