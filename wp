@@ -16,11 +16,16 @@ function main {
   K_MEANS=16
   WALLPAPER_DIR=${WALLPAPER_DIR:-~/.wallpapers/}
 
-  if test $# -gt 0; then
+  while test $# -gt 0; do
       case "$1" in
-          usage | -h | --help | help)
+          usage | -h | --help)
               shift
               usage
+              ;;
+          n | -n)
+              shift
+              K_MEANS=$1
+              shift
               ;;
           add | -a | --add)
               shift
@@ -51,12 +56,11 @@ function main {
               slideshow $*
               ;;
           *)
-              indent "$1 is not a recognized directive"
+              shift
+              indent "$1 is not a recognised directive"
               ;;
       esac
-  else
-      usage
-  fi
+  done
 }
 
 #:: Prety print function
@@ -82,11 +86,6 @@ function add {
     exit 1
   fi
 
-  if [ '-n' = $1 ]; then
-      K_MEANS=$2
-      shift 2
-  fi
-
   files=$*
 
   for file in $files; do
@@ -100,7 +99,7 @@ function add {
   cd $WALLPAPER_DIR
 
   for file in $*; do
-    echo ":: Generating .$file.colors and .$file.Xres in $PWD with $K_MEANS colors"
+    echo ":: Generating .$file.colors and .$file.Xres in $PWD"
     python2 $DIR/py/color_detect.py $file $K_MEANS
   done
 }
@@ -118,14 +117,14 @@ function remove {
   for file in $*; do
     indent "Removing $file"
     rm ${WALLPAPER_DIR}/${file}
-    rm ${WALLPAPER_DIR}/.${file}.{colors,Xres,sample}*
+    rm ${WALLPAPER_DIR}/.${file}.{colors,Xres}
   done
 }
 
 function change {
   #:: Select a random background from WALLPAPER_DIR, or use the passed background
   if [ -z $1 ]; then
-      background=$(find $WALLPAPER_DIR -type f | grep -P "^((?!sample).)*\.(jpg|png)\$" | shuf -n1)
+    background=$(find $WALLPAPER_DIR -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n1)
   else
     background=$WALLPAPER_DIR/$1
 
@@ -232,17 +231,18 @@ function usage {
   printf "%b" "  $0 [action] [options]
 
 Actions
-- usage:                                  Print this help message.
-- add [-n [number of colors]] [file]...:  Add file, or files, to the wallpaper database.
-- rm  [file]...:                          Remove file, or files, from the wallpaper database.
-- change [file]:                          Set the wallpaper to file, or a random wallpaper
-                                          from the wallpaper database.
-- slideshow [cmd file]:                   Rotate through wallpapers, optionally
-                                          running cmd each time and using only
-                                          wallpapers listed in the file.
-- current:                                List the current background
-- ls:                                     List all wallpapers in the database.
-- colors:                                 Display the current set of colors.
+- usage:                Print this help message.
+- n [number]   :        Number of colors to gather.
+- add [file]...:        Add file, or files, to the wallpaper database.
+- rm  [file]...:        Remove file, or files, from the wallpaper database.
+- change [file]:        Set the wallpaper to file, or a random wallpaper
+                        from the wallpaper database.
+- slideshow [cmd file]: Rotate through wallpapers, optionally
+                        running cmd each time and using only
+                        wallpapers listed in the file.
+- current:              List the current background
+- ls:                   List all wallpapers in the database.
+- colors:               Display the current set of colors.
 "
 }
 
