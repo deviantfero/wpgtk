@@ -20,7 +20,7 @@ wpg has some dependencies:
 
 Arch
 ```sh
-$ sudo pacman -S python2-pillow feh python-gobject gtk3
+$ sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt
 ```
 *buntu
 ```sh
