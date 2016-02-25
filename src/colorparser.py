@@ -77,7 +77,10 @@ def change_colors_ob( active, inactive ):
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
                 print( line.replace( "2C4448", inactive ), end='' )
-    call( ["openbox", "--reconfigure"] )
+    if( isfile(homedir + "/.config/openbox/menu.xml") ):
+        call( ["openbox", "--reconfigure"] )
+    else:
+        print( "NO OPENBOX INSTALL!" )
 
 def change_colors_icons( active, inactive, glyph ):
     backupdir = homedir + "/.icons/flattrcolor/scripts/replace_folder_file.sh.base"
