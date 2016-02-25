@@ -24,7 +24,7 @@ $ sudo pacman -S python2-pillow feh python-gobject gtk3
 ```
 *buntu
 ```sh
-$ sudo apt-get install feh python3-gi python-gobject python-pip build-dep python-imaging libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev && pip install Pillow
+$ sudo apt-get install feh python3-gi python-gobject python-pip build-dep python-imaging libfreetype6 libfreetype6-dev  xsltproc && pip install Pillow
 ```
 although you may already have most of these installed by default, i put them on here just in case.
 

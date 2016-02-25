@@ -35,7 +35,7 @@ function install_color {
 	echo "INSTALLING::ICONS"
 	cp -r ./themes/flattrcolor ~/.icons
 	echo "INSTALLING::GTK-THEME"
-	sudo cp -r ./themes/FlatColor ~/.themes/
+	cp -r ./themes/FlatColor ~/.themes/
 	tint2support
 	echo "DONE - SET YOUR THEMES AND RUN wpg"
 	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wp
