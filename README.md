@@ -54,7 +54,7 @@ $ sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt
 ```
 *buntu
 ```sh
-$ sudo apt-get install feh python3-gi python-gobject python-pip python-imaging libfreetype6 libfreetype6-dev xsltproc && pip install Pillow
+$ sudo apt-get install feh python3-gi python-gobject python-pip python-imaging xsltproc && pip install Pillow
 ```
 although you may already have most of these installed by default, i put them on here just in case.
 
