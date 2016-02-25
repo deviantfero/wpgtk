@@ -21,7 +21,7 @@ def read_color_in_line( xres_file ):
         print( err.args )
         print( err.filename )
         return "4A838F"
-    line_get = randint( 2, 14 )
+    line_get = randint( 1, 15 )
     xres_list = [ line for line in f ]
     color = xres_list[ line_get ]
     color = color.split( " ", len( color ) )

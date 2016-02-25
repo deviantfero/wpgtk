@@ -1,4 +1,7 @@
 #openbox themerc edited with obtheme
+#DO NOT CHANGE THINGS WHICH CONTAIN 4A838F
+#OR THINGS WITH 2C4448 as this are the colors that my program searchs and replaces
+#everything else is editable, please edit themerc.base instead of themerc
 border.width: 0
 menu.border.color: #2E2920
 menu.border.width: 0
