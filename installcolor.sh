@@ -3,8 +3,6 @@
 function install_dependencies {
 	echo "INSTALLING DEPENDENCIES"
 	version="$( uname -r | grep ARCH )"
-	echo "printing"
-	echo "$version"
 
 	if [ -n "$version"  ]; then
 		echo "ARCH LINUX DETECTED::"
