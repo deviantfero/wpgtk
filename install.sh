@@ -9,7 +9,7 @@ function install_dependencies {
 		sh -c "sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt"
 		echo "DEPENDENCIES INSTALL COMPLETE"
 	else
-		version="$( uname -r | grep generic )"
+		version="$( uname -r | grep -Eo "(eneric|64)" )"
 		if [ -n "$version" ]; then
 			echo "DEBIAN OR *BUNTU DETECTED"
 			sh -c "sudo apt-get install feh python3-gi python-gobject python-pip python-imaging xsltproc && pip install Pillow"
