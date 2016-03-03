@@ -88,6 +88,19 @@ def change_colors_icons( active, inactive, glyph ):
     xsl_file = homedir + "/.icons/flattrcolor/scripts/change_folder_colors.xslt"
     executable = homedir + "/.icons/flattrcolor/scripts/replace_script.sh"
     if( isfile( backupdir ) ):
+        file_current_glyph = open( realdir, "r" )
+        current_glyph = []
+        for line in file_current_glyph:
+            if( "New" in line ):
+                current_glyph.append( line )
+                break
+        current_glyph = current_glyph.pop()
+        current_glyph = current_glyph.strip( "\n" )
+        current_glyph = current_glyph.split( "=" )
+        current_glyph = current_glyph.pop()
+        file_current_glyph.close()
+        print( "CURRENT GLYPH: " + current_glyph )
+
         call( ["cp", backupdir, realdir] )
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
@@ -97,7 +110,10 @@ def change_colors_icons( active, inactive, glyph ):
                 print( line.replace( "1abc9c", active ), end='' )
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
-                print( line.replace( "304050", glyph ), end='' )
+                print( line.replace( "l=304050", "l=" + current_glyph ), end='' )
+        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
+            for line in file:
+                print( line.replace( "w=304050", "w=" + glyph ), end='' )
         call( executable, shell=True )
 
 def change_colors_tint2( active, inactive ):
@@ -144,8 +160,8 @@ def execute_gcolorchange( image_name ):
     fg_icon = base_color
     bg_icon = reduce_brightness( base_color, 40 )
     glyph = reduce_brightness( base_color, 70 )
-    print( active )
-    print( inactive )
+    print( "FG: " + active )
+    print( "BG: " + inactive )
     print( "CHANGING::OPENBOX" )
     change_colors_ob( active, inactive )
     print( "CHANGING::TINT2" )
