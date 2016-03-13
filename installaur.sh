@@ -2,13 +2,21 @@
 
 function tint2support {
 	echo
+	echo
 	echo "INSTALLING::TINT2-THEME"
 	echo
 	echo "THIS WILL OVERRIDE YOUR TINT2 THEME"
 	echo
-	echo -n "INSTALLING::TINT2-THEME"
-	cp ./themes/tint2rc ~/.config/tint2/
-	cp ./themes/tint2rc.base ~/.config/tint2/
+	echo -n "do you want to continue[Y/n]: "
+	read election
+	if [[ "$election" == "y" || "$election" == "Y" ]]; then
+		echo -n "INSTALLING::TINT2-THEME"
+		cp ./themes/tint2rc ~/.config/tint2/
+		cp ./themes/tint2rc.base ~/.config/tint2/
+	else
+		echo "TINT2-THEME::NOT-INSTALLED"
+		return 1
+	fi
 }
 
 function install_color {
