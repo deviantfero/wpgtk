@@ -17,10 +17,10 @@ function install_color {
 	mkdir ~/.themes
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"
-	sudo cp -r ./py/ ../pkg
-	sudo cp -r ./src/ ../pkg
-	sudo cp ./wp ./wpg ../pkg
-	sudo cp ./functions ../pkg
+	sudo cp -r ./py/ "$pkgdir"
+	sudo cp -r ./src/ "$pkgdir"
+	sudo cp ./wp ./wpg "$pkgdir"
+	sudo cp ./functions "$pkgdir"
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/
 	cp -r ./themes/colorbamboo_nb ~/.themes/
