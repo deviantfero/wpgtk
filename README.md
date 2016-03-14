@@ -9,6 +9,12 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 
 * it can take a little while to generate the color pallete though, be warned
 
+### Now avialable in AUR
+
+```sh
+yaourt -S wpgtk-git
+```
+
 ### Installation 
 if you are in ubuntu, debian or Arch linux, the installer will take care of dependencies on it's own.
 
