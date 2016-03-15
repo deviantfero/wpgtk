@@ -13,7 +13,7 @@ function main {
     [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
   done
   if [[ "$SOURCE" ==  "/usr/bin/wp" ]]; then
-	  DIR="/usr/bin/py/"
+	  DIR="/usr/bin/wpgtk/py/"
   else
 	  echo "not installed by AUR"
   fi
