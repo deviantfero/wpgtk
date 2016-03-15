@@ -44,10 +44,12 @@ class mainWindow( Gtk.Window ):
         current_walls.show_files_only()
         image_name = filepath + ".current"
         image_name = os.path.realpath( image_name )
+        print( image_name )
 
         #these variables are just to get the image and preview of current wallpaper
         route_list = image_name.split( "/", image_name.count("/") )
         file_name = route_list[4]
+        print( route_list[4] )
         sample_name = filepath + "." + file_name + ".sample.png"
 
         option_list = Gtk.ListStore( str )
