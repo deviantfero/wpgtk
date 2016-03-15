@@ -47,7 +47,7 @@ function install_color {
 	echo "INSTALLING::WPG"
 	sudo cp -r ./py/ /usr/local/bin/
 	sudo cp -r ./src/ /usr/local/bin/
-	sudo cp ./wp ./wpg /usr/local/bin
+	sudo cp ./wpcscript ./wpg /usr/local/bin
 	sudo cp ./functions /usr/local/bin
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/
@@ -58,7 +58,7 @@ function install_color {
 	cp -r ./themes/FlatColor ~/.themes/
 	tint2support
 	echo "DONE - SET YOUR THEMES AND RUN wpg"
-	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wp
+	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wpcscript
 }
 
 install_dependencies &&

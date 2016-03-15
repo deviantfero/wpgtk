@@ -44,15 +44,8 @@ function uninstall_color {
 	sudo rm -r /usr/local/bin/py/
 	sudo rm -r /usr/local/bin/src/
 	sudo rm /usr/local/bin/wpg
+	sudo rm /usr/local/bin/wpcscript
 	sudo rm /usr/local/bin/functions
-	echo "UNUNINSTALLING::OPENBOX-THEME"
-	rm -r ~/themes/colorbamboo 
-	rm -r ~/themes/colorbamboo_nb
-	echo "UNINSTALLING::ICONS"
-	rm -r ~/themes/flattrcolor
-	echo "UNINSTALLING::GTK-THEME"
-	rm -r ~/themes/FlatColor
-	tint2support
 	echo "DONE - SET YOUR THEMES AND RUN wpg"
 }
 

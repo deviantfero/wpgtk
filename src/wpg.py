@@ -116,11 +116,11 @@ class mainWindow( Gtk.Window ):
                 filename = filepath.split( "/", len(filepath) )
                 filename = filename.pop()
                 call( "cp " + filepath + " ./" + filename, shell=True )
-                call( "wp add " + "./" + filename, shell=True )
+                call( "wpcscript add " + "./" + filename, shell=True )
                 call( "rm ./" + filename, shell=True )
                 filechooser.destroy()
             else:
-                call( "wp add " + filepath, shell=True )
+                call( "wpcscript add " + filepath, shell=True )
             filechooser.destroy()
             option_list = Gtk.ListStore( str )
             current_walls = fileList( filepath )
@@ -141,9 +141,9 @@ class mainWindow( Gtk.Window ):
         current_walls = fileList( path )
         filepath = current_walls.file_names_only[x]
         colorscheme = current_walls.file_names_only[y]
-        call( [ "wp", "change", filepath ] )
+        call( [ "wpcscript", "change", filepath ] )
         call( [ "xrdb", "-merge", GLib.get_home_dir() + "/.wallpapers/." + colorscheme + ".Xres" ] )
-        call( [ "sh", "-c", "echo -n \"wp change "+ filepath +" && \" > ~/.wallpapers/wp_init.sh" ] )
+        call( [ "sh", "-c", "echo -n \"wpcscript change "+ filepath +" && \" > ~/.wallpapers/wp_init.sh" ] )
         call( [ "sh", "-c", "echo \"xrdb -merge "+ path + "." + colorscheme + ".Xres" + "\" >> ~/.wallpapers/wp_init.sh" ] )
         call( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
         if( os.path.isfile(GLib.get_home_dir() + "/.themes/colorbamboo/openbox-3/themerc.base") ):
@@ -154,7 +154,7 @@ class mainWindow( Gtk.Window ):
         x = self.option_combo.get_active()
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         filepath = current_walls.file_names_only[x]
-        call( [ "wp", "rm", filepath ] )
+        call( [ "wpcscript", "rm", filepath ] )
         option_list = Gtk.ListStore( str )
         current_walls = fileList( filepath )
         for elem in list(current_walls.files):
