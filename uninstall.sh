@@ -46,7 +46,7 @@ function uninstall_color {
 	sudo rm /usr/local/bin/wpg
 	sudo rm /usr/local/bin/wpcscript
 	sudo rm /usr/local/bin/functions
-	echo "DONE - SET YOUR THEMES AND RUN wpg"
+	echo "DONE - wpg HAS BEEN UNINSTALLED"
 }
 
 uninstall_color

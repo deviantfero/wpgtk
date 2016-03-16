@@ -46,7 +46,9 @@ function install_color {
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"
 	sudo cp -r ./py/ /usr/local/bin/
+	sudo chmod -R ugo+rx /usr/local/bin/py
 	sudo cp -r ./src/ /usr/local/bin/
+	sudo chmod -R ugo+rx /usr/local/bin/src
 	sudo cp ./wpcscript ./wpg /usr/local/bin
 	sudo cp ./functions /usr/local/bin
 	echo "INSTALLING::OPENBOX-THEME"
