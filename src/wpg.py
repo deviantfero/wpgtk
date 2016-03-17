@@ -143,7 +143,8 @@ class mainWindow( Gtk.Window ):
         colorscheme = current_walls.file_names_only[y]
         call( [ "wpcscript", "change", filepath ] )
         call( [ "xrdb", "-merge", GLib.get_home_dir() + "/.wallpapers/." + colorscheme + ".Xres" ] )
-        call( [ "sh", "-c", "echo -n \"wpcscript change "+ filepath +" && \" > ~/.wallpapers/wp_init.sh" ] )
+        call( [ "sh", "-c", "echo \"#!/bin/bash\" > ~/.wallpapers/wp_init.sh" ] )
+        call( [ "sh", "-c", "echo -n \"wpcscript change "+ filepath +" && \" >> ~/.wallpapers/wp_init.sh" ] )
         call( [ "sh", "-c", "echo \"xrdb -merge "+ path + "." + colorscheme + ".Xres" + "\" >> ~/.wallpapers/wp_init.sh" ] )
         call( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
         if( os.path.isfile(GLib.get_home_dir() + "/.themes/colorbamboo/openbox-3/themerc.base") ):
