@@ -8,13 +8,16 @@ See What it can do!
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
-* it can take a little while to generate the color pallete though, be warned
+**_it can take a little while to generate the color pallet._**
+
+----
 
 ### Now avialable in AUR
 
 ```sh
 yaourt -S wpgtk-git
 ```
+---
 
 ### Version
 2.2
@@ -24,12 +27,20 @@ yaourt -S wpgtk-git
 * Now your window borders change with your wallpaper
 * Now your Icon set changes with your wallpaper
 * It also changes a special GKT theme automatically
-* it uses random colors from the image, so you can repeat until you're satisfied
+* It uses random colors from the image, so you can repeat until you're satisfied
 * It comes with special themes solely for the purpose of being dynamic, so no need for any complicated configuration
 * you can modify the themes to a certain degree. So feel free to do it!
-* It saves all colors of the current wallpapers in two files, one named ".colors" and another named ".main_colors" the latter contains the colors used by window borders at that time
+* It saves all colors of the current wallpapers in two files, one named ".colors" and another named ".main_colors" the latter contains the colors used by window borders at that time.
 * If you specify a color in your .Xresources it will not be overriden by wpgtk
-* You can now choose a colorscheme generated for a wallpaper in whichever wallpaper you'd like!
+* You can now choose a colorscheme generated for a wallpaper in whichever wallpaper you'd like.
+* If you need a pair of colors predefined, just specify them on your .Xresources
+* If you want the background color that wp gives you, on your terminal set your bg color to 0 like this
+
+```sh
+URxvt*background: 0
+```
+
+---
 
 ### Installation 
 if you are in ubuntu, debian or Arch linux, the installer will take care of dependencies on it's own.
@@ -46,6 +57,8 @@ after doing this there just a few more steps to get a dynamic theme going
 * Select Flatcolor as your GTK theme
 * Select flattrcolor as your Icon theme
 * you're good to go!
+
+**_you need to uninstall any other wallpaper manager as it will override this one at startup._**
 
 now to actually run the program just
 ```sh
@@ -76,14 +89,7 @@ $ sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt
 ```sh
 $ sudo apt-get install feh python3-gi python-gobject python-pip python-imaging xsltproc && pip install Pillow
 ```
-* if you need a pair of colors predefined, just specify them on your .Xresources
-* If you want the background color that wp gives you, on your terminal set your bg color to 0
-
-```sh
-URxvt*background: 0
-```
-
-**_you need to uninstall any other wallpaper manager as it will override this one at startup._**
+---
 
 ### Credit
 I found the script by other means, but i found out the author of the color script that i made
