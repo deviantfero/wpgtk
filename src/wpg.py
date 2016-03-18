@@ -165,8 +165,6 @@ class mainWindow( Gtk.Window ):
         filepath = current_walls.file_names_only[x]
         call( [ "wpcscript", "rm", filepath ] )
         call( [ "rm", GLib.get_home_dir() + "/.wallpapers/" + "." + filepath + ".sample.png" ] )
-        call( [ "rm", GLib.get_home_dir() + "/.wallpapers/" + "." + filepath + ".Xres" ] )
-        call( [ "rm", GLib.get_home_dir() + "/.wallpapers/" + "." + filepath + ".colors" ] )
         option_list = Gtk.ListStore( str )
         current_walls = fileList( filepath )
         for elem in list(current_walls.files):
