@@ -9,6 +9,8 @@ from gi.repository import Gtk, GdkPixbuf, GLib
 from colorparser import execute_gcolorchange
 from time import sleep
 
+version = "2.2"
+
 class fileList():
 
     def __init__( self, path ):
@@ -37,19 +39,18 @@ class fileList():
 class mainWindow( Gtk.Window ):
 
     def __init__( self ):
-        Gtk.Window.__init__( self, title = "wpgtk v2.1" )
+        Gtk.Window.__init__( self, title = "wpgtk " + version )
         
         filepath = GLib.get_home_dir() + "/.wallpapers/"
         current_walls = fileList( filepath )
         current_walls.show_files_only()
         image_name = filepath + ".current"
         image_name = os.path.realpath( image_name )
-        print( image_name )
+        print( "CURRENT WALLPAPER: " + image_name )
 
         #these variables are just to get the image and preview of current wallpaper
         route_list = image_name.split( "/", image_name.count("/") )
         file_name = route_list[4]
-        print( route_list[4] )
         sample_name = filepath + "." + file_name + ".sample.png"
 
         option_list = Gtk.ListStore( str )
@@ -100,7 +101,7 @@ class mainWindow( Gtk.Window ):
         self.current_walls = Gtk.ComboBox()
 
     def on_add_clicked( self, widget ):
-        print( "Add" )
+        print( "Adding..." )
         filechooser = Gtk.FileChooserDialog( "Select an Image", self, Gtk.FileChooserAction.OPEN,
                 (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                  Gtk.STOCK_OPEN, Gtk.ResponseType.OK) )
@@ -115,6 +116,10 @@ class mainWindow( Gtk.Window ):
                 filepath = filepath.replace( " ", "\ " )
                 filename = filepath.split( "/", len(filepath) )
                 filename = filename.pop()
+                if( " " in filename ):
+                    filename = filename.replace( " ", "\ " )
+                elif( "\\" in filename ):
+                    filename = filename.replace( "\\", "\\\\" )
                 call( "cp " + filepath + " ./" + filename, shell=True )
                 call( "wpcscript add " + "./" + filename, shell=True )
                 call( "rm ./" + filename, shell=True )
@@ -131,10 +136,11 @@ class mainWindow( Gtk.Window ):
             self.option_combo.set_entry_text_column( 0 )
             self.colorscheme.set_model( option_list )
             self.colorscheme.set_entry_text_column( 0 )
+        print( "Done." )
 
 
     def on_set_clicked( self, widget ):
-        print( "Set" )
+        print( "Setting..." )
         x = self.option_combo.get_active()
         y = self.colorscheme.get_active()
         path = GLib.get_home_dir() + "/.wallpapers/"
@@ -143,15 +149,17 @@ class mainWindow( Gtk.Window ):
         colorscheme = current_walls.file_names_only[y]
         call( [ "wpcscript", "change", filepath ] )
         call( [ "xrdb", "-merge", GLib.get_home_dir() + "/.wallpapers/." + colorscheme + ".Xres" ] )
-        call( [ "sh", "-c", "echo \'#!/bin/bash\' > ~/.wallpapers/wp_init.sh" ] )
-        call( [ "sh", "-c", "echo -n \"wpcscript change "+ filepath +" && \" >> ~/.wallpapers/wp_init.sh" ] )
-        call( [ "sh", "-c", "echo \"xrdb -merge "+ path + "." + colorscheme + ".Xres" + "\" >> ~/.wallpapers/wp_init.sh" ] )
+        init_file = open( GLib.get_home_dir() + "/.wallpapers/wp_init.sh", "w" )
+        init_file.writelines( [ "#!/bin/bash\n", "wpcscript change " + filepath + " && " ] )
+        init_file.writelines( "xrdb -merge " + path + "." + colorscheme + ".Xres\n" )
+        init_file.close()
         call( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
         if( os.path.isfile(GLib.get_home_dir() + "/.themes/colorbamboo/openbox-3/themerc.base") ):
             execute_gcolorchange( colorscheme )
+        print( "Done." )
 
     def on_rm_clicked( self, widget ):
-        print( "rm" )
+        print( "Deleting..." )
         x = self.option_combo.get_active()
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         filepath = current_walls.file_names_only[x]
@@ -164,6 +172,7 @@ class mainWindow( Gtk.Window ):
         self.option_combo.set_entry_text_column( 0 )
         self.colorscheme.set_model( option_list )
         self.colorscheme.set_entry_text_column( 0 )
+        print( "Done." )
 
     def combo_box_change( self, widget ):
         x = self.option_combo.get_active()

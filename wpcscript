@@ -15,8 +15,9 @@ function main {
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
   if [[ "$SOURCE" ==  "/usr/bin/wpcscript" ]]; then
 	  DIR="/usr/bin/wpgtk"
+	  echo ":: installed by AUR"
   else
-	  echo "not installed by AUR"
+	  echo ":: not installed by AUR"
   fi
   K_MEANS=16
   WALLPAPER_DIR=${WALLPAPER_DIR:-~/.wallpapers/}
@@ -62,7 +63,7 @@ function main {
               ;;
           *)
               shift
-              indent "$1 is not a recognised directive"
+			  echo ":: Done"
               ;;
       esac
   done
@@ -156,7 +157,7 @@ function change {
   if [ $? -ne 0 ]; then
     indent "Failed to set $background as background"
   else
-    indent "Set $background as background"
+    indent "Setting $filename as background"
 
     #:: Set the colorscheme
     ln -f ${dirname}/.${filename}.colors ~/.colors

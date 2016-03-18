@@ -5,16 +5,16 @@ function install_dependencies {
 	version="$( uname -r | grep ARCH )"
 
 	if [ -n "$version"  ]; then
-		echo "ARCH LINUX DETECTED::"
+		echo ":: ARCH LINUX DETECTED"
 		sh -c "sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt"
-		echo "DEPENDENCIES INSTALL COMPLETE"
+		echo ":: DEPENDENCIES INSTALL COMPLETE"
 	else
-		version="$( uname -r | grep -Eo "(eneric|64)" )"
+		version="$( uname -a | grep -Eo "(eneric|bian)" )"
 		if [ -n "$version" ]; then
-			echo "DEBIAN OR *BUNTU DETECTED"
+			echo ":: DEBIAN OR *BUNTU DETECTED"
 			sh -c "sudo apt-get install feh python3-gi python-gobject python-pip python-imaging xsltproc && pip install Pillow"
 		else
-			echo "ANOTHER DISTRO DETECTED:: INSTALL DEPENDENCIES FOR YOUR DISTRO"
+			echo ":: ANOTHER DISTRO DETECTED:: INSTALL DEPENDENCIES FOR YOUR DISTRO"
 			echo
 		fi
 	fi
@@ -23,18 +23,18 @@ function install_dependencies {
 function tint2support {
 	echo
 	echo
-	echo "INSTALLING::TINT2-THEME"
+	echo -e "\e[93m\e[5mINSTALLING::TINT2-THEME\e[0m"
 	echo
-	echo "THIS WILL OVERRIDE YOUR TINT2 THEME"
+	echo -e "\e[31mTHIS WILL OVERRIDE YOUR TINT2 THEME"
 	echo
-	echo -n "do you want to continue[Y/n]: "
+	echo -ne "\e[0mdo you want to continue[Y/n]: "
 	read election
 	if [[ "$election" == "y" || "$election" == "Y" ]]; then
-		echo -n "INSTALLING::TINT2-THEME"
+		echo "INSTALLING::TINT2-THEME"
 		cp ./themes/tint2rc ~/.config/tint2/
 		cp ./themes/tint2rc.base ~/.config/tint2/
 	else
-		echo "TINT2-THEME::NOT-INSTALLED"
+		echo -e "\e[31mTINT2-THEME::NOT-INSTALLED"
 		return 1
 	fi
 }
@@ -59,7 +59,7 @@ function install_color {
 	echo "INSTALLING::GTK-THEME"
 	cp -r ./themes/FlatColor ~/.themes/
 	tint2support
-	echo "DONE - SET YOUR THEMES AND RUN wpg"
+	echo -e "\e[34m:: DONE - SET THEMES AND RUN wpg\e[0m"
 	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wpcscript
 }
 

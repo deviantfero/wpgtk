@@ -12,6 +12,12 @@ homedir = "/home/" + getuser()
 walldir = homedir + "/.wallpapers/"
 
 
+def darkness(hexv):
+    rgb = list( int(hexv[i:i+2], 16) for i in ( 0, 2, 4 ) )
+    hls = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
+    hls = list(hls)
+    return hls[1]
+
 def read_color_in_line( xres_file ):
     xres_file = "." + xres_file + ".Xres"
     try:
@@ -32,10 +38,10 @@ def read_color_in_line( xres_file ):
 
 def reduce_brightness( hex_string, reduce_lvl ):
     rgb = list( int(hex_string[i:i+2], 16) for i in ( 0, 2, 4 ) )
-    hsl = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
-    hsl = list(hsl)
-    hsl[1] = hsl[1] - reduce_lvl
-    rgb = hls_to_rgb( hsl[0], hsl[1], hsl[2] )
+    hls = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
+    hls = list(hls)
+    hls[1] = hls[1] - reduce_lvl
+    rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
     rgb_int = []
     for elem in rgb:
         rgb_int.append( int(elem) )
@@ -45,10 +51,10 @@ def reduce_brightness( hex_string, reduce_lvl ):
 
 def add_brightness( hex_string, reduce_lvl ):
     rgb = list( int(hex_string[i:i+2], 16) for i in ( 0, 2, 4 ) )
-    hsl = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
-    hsl = list(hsl)
-    hsl[1] = hsl[1] + reduce_lvl
-    rgb = hls_to_rgb( hsl[0], hsl[1], hsl[2] )
+    hls = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
+    hls = list(hls)
+    hls[1] = hls[1] + reduce_lvl
+    rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
     rgb_int = []
     for elem in rgb:
         rgb_int.append( int(elem) )
@@ -77,6 +83,10 @@ def change_colors_ob( active, inactive ):
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
                 print( line.replace( "2C4448", inactive ), end='' )
+        print( "CHANGED::OPENBOX" )
+    else:
+        print( "FAILED TO CHANGE::OPENBOX - BASE FILE DOES NOT EXIST" )
+
     if( isfile(homedir + "/.config/openbox/menu.xml") ):
         call( ["openbox", "--reconfigure"] )
     else:
@@ -99,7 +109,6 @@ def change_colors_icons( active, inactive, glyph ):
         current_glyph = current_glyph.split( "=" )
         current_glyph = current_glyph.pop()
         file_current_glyph.close()
-        print( "CURRENT GLYPH: " + current_glyph )
 
         call( ["cp", backupdir, realdir] )
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
@@ -115,6 +124,10 @@ def change_colors_icons( active, inactive, glyph ):
             for line in file:
                 print( line.replace( "w=304050", "w=" + glyph ), end='' )
         call( executable, shell=True )
+        print( "CHANGED::ICONS" )
+        print( "CURRENT GLYPH: " + current_glyph )
+    else:
+        print( "FAILED TO CHANGE::ICONS - BASE FILES DO NOT EXIST" )
 
 def change_colors_tint2( active, inactive ):
     backupdir = homedir + "/.config/tint2/tint2rc.base"
@@ -128,6 +141,9 @@ def change_colors_tint2( active, inactive ):
             for line in file:
                 print( line.replace( "2C4448".lower(), inactive ), end='' )
         call( [ "killall", "-SIGUSR1", "tint2" ] )
+        print( "CHANGED::TINT2" )
+    else:
+        print( "FAILED TO CHANGE::TINT2 - BASE FILE DOES NOT EXIST" )
 
 def change_colors_gtk2( active, inactive ):
     backupdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc.base"
@@ -137,6 +153,9 @@ def change_colors_gtk2( active, inactive ):
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
                 print( line.replace( "4A838F", active ), end='' )
+        print( "CHANGED::GTK2" )
+    else:
+        print( "FAILED TO CHANGE::GTK2 - BASE FILE DOES NOT EXIST" )
 
 def change_colors_gtk3( active, inactive ):
     backupdir = homedir + "/.themes/FlatColor/gtk-3.0/gtk.css.base"
@@ -146,33 +165,56 @@ def change_colors_gtk3( active, inactive ):
         with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
             for line in file:
                 print( line.replace( "4A838F".lower(), active ), end='' )
+        print( "CHANGED::GTK3" )
+    else:
+        print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )
+
+def define_redux( hexvalue ):
+    base_brightness = darkness(hexvalue)
+    redux_list = []
+    if( hexvalue == "4A838F" ):
+        redux_list.append(0) 
+        redux_list.append(50)
+    elif base_brightness >= 190:
+        redux_list.append( 60 )
+        redux_list.append( 115 )
+    elif base_brightness >= 160:
+        redux_list.append(50)
+        redux_list.append(105)
+    elif base_brightness <= 125:
+        redux_list.append(20)
+        redux_list.append(55)
+    elif base_brightness <= 100:
+        redux_list.append(10)
+        redux_list.append(15)
+    else:
+        redux_list.append(30)
+        redux_list.append(75)
+    return redux_list
 
 def execute_gcolorchange( image_name ):
+    #--Getting random color from an .Xres file--#
     base_color = read_color_in_line( image_name )
-    if( base_color == "4A838F" ):
-        base_redux = 0
-        inact_redux = 50
-    else:
-        base_redux = 30
-        inact_redux = 75
+    base_brightness = darkness( base_color )
+    #--Defining how dark the windows have to be--#
+    redux_list = define_redux( base_color )
+    base_redux = redux_list[0]
+    inact_redux = redux_list[1]
     active = reduce_brightness( base_color, base_redux )
     inactive = reduce_brightness( base_color, inact_redux )
     fg_icon = base_color
     bg_icon = reduce_brightness( base_color, 40 )
     glyph = reduce_brightness( base_color, 70 )
+    print( "BASE BRIGHTNESS: " + str( base_brightness ) )
     print( "FG: " + active )
     print( "BG: " + inactive )
-    bg_fg_file = open( homedir + "/.main_colors.Xres", "w" )
+    bg_fg_file = open( homedir + "/.main_colors", "w" )
     bg_fg_file.write( "FG:" + active + "\n" )
     bg_fg_file.write( "BG:" + inactive + "\n" )
-    print( "CHANGING::OPENBOX" )
     change_colors_ob( active, inactive )
-    print( "CHANGING::TINT2" )
     change_colors_tint2( active, inactive )
-    print( "CHANGING::GTK" )
     change_colors_gtk2( active, inactive )
     change_colors_gtk3( active, inactive )
-    print( "CHANGING::ICONS" )
     change_colors_icons( fg_icon, bg_icon, glyph )
     print( "SUCCESS" )
 

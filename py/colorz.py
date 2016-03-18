@@ -24,7 +24,7 @@ def colorz(filename, n=3):
     w, h = img.size
 
     points = get_points(img)
-    clusters = kmeans(points, n, 1)
+    clusters = kmeans(points, n, 5)
     rgbs = [map(int, c.center.coords) for c in clusters]
     return map(rtoh, rgbs)
 
