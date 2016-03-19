@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="62"
+   height="62"
+   id="svg11211"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   viewBox="0 0 61.999999 62.000001"
+   sodipodi:docname="launcher_icon_shadow_62.svg">
+  <defs
+     id="defs11213">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath10504-2-2">
+      <path
+         style="opacity:0.2;color:#000000;fill:#ff00ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m 4,24 c -2.216,0 -4,1.784 -4,4 l 0,56 c 0,2.216 1.784,4 4,4 l 56,0 c 2.216,0 4,-1.784 4,-4 l 0,-56 c 0,-2.216 -1.784,-4 -4,-4 L 4,24 z m 6,6 44,0 c 2.216,0 4,1.784 4,4 l 0,44 c 0,2.216 -1.784,4 -4,4 L 10,82 C 7.784,82 6,80.216 6,78 L 6,34 c 0,-2.216 1.784,-4 4,-4 z"
+         id="path10506-3-2"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <filter
+       inkscape:collect="always"
+       id="filter3845">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.82"
+         id="feGaussianBlur3847" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="22.249798"
+     inkscape:cy="23.81988"
+     inkscape:document-units="px"
+     inkscape:current-layer="g4450"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1131"
+     inkscape:window-height="624"
+     inkscape:window-x="233"
+     inkscape:window-y="115"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata11216">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(1016.7143,264.85211)">
+    <g
+       transform="translate(-1087.7143,-289.85211)"
+       style="display:inline"
+       id="g4450"
+       inkscape:export-filename="PNG/launcher_icon_shadow_62.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>

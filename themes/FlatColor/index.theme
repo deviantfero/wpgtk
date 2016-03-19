@@ -1,10 +1,11 @@
 [Desktop Entry]
 Type=X-GNOME-Metatheme
-Name=Iris
-Comment=A flat and light theme with a modern look
+Name=Polar Night
+Comment=dark, cold, clean
 Encoding=UTF-8
 
 [X-GNOME-Metatheme]
-GtkTheme=Iris
-MetacityTheme=Iris
+GtkTheme=Polar Night
+MetacityTheme=Polar Night
 ButtonLayout=:minimize,maximize,close
+IconTheme=gnome

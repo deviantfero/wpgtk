@@ -11,6 +11,13 @@ from os.path import isfile
 homedir = "/home/" + getuser()
 walldir = homedir + "/.wallpapers/"
 
+replacebg = "4A838F"
+replacefg = "2C4448"
+
+def replace_in_file( file_to_operate, target, newstring ):
+    with fileinput.FileInput( file_to_operate, inplace=True, backup=False ) as file:
+        for line in file:
+            print( line.replace( target, newstring ), end='' )
 
 def darkness(hexv):
     rgb = list( int(hexv[i:i+2], 16) for i in ( 0, 2, 4 ) )
@@ -67,22 +74,14 @@ def change_colors_ob( active, inactive ):
     realdir = homedir + "/.themes/colorbamboo/openbox-3/themerc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "4A838F", active ), end='' )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "2C4448", inactive ), end='' )
+        replace_in_file( realdir, replacebg, active )
+        replace_in_file( realdir, replacefg, inactive )
     backupdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc.base"
     realdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "4A838F", active ), end='' )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "2C4448", inactive ), end='' )
+        replace_in_file( realdir, replacebg, active )
+        replace_in_file( realdir, replacefg, inactive )
         print( "CHANGED::OPENBOX" )
     else:
         print( "FAILED TO CHANGE::OPENBOX - BASE FILE DOES NOT EXIST" )
@@ -134,12 +133,8 @@ def change_colors_tint2( active, inactive ):
     realdir = homedir + "/.config/tint2/tint2rc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "4A838F".lower(), active ), end='' )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "2C4448".lower(), inactive ), end='' )
+        replace_in_file( realdir, replacebg.lower(), active )
+        replace_in_file( realdir, replacefg.lower(), inactive )
         call( [ "killall", "-SIGUSR1", "tint2" ] )
         print( "CHANGED::TINT2" )
     else:
@@ -150,9 +145,7 @@ def change_colors_gtk2( active, inactive ):
     realdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "4A838F", active ), end='' )
+        replace_in_file( realdir, replacebg, active )
         print( "CHANGED::GTK2" )
     else:
         print( "FAILED TO CHANGE::GTK2 - BASE FILE DOES NOT EXIST" )
@@ -162,9 +155,7 @@ def change_colors_gtk3( active, inactive ):
     realdir = homedir + "/.themes/FlatColor/gtk-3.0/gtk.css"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "4A838F".lower(), active ), end='' )
+        replace_in_file( realdir, replacebg.lower(), active )
         print( "CHANGED::GTK3" )
     else:
         print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )

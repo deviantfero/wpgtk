@@ -1,27 +1,27 @@
-.header-bar,
-.header-bar:insensitive {
-	border-width: 0 0 1px;
-	border-style: solid;
-	border-color: shade(@menubar_bg_color, 0.90);
+/**************
+ * header-bar *
+ **************/
 
-	background-color: @menubar_bg_color;
-    padding: 6px 6px;
+.header-bar {
+    padding: 6px;
+    border-width: 0;
+    border-style: none;
+    background-color: @theme_bg_color;
 }
 
 .header-bar .button.text-button {
-	padding: 6px 6px;
+    padding: 4px;
 }
 
 .header-bar .button.image-button {
-	padding: 6px 6px;
+    padding: 6px;
 }
 
 .header-bar .title {
-	font: Bold 10;
-    color: @menubar_fg_color;
+    font: bold;
 }
 
 .header-bar .subtitle {
-	font: 9;
-    color: @menubar_fg_color;
+    font: smaller;
 }
+

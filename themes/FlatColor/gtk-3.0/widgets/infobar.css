@@ -2,134 +2,89 @@
  * infobar *
  ***********/
 GtkInfoBar {
-    border-width: 0px;
+    border-width: 0;
     border-style: none;
 }
 
 .info {
-    border-width: 0px;
-    border-style: solid;
-    border-color: shade(@info_bg_color, 0.8);
+    border-width: 0;
+    border-style: none;
     background-color: @info_bg_color;
     background-image: none;
     color: @info_fg_color;
 }
 
-.info .button.close {
-    color: @info_fg_color;
-}
-
-.info .button.close:hover {
-    background-image: linear-gradient(to bottom,
-                                      alpha(white, 0.3),
-                                      alpha(white, 0.2) 30%,
-                                      alpha(black, 0.02));
-}
-
-.info .button.close:active {
-    color: @info_fg_color;
-    background-image: linear-gradient(to bottom,
-                                      alpha(black, 0.1),
-                                      transparent);
-}
-
 .warning {
-    border-width: 0px;
-    border-style: solid;
-    border-color: shade(@warning_bg_color, 0.8);
+    border-width: 0;
+    border-style: none;
     background-color: @warning_bg_color;
     background-image: none;
     color: @warning_fg_color;
 }
 
-.warning .button.close {
-    color: @warning_fg_color;
-}
-
-.warning .button.close:hover {
-    background-image: linear-gradient(to bottom,
-                                      alpha(white, 0.3),
-                                      alpha(white, 0.2) 30%,
-                                      alpha(black, 0.02));
-}
-
-.warning .button.close:active {
-    color: @warning_fg_color;
-    background-image: linear-gradient(to bottom,
-                                      alpha(black, 0.1),
-                                      transparent);
-}
-
 .question {
-    border-width: 0px;
-    border-style: solid;
-    border-color: shade(@question_bg_color, 0.8);
+    border-width: 0;
+    border-style: none;
     background-color: @question_bg_color;
     background-image: none;
     color: @question_fg_color;
-}
-
-.question .button.close {
-    border-style: solid;
-    border-width: 1px;
-    color: @question_fg_color;
-    background-image: none;
-    background-color: @question_bg_color;
-    border-color: @question_bg_color;
-}
-
-.question .button {
-    border-style: solid;
-    border-width: 1px;
-    color: @question_fg_color;
-    background-image: none;
-    background-color: @question_bg_color;
-    border-color: shade(@question_bg_color, 0.85);
-}
-
-.question .button.close:hover,
-.question .button:hover {
-    transition: none;
-    border-style: solid;
-    border-width: 1px;
-    color: @question_fg_color;
-    border-color: alpha(#000, 0.15);
-    background-image: none;
-    background-color: @question_bg_color;
-}
-
-.question .button.close:active {
-    border-style: solid;
-    border-width: 1px;
-    color: @question_fg_color;
-    border-color: alpha(#000, 0.25);
-    background-image: none;
-    background-color: @question_bg_color;
 }
 
 .error {
-    border-width: 0px;
-    border-style: solid;
-    border-color: shade(@error_bg_color, 0.8);
+    border-width: 0;
+    border-style: none;
     background-color: @error_bg_color;
     background-image: none;
     color: @error_fg_color;
 }
 
+.warning .button,
+.question .button,
+.info .button,
+.error .button,
+.warning .button.close,
+.question .button.close,
+.info .button.close,
 .error .button.close {
-    color: @error_fg_color;
-}
 
+}
+.warning .button:hover,
+.question .button:hover,
+.info .button:hover,
+.error .button:hover,
+.warning .button.close:hover,
+.question .button.close:hover,
+.info .button.close:hover,
 .error .button.close:hover {
-    background-image: linear-gradient(to bottom,
-                                      alpha(white, 0.3),
-                                      alpha(white, 0.2) 30%,
-                                      alpha(black, 0.02));
-}
 
-.error .button.close:active {
-    color: @error_fg_color;
-    background-image: linear-gradient(to bottom,
-                                      alpha(black, 0.1),
-                                      transparent);
+}
+.warning .button:active,
+.question .button:active,
+.info .button:active,
+.error .button:active,
+.warning .button.close:active,
+.question .button.close:active,
+.info .button.close:active,
+.error .button.close:active,
+.warning .button:active:hover,
+.question .button:active:hover,
+.info .button:active:hover,
+.error .button:active:hover,
+.warning .button.close:active:hover,
+.question .button.close:active:hover,
+.info .button.close:active:hover,
+.error .button.close:active:hover {
+
+}
+.warning .button:insensitive,
+.question .button:insensitive,
+.info .button:insensitive,
+.error .button:insensitive {
+
+}
+.warning .button *:insensitive,
+.question .button *:insensitive,
+.info .button *:insensitive,
+.error .button *:insensitive {
+
 }

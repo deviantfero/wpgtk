@@ -2,22 +2,23 @@
  * scrollbar *
  *************/
 .scrollbar {
-    border-width: 0px;
+    border-width: 0;
     border-style: none;
     padding: 0;
 }
 
 .scrollbars-junction,
 .scrollbar.trough {
-    border: solid 3px transparent;  
+    border-width: 0;
     border-radius: 0;
-    background-color:  shade(@theme_bg_color, 1.0);
+    background-color: @theme_bg_color;
     background-image: none;
 }
 
 .scrollbar.button,
 .scrollbar.button:active,
 .scrollbar.button:active:hover {
+
     border-width: 0;
     border-radius: 0;
     background-color: transparent;
@@ -26,24 +27,26 @@
 }
 
 .scrollbar.slider {
-    padding: 10px;
-    border-width: 3px;
-    border-color: transparent;
+    border-width: 0;
     border-radius: 0;
-    border-style: solid;
-    background-color: mix(@theme_bg_color, @theme_fg_color, 0.3);
+    background-color: shade(@button_normal_color, 1.1);
 }
 
 .scrollbar.slider:hover,
 .scrollbar.slider.vertical:hover {
-    background-color: mix(@theme_bg_color, @theme_fg_color, 0.4);
+    background-color: @button_normal_color;
 }
 
 .scrollbar.slider:active,
 .scrollbar.slider.vertical:active {
-    background-color: shade(@theme_selected_fg_color, 1.35);
+    background-color: @theme_selected_bg_color;
 }
-
+.scrollbar.trough,
+.scrollbar.trough.vertical {
+    border-width: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
 .scrollbar.slider.fine-tune:prelight:active {
       background-size: 50%;
       background-repeat: no-repeat;
@@ -52,21 +55,20 @@
 
 /* overlay scrollbar */
 OsThumb {
-    color: shade(@theme_bg_color, 0.7);
+    color: shade(@theme_bg_color, 0.6);
 }
 
 OsThumb:selected,
 OsScrollbar:selected {
-    background-color: @theme_selected_fg_color;
+    background-color: @theme_selected_bg_color;
 }
 
 OsThumb:active,
 OsScrollbar:active {
-    background-color: @theme_selected_fg_color;
+    background-color: @theme_selected_bg_color;
 }
 
 OsThumb:insensitive,
 OsScrollbar:insensitive {
     background-color: shade(@theme_bg_color, 0.9);
 }
-

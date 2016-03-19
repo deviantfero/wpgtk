@@ -1,0 +1,68 @@
+UnityPanelWidget,
+.unity-panel {
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #363D43;
+    background-color: #363D43;
+    background-image: none;
+    color: #fff;
+}
+
+.unity-panel.menubar,
+.unity-panel .menubar {
+}
+
+.unity-panel.menuitem,
+.unity-panel .menuitem {
+    border-width: 0 1px;
+    color: #fff;
+}
+
+.unity-panel.menubar.menuitem:hover,
+.unity-panel.menubar .menuitem *:hover {
+    border-color: @theme_selected_bg_color;
+    background-color: @theme_selected_bg_color;
+    background-image: none;
+    color: @theme_selected_fg_color;
+}
+
+SheetStyleDialog.unity-force-quit {
+    background-color: @theme_bg_color;
+}
+
+
+/* This will theme the top decoration, so the whole space above the window */
+UnityDecoration.top {
+	border: 0px solid shade (@theme_bg_color, 0.5);
+	border-bottom-width: 0;
+	border-radius: 4px 4px 0 0; /* Corner radius, only the top ones should be */
+	padding: 1px 8px 0 8px; /* This padding will be applied to the content of the top layout */
+	background-color: @theme_bg_color; /* Decoration background */
+	color: @theme_fg_color; /* The foreground color will be used to paint the text */
+	text-shadow: none;
+	box-shadow: none;
+}
+
+/* Top decoration for inactive windows */
+UnityDecoration.top:backdrop {
+	border: 0px solid @theme_bg_color;
+	border-bottom-width: 0;
+	background-color: @theme_bg_color;
+	color: #999999;
+}
+
+/* Left decoration, it themes only the space at the left of the window */
+UnityDecoration.left,
+/* Right decoration, it themes only the space at the right of the window */
+UnityDecoration.right,
+/* Bottom decoration, it themes all the space below the window */
+UnityDecoration.bottom {
+	background-color: @theme_bg_color;
+}
+
+/* Left, right and bottom decorations themes for inactive windows */
+UnityDecoration.left:backdrop,
+UnityDecoration.right:backdrop,
+UnityDecoration.bottom:backdrop {
+	background-color: @theme_bg_color;
+}
