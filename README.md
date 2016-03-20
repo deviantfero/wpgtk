@@ -3,7 +3,7 @@
 
 See What it can do!
 
-#### ![Watch a video demonstration, Click here!](http://s1.webmshare.com/99Kna.webm)
+http://s1.webmshare.com/99Kna.webm
 ![Dynamic themes](http://i.imgur.com/paIQsa0.png)
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
@@ -24,9 +24,9 @@ yaourt -S wpgtk-git
 
 ###### Features added
 
-* Now your window borders change with your wallpaper
-* Now your Icon set changes with your wallpaper
-* It also changes a special GKT theme automatically
+* Special Openbox theme so that window borders change with your wallpaper
+* Special Icon set included that changes with your wallpaper
+* It also changes a special GTK theme automatically
 * It uses random colors from the image, so you can repeat until you're satisfied
 * It comes with special themes solely for the purpose of being dynamic, so no need for any complicated configuration
 * you can modify the themes to a certain degree. So feel free to do it!
