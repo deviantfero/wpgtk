@@ -20,7 +20,7 @@ yaourt -S wpgtk-git
 ---
 
 ### Version
-2.3
+2.5
 
 ###### Features added
 
@@ -39,6 +39,22 @@ yaourt -S wpgtk-git
 ```sh
 URxvt*background: 0
 ```
+
+###### Important feature added
+
+* now wpgtk supports optional files, that means that it supports every window manager as long as it's colors are defined in a textfile and hexagesimal values
+
+_**example**_
+
+all you need to do, is copy your config file to ~/.themes/color_other
+add a ".base" at the end, and replace your active and inactive states colors with COLORACT and COLORIN respectively.
+wpg will generate a config file each time it runs with their respective color.
+
+this would be .base file of your wm config
+![INPUT](http://i.imgur.com/IYW7c7a.png)
+
+this would be the output config
+![OUTPUT](http://i.imgur.com/spfrUFc.png)
 
 ---
 
@@ -99,8 +115,5 @@ it's http://github.com/everett1992/wp
 
 ### Examples
 ![Dynamic bar](http://i.imgur.com/1d8ragK.png)
-![Dynamic theme2](http://i.imgur.com/wzBV8nV.png)
-![Dynamic bar2](http://i.imgur.com/ucBAOXT.png)
-![IMG 1](http://i.imgur.com/xXIB7QH.png)
-![IMG 1](http://i.imgur.com/fpbmtPi.png)
+![Dynamic theme2](http://i.imgur.com/jNNSenW.png)
 
