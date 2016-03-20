@@ -9,7 +9,7 @@ from gi.repository import Gtk, GdkPixbuf, GLib
 from colorparser import execute_gcolorchange
 from time import sleep
 
-version = "2.3"
+version = "2.5"
 
 class fileList():
 
