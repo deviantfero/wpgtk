@@ -4,7 +4,7 @@
 See What it can do!
 
 #### ![Watch a video demonstration, Click here!](http://s1.webmshare.com/99Kna.webm)
-![Dynamic themes](http://i.imgur.com/MGPtHXs.png)
+![Dynamic themes](http://i.imgur.com/paIQsa0.png)
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
