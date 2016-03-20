@@ -77,7 +77,7 @@ class mainWindow( Gtk.Window ):
         self.add( self.grid )
         self.preview = Gtk.Image()
         self.sample = Gtk.Image()
-        if( os.path.isfile( image_name ) ):
+        if( os.path.isfile( image_name ) and os.path.isfile(sample_name) ):
             self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale( image_name, width=500, height=333, preserve_aspect_ratio=False )
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_name, width=500, height=500 )
             self.preview.set_from_pixbuf( self.pixbuf_preview )
@@ -110,6 +110,7 @@ class mainWindow( Gtk.Window ):
         if response == Gtk.ResponseType.OK:
             print( "Open Clicked" )
             filepath = filechooser.get_filename()
+            filechooser.destroy()
             if( "\\" in filepath ):
                 filepath = filepath.replace( "\\", "\\\\" )
             if( " " in filepath ):
@@ -123,10 +124,8 @@ class mainWindow( Gtk.Window ):
                 call( "cp " + filepath + " ./" + filename, shell=True )
                 call( "wpcscript add " + "./" + filename, shell=True )
                 call( "rm ./" + filename, shell=True )
-                filechooser.destroy()
             else:
                 call( "wpcscript add " + filepath, shell=True )
-            filechooser.destroy()
             option_list = Gtk.ListStore( str )
             current_walls = fileList( filepath )
 
@@ -136,6 +135,8 @@ class mainWindow( Gtk.Window ):
             self.option_combo.set_entry_text_column( 0 )
             self.colorscheme.set_model( option_list )
             self.colorscheme.set_entry_text_column( 0 )
+        elif response == Gtk.ResponseType.CANCEL:
+            filechooser.destroy()
         print( "Done." )
 
 
@@ -146,16 +147,24 @@ class mainWindow( Gtk.Window ):
         path = GLib.get_home_dir() + "/.wallpapers/"
         current_walls = fileList( path )
         filepath = current_walls.file_names_only[x]
-        colorscheme = current_walls.file_names_only[y]
+        colorscheme_file = current_walls.file_names_only[y]
+        colorscheme = "." + colorscheme_file + ".Xres"
+        colorscheme_sample = "." + current_walls.file_names_only[y] + ".sample.png"
+        if( not os.path.isfile( path + colorscheme ) or not os.path.isfile( path + colorscheme_sample ) ):
+            print( ":: " + path + colorscheme + " NOT FOUND" )
+            print( ":: GENERATING COLORS" )
+            call( [ "wpcscript", "add", path + filepath ] )
+            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( path + colorscheme_sample, width=500, height=500 )
+            self.sample.set_from_pixbuf( self.pixbuf_sample )
         call( [ "wpcscript", "change", filepath ] )
-        call( [ "xrdb", "-merge", GLib.get_home_dir() + "/.wallpapers/." + colorscheme + ".Xres" ] )
+        call( [ "xrdb", "-merge", path + colorscheme] )
         init_file = open( GLib.get_home_dir() + "/.wallpapers/wp_init.sh", "w" )
         init_file.writelines( [ "#!/bin/bash\n", "wpcscript change " + filepath + " && " ] )
-        init_file.writelines( "xrdb -merge " + path + "." + colorscheme + ".Xres\n" )
+        init_file.writelines( "xrdb -merge " + path + colorscheme + "\n" )
         init_file.close()
         call( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
         if( os.path.isfile(GLib.get_home_dir() + "/.themes/colorbamboo/openbox-3/themerc.base") ):
-            execute_gcolorchange( colorscheme )
+            execute_gcolorchange( colorscheme_file )
         print( "Done." )
 
     def on_rm_clicked( self, widget ):
@@ -192,7 +201,11 @@ class mainWindow( Gtk.Window ):
         selected_file = current_walls.file_names_only[x]
         selected_sample = "." + selected_file + ".sample.png"
         samplepath = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
-        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( samplepath, width=500, height=500 )
+        nosamplepath = GLib.get_home_dir() + "/.wallpapers/" + ".no_sample.sample.png"
+        if( os.path.isfile( samplepath ) ):
+            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( samplepath, width=500, height=500 )
+        else:
+            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( nosamplepath, width=500, height=500 )
         self.sample.set_from_pixbuf( self.pixbuf_sample )
 
 if __name__ == "__main__":

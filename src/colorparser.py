@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import fileinput
 from subprocess import call
+from os import walk
 from sys import argv
 from colorsys import rgb_to_hls
 from colorsys import hls_to_rgb
@@ -13,6 +14,7 @@ walldir = homedir + "/.wallpapers/"
 
 replacebg = "4A838F"
 replacefg = "2C4448"
+replace = [ "ACTIVE", "INACTIVE" ]
 
 def replace_in_file( file_to_operate, target, newstring ):
     with fileinput.FileInput( file_to_operate, inplace=True, backup=False ) as file:
@@ -72,10 +74,13 @@ def add_brightness( hex_string, reduce_lvl ):
 def change_colors_ob( active, inactive ):
     backupdir = homedir + "/.themes/colorbamboo/openbox-3/themerc.base"
     realdir = homedir + "/.themes/colorbamboo/openbox-3/themerc"
+    button_color_hover = add_brightness( active, 70 )
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
         replace_in_file( realdir, replacebg, active )
         replace_in_file( realdir, replacefg, inactive )
+        replace_in_file( realdir, "REPLAC", button_color_hover )
+        replace_in_file( realdir, "REPLAD", inactive )
     backupdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc.base"
     realdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc"
     if( isfile( backupdir ) ):
@@ -160,6 +165,22 @@ def change_colors_gtk3( active, inactive ):
     else:
         print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )
 
+def change_other_files( active, inactive ):
+    other_path = "/home/" + getuser() + "/.themes/color_other/"
+    files = []
+    for( dirpath, dirnames, filenames ) in walk( other_path ):
+        files.extend( filenames )
+    if( files ):
+        for word in files:
+            if ".base" in word:
+                original = word.split( ".base", len(word) ).pop(0)
+                call([ "cp", other_path + word, other_path + original ])
+                replace_in_file( other_path + original, replace[0], active )
+                replace_in_file( other_path + original, replace[1], inactive )
+                print( "CHANGED::OPTIONAL FILES - " + original )
+    else:
+        print( "NO OPTIONAL FILES DETECTED::NOT CHANGED" )
+
 def define_redux( hexvalue ):
     base_brightness = darkness(hexvalue)
     redux_list = []
@@ -207,6 +228,7 @@ def execute_gcolorchange( image_name ):
     change_colors_gtk2( active, inactive )
     change_colors_gtk3( active, inactive )
     change_colors_icons( fg_icon, bg_icon, glyph )
+    change_other_files( active, inactive )
     print( "SUCCESS" )
 
 if __name__ == "__main__":

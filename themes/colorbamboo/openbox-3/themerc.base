@@ -2,6 +2,7 @@
 #DO NOT CHANGE THINGS WHICH CONTAIN 4A838F
 #OR THINGS WITH 2C4448 as this are the colors that my program searchs and replaces
 #everything else is editable, please edit themerc.base instead of themerc
+
 border.width: 0
 menu.border.color: #2E2920
 menu.border.width: 0
@@ -34,15 +35,15 @@ window.inactive.border.color: #2C4448
 window.active.button.disabled.bg: Solid Flat
 window.active.button.disabled.bg.color: #4A838F
 window.active.button.disabled.bg.border.color: #4A838F
-window.active.button.disabled.image.color: #c0c0c0
+window.active.button.disabled.image.color: #4A838F
 window.active.button.hover.bg: Solid Flat
 window.active.button.hover.bg.color: #4A838F
 window.active.button.hover.bg.border.color: #4A838F
-window.active.button.hover.image.color: #58D3F7
+window.active.button.hover.image.color: #REPLAC
 window.active.button.pressed.bg: Solid Flat
 window.active.button.pressed.bg.color: #4A838F
 window.active.button.pressed.bg.border.color: #4A838F
-window.active.button.pressed.image.color: #46919C
+window.active.button.pressed.image.color: #REPLAD
 Window.active.button.toggled.bg: Solid Flat
 window.active.button.toggled.bg.color: #4A838F
 window.active.button.toggled.bg.border.color: #4A838F

@@ -22,6 +22,7 @@ function tint2support {
 function install_color {
 	echo "CREATING::DIRECTORIES"
 	mkdir ~/.wallpapers 
+	cp ./misc/no_sample.sample.png ~/.wallpapers/.no_sample.sample.png
 	mkdir ~/.themes
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"

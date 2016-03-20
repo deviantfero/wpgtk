@@ -51,6 +51,7 @@ function install_color {
 	sudo chmod -R ugo+rx /usr/local/bin/src
 	sudo cp ./wpcscript ./wpg /usr/local/bin
 	sudo cp ./functions /usr/local/bin
+	cp ./misc/no_sample.sample.png ~/.wallpapers/.no_sample.sample.png
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/
 	cp -r ./themes/colorbamboo_nb ~/.themes/
@@ -63,5 +64,10 @@ function install_color {
 	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wpcscript
 }
 
-install_dependencies &&
-install_color
+usr="$(whoami)"
+if [[ "$usr" != "root" ]]; then
+	install_dependencies &&
+	install_color
+else
+	echo "don't run as sudo"
+fi
