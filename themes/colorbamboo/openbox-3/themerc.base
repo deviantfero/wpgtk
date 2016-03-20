@@ -1,13 +1,13 @@
 #openbox themerc edited with obtheme
-#DO NOT CHANGE THINGS WHICH CONTAIN 4A838F
-#OR THINGS WITH 2C4448 as this are the colors that my program searchs and replaces
+#DO NOT CHANGE THINGS WHICH CONTAIN COLORACT
+#OR THINGS WITH COLORIN as this are the colors that my program searchs and replaces
 #everything else is editable, please edit themerc.base instead of themerc
 
 border.width: 0
 menu.border.color: #2E2920
 menu.border.width: 0
 menu.items.active.bg: Solid Flat
-menu.items.active.bg.color: #4A838F
+menu.items.active.bg.color: #COLORACT
 menu.items.active.text.color: #FFFFFF
 menu.items.bg: Flat Solid
 menu.items.bg.color: #202020
@@ -24,33 +24,33 @@ menu.title.text.justify: Left
 osd.bg: flat border vertical gradient
 osd.bg.color: #121212
 osd.bg.colorTo: #121212
-osd.bg.border.color: #4A838F
-osd.border.color: #4A838F
+osd.bg.border.color: #COLORACT
+osd.border.color: #COLORACT
 osd.border.width: 3
 osd.label.bg: parentrelative
 osd.label.text.color: #f0f0f0
 padding.height: 6
-window.active.border.color: #4A838F
-window.inactive.border.color: #2C4448
+window.active.border.color: #COLORACT
+window.inactive.border.color: #COLORIN
 window.active.button.disabled.bg: Solid Flat
-window.active.button.disabled.bg.color: #4A838F
-window.active.button.disabled.bg.border.color: #4A838F
-window.active.button.disabled.image.color: #4A838F
+window.active.button.disabled.bg.color: #COLORACT
+window.active.button.disabled.bg.border.color: #COLORACT
+window.active.button.disabled.image.color: #COLORACT
 window.active.button.hover.bg: Solid Flat
-window.active.button.hover.bg.color: #4A838F
-window.active.button.hover.bg.border.color: #4A838F
+window.active.button.hover.bg.color: #COLORACT
+window.active.button.hover.bg.border.color: #COLORACT
 window.active.button.hover.image.color: #REPLAC
 window.active.button.pressed.bg: Solid Flat
-window.active.button.pressed.bg.color: #4A838F
-window.active.button.pressed.bg.border.color: #4A838F
+window.active.button.pressed.bg.color: #COLORACT
+window.active.button.pressed.bg.border.color: #COLORACT
 window.active.button.pressed.image.color: #REPLAD
 Window.active.button.toggled.bg: Solid Flat
-window.active.button.toggled.bg.color: #4A838F
-window.active.button.toggled.bg.border.color: #4A838F
+window.active.button.toggled.bg.color: #COLORACT
+window.active.button.toggled.bg.border.color: #COLORACT
 window.active.button.toggled.image.color: #FFFFFF
 window.active.button.unpressed.bg: Solid Flat
-window.active.button.unpressed.bg.color: #4A838F
-window.active.button.unpressed.bg.border.color: #4A838F
+window.active.button.unpressed.bg.color: #COLORACT
+window.active.button.unpressed.bg.border.color: #COLORACT
 window.active.button.unpressed.image.color: #FFFFFF
 window.active.client.color: #202020
 window.active.grip.bg: Solid Flat
@@ -61,34 +61,34 @@ window.active.label.bg: Parentrelative
 window.active.label.text.color: #FFFFFF
 window.active.label.text.font: shadow=n
 window.active.title.bg: Solid Flat
-window.active.title.bg.color: #4A838F
+window.active.title.bg.color: #COLORACT
 window.client.padding.width: 0
 window.handle.width: 0
 window.inactive.button.disabled.bg: Solid Flat
-window.inactive.button.disabled.bg.color: #2C4448
-window.inactive.button.disabled.bg.border.color: #2C4448
-window.inactive.button.disabled.image.color: #2C4448
+window.inactive.button.disabled.bg.color: #COLORIN
+window.inactive.button.disabled.bg.border.color: #COLORIN
+window.inactive.button.disabled.image.color: #COLORIN
 window.inactive.button.hover.bg: Solid Flat
-window.inactive.button.hover.bg.color: #2C4448
-window.inactive.button.hover.bg.border.color: #2C4448
+window.inactive.button.hover.bg.color: #COLORIN
+window.inactive.button.hover.bg.border.color: #COLORIN
 window.inactive.button.hover.image.color: #2E2920
 window.inactive.button.pressed.bg: Solid Flat
-window.inactive.button.pressed.bg.color: #2C4448
+window.inactive.button.pressed.bg.color: #COLORIN
 window.inactive.button.pressed.bg.border.color: #2E2920
-window.inactive.button.pressed.image.color: #2C4448
-window.inactive.button.toggled.image.color: #2C4448
+window.inactive.button.pressed.image.color: #COLORIN
+window.inactive.button.toggled.image.color: #COLORIN
 window.inactive.button.unpressed.bg: Solid Flat
-window.inactive.button.unpressed.bg.color: #2C4448
-window.inactive.button.unpressed.bg.border.color: #2C4448
-window.inactive.button.unpressed.image.color: #2C4448
+window.inactive.button.unpressed.bg.color: #COLORIN
+window.inactive.button.unpressed.bg.border.color: #COLORIN
+window.inactive.button.unpressed.image.color: #COLORIN
 window.inactive.client.color: #202020
 window.inactive.grip.bg: Solid Flat
-window.inactive.grip.bg.color: #2C4448
+window.inactive.grip.bg.color: #COLORIN
 window.inactive.handle.bg: Solid Flat
-window.inactive.handle.bg.color: #2C4448
+window.inactive.handle.bg.color: #COLORIN
 window.inactive.label.bg: Parentrelative
-window.inactive.label.text.color: #2C4448
+window.inactive.label.text.color: #COLORIN
 window.inactive.label.text.font: shadow=n
 window.inactive.title.bg: Solid Flat
-window.inactive.title.bg.color: #2C4448
+window.inactive.title.bg.color: #COLORIN
 window.label.text.justify: Center

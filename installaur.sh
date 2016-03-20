@@ -23,7 +23,7 @@ function install_color {
 	echo "CREATING::DIRECTORIES"
 	mkdir ~/.wallpapers 
 	cp ./misc/no_sample.sample.png ~/.wallpapers/.no_sample.sample.png
-	mkdir ~/.themes
+	mkdir ~/.themes/color_other
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"
 	echo "INSTALLING::OPENBOX-THEME"

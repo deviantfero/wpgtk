@@ -42,7 +42,7 @@ function tint2support {
 function install_color {
 	echo "CREATING::DIRECTORIES"
 	mkdir ~/.wallpapers 
-	mkdir ~/.themes
+	mkdir -p ~/.themes/color_other
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"
 	sudo cp -r ./py/ /usr/local/bin/

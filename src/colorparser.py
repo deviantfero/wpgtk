@@ -12,9 +12,8 @@ from os.path import isfile
 homedir = "/home/" + getuser()
 walldir = homedir + "/.wallpapers/"
 
-replacebg = "4A838F"
-replacefg = "2C4448"
-replace = [ "ACTIVE", "INACTIVE" ]
+replace_active = "COLORACT"
+replace_inactive = "COLORIN"
 
 def replace_in_file( file_to_operate, target, newstring ):
     with fileinput.FileInput( file_to_operate, inplace=True, backup=False ) as file:
@@ -77,16 +76,16 @@ def change_colors_ob( active, inactive ):
     button_color_hover = add_brightness( active, 70 )
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replacebg, active )
-        replace_in_file( realdir, replacefg, inactive )
+        replace_in_file( realdir, replace_inactive, inactive )
+        replace_in_file( realdir, replace_active, active )
         replace_in_file( realdir, "REPLAC", button_color_hover )
         replace_in_file( realdir, "REPLAD", inactive )
     backupdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc.base"
     realdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replacebg, active )
-        replace_in_file( realdir, replacefg, inactive )
+        replace_in_file( realdir, replace_inactive, inactive )
+        replace_in_file( realdir, replace_active, active )
         print( "CHANGED::OPENBOX" )
     else:
         print( "FAILED TO CHANGE::OPENBOX - BASE FILE DOES NOT EXIST" )
@@ -138,8 +137,8 @@ def change_colors_tint2( active, inactive ):
     realdir = homedir + "/.config/tint2/tint2rc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replacebg.lower(), active )
-        replace_in_file( realdir, replacefg.lower(), inactive )
+        replace_in_file( realdir, replace_inactive, inactive )
+        replace_in_file( realdir, replace_active, active )
         call( [ "killall", "-SIGUSR1", "tint2" ] )
         print( "CHANGED::TINT2" )
     else:
@@ -150,7 +149,7 @@ def change_colors_gtk2( active, inactive ):
     realdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replacebg, active )
+        replace_in_file( realdir, replace_active, active )
         print( "CHANGED::GTK2" )
     else:
         print( "FAILED TO CHANGE::GTK2 - BASE FILE DOES NOT EXIST" )
@@ -160,7 +159,7 @@ def change_colors_gtk3( active, inactive ):
     realdir = homedir + "/.themes/FlatColor/gtk-3.0/gtk.css"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replacebg.lower(), active )
+        replace_in_file( realdir, replace_active, active )
         print( "CHANGED::GTK3" )
     else:
         print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )
@@ -175,8 +174,8 @@ def change_other_files( active, inactive ):
             if ".base" in word:
                 original = word.split( ".base", len(word) ).pop(0)
                 call([ "cp", other_path + word, other_path + original ])
-                replace_in_file( other_path + original, replace[0], active )
-                replace_in_file( other_path + original, replace[1], inactive )
+                replace_in_file( other_path + original, replace_inactive, active )
+                replace_in_file( other_path + original, replace_active, inactive )
                 print( "CHANGED::OPTIONAL FILES - " + original )
     else:
         print( "NO OPTIONAL FILES DETECTED::NOT CHANGED" )

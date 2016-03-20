@@ -16,7 +16,7 @@ border_color_pressed = #ffffff 100
 # Background 2: Active task, Clock, Launcher icon, Urgent task
 rounded = 0
 border_width = 0
-background_color = #4a838f 100
+background_color = #COLORACT 100
 border_color = #224f55 0
 background_color_hover = #46919c 100
 border_color_hover = #224f55 0
@@ -26,7 +26,7 @@ border_color_pressed = #224f55 0
 # Background 3: Default task, Iconified task, Launcher, Systray, Tooltip
 rounded = 0
 border_width = 0
-background_color = #2c4448 100
+background_color = #COLORIN 100
 border_color = #ffffff 100
 background_color_hover = #46919c 32
 border_color_hover = #ffffff 100
