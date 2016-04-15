@@ -1,0 +1,27 @@
+/**************
+ * header-bar *
+ **************/
+
+.header-bar {
+    padding: 6px;
+    border-width: 0;
+    border-style: none;
+    background-color: @theme_bg_color;
+}
+
+.header-bar .button.text-button {
+    padding: 4px;
+}
+
+.header-bar .button.image-button {
+    padding: 6px;
+}
+
+.header-bar .title {
+    font: bold;
+}
+
+.header-bar .subtitle {
+    font: smaller;
+}
+

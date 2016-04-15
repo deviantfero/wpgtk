@@ -1,0 +1,90 @@
+/***********
+ * infobar *
+ ***********/
+GtkInfoBar {
+    border-width: 0;
+    border-style: none;
+}
+
+.info {
+    border-width: 0;
+    border-style: none;
+    background-color: @info_bg_color;
+    background-image: none;
+    color: @info_fg_color;
+}
+
+.warning {
+    border-width: 0;
+    border-style: none;
+    background-color: @warning_bg_color;
+    background-image: none;
+    color: @warning_fg_color;
+}
+
+.question {
+    border-width: 0;
+    border-style: none;
+    background-color: @question_bg_color;
+    background-image: none;
+    color: @question_fg_color;
+}
+
+.error {
+    border-width: 0;
+    border-style: none;
+    background-color: @error_bg_color;
+    background-image: none;
+    color: @error_fg_color;
+}
+
+.warning .button,
+.question .button,
+.info .button,
+.error .button,
+.warning .button.close,
+.question .button.close,
+.info .button.close,
+.error .button.close {
+
+}
+.warning .button:hover,
+.question .button:hover,
+.info .button:hover,
+.error .button:hover,
+.warning .button.close:hover,
+.question .button.close:hover,
+.info .button.close:hover,
+.error .button.close:hover {
+
+}
+.warning .button:active,
+.question .button:active,
+.info .button:active,
+.error .button:active,
+.warning .button.close:active,
+.question .button.close:active,
+.info .button.close:active,
+.error .button.close:active,
+.warning .button:active:hover,
+.question .button:active:hover,
+.info .button:active:hover,
+.error .button:active:hover,
+.warning .button.close:active:hover,
+.question .button.close:active:hover,
+.info .button.close:active:hover,
+.error .button.close:active:hover {
+
+}
+.warning .button:disabled,
+.question .button:disabled,
+.info .button:disabled,
+.error .button:disabled {
+
+}
+.warning .button *:disabled,
+.question .button *:disabled,
+.info .button *:disabled,
+.error .button *:disabled {
+
+}

@@ -1,0 +1,102 @@
+/**************
+ * spinbutton *
+ **************/
+.spinbutton .button {
+
+    color: mix(@theme_text_color, @theme_base_color, 0.4);
+    padding: 2px 4px;
+    border-width: 0;
+    border-radius: 0;
+    border-style: none;
+    background-color: transparent;
+    background-image: none;
+}
+
+.spinbutton .button:disabled {
+    color: mix(@theme_text_color, @theme_base_color, 0.55);
+}
+
+.spinbutton .button:active,
+.spinbutton .button:hover {
+    color: @theme_fg_color;
+}
+
+.spinbutton .button:first-child {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.spinbutton .button:last-child {
+    border-radius: 0;
+}
+
+.spinbutton .button:dir(rtl) {
+
+}
+
+.spinbutton.vertical .button {
+
+    border-width: 1px;
+    border-style: none;
+    border-radius: 0;
+    background-color: @theme_base_color;
+    color: mix(@theme_text_color, @theme_base_color, 0.4);
+    background-image: none;
+    box-shadow: none;
+}
+
+.spinbutton.vertical .button:hover {
+    color: @theme_fg_color;
+    background-image: none;
+}
+
+.spinbutton.vertical .button:active {
+    color: @theme_fg_color;
+    background-image: none;
+}
+
+.spinbutton.vertical .button:active:hover {
+
+}
+
+.spinbutton.vertical .button:focus,
+.spinbutton.vertical .button:hover:focus,
+.spinbutton.vertical .button:active:focus,
+.spinbutton.vertical .button:active:hover:focus {
+
+}
+
+.spinbutton.vertical .button:disabled {
+    background-color: shade(@theme_bg_color, 1.04);
+    background-image: none;
+    color: mix(@theme_text_color, @theme_base_color, 0.4);
+    background-image: none;
+}
+
+.spinbutton.vertical .button:first-child {
+    border-width: 1px 1px 0 1px;
+    border-bottom-width: 0;
+    border-radius: 0;
+}
+
+.spinbutton.vertical .button:last-child {
+    border-width: 0 1px 1px 1px;
+    border-top-width: 0;
+    border-radius: 0;
+}
+
+.spinbutton.vertical.entry {
+    border-width: 0;
+    border-style: none;
+    border-top-color: @theme_base_color;
+    border-bottom-color: @theme_base_color;
+    border-radius: 0;
+}
+.spinbutton.vertical.entry:disabled {
+    border-top-color:  shade(@theme_bg_color, 1.04);
+    border-bottom-color: shade(@theme_bg_color, 1.04);
+}
+.spinbutton.vertical.entry:active,
+.spinbutton.vertical.entry:focus {
+    box-shadow: inset 4px 0 @theme_selected_bg_color;
+}

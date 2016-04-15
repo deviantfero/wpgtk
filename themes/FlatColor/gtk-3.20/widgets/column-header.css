@@ -1,0 +1,53 @@
+/*****************
+ * column-header *
+ *****************/
+column-header.button,
+column-header.button:active,
+column-header .button,
+column-header .button:active {
+    font-weight: bold;
+    border-width: 0;
+    border-radius: 0;
+}
+column-header.button,
+column-header.button:active,
+column-header.button:focus,
+column-header.button:active:focus,
+column-header .button,
+column-header .button:active,
+column-header .button:focus,
+column-header .button:active:focus {
+
+    box-shadow: none;
+    background-color: inherit;
+    background-image: none;
+}
+column-header.button:hover,
+column-header.button:active:hover,
+column-header.button:hover:focus,
+column-header.button:active:hover:focus,
+column-header .button:hover,
+column-header .button:active:hover,
+column-header .button:hover:focus,
+column-header .button:active:hover:focus {
+ 
+    box-shadow: none;
+    background-color: inherit;
+    background-image: none;
+}
+column-header:last-child.button,
+column-header:last-child .button {
+
+}
+column-header.button,
+column-header .button,
+column-header.button:focus,
+column-header .button:focus {
+    color: shade(@theme_text_color, 1.1);
+}
+column-header.button:active,
+column-header .button:active,
+column-header.button:active:focus,
+column-header .button:active:focus {
+    color: @theme_selected_bg_color;
+}

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   viewBox="0 0 24 24"
+   height="24"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91pre2 r"
+   sodipodi:docname="dropboxstatus-x.svg">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18">
+    <clipPath
+       id="clipPath6">
+      <rect
+         height="6.375"
+         width="3.825"
+         y="220.75"
+         x="26.85"
+         id="rect8"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath10">
+      <rect
+         height="5.2160001"
+         width="2.898"
+         y="221.33"
+         x="26.966"
+         id="rect12"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath14">
+      <rect
+         height="4.8740001"
+         width="1.876"
+         y="221.5"
+         x="26.999001"
+         id="rect16"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath3025">
+      <rect
+         id="rect3027"
+         x="26.999001"
+         y="221.5"
+         width="1.876"
+         height="4.8740001"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath3021">
+      <rect
+         id="rect3023"
+         x="26.966"
+         y="221.33"
+         width="2.898"
+         height="5.2160001"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath3017">
+      <rect
+         id="rect3019"
+         x="26.85"
+         y="220.75"
+         width="3.825"
+         height="6.375"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="672"
+     id="namedview16"
+     showgrid="true"
+     inkscape:showpageshadow="false"
+     borderlayer="true"
+     inkscape:zoom="15.170655"
+     inkscape:cx="11.046971"
+     inkscape:cy="11.142561"
+     inkscape:window-x="-4"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4149"
+       originx="1px"
+       originy="1px" />
+    <sodipodi:guide
+       position="1,23"
+       orientation="22,0"
+       id="guide4155" />
+    <sodipodi:guide
+       position="1,1"
+       orientation="0,22"
+       id="guide4157" />
+    <sodipodi:guide
+       position="23,1"
+       orientation="-22,0"
+       id="guide4159" />
+    <sodipodi:guide
+       position="23,23"
+       orientation="0,-22"
+       id="guide4161" />
+    <sodipodi:guide
+       position="4,20"
+       orientation="16,0"
+       id="guide4163" />
+    <sodipodi:guide
+       position="4,4"
+       orientation="0,16"
+       id="guide4165" />
+    <sodipodi:guide
+       position="20,4"
+       orientation="-16,0"
+       id="guide4167" />
+    <sodipodi:guide
+       position="20,20"
+       orientation="0,-16"
+       id="guide4169" />
+  </sodipodi:namedview>
+  <path
+     d="m 8.4589844,4 -5.0605469,3.3046875 3.5,2.8007815 L 12,6.9550781 8.4589844,4 Z M 12,6.9550781 l 5.101562,3.1503909 3.5,-2.8007815 L 15.541016,4 12,6.9550781 Z M 17.101562,10.105469 12,13.255859 l 3.541016,2.955079 5.060546,-3.302735 -3.5,-2.802734 z M 12,13.255859 l -5.1015625,-3.15039 -3.5,2.802734 5.0605469,3.302735 L 12,13.255859 Z m 0.0098,0.636719 -3.5507816,2.945313 -1.5195313,-0.990235 0,1.111328 L 12.009766,20 l 5.072265,-3.041016 0,-1.111328 -1.519531,0.990235 -3.552734,-2.945313 z"
+     id="polygon8"
+     style="fill:#f92d36;fill-opacity:1"
+     inkscape:connector-curvature="0" />
+</svg>

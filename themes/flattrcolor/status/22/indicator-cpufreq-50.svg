@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22"
+   height="22"
+   id="svg4359"
+   version="1.1"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="indicator-cpufreq-50.svg"
+   viewBox="0 0 22 22">
+  <defs
+     id="defs4361">
+    <clipPath
+       id="clipPath6">
+      <rect
+         height="6.375"
+         width="3.825"
+         y="220.75"
+         x="26.85"
+         fill="#bebebe"
+         color="#bebebe"
+         id="rect8" />
+    </clipPath>
+    <clipPath
+       id="clipPath10">
+      <rect
+         height="5.216"
+         width="2.898"
+         y="221.33"
+         x="26.966"
+         fill="#bebebe"
+         color="#bebebe"
+         id="rect12" />
+    </clipPath>
+    <clipPath
+       id="clipPath14">
+      <rect
+         height="4.874"
+         width="1.876"
+         y="221.5"
+         x="26.999"
+         fill="#bebebe"
+         color="#bebebe"
+         id="rect16" />
+    </clipPath>
+    <clipPath
+       id="clipPath3025">
+      <rect
+         id="rect3027"
+         color="#bebebe"
+         fill="#bebebe"
+         x="26.999"
+         y="221.5"
+         width="1.876"
+         height="4.874" />
+    </clipPath>
+    <clipPath
+       id="clipPath3021">
+      <rect
+         id="rect3023"
+         color="#bebebe"
+         fill="#bebebe"
+         x="26.966"
+         y="221.33"
+         width="2.898"
+         height="5.216" />
+    </clipPath>
+    <clipPath
+       id="clipPath3017">
+      <rect
+         id="rect3019"
+         color="#bebebe"
+         fill="#bebebe"
+         x="26.85"
+         y="220.75"
+         width="3.825"
+         height="6.375" />
+    </clipPath>
+    <clipPath
+       id="clipPath6-0">
+      <rect
+         height="6.375"
+         width="3.825"
+         y="220.75"
+         x="26.85"
+         fill="#bebebe"
+         color="#bebebe"
+         id="rect8-6" />
+    </clipPath>
+    <clipPath
+       id="clipPath10-7">
+      <rect
+         height="5.216"
+         width="2.898"
+         y="221.33"
+         x="26.966"
+         fill="#bebebe"
+         color="#bebebe"
+         id="rect12-6" />
+    </clipPath>
+    <clipPath
+       id="clipPath14-7">
+      <rect
+         height="4.874"
+         width="1.876"
+         y="221.5"
+         x="26.999"
+         fill="#bebebe"
+         color="#bebebe"
+         id="rect16-9" />
+    </clipPath>
+    <clipPath
+       id="clipPath3025-1">
+      <rect
+         id="rect3027-5"
+         color="#bebebe"
+         fill="#bebebe"
+         x="26.999"
+         y="221.5"
+         width="1.876"
+         height="4.874" />
+    </clipPath>
+    <clipPath
+       id="clipPath3021-4">
+      <rect
+         id="rect3023-8"
+         color="#bebebe"
+         fill="#bebebe"
+         x="26.966"
+         y="221.33"
+         width="2.898"
+         height="5.216" />
+    </clipPath>
+    <clipPath
+       id="clipPath3017-5">
+      <rect
+         id="rect3019-1"
+         color="#bebebe"
+         fill="#bebebe"
+         x="26.85"
+         y="220.75"
+         width="3.825"
+         height="6.375" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="61.753992"
+     inkscape:cx="12.010267"
+     inkscape:cy="12.106101"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="2560"
+     inkscape:window-height="957"
+     inkscape:window-x="-4"
+     inkscape:window-y="29"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="false"
+     borderlayer="true"
+     showguides="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4105"
+       originx="0"
+       originy="0"
+       empspacing="2" />
+    <sodipodi:guide
+       position="-1,22"
+       orientation="22,0"
+       id="guide4111" />
+    <sodipodi:guide
+       position="23,-1"
+       orientation="0,22"
+       id="guide4113" />
+    <sodipodi:guide
+       position="23,-1"
+       orientation="-22,0"
+       id="guide4115" />
+    <sodipodi:guide
+       position="11,10"
+       orientation="16,0"
+       id="guide4130" />
+    <sodipodi:guide
+       position="12,11"
+       orientation="0,16"
+       id="guide4132" />
+    <sodipodi:guide
+       position="19,19"
+       orientation="0,-16"
+       id="guide4136" />
+    <sodipodi:guide
+       position="3,22"
+       orientation="19.000011,0"
+       id="guide4152" />
+    <sodipodi:guide
+       position="3,2.9999886"
+       orientation="0,4"
+       id="guide4154" />
+    <sodipodi:guide
+       position="15,3"
+       orientation="0,4.0000019"
+       id="guide4162" />
+    <sodipodi:guide
+       position="19.000002,3"
+       orientation="-19,0"
+       id="guide4164" />
+    <sodipodi:guide
+       position="-1,23"
+       orientation="0,-4.0000019"
+       id="guide4166" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4364">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,-26)">
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#304050;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4147-8"
+       width="2"
+       height="2"
+       x="-3"
+       y="25" />
+    <path
+       style="opacity:1;fill:#304050;fill-opacity:1;stroke:none;stroke-width:3.56737041px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 10 3 L 10 5 L 12 5 L 12 3 L 10 3 z M 8 4 L 8 5 L 9 5 L 9 4 L 8 4 z M 13 4 L 13 5 L 14 5 L 14 4 L 13 4 z M 7 6 C 6.446 6 6 6.446 6 7 L 6 15 C 6 15.554 6.446 16 7 16 L 15 16 C 15.554 16 16 15.554 16 15 L 16 7 C 16 6.446 15.554 6 15 6 L 7 6 z M 7 7 L 15 7 L 15 15 L 7 15 L 7 7 z M 4 8 L 4 9 L 5 9 L 5 8 L 4 8 z M 17 8 L 17 9 L 18 9 L 18 8 L 17 8 z M 3 10 L 3 12 L 5 12 L 5 10 L 3 10 z M 17 10 L 17 12 L 19 12 L 19 10 L 17 10 z M 4 13 L 4 14 L 5 14 L 5 13 L 4 13 z M 17 13 L 17 14 L 18 14 L 18 13 L 17 13 z M 8 17 L 8 18 L 9 18 L 9 17 L 8 17 z M 10 17 L 10 19 L 12 19 L 12 17 L 10 17 z M 13 17 L 13 18 L 14 18 L 14 17 L 13 17 z "
+       transform="translate(0,26)"
+       id="rect4154" />
+    <path
+       sodipodi:nodetypes="ccccccccccc"
+       inkscape:connector-curvature="0"
+       id="rect4164-2"
+       d="M 11,34 10.455079,35 9.0000005,38.000958 11,38.000958 11,39 11,40 11.544922,39 13,36.000958 l -2,0 L 11,35 Z"
+       style="color:#000000;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#3fc380;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+/**************
+ * ComboBoxes *
+ **************/
+combobox arrow {
+	-gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+	min-height: 16px;
+	min-width: 16px; 
+}
+
+combobox menu,
+combobox .menu {
+	padding: 2px 0; 
+}
+
+combobox menu menuitem,
+combobox .menu menuitem {
+	min-height: 28px;
+	padding: 0 10px; 
+}
+combobox menu menuitem:hover {
+	background-color: @theme_selected_bg_color;
+}
+
+combobox:drop(active) {
+	box-shadow: none; 
+}

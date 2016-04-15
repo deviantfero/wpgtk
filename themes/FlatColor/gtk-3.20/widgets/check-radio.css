@@ -1,0 +1,18 @@
+/*******************
+ * check and radio *
+ *******************/
+.check,
+.radio,
+.check:disabled,
+.radio:disabled {
+
+}
+
+GtkCheckButton:hover,
+GtkCheckButton:active:hover,
+GtkCheckButton:selected,
+GtkCheckButton:selected:focus {
+    background-color: transparent;
+}
+
+

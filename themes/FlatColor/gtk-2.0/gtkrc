@@ -4,7 +4,7 @@ gtk-color-scheme = "bg_color:#161616
 fg_color:#fff
 base_color:#090909
 text_color:#fff
-selected_bg_color:#7e8489
+selected_bg_color:#5f5f7d
 selected_fg_color:#FFFFFF
 tooltip_bg_color:#202020
 tooltip_fg_color:#fff
@@ -22,7 +22,7 @@ link_color:#8EC3EB"
 gtk-auto-mnemonics	= 1
 
 # Default Style
-# DO --NOT-- CHANGE 7e8489
+# DO --NOT-- CHANGE ACTIVE
 # IT's THE COLOR THAT WPGTK REPLACES
 # FEEL FREE TO MODIFY EVERYTHING ELSE IN gtkrc.base
 
@@ -191,7 +191,7 @@ style "murrine-thin" {
 
 style "murrine-notebook-bg" {
 	bg[NORMAL] = @bg_color
-	bg[ACTIVE] = shade (0.99, @base_color)
+	bg[ACTIVE] = shade (1.05, @base_color)
 }
 
 style "murrine-notebook" = "murrine-notebook-bg" {

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91+devel r"
+   viewBox="0 0 16 16"
+   sodipodi:docname="folder-saved-search-symbolic.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="17.0625"
+     inkscape:cx="-5.6046749"
+     inkscape:cy="10.151631"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:showpageshadow="false"
+     borderlayer="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="670"
+     inkscape:window-x="-4"
+     inkscape:window-y="29"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4137" />
+    <sodipodi:guide
+       position="0,16.000017"
+       orientation="16,0"
+       id="guide4145" />
+    <sodipodi:guide
+       position="0,1.7382813e-05"
+       orientation="0,16"
+       id="guide4147" />
+    <sodipodi:guide
+       position="16,1.7382813e-05"
+       orientation="-16,0"
+       id="guide4149" />
+    <sodipodi:guide
+       position="16,16.000017"
+       orientation="0,-16"
+       id="guide4151" />
+    <sodipodi:guide
+       position="1,1.0000174"
+       orientation="0,14"
+       id="guide4155" />
+    <sodipodi:guide
+       position="15,1.0000174"
+       orientation="-14,0"
+       id="guide4157" />
+    <sodipodi:guide
+       position="15,15.000017"
+       orientation="0,-14"
+       id="guide4159" />
+    <sodipodi:guide
+       position="2,14.000017"
+       orientation="12,0"
+       id="guide4161" />
+    <sodipodi:guide
+       position="2,2.0000174"
+       orientation="0,12"
+       id="guide4163" />
+    <sodipodi:guide
+       position="14,2.0000174"
+       orientation="-12,0"
+       id="guide4165" />
+    <sodipodi:guide
+       position="14,14.000017"
+       orientation="0,-12"
+       id="guide4167" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="M 6 2 C 3.7839952 2 2 3.7839952 2 6 C 2 8.2160048 3.7839952 10 6 10 C 6.926351 10 7.7667544 9.675125 8.4433594 9.1503906 L 13.292969 14 L 14 13.292969 L 9.1503906 8.4433594 C 9.675125 7.7667544 10 6.926351 10 6 C 10 3.7839952 8.2160048 2 6 2 z M 6 3 C 7.6620073 3 9 4.3379927 9 6 C 9 6.6493939 8.7914132 7.246354 8.4433594 7.7363281 C 8.4243114 7.763143 8.3988056 7.7844006 8.3789062 7.8105469 C 8.2155621 8.0252113 8.0252113 8.2155621 7.8105469 8.3789062 C 7.7843927 8.3988077 7.7631759 8.424288 7.7363281 8.4433594 C 7.246354 8.7914132 6.6493939 9 6 9 C 4.3379927 9 3 7.6620073 3 6 C 3 4.3379927 4.3379927 3 6 3 z "
+       transform="translate(0,1036.3622)"
+       id="rect4179" />
+  </g>
+</svg>

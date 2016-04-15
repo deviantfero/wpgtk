@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   viewBox="0 0 64 64.000003"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="konqueror.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8"
+     inkscape:cx="17.691455"
+     inkscape:cy="31.511769"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:showpageshadow="false"
+     borderlayer="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="670"
+     inkscape:window-x="-4"
+     inkscape:window-y="29"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4136" />
+    <sodipodi:guide
+       position="5,59.000069"
+       orientation="54,0"
+       id="guide4142" />
+    <sodipodi:guide
+       position="5,5.0000688"
+       orientation="0,54"
+       id="guide4144" />
+    <sodipodi:guide
+       position="59,5.0000688"
+       orientation="-54,0"
+       id="guide4146" />
+    <sodipodi:guide
+       position="59,59.000069"
+       orientation="0,-54"
+       id="guide4148" />
+    <sodipodi:guide
+       position="0,64.000069"
+       orientation="64,0"
+       id="guide4150" />
+    <sodipodi:guide
+       position="0,6.875e-05"
+       orientation="0,64"
+       id="guide4152" />
+    <sodipodi:guide
+       position="64,6.875e-05"
+       orientation="-64,0"
+       id="guide4154" />
+    <sodipodi:guide
+       position="64,64.000069"
+       orientation="0,-64"
+       id="guide4156" />
+    <sodipodi:guide
+       position="13,50.999947"
+       orientation="38,0"
+       id="guide4155" />
+    <sodipodi:guide
+       position="13,12.999947"
+       orientation="0,38"
+       id="guide4157" />
+    <sodipodi:guide
+       position="51,12.999947"
+       orientation="-38,0"
+       id="guide4159" />
+    <sodipodi:guide
+       position="51,50.999947"
+       orientation="0,-38"
+       id="guide4161" />
+    <sodipodi:guide
+       position="17,46.999949"
+       orientation="30,0"
+       id="guide4151" />
+    <sodipodi:guide
+       position="17,16.999947"
+       orientation="0,30"
+       id="guide4153" />
+    <sodipodi:guide
+       position="47,16.999947"
+       orientation="-30,0"
+       id="guide4158" />
+    <sodipodi:guide
+       position="47,46.999949"
+       orientation="0,-30"
+       id="guide4160" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1058.5196)">
+    <rect
+       style="fill:#36d7b7;fill-opacity:1;stroke:none"
+       id="rect4158"
+       width="54"
+       height="54"
+       x="5"
+       y="1063.5197"
+       ry="27" />
+    <path
+       style="fill:#caf4ec;fill-opacity:1;stroke:none"
+       d="M 32 13 C 21.474 13 13 21.474 13 32 C 13 42.526 21.474 51 32 51 C 38.564672 51 44.329661 47.70215 47.740234 42.667969 A 2.5 2.5 0 0 0 49 40.5 A 2.5 2.5 0 0 0 49 40.474609 C 50.269247 37.923407 51 35.053241 51 32 C 51 21.474 42.526 13 32 13 z M 32 15 C 41.418 15 49 22.582 49 32 C 49 34.249329 48.556225 36.388015 47.769531 38.349609 A 2.5 2.5 0 0 0 46.5 38 A 2.5 2.5 0 0 0 45.431641 38.242188 A 15.5 15.5 0 0 0 40.556641 31.447266 A 15.5 15.5 0 0 0 37.523438 25.388672 A 3.5 3.5 0 0 0 39.5 26 A 3.5 3.5 0 0 0 43 22.5 A 3.5 3.5 0 0 0 42.972656 22.087891 A 17.5 17.5 0 0 1 43.033203 22.089844 A 15.5 15.5 0 0 0 42.970703 22.078125 A 3.5 3.5 0 0 0 39.5 19 A 3.5 3.5 0 0 0 36.021484 22.121094 A 15.5 15.5 0 0 0 35.568359 22.220703 A 15.5 15.5 0 0 0 34.492188 22.566406 A 15.5 15.5 0 0 0 29.544922 20.220703 A 15.5 15.5 0 0 0 23.972656 19.791016 A 1.5 1.5 0 0 0 24 19.5 A 1.5 1.5 0 0 0 22.5 18 A 1.5 1.5 0 0 0 22.328125 18.011719 C 25.071189 16.115857 28.398826 15 32 15 z M 21.115234 18.925781 A 1.5 1.5 0 0 0 21 19.5 A 1.5 1.5 0 0 0 22.5 21 A 1.5 1.5 0 0 0 23.869141 20.107422 A 17.5 17.5 0 0 1 27.355469 20.667969 A 17.5 17.5 0 0 1 32.837891 23.244141 A 15.5 15.5 0 0 0 26.691406 28.605469 A 15.5 15.5 0 0 0 22.574219 30.453125 A 1.5 1.5 0 0 0 21.5 30 A 1.5 1.5 0 0 0 20 31.5 A 1.5 1.5 0 0 0 21.5 33 A 1.5 1.5 0 0 0 23 31.5 A 1.5 1.5 0 0 0 22.857422 30.865234 A 17.5 17.5 0 0 1 25.1875 30.037109 A 17.5 17.5 0 0 1 25.931641 29.869141 A 15.5 15.5 0 0 0 24.248047 39.337891 A 2.5 2.5 0 0 0 23 41.5 A 2.5 2.5 0 0 0 25.5 44 A 2.5 2.5 0 0 0 28 41.5 A 2.5 2.5 0 0 0 25.5 39 A 2.5 2.5 0 0 0 24.802734 39.101562 A 17.5 17.5 0 0 1 27.96875 29.542969 A 17.5 17.5 0 0 1 39.542969 32.484375 A 17.5 17.5 0 0 1 40.291016 38.015625 A 1.5 1.5 0 0 0 39 39.5 A 1.5 1.5 0 0 0 40.5 41 A 1.5 1.5 0 0 0 42 39.5 A 1.5 1.5 0 0 0 40.767578 38.025391 A 15.5 15.5 0 0 0 40.943359 33.542969 A 17.5 17.5 0 0 1 45.009766 38.494141 A 2.5 2.5 0 0 0 44 40.5 A 2.5 2.5 0 0 0 45.25 42.662109 C 42.139022 46.528863 37.371555 49 32 49 C 22.582 49 15 41.418 15 32 C 15 26.730864 17.374969 22.039282 21.115234 18.925781 z M 36.080078 23.226562 A 3.5 3.5 0 0 0 36.445312 24.201172 A 15.5 15.5 0 0 0 35.595703 23.427734 A 17.5 17.5 0 0 1 36.080078 23.226562 z M 34.037109 24.166016 A 17.5 17.5 0 0 1 38.646484 30.126953 A 15.5 15.5 0 0 0 29.050781 28.152344 A 17.5 17.5 0 0 1 34.037109 24.166016 z "
+       transform="translate(0,1058.5196)"
+       id="rect4157" />
+  </g>
+</svg>

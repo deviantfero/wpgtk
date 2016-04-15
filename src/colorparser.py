@@ -19,6 +19,12 @@ def replace_in_file( file_to_operate, target, newstring ):
     with fileinput.FileInput( file_to_operate, inplace=True, backup=False ) as file:
         for line in file:
             print( line.replace( target, newstring ), end='' )
+def clean_icon_color( dirty_list ):
+    dirty_list = dirty_list.pop()
+    dirty_list = dirty_list.strip( "\n" )
+    dirty_list = dirty_list.split( "=" )
+    dirty_list = dirty_list.pop()
+    return dirty_list
 
 def darkness(hexv):
     rgb = list( int(hexv[i:i+2], 16) for i in ( 0, 2, 4 ) )
@@ -103,29 +109,33 @@ def change_colors_icons( active, inactive, glyph ):
     if( isfile( backupdir ) ):
         file_current_glyph = open( realdir, "r" )
         current_glyph = []
+        current_front = []
+        current_back = []
         for line in file_current_glyph:
-            if( "New" in line ):
+            if( "New" in line and "glyph" in line ):
                 current_glyph.append( line )
                 break
-        current_glyph = current_glyph.pop()
-        current_glyph = current_glyph.strip( "\n" )
-        current_glyph = current_glyph.split( "=" )
-        current_glyph = current_glyph.pop()
+        for line in file_current_glyph:
+            if( "New" in line and "front" in line ):
+                current_front.append( line )
+                break
+        for line in file_current_glyph:
+            if( "New" in line and "back" in line ):
+                current_back.append( line )
+                break
+        call( ["cp", backupdir, realdir] )
+        current_glyph = clean_icon_color( current_glyph )
+        current_front = clean_icon_color( current_front )
+        current_back = clean_icon_color( current_back )
+        print( current_front )
         file_current_glyph.close()
 
-        call( ["cp", backupdir, realdir] )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "34495d", inactive ), end='' )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "1abc9c", active ), end='' )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "l=304050", "l=" + current_glyph ), end='' )
-        with fileinput.FileInput( realdir, inplace=True, backup=False ) as file:
-            for line in file:
-                print( line.replace( "w=304050", "w=" + glyph ), end='' )
+        replace_in_file( realdir, "l=178984", "l=" + current_glyph )
+        replace_in_file( realdir, "w=178984", "w=" + glyph )
+        replace_in_file( realdir, "l=36d7b7", "l=" + current_front )
+        replace_in_file( realdir, "w=36d7b7", "w=" + active )
+        replace_in_file( realdir, "l=1ba39c", "l=" + current_back )
+        replace_in_file( realdir, "w=1ba39c", "w=" + inactive )
         call( executable, shell=True )
         print( "CHANGED::ICONS" )
         print( "CURRENT GLYPH: " + current_glyph )
@@ -163,6 +173,14 @@ def change_colors_gtk3( active, inactive ):
         print( "CHANGED::GTK3" )
     else:
         print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )
+    backupdir = homedir + "/.themes/FlatColor/gtk-3.20/gtk.css.base"
+    realdir = homedir + "/.themes/FlatColor/gtk-3.20/gtk.css"
+    if( isfile( backupdir ) ):
+        call( ["cp", backupdir, realdir] )
+        replace_in_file( realdir, replace_active, active )
+        print( "CHANGED::GTK3.20" )
+    else:
+        print( "FAILED TO CHANGE::GTK3.20 - BASE FILE DOES NOT EXIST" )
 
 def change_other_files( active, inactive ):
     other_path = "/home/" + getuser() + "/.themes/color_other/"

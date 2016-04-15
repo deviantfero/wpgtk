@@ -1,0 +1,114 @@
+/*****************
+ * color chooser *
+ *****************/
+GtkColorSwatch,
+GtkColorSwatch:selected {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 0;
+    border-color: @theme_bg_color;
+    background-color: transparent;
+    transition: all 200ms ease-out;
+}
+
+GtkColorSwatch:hover,
+GtkColorSwatch:selected:hover {
+    border-width: 0;
+    border-radius: 0;
+    border-color: @theme_bg_color;
+    transition: all 200ms ease-in;
+}
+
+GtkColorSwatch.color-dark:hover {
+}
+
+GtkColorSwatch.color-light:hover {
+}
+
+GtkColorSwatch.color-light:selected:hover,
+GtkColorSwatch.color-dark:selected:hover {
+    background-image: none;
+}
+
+GtkColorSwatch.left,
+GtkColorSwatch:first-child {
+
+}
+
+GtkColorSwatch.right,
+GtkColorSwatch:last-child {
+
+}
+
+GtkColorSwatch:only-child {
+
+}
+
+GtkColorSwatch.top {
+
+}
+
+GtkColorSwatch.bottom {
+
+}
+
+GtkColorChooserWidget #add-color-button {
+    transition: all 100ms ease-out;
+    border-color: @entry_border_color;
+    border-width: 1px;
+    border-style: none;
+    border-radius: 0;
+    background-color: @theme_base_color;
+    color: mix(@theme_text_color, @theme_base_color, 0.4);
+}
+
+GtkColorChooserWidget #add-color-button:hover {
+    transition: all 100ms ease-in;
+    border-color: @theme_selected_bg_color;
+    border-width: 1px;
+    border-style: none;
+    border-radius: 0;
+    background-color: @theme_base_color;
+    color: @theme_fg_color;
+}
+
+.color-active-badge,
+.color-active-badge:selected {
+    border-width: 1px;
+    border-style: solid;
+    border-width: 0;
+    background-color: transparent;
+}
+
+.color-active-badge.color-light,
+.color-active-badge.color-light:hover {
+    border-color: alpha(black, 0.3);
+    color: alpha(black, 0.3);
+}
+
+.color-active-badge.color-dark,
+.color-active-badge.color-dark:hover {
+    border-color: alpha(white, 0.3);
+    color: alpha(white, 0.3);
+}
+
+GtkColorEditor GtkColorSwatch {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 0;
+    border-color: @theme_bg_color;
+    background-color: transparent;
+    transition: all 200ms ease-out;
+}
+
+GtkColorEditor GtkColorSwatch.color-dark:hover,
+GtkColorEditor GtkColorSwatch.color-light:hover {
+    border-width: 0;
+    border-radius: 0;
+    border-color: @theme_bg_color;
+    transition: all 200ms ease-in;
+}
+
+GtkColorButton.button {
+    padding: 6px;
+}

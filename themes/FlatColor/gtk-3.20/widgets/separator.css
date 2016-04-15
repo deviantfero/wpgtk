@@ -1,0 +1,24 @@
+/*************
+ * separator *
+ *************/
+.sidebar.view.separator,
+.view.separator,
+.separator {
+    border-width: 0;
+    border-style: none;
+    color: transparent;
+}
+.separator:disabled {
+     color: transparent;
+}
+.button .separator,
+.button.separator {
+    border-width: 0;
+    color: transparent;
+}
+
+.button .separator:disabled,
+.button.separator:disabled {
+    color: transparent;
+    border-width: 0;
+}

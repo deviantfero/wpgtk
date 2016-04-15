@@ -1,0 +1,124 @@
+/*****************
+ * Progress bars *
+ *****************/
+progressbar {
+  color: rgba(0, 0, 0, 0.48);
+  font-size: smaller; }
+  progressbar.horizontal trough,
+  progressbar.horizontal progress {
+    min-height: 9px; }
+  progressbar.vertical trough,
+  progressbar.vertical progress {
+    min-width: 9px; }
+  progressbar trough {
+    background-color: shade( @theme_bg_color, 1.09 ); }
+  progressbar progress {
+    background-color: @theme_selected_bg_color; }
+
+/*************
+ * Level Bar *
+ *************/
+levelbar block {
+  min-width: 36px;
+  min-height: 4px; }
+levelbar.vertical block {
+  min-width: 4px;
+  min-height: 36px; }
+levelbar trough {
+  padding: 2px;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0, 0, 0.2, 1), color 0;
+  border-image: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background-color: #FFFFFF;
+  color: rgba(0, 0, 0, 0.8); }
+  levelbar trough:disabled {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    background-color: #f6f7f8;
+    color: rgba(0, 0, 0, 0.32); }
+levelbar.horizontal.discrete block {
+  margin: 0 1px; }
+levelbar.vertical.discrete block {
+  margin: 1px 0; }
+levelbar.horizontal.discrete trough {
+  padding: 2px 1px; }
+levelbar.vertical.discrete trough {
+  padding: 1px 2px; }
+levelbar block.low {
+  background-color: #F50057; }
+levelbar block.high {
+  background-color: #2196F3; }
+levelbar block.full {
+  background-color: #00C853; }
+levelbar block.empty {
+  background-color: alpha(currentColor, 0.3);
+  color: rgba(0, 0, 0, 0.32); }
+
+.scale {
+    padding: 0;
+    border-width: 0;
+    border-radius: 0;
+
+    -GtkScale-slider-length: 6;
+}
+
+.scale.slider {
+    border-radius: 0;
+    background-color: @button_normal_color;
+    background-image: none;
+
+}
+
+.scale.slider:hover {
+    background-color: shade(@button_normal_color, 1.06);
+}
+
+.scale.slider:disabled {
+    background-color: shade(@theme_bg_color, 1.04);
+    background-image: none;
+}
+
+.scale.slider.fine-tune:active,
+.scale.slider.fine-tune:active:hover,
+.scale.slider.fine-tune.horizontal:active,
+.scale.slider.fine-tune.horizontal:active:hover {
+      background-size: 50%;
+      background-repeat: no-repeat;
+      background-position: center;
+}
+
+.scale.mark {
+    color: shade(@theme_bg_color, 0.85);
+}
+
+.scale.trough {
+    margin: 7px 0;
+    border-radius: 0;
+    background-color: shade(@theme_bg_color, 0.93);
+    background-image: none;
+}
+
+.scale.trough.vertical {
+    margin: 0 7px;
+}
+
+.menuitem .scale.highlight.left,
+.scale.highlight.left {
+    background-color: @theme_selected_bg_color;
+    background-image: none;
+}
+
+.menuitem .scale.highlight.left:hover {
+    background-color: shade(@theme_selected_bg_color, 1.1);
+}
+
+.scale.highlight.bottom {
+    background-color: @theme_selected_bg_color;
+    background-image: none;
+}
+
+.scale.trough:disabled,
+.scale.highlight.left:disabled {
+    background-color: shade(@theme_bg_color, 1.04);
+    background-image: none;
+}
