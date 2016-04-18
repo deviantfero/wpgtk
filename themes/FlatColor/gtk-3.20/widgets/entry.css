@@ -19,7 +19,8 @@ entry:focus {
 }
 
 entry:selected,
-entry:selected:focus {
+entry:selected:focus,
+entry selection {
     background-color: @theme_selected_bg_color;
     color: @theme_selected_fg_color;
 }

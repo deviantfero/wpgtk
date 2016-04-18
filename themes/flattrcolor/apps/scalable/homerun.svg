@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="38.4pt"
+   height="38.4pt"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.49 r12742"
+   sodipodi:docname="homerun.svg">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="718"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="9.8333329"
+     inkscape:cx="19.168105"
+     inkscape:cy="30.365706"
+     inkscape:window-x="-2"
+     inkscape:window-y="23"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:showpageshadow="false"
+     borderlayer="true">
+    <sodipodi:guide
+       position="9.5367432e-07,48.000001"
+       orientation="47.999999,0"
+       id="guide4062" />
+    <sodipodi:guide
+       position="9.5367432e-07,1.9073486e-06"
+       orientation="0,47.999999"
+       id="guide4064" />
+    <sodipodi:guide
+       position="48,1.9073486e-06"
+       orientation="-47.999999,0"
+       id="guide4066" />
+    <sodipodi:guide
+       position="48,48.000001"
+       orientation="0,-47.999999"
+       id="guide4068" />
+    <sodipodi:guide
+       position="4.000001,44.000001"
+       orientation="39.999999,0"
+       id="guide4070" />
+    <sodipodi:guide
+       position="4.000001,4.0000019"
+       orientation="0,39.999999"
+       id="guide4072" />
+    <sodipodi:guide
+       position="44,4.0000019"
+       orientation="-39.999999,0"
+       id="guide4074" />
+    <sodipodi:guide
+       position="44,44.000001"
+       orientation="0,-39.999999"
+       id="guide4076" />
+    <sodipodi:guide
+       position="15,33.00005"
+       orientation="18.000002,0"
+       id="guide4121" />
+    <sodipodi:guide
+       position="15,15.000048"
+       orientation="0,18.000004"
+       id="guide4123" />
+    <sodipodi:guide
+       position="33.000004,15.000048"
+       orientation="-18.000002,0"
+       id="guide4125" />
+    <sodipodi:guide
+       position="33.000004,33.00005"
+       orientation="0,-18.000004"
+       id="guide4127" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4" />
+  <rect
+     ry="20.000002"
+     y="3.9999523"
+     x="3.9999998"
+     height="40.000004"
+     width="40.000004"
+     id="rect3282"
+     style="fill:#34495e;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+  <rect
+     style="fill:#3498db;fill-opacity:1;stroke:none"
+     id="rect3305"
+     width="4.9999971"
+     height="4.9999971"
+     x="-32.999996"
+     y="15.000005"
+     ry="0"
+     transform="scale(-1,1)" />
+  <rect
+     ry="0"
+     y="28.000004"
+     x="28"
+     height="4.9999971"
+     width="4.9999971"
+     id="rect3307"
+     style="fill:#80bee8;fill-opacity:1;stroke:none" />
+  <rect
+     ry="0"
+     y="28.000004"
+     x="15.000001"
+     height="4.9999971"
+     width="4.9999971"
+     id="rect3313"
+     style="fill:#6eb4e6;fill-opacity:1;stroke:none" />
+  <rect
+     ry="0"
+     y="15.000002"
+     x="-19.999998"
+     height="4.9999971"
+     width="4.9999971"
+     id="rect4129"
+     style="fill:#2281c0;fill-opacity:1;stroke:none"
+     transform="scale(-1,1)" />
+</svg>

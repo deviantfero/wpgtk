@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg3760"
+   version="1.1"
+   inkscape:version="0.48+devel r12662"
+   sodipodi:docname="mail-mark-junk.svg">
+  <defs
+     id="defs3762" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.763495"
+     inkscape:cx="44.254312"
+     inkscape:cy="24.597552"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="714"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="8.9999856,39.000012"
+       orientation="30,0"
+       id="guide3280" />
+    <sodipodi:guide
+       position="8.9999856,9.0000118"
+       orientation="0,30"
+       id="guide3282" />
+    <sodipodi:guide
+       position="38.999986,9.0000118"
+       orientation="-30,0"
+       id="guide3284" />
+    <sodipodi:guide
+       position="38.999986,39.000012"
+       orientation="0,-30"
+       id="guide3286" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3765">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-550.28572,-582.6479)">
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="m 574.27791,591.6479 c -3.92727,2.3e-4 -7.82858,1.61575 -10.60352,4.39258 -2.77494,2.77683 -4.38867,6.68075 -4.38867,10.60742 0,3.92667 1.61373,7.82864 4.38867,10.60547 2.77494,2.77683 6.67625,4.3943 10.60352,4.39453 3.92726,2.3e-4 7.83284,-1.61769 10.61133,-4.39453 2.77848,-2.77684 4.39648,-6.67836 4.39648,-10.60547 0,-3.92711 -1.618,-7.83058 -4.39648,-10.60742 -2.77849,-2.77685 -6.68407,-4.39281 -10.61133,-4.39258 z m 0.002,4 c 2.87999,-1.7e-4 5.7437,1.18435 7.78125,3.2207 2.03755,2.03636 3.22461,4.89942 3.22461,7.7793 0,2.87988 -1.18706,5.74099 -3.22461,7.77734 -2.03755,2.03636 -4.90126,3.22283 -7.78125,3.22266 -2.87999,-1.7e-4 -5.74043,-1.18631 -7.77539,-3.22266 -2.03496,-2.03634 -3.21875,-4.89778 -3.21875,-7.77734 0,-2.87956 1.18379,-5.741 3.21875,-7.77734 2.03496,-2.03635 4.8954,-3.22249 7.77539,-3.22266 z"
+       id="path3272"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3282"
+       width="24"
+       height="4"
+       x="-34.883507"
+       y="-837.04614"
+       transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,0,0)" />
+  </g>
+</svg>

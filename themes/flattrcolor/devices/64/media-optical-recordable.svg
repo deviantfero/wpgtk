@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Karbon, part of Calligra: http://www.calligra.org/karbon -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.4pt" height="38.4pt">
+<defs/>
+<g id="layer0">
+  <path id="shape011" transform="translate(4, 4)" fill="#001826" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M20 0C8.95035 0 0 8.95035 0 20C0 31.0497 8.95035 40 20 40C31.0497 40 40 31.0497 40 20C40 8.95035 31.0497 0 20 0ZM20 16.7188C21.8183 16.7188 23.2812 18.1817 23.2812 20C23.2812 21.8183 21.8183 23.2812 20 23.2812C18.1817 23.2812 16.7188 21.8183 16.7188 20C16.7188 18.1817 18.1817 16.7188 20 16.7188Z"/>
+  <path id="shape11" transform="translate(16.375, 16.375)" fill="#e67e22" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2.00000000000" d="M7.625 0C3.4196 0 0 3.4196 0 7.625C0 11.8303 3.4196 15.25 7.625 15.25C11.8303 15.25 15.25 11.8303 15.25 7.625C15.25 3.4196 11.8303 0 7.625 0ZM7.625 4.34375C9.44333 4.34375 10.9062 5.80667 10.9062 7.625C10.9062 9.44333 9.44333 10.9062 7.625 10.9062C5.80667 10.9062 4.34375 9.44333 4.34375 7.625C4.34375 5.80667 5.80667 4.34375 7.625 4.34375Z"/>
+  <path id="shape0" transform="translate(29.0068, 29.2245)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" stroke-dasharray="0,0" d="M0 2.18482C1.34004 1.2549 1.72047 0.660859 2.25005 0L10.1497 5.63583C8.95572 7.48594 7.54508 9.09863 5.60066 10.2041Z"/>
+  <path id="shape1" transform="matrix(-1 0 0 -1 18.9749 18.8407)" fill="#34495e" fill-rule="evenodd" stroke="#003bc3" stroke-width="0.00000000000" stroke-linecap="square" stroke-linejoin="bevel" stroke-dasharray="0,0" d="M0 2.2294C1.36009 1.28051 1.74622 0.674346 2.28372 0L10.3016 5.75084C9.08976 7.63871 7.65799 9.28431 5.68447 10.4123Z"/>
+ </g>
+</svg>

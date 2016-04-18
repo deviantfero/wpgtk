@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   viewBox="0 0 13.546667 13.546667"
+   sodipodi:docname="dosbox.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4"
+     inkscape:cx="1.5036493"
+     inkscape:cy="22.608655"
+     inkscape:document-units="px"
+     inkscape:current-layer="g4096"
+     showgrid="false"
+     units="px"
+     borderlayer="true"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="836"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1"
+     showguides="false"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="8.9999996,38.999975"
+       orientation="30.000028,0"
+       id="guide3266" />
+    <sodipodi:guide
+       position="8.9999996,8.9999467"
+       orientation="0,30.000001"
+       id="guide3268" />
+    <sodipodi:guide
+       position="39.000001,8.9999467"
+       orientation="-30.000028,0"
+       id="guide3270" />
+    <sodipodi:guide
+       position="39.000001,38.999975"
+       orientation="0,-30.000001"
+       id="guide3272" />
+    <sodipodi:guide
+       position="3.9999989,44.000052"
+       orientation="39.999965,0"
+       id="guide3303" />
+    <sodipodi:guide
+       position="3.9999989,4.0000862"
+       orientation="0,40.000001"
+       id="guide3305" />
+    <sodipodi:guide
+       position="44,4.0000862"
+       orientation="-39.999965,0"
+       id="guide3307" />
+    <sodipodi:guide
+       position="44,44.000052"
+       orientation="0,-40.000001"
+       id="guide3309" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="35.122282,28.208933"
+       id="guide3815" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-283.45334)">
+    <g
+       id="g4096">
+      <rect
+         style="fill:#e67e22;stroke:none;fill-opacity:1"
+         id="rect3284"
+         width="11.28889"
+         height="11.28889"
+         x="1.1288886"
+         y="284.58221" />
+      <rect
+         y="285.99335"
+         x="2.54"
+         height="8.4666672"
+         width="8.4666672"
+         id="rect3297"
+         style="fill:#2c3e50;fill-opacity:1;stroke:none" />
+      <g
+         transform="matrix(0.1077651,0,0,0.1077651,1.3578039,285.92789)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#f8f8f8;fill-opacity:1;stroke:none;font-family:Terminal Dosis;-inkscape-font-specification:Terminal Dosis"
+         id="text3029">
+        <path
+           d="m 34.567225,28.24297 c -2.278666,0.781249 -4.550799,1.171874 -6.816407,1.171875 -3.697927,-1e-6 -6.549487,-0.963542 -8.554687,-2.890625 -1.992192,-1.927079 -2.988285,-4.661452 -2.988281,-8.203125 -4e-6,-3.476549 0.983068,-6.19139 2.949218,-8.144532 1.979159,-1.953104 4.726552,-2.9296656 8.242188,-2.9296872 2.239566,2.16e-5 4.498679,0.338563 6.777344,1.015625 l 0,3.2226562 c -2.51304,-0.898419 -4.654965,-1.347637 -6.425782,-1.347656 -2.31772,1.9e-5 -4.140635,0.729184 -5.46875,2.1875 -1.315112,1.458348 -1.972663,3.457044 -1.972656,5.996094 -7e-6,2.565112 0.703117,4.576828 2.109375,6.035156 1.41926,1.445315 3.372383,2.167971 5.859375,2.167969 1.861962,2e-6 3.958314,-0.436196 6.289063,-1.308594 l 0,3.027344"
+           style="font-weight:bold;letter-spacing:-9.43000031000000050px;font-family:Lucida Console;-inkscape-font-specification:Lucida Console Bold;fill:#f8f8f8;fill-opacity:1"
+           id="path3034"
+           inkscape:connector-curvature="0" />
+        <path
+           d="m 38.2839,13.496876 0,-5.7812502 5.78125,0 0,5.7812502 -5.78125,0 m 0,15.429687 0,-5.78125 5.78125,0 0,5.78125 -5.78125,0"
+           style="font-weight:bold;letter-spacing:-9.43000031px;fill:#f8f8f8;fill-opacity:1;font-family:Lucida Console;-inkscape-font-specification:Lucida Console Bold"
+           id="path3036"
+           inkscape:connector-curvature="0" />
+        <path
+           d="m 47.134396,8.203907 16.787545,10.371094 -16.787545,10.351562 0,-3.242187 11.550337,-7.109375 -11.550337,-7.128906 0,-3.242188"
+           style="font-weight:bold;letter-spacing:-9.43000031px;fill:#f8f8f8;fill-opacity:1;font-family:Lucida Console;-inkscape-font-specification:Lucida Console Bold"
+           id="path3038"
+           inkscape:connector-curvature="0" />
+      </g>
+      <g
+         style="font-size:2.74609756px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#f8f8f8;fill-opacity:1;stroke:none;font-family:Lucida Console;-inkscape-font-specification:Lucida Console Bold"
+         id="text3808"
+         transform="matrix(1.2023998,0,0,1.4369267,-2.3483788,-126.38776)">
+        <path
+           d="m 8.8185139,289.10946 0,-0.19845 1.6546311,0 0,0.19845 -1.6546311,0"
+           id="path3813"
+           inkscape:connector-curvature="0"
+           style="fill:#f8f8f8;fill-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>

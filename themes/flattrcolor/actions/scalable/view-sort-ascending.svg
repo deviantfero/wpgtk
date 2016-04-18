@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg3070"
+   version="1.1"
+   inkscape:version="0.49 r12742"
+   sodipodi:docname="gtk-sort-ascending.svg">
+  <defs
+     id="defs3072" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8.0343728"
+     inkscape:cx="10.052447"
+     inkscape:cy="22.582149"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="718"
+     inkscape:window-x="-2"
+     inkscape:window-y="23"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="9.0000117,39.000012"
+       orientation="30,0"
+       id="guide3268" />
+    <sodipodi:guide
+       position="9.0000117,9.0000118"
+       orientation="0,30"
+       id="guide3270" />
+    <sodipodi:guide
+       position="39.000012,9.0000118"
+       orientation="-30,0"
+       id="guide3272" />
+    <sodipodi:guide
+       position="39.000012,39.000012"
+       orientation="0,-30"
+       id="guide3274" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3075">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-424.57143,-522.6479)">
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="M 9 9 L 9 16 L 16 16 L 16 9 L 9 9 z M 20 10.5 L 20 14.5 L 39 14.5 L 39 10.5 L 20 10.5 z M 9 20.5 L 9 27.5 L 16 27.5 L 16 20.5 L 9 20.5 z M 20 22 L 20 26 L 39 26 L 39 22 L 20 22 z M 9 32 L 9 39 L 16 39 L 16 32 L 9 32 z M 25 33.5 L 29.5 37.5 L 34 33.5 L 25 33.5 z "
+       transform="translate(424.57143,522.6479)"
+       id="rect3276" />
+  </g>
+</svg>

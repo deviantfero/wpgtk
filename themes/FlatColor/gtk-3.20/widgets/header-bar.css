@@ -3,7 +3,7 @@
  **************/
 
 .header-bar {
-    padding: 6px;
+    padding: 4px;
     border-width: 0;
     border-style: none;
     background-color: @theme_bg_color;

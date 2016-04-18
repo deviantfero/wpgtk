@@ -30,7 +30,3 @@ calendar.highlight {
 	color: #fff;
 	font-weight: 100; 
 }
-
-calendar:marked {
-	background-color: #000;
-}

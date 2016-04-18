@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48+devel r12923"
+   sodipodi:docname="wine-winecfg.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.0627443"
+     inkscape:cx="-0.41454571"
+     inkscape:cy="11.87017"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="669"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3850" />
+    <sodipodi:guide
+       position="4,4.0000174"
+       orientation="-40,0"
+       id="guide4072" />
+    <sodipodi:guide
+       position="4,44.000017"
+       orientation="0,40"
+       id="guide4074" />
+    <sodipodi:guide
+       position="44,44.000017"
+       orientation="40,0"
+       id="guide4076" />
+    <sodipodi:guide
+       position="44,4.0000174"
+       orientation="0,-40"
+       id="guide4078" />
+    <sodipodi:guide
+       position="9,9.0000174"
+       orientation="-30,0"
+       id="guide4082" />
+    <sodipodi:guide
+       position="9,39.000017"
+       orientation="0,30"
+       id="guide4084" />
+    <sodipodi:guide
+       position="39,39.000017"
+       orientation="30,0"
+       id="guide4086" />
+    <sodipodi:guide
+       position="39,9.0000174"
+       orientation="0,-30"
+       id="guide4088" />
+    <sodipodi:guide
+       position="15,15.000017"
+       orientation="-18,0"
+       id="guide4092" />
+    <sodipodi:guide
+       position="15,33.000017"
+       orientation="0,18"
+       id="guide4094" />
+    <sodipodi:guide
+       position="33,33.000017"
+       orientation="18,0"
+       id="guide4096" />
+    <sodipodi:guide
+       position="33,15.000017"
+       orientation="0,-18"
+       id="guide4098" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <circle
+       style="fill:#27ae60;fill-opacity:1;stroke:none"
+       id="path4068"
+       cx="24"
+       cy="1028.3622"
+       r="20"
+       d="m 44,1028.3622 a 20,20 0 0 1 -20,20 20,20 0 0 1 -20,-20 20,20 0 0 1 20,-20 20,20 0 0 1 20,20 z" />
+    <circle
+       r="11"
+       cy="1028.3622"
+       cx="24"
+       id="circle4100"
+       style="fill:#ecf0f1;fill-opacity:1;stroke:none"
+       d="m 35,1028.3622 a 11,11 0 0 1 -11,11 11,11 0 0 1 -11,-11 11,11 0 0 1 11,-11 11,11 0 0 1 11,11 z" />
+    <path
+       sodipodi:type="star"
+       style="fill:#34495e;fill-opacity:1;stroke:none"
+       id="path4102"
+       sodipodi:sides="3"
+       sodipodi:cx="24.249926"
+       sodipodi:cy="1015.2199"
+       sodipodi:r1="1.7463723"
+       sodipodi:r2="0.87318623"
+       sodipodi:arg1="0.52359878"
+       sodipodi:arg2="1.5707963"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 25.762328,1016.0931 -1.512402,0 -1.512403,0 0.756201,-1.3098 0.756202,-1.3098 0.756201,1.3098 z"
+       inkscape:transform-center-y="-0.50002191"
+       transform="matrix(0.99179927,0,0,1.1452311,-0.05105852,-147.29921)" />
+  </g>
+</svg>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg5453"
+   version="1.1"
+   inkscape:version="0.48+devel r12923"
+   sodipodi:docname="netflix-desktop.svg">
+  <defs
+     id="defs5455" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.4820195"
+     inkscape:cx="28.451864"
+     inkscape:cy="27.604228"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="669"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="15.000012,33.000026"
+       orientation="18,0"
+       id="guide4078" />
+    <sodipodi:guide
+       position="15.000012,15.000026"
+       orientation="0,18"
+       id="guide4080" />
+    <sodipodi:guide
+       position="33.000012,15.000026"
+       orientation="-18,0"
+       id="guide4082" />
+    <sodipodi:guide
+       position="33.000012,33.000026"
+       orientation="0,-18"
+       id="guide4084" />
+    <sodipodi:guide
+       position="9.0000117,38.999996"
+       orientation="29.999969,0"
+       id="guide4086" />
+    <sodipodi:guide
+       position="9.0000117,9.0000264"
+       orientation="0,30"
+       id="guide4088" />
+    <sodipodi:guide
+       position="39.000012,9.0000264"
+       orientation="-29.999969,0"
+       id="guide4090" />
+    <sodipodi:guide
+       position="39.000012,38.999996"
+       orientation="0,-30"
+       id="guide4092" />
+    <sodipodi:guide
+       position="4.0000117,43.999996"
+       orientation="39.999969,0"
+       id="guide4094" />
+    <sodipodi:guide
+       position="4.0000117,4.0000264"
+       orientation="0,40"
+       id="guide4096" />
+    <sodipodi:guide
+       position="44.000012,4.0000264"
+       orientation="-39.999969,0"
+       id="guide4098" />
+    <sodipodi:guide
+       position="44.000012,43.999996"
+       orientation="0,-40"
+       id="guide4100" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5458">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-384.57143,-499.798)">
+    <rect
+       style="fill:#e74c3c;fill-opacity:1;stroke:none"
+       id="rect4102"
+       width="40"
+       height="39.999969"
+       x="388.57144"
+       y="503.798" />
+    <path
+       inkscape:connector-curvature="0"
+       d="m 408.83275,508.79821 0,0.51897 c 0,0 -0.002,0.91555 -0.002,1.71138 -0.79878,-0.88178 -2.01344,-2.23035 -2.01344,-2.23035 l -5.54583,0 0.003,27.48162 3.19485,2.51804 3.33093,-0.41662 c 0,0 0.0141,-1.45123 0.0237,-2.43601 1.09397,0.89817 2.59195,2.12472 2.59195,2.12472 l 5.45546,-0.55472 0,-25.88832 -2.96044,-2.82279 -4.07779,-0.006 z"
+       id="path8"
+       style="fill:#000000" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff"
+       d="m 409.74132,530.35476 -0.18472,0.0217 -3.18696,-20.83944 -4.24314,-0.005 0.002,26.15797 c 0,0 0.84217,-0.12105 2.63502,-0.32411 l -0.18473,-19.88288 0.18374,-0.0174 3.03179,19.58897 c 0,0 1.03613,-0.12171 4.55969,-0.46976 l 0,-25.05083 -2.70669,0 0.0941,20.82042 z"
+       id="path26" />
+  </g>
+</svg>

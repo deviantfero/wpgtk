@@ -12,3 +12,4 @@
 ./replace_folder_file.sh ../places/64/folder-templates.svg
 ./replace_folder_file.sh ../places/64/folder-videos.svg
 ./replace_folder_file.sh ../places/64/user-home.svg
+
