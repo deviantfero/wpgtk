@@ -6,18 +6,11 @@
     background-clip: padding-box;
 
     -GtkArrow-arrow-scaling: 0.55;
-    -GtkCheckButton-indicator-size: 16;
-    -GtkCheckMenuItem-indicator-size: 14;
-    -GtkExpander-expander-size: 8;
     -GtkHTML-link-color: @link_color;
     -GtkIMHtml-hyperlink-color: @link_color;
-    -GtkNotebook-initial-gap: 0;
-    -GtkProgressBar-min-horizontal-bar-height: 12;
-    -GtkProgressBar-min-vertical-bar-width: 12;
     -GtkScrollbar-has-backward-stepper: false;
     -GtkScrollbar-has-forward-stepper: false;
     -GtkScrolledWindow-scrollbar-spacing: 0;
-    -GtkStatusbar-shadow-type: none;
     -GtkTextView-error-underline-color: @error_color;
     -GtkToolButton-icon-spacing: 6;
     -GtkToolItemGroup-expander-size: 8;
@@ -25,8 +18,6 @@
     -GtkWindow-resize-grip-height: 0;
     -GtkWindow-resize-grip-width: 0;
     -WnckTasklist-fade-overlay-rect: 0;
-    -GtkCheckButton-indicator-size: 16;
-    -GtkCheckMenuItem-indicator-size: 12;
     -GtkWidget-horizontal-separator: 0;
     -GtkWidget-vertical-separator: 0;
     outline-color: transparent;
