@@ -216,6 +216,9 @@ def define_redux( hexvalue ):
     elif base_brightness <= 100:
         redux_list.append(10)
         redux_list.append(15)
+    elif base_brightness <= 70:
+        redux_list.append(5)
+        redux_list.append(10)
     else:
         redux_list.append(30)
         redux_list.append(75)
