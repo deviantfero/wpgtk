@@ -59,9 +59,9 @@ this would be .base file of your wm config
 this would be the output config
 ![OUTPUT](http://i.imgur.com/spfrUFc.png)
 
-####### WPGTK and i3
+_**wpg and i3**_
 
-It then becomes possible to then replace  your WM's configuration file with a link to the output config of WPGTK:
+It then becomes possible to then replace  your WM's configuration file with a link to the output config of wpg:
 
 ```sh
 
