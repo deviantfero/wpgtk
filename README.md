@@ -21,7 +21,7 @@ yaourt -S wpgtk-git
 ---
 
 ### Version
-2.5
+2.8
 
 ###### Features added
 
