@@ -24,7 +24,7 @@ yaourt -S wpgtk-git
 2.8
 
 ###### Features added
-
+i
 * Special Openbox theme so that window borders change with your wallpaper
 * Special Icon set included that changes with your wallpaper
 * It also changes a special GTK theme automatically
@@ -49,7 +49,7 @@ URxvt*background: 0
 
 _**example**_
 
-all you need to do, is copy your config file to ~/.themes/color_other
+all you need to do, is copy your config file to ~/.themes/color_other/
 add a ".base" at the end, and replace your active and inactive states colors with COLORACT and COLORIN respectively.
 wpg will generate a config file each time it runs with their respective color.
 
@@ -59,10 +59,20 @@ this would be .base file of your wm config
 this would be the output config
 ![OUTPUT](http://i.imgur.com/spfrUFc.png)
 
+_**wpg and i3**_
+
+It then becomes possible to then replace  your WM's configuration file with a link to the output config of wpg:
+
+```sh
+
+ln -s  ~/.themes/color_other/config_i3 ~/.i3/config
+
+```
+
 ---
 
 ### Installation 
-if you are in ubuntu, debian or Arch linux, the installer will take care of dependencies on it's own.
+if you are in Ubuntu, Debian or Arch linux, the installer will take care of dependencies on it's own.
 
 do the following
 ```sh
@@ -109,13 +119,13 @@ $ sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt
 $ sudo apt-get install feh python3-gi python-gobject python-pip python-imaging xsltproc && pip install Pillow
 ```
 ---
-
+i
 ### Credit
 I found the script by other means, but i found out the author of the color script that i made
 the GUI for, i'll leave the link to the original repo down below 
 
 it's http://github.com/everett1992/wp
-
+i
 ### Examples
 ![Dynamic bar](http://i.imgur.com/1d8ragK.png)
 ![Dynamic theme2](http://i.imgur.com/jNNSenW.png)
