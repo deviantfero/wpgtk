@@ -61,6 +61,14 @@ function main {
               shift
               slideshow $*
               ;;
+          tmp)
+              shift
+			  if [ -f /usr/local/bin/py/make_sample.py ]; then
+				  /usr/local/bin/py/make_sample.py
+			  else
+				  /usr/bin/py/make_sample.py
+			  fi
+              ;;
           *)
               shift
 			  echo ":: Done"

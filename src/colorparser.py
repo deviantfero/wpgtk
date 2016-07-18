@@ -15,23 +15,6 @@ walldir = homedir + "/.wallpapers/"
 replace_active = "COLORACT"
 replace_inactive = "COLORIN"
 
-def replace_in_file( file_to_operate, target, newstring ):
-    with fileinput.FileInput( file_to_operate, inplace=True, backup=False ) as file:
-        for line in file:
-            print( line.replace( target, newstring ), end='' )
-def clean_icon_color( dirty_list ):
-    dirty_list = dirty_list.pop()
-    dirty_list = dirty_list.strip( "\n" )
-    dirty_list = dirty_list.split( "=" )
-    dirty_list = dirty_list.pop()
-    return dirty_list
-
-def darkness(hexv):
-    rgb = list( int(hexv[i:i+2], 16) for i in ( 0, 2, 4 ) )
-    hls = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
-    hls = list(hls)
-    return hls[1]
-
 def read_color_in_line( xres_file ):
     xres_file = "." + xres_file + ".Xres"
     try:
@@ -48,7 +31,73 @@ def read_color_in_line( xres_file ):
     color = color[1]
     color = color.strip( '#' )
     color = color.strip( '\n' )
+    f.close()
     return color
+
+def read_colors( xres_file ):
+    xres_file = "." + xres_file + ".Xres"
+    try:
+        f = open( walldir + xres_file, "r" )
+    except IOError as err:
+        print( err )
+        print( err.args )
+        print( err.filename )
+        empty = []
+        for x in range( 0, 16 ):
+            empty.append( '000000' )
+        return empty
+    xres_list = [ line for line in f ]
+    xres_list = list( map(lambda x: x.split("#", len(x)), xres_list ) )
+    xres_list = [ word[1].strip( "\n" ) for word in xres_list ]
+    f.close()
+    return xres_list
+
+def write_colors( xres_file, color_list ):
+    col_file = "." + xres_file + ".colors"
+    xres_file = "." + xres_file + ".Xres"
+    try:
+        f = open( walldir + xres_file, "w" )
+        fc = open( walldir + col_file, "w" )
+        temp = open( walldir + ".tmp.colors", "w" )
+    except IOError as err:
+        print( err )
+        print( err.args )
+        print( err.filename )
+    if( isfile( walldir + xres_file ) and isfile( walldir + col_file) ):
+        for i, c in enumerate(color_list):
+            f.write( "*color" + str(i) + ": #" + c + "\n" )
+            fc.write( "export COLOR" + str(i) + '="#' + c + '"\n' )
+            temp.write( "#" + c + "\n" )
+    else:
+        print( "not writing" )
+    f.close()
+    fc.close()
+    temp.close()
+
+def write_tmp( color_list ):
+    f = open( walldir + ".tmp.colors", "w" )
+    for c in color_list:
+        f.write( "#" + c + "\n" )
+    f.close()
+
+def replace_in_file( file_to_operate, target, newstring ):
+    with fileinput.FileInput( file_to_operate, inplace=True, backup=False ) as file:
+        for line in file:
+            print( line.replace( target, newstring ), end='' )
+
+def clean_icon_color( dirty_list ):
+    dirty_list = dirty_list.pop()
+    dirty_list = dirty_list.strip( "\n" )
+    dirty_list = dirty_list.split( "=" )
+    dirty_list = dirty_list.pop()
+    return dirty_list
+
+def darkness(hexv):
+    rgb = list( int(hexv[i:i+2], 16) for i in ( 0, 2, 4 ) )
+    hls = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
+    hls = list(hls)
+    return hls[1]
+
 
 def reduce_brightness( hex_string, reduce_lvl ):
     rgb = list( int(hex_string[i:i+2], 16) for i in ( 0, 2, 4 ) )
@@ -210,15 +259,21 @@ def define_redux( hexvalue ):
     elif base_brightness >= 160:
         redux_list.append(50)
         redux_list.append(105)
+    elif base_brightness <= 10:
+        redux_list.append(-35)
+        redux_list.append(-15)
+    elif base_brightness <= 60:
+        redux_list.append(-20)
+        redux_list.append(-5)
+    elif base_brightness <= 70:
+        redux_list.append(0)
+        redux_list.append(15)
+    elif base_brightness <= 80:
+        redux_list.append(5)
+        redux_list.append(20)
     elif base_brightness <= 125:
         redux_list.append(20)
         redux_list.append(55)
-    elif base_brightness <= 100:
-        redux_list.append(10)
-        redux_list.append(15)
-    elif base_brightness <= 70:
-        redux_list.append(5)
-        redux_list.append(10)
     else:
         redux_list.append(30)
         redux_list.append(75)
@@ -234,9 +289,9 @@ def execute_gcolorchange( image_name ):
     inact_redux = redux_list[1]
     active = reduce_brightness( base_color, base_redux )
     inactive = reduce_brightness( base_color, inact_redux )
-    fg_icon = base_color
-    bg_icon = reduce_brightness( base_color, 40 )
-    glyph = reduce_brightness( base_color, 70 )
+    fg_icon = active
+    bg_icon = inactive
+    glyph = reduce_brightness( inactive, 15 )
     print( "BASE BRIGHTNESS: " + str( base_brightness ) )
     print( "FG: " + active )
     print( "BG: " + inactive )

@@ -87,6 +87,7 @@ if __name__ == '__main__':
     # sort by value, saturation, then hue
     colors = colorz(WALLPAPER, n=n)
     colors.sort(key=lambda  x:darkness(x), reverse=True)
+    new_colors = []
     for c in colors:
         if i == 0:
             c = normalize(c, minv=0, maxv=32)
@@ -99,9 +100,10 @@ if __name__ == '__main__':
         c = normalize(c, minv=32, maxv=224)
         xres += """*color{}: {}\n""".format(i, c)
         cols += """export COLOR{}="{}"\n""".format(i, c)
+        new_colors.append( c )
         i += 1
 
-    create_sample(SAMPLE, colors)
+    create_sample(SAMPLE, new_colors)
     with open(XRESOURCES, 'w') as f:
         f.write(xres)
     with open(COLORS, 'w') as f:

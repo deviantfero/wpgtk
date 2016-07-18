@@ -3,8 +3,9 @@
 
 See What it can do!
 
-http://s1.webmshare.com/99Kna.webm
-![Dynamic themes](http://i.imgur.com/paIQsa0.png)
+http://webmshare.com/play/zMm1z
+![Dynamic themes](http://i.imgur.com/Bmjxh4d.png)
+![color editor](http://i.imgur.com/3prQAU0.png)
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
 
@@ -39,6 +40,8 @@ yaourt -S wpgtk-git
 ```sh
 URxvt*background: 0
 ```
+
+* you can now modify the colorschemes you are provided color by color, no more same color in 2 spaces, now you are in control
 
 ###### Important feature added
 
