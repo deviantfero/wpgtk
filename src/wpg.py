@@ -100,7 +100,7 @@ class colorGrid( Gtk.Grid ):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_name, width=500, height=300 )
             self.sample.set_from_pixbuf( self.pixbuf_sample )
 
-        sampler_name = filepath + ".nsampler.png"
+        sampler_name = filepath + ".nsampler.sample.png"
         self.sampler = Gtk.Image()
         if( os.path.isfile(sampler_name) ):
             self.pixbuf_sampler = GdkPixbuf.Pixbuf.new_from_file_at_size( sampler_name, width=500, height=300 )
