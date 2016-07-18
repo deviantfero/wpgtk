@@ -7,7 +7,7 @@ http://webmshare.com/play/zMm1z
 ![Dynamic themes](http://i.imgur.com/Bmjxh4d.png)
 ![color editor](http://i.imgur.com/3prQAU0.png)
 
-wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper
+wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper, you can now also modify this generated colorschemes color by color to your content.
 
 **_it can take a little while to generate the color pallet._**
 
