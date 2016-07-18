@@ -51,7 +51,7 @@ function install_color {
 	sudo chmod -R ugo+rx /usr/local/bin/src
 	sudo cp ./wpcscript ./wpg /usr/local/bin
 	sudo cp ./functions /usr/local/bin
-	cp ./misc/no_sample.sample.png ~/.wallpapers/.no_sample.sample.png
+	cp ./misc/.* ~/.wallpapers/
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/
 	cp -r ./themes/colorbamboo_nb ~/.themes/

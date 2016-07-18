@@ -72,16 +72,6 @@ class colorGrid( Gtk.Grid ):
         self.colorgrid.set_row_spacing( PAD )
         self.colorgrid.set_column_spacing( PAD )
 
-        self.numgrid = Gtk.Grid()
-        self.numgrid.set_border_width( 12 )
-        self.numgrid.set_column_spacing( 18.50 )
-        for x in range( 0, 16 ):
-            if x < 9:
-                self.numgrid.attach( Gtk.Label( " " + str(x) + " "), x, 0, 1, 1 )
-            else:
-                self.numgrid.attach( Gtk.Label(str(x)), x, 0, 1, 1 )
-
-
         self.color_list = []
         self.button_list = []
         for x in range( 0, 16 ):
@@ -110,6 +100,12 @@ class colorGrid( Gtk.Grid ):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_name, width=500, height=300 )
             self.sample.set_from_pixbuf( self.pixbuf_sample )
 
+        sampler_name = filepath + ".nsampler.png"
+        self.sampler = Gtk.Image()
+        if( os.path.isfile(sampler_name) ):
+            self.pixbuf_sampler = GdkPixbuf.Pixbuf.new_from_file_at_size( sampler_name, width=500, height=300 )
+            self.sampler.set_from_pixbuf( self.pixbuf_sampler )
+
 
         self.ok_button = Gtk.Button( "Ok" )
         self.ok_button.connect( "pressed", self.on_ok_click )
@@ -130,7 +126,7 @@ class colorGrid( Gtk.Grid ):
         self.attach( self.ok_button, 0, 1, 1, 1 )
         self.attach( self.colorgrid, 0, 2, 1, 1 )
         self.attach( self.sample, 0, 3, 1, 1 )
-        self.attach( self.numgrid, 0, 4, 1, 1 )
+        self.attach( self.sampler, 0, 4, 1, 1 )
         self.attach( self.done_lbl, 0, 5, 1, 1 )
 
     def make_button( self, hex_color ):
