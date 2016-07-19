@@ -7,6 +7,7 @@ import os.path #fetch filenames
 #making sure it uses v3.0
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib 
 from colorparser import execute_gcolorchange
+from colorparser import add_brightness
 from colorparser import read_colors
 from colorparser import write_colors
 from colorparser import write_tmp
@@ -72,6 +73,10 @@ class colorGrid( Gtk.Grid ):
         self.colorgrid.set_row_spacing( PAD )
         self.colorgrid.set_column_spacing( PAD )
 
+        self.button_grid = Gtk.Grid()
+        self.button_grid.set_column_homogeneous( 1 )
+        self.button_grid.set_column_spacing( PAD )
+
         self.color_list = []
         self.button_list = []
         for x in range( 0, 16 ):
@@ -107,8 +112,13 @@ class colorGrid( Gtk.Grid ):
             self.sampler.set_from_pixbuf( self.pixbuf_sampler )
 
 
-        self.ok_button = Gtk.Button( "Ok" )
+        self.ok_button = Gtk.Button( "Save" )
         self.ok_button.connect( "pressed", self.on_ok_click )
+        self.ok_button.set_sensitive( False )
+
+        self.auto_button = Gtk.Button( "Auto-adjust" )
+        self.auto_button.connect( "pressed", self.on_auto_click )
+        self.auto_button.set_sensitive( False )
 
         self.done_lbl = Gtk.Label( "" )
 
@@ -122,8 +132,11 @@ class colorGrid( Gtk.Grid ):
         self.option_combo.set_entry_text_column( 0 )
         self.option_combo.connect( "changed", self.combo_box_change )
 
+        self.button_grid.attach( self.ok_button, 0, 1, 1, 1 )
+        self.button_grid.attach( self.auto_button, 1, 1, 1, 1 )
+
         self.attach( self.option_combo, 0, 0, 1, 1 )
-        self.attach( self.ok_button, 0, 1, 1, 1 )
+        self.attach( self.button_grid, 0, 1, 1, 1 )
         self.attach( self.colorgrid, 0, 2, 1, 1 )
         self.attach( self.sample, 0, 3, 1, 1 )
         self.attach( self.sampler, 0, 4, 1, 1 )
@@ -142,7 +155,6 @@ class colorGrid( Gtk.Grid ):
 
     def on_ok_click( self, widget ):
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
-        print( current_walls.file_names_only )
         if( len(current_walls.file_names_only) > 0 ):
             x = self.option_combo.get_active()
             write_colors( current_walls.file_names_only[x], self.color_list )
@@ -157,6 +169,18 @@ class colorGrid( Gtk.Grid ):
                 sample_path = filepath + selected_sample
                 self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
                 self.parent.sample.set_from_pixbuf( self.pixbuf_sample )
+    
+    def on_auto_click( self, widget ):
+        current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
+        self.color_list = self.color_list[:8:] + [ add_brightness( x, 35 ) for x in self.color_list[:8:] ]
+        for x in range( 0, 16 ):
+            self.button_list[x].set_label( self.color_list[x] )
+        write_tmp( self.color_list )
+        os.system( "wpcscript tmp 1>/dev/null" )
+        sample_path = filepath + ".tmp.sample.png"
+        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
+        self.sample.set_from_pixbuf( self.pixbuf_sample )
+        self.done_lbl.set_text( "Auto-adjust done" )
 
     def on_color_click( self, widget ):
         self.done_lbl.set_text( "" )
@@ -185,6 +209,8 @@ class colorGrid( Gtk.Grid ):
     def combo_box_change( self, widget ):
         self.done_lbl.set_text( "" )
         x = self.option_combo.get_active()
+        self.auto_button.set_sensitive( True )
+        self.ok_button.set_sensitive( True )
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         selected_file = current_walls.file_names_only[x]
         selected_sample = "." + selected_file + ".sample.png"
