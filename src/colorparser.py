@@ -119,10 +119,10 @@ def add_brightness( hex_string, reduce_lvl ):
     rgb = list( int(hex_string[i:i+2], 16) for i in ( 0, 2, 4 ) )
     hls = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
     hls = list(hls)
-    if( hls[1] + reduce_lvl < 255 ):
+    if( hls[1] + reduce_lvl < 190 ):
         hls[1] = hls[1] + reduce_lvl
     else:
-        add_brightness( hex_string, reduce_lvl - 5 )
+        add_brightness( hex_string, reduce_lvl - 10 )
     rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
     rgb_int = []
     for elem in rgb:
