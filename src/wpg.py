@@ -172,11 +172,7 @@ class colorGrid( Gtk.Grid ):
     
     def on_auto_click( self, widget ):
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
-<<<<<<< HEAD
         self.color_list = self.color_list[:8:] + [ add_brightness( x, 50 ) for x in self.color_list[:8:] ]
-=======
-        self.color_list = self.color_list[:8:] + [ add_brightness( x, 30 ) for x in self.color_list[:8:] ]
->>>>>>> 2a2ce7dd2f5a5c8ef3a04aae7a4c1d84532de1b2
         for x in range( 0, 16 ):
             self.button_list[x].set_label( self.color_list[x] )
         write_tmp( self.color_list )
