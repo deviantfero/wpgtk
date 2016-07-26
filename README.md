@@ -5,7 +5,8 @@ See What it can do!
 
 http://webmshare.com/play/zMm1z
 ![Dynamic themes](http://i.imgur.com/Bmjxh4d.png)
-![color editor](http://i.imgur.com/3prQAU0.png)
+![color editor](http://i.imgur.com/Cp0FzR6.png)
+![Borderless](http://i.imgur.com/jYTFbcL.png)
 
 wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper, you can now also modify this generated colorschemes color by color to your content.
 
@@ -16,7 +17,7 @@ wpg is a GUI for a little program called wp ( original source below ) to manage 
 ### Now avialable in AUR
 
 ```sh
-yaourt -S wpgtk-git
+wpgtk-git
 ```
 ---
 
@@ -24,7 +25,7 @@ yaourt -S wpgtk-git
 2.8
 
 ###### Features added
-i
+
 * Special Openbox theme so that window borders change with your wallpaper
 * Special Icon set included that changes with your wallpaper
 * It also changes a special GTK theme automatically
@@ -85,7 +86,6 @@ after doing this there just a few more steps to get a dynamic theme going
 * Select colorbamboo or colorbamboo_nb (no_borders) as your openbox window theme
 * Select Flatcolor as your GTK theme
 * Select flattrcolor as your Icon theme
-* you're good to go!
 
 **_you need to uninstall any other wallpaper manager as it will override this one at startup._**
 
@@ -119,14 +119,10 @@ $ sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt
 $ sudo apt-get install feh python3-gi python-gobject python-pip python-imaging xsltproc && pip install Pillow
 ```
 ---
-i
+
 ### Credit
 I found the script by other means, but i found out the author of the color script that i made
 the GUI for, i'll leave the link to the original repo down below 
 
 it's http://github.com/everett1992/wp
-i
-### Examples
-![Dynamic bar](http://i.imgur.com/1d8ragK.png)
-![Dynamic theme2](http://i.imgur.com/jNNSenW.png)
 
