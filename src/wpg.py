@@ -6,13 +6,13 @@ from subprocess import call
 import os.path #fetch filenames
 #making sure it uses v3.0
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib 
-from colorparser import execute_gcolorchange
-from colorparser import add_brightness
-from colorparser import read_colors
-from colorparser import write_colors
-from colorparser import write_tmp
+from data.colorparser import execute_gcolorchange
+from data.colorparser import add_brightness
+from data.colorparser import read_colors
+from data.colorparser import write_colors
+from data.colorparser import write_tmp
 from time import sleep
-from colorpicker import ColorDialog
+from gui.colorpicker import ColorDialog
 
 version = "2.8"
 PAD = 10
