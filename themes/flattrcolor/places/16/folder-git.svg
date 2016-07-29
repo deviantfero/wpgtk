@@ -77,7 +77,7 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <path
-       style="opacity:1;fill:#34495d;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:1;fill:#C2C2C2;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="M 5.5 2 A 1.5 1.5 0 0 0 4 3.5 A 1.5 1.5 0 0 0 5 4.9121094 L 5 11.087891 A 1.5 1.5 0 0 0 4 12.5 A 1.5 1.5 0 0 0 5.5 14 A 1.5 1.5 0 0 0 7 12.5 A 1.5 1.5 0 0 0 6.0410156 11.101562 C 6.2316125 9.9082915 7.2514 9 8.5 9 C 10.292355 9 11.745029 7.6609835 11.957031 5.9277344 A 1.5 1.5 0 0 0 13 4.5 A 1.5 1.5 0 0 0 11.5 3 A 1.5 1.5 0 0 0 10 4.5 A 1.5 1.5 0 0 0 10.958984 5.8984375 C 10.768387 7.0917114 9.7485999 8 8.5 8 C 7.5169586 8 6.6345666 8.4044372 6 9.0527344 L 6 4.9121094 A 1.5 1.5 0 0 0 7 3.5 A 1.5 1.5 0 0 0 5.5 2 z M 5.5 3 A 0.5 0.5 0 0 1 6 3.5 A 0.5 0.5 0 0 1 5.5 4 A 0.5 0.5 0 0 1 5 3.5 A 0.5 0.5 0 0 1 5.5 3 z M 11.5 4 A 0.5 0.5 0 0 1 12 4.5 A 0.5 0.5 0 0 1 11.5 5 A 0.5 0.5 0 0 1 11 4.5 A 0.5 0.5 0 0 1 11.5 4 z M 5.5 12 A 0.5 0.5 0 0 1 6 12.5 A 0.5 0.5 0 0 1 5.5 13 A 0.5 0.5 0 0 1 5 12.5 A 0.5 0.5 0 0 1 5.5 12 z "
        transform="translate(0,1036.3622)"
        id="circle4175" />

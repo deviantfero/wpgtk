@@ -77,7 +77,7 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <path
-       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#34495d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#C2C2C2;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        d="M 7.9902344,2 4,5.9921875 4,6.0019531 4,7 l 2,0 0,2.999 0,1 4,0.002 0,-1 0,-2.9989999 2,0 0,-1 0,-0.00977 L 8.0097656,2 8,2 Z M 8,3.40625 10.59375,6 10,6 9,6 9,9.999 7,9.999 7,7 7,6 5.40625,6 Z M 3,9 l 0,1 0,4 1,0 9,0 0,-1 0,-4 -1,0 -1,0 0,1 1,0 0,3 -8,0 0,-3 1,0 0,-1 -1,0 z"
        transform="translate(0,1036.3622)"
        id="folderGlyph"
