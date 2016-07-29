@@ -105,24 +105,35 @@ def reduce_brightness( hex_string, reduce_lvl ):
     hls = list(hls)
     if( hls[1] - reduce_lvl > 0 ):
         hls[1] = hls[1] - reduce_lvl
+        rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
+        rgb_int = []
+        for elem in rgb:
+            if( elem < 0 ):
+                elem = 0
+            rgb_int.append( int(elem) )
+        rgb_int = tuple( rgb_int )
+        hex_result = '%02x%02x%02x' % rgb_int
+        return hex_result
     else:
         reduce_brightness( hex_string, reduce_lvl - 5 )
-    rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
-    rgb_int = []
-    for elem in rgb:
-        rgb_int.append( int(elem) )
-    rgb_int = tuple( rgb_int )
-    hex_result = '%02x%02x%02x' % rgb_int
-    return hex_result
 
 def add_brightness( hex_string, reduce_lvl ):
     rgb = list( int(hex_string[i:i+2], 16) for i in ( 0, 2, 4 ) )
     hls = rgb_to_hls( rgb[0], rgb[1], rgb[2] )
     hls = list(hls)
-    if( hls[1] + reduce_lvl < 190 ):
+    if( hls[1] + reduce_lvl < 250 ):
         hls[1] = hls[1] + reduce_lvl
+        rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
+        rgb_int = []
+        for elem in rgb:
+            if( elem > 255 ):
+                elem = 255
+            rgb_int.append( int(elem) )
+        rgb_int = tuple( rgb_int )
+        hex_result = '%02x%02x%02x' % rgb_int
+        return hex_result
     else:
-        add_brightness( hex_string, reduce_lvl - 10 )
+        add_brightness( hex_string, reduce_lvl - 5 )
     rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
     rgb_int = []
     for elem in rgb:
