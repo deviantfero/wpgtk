@@ -12,8 +12,8 @@ from os.path import isfile
 homedir = "/home/" + getuser()
 walldir = homedir + "/.wallpapers/"
 
-replace_active = "COLORACT"
-replace_inactive = "COLORIN"
+r_active = "COLORACT"
+r_inactive = "COLORIN"
 
 def read_color_in_line( xres_file ):
     xres_file = "." + xres_file + ".Xres"
@@ -148,16 +148,16 @@ def change_colors_ob( active, inactive ):
     button_color_hover = add_brightness( active, 70 )
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replace_inactive, inactive )
-        replace_in_file( realdir, replace_active, active )
+        replace_in_file( realdir, r_inactive, inactive )
+        replace_in_file( realdir, r_active, active )
         replace_in_file( realdir, "REPLAC", button_color_hover )
         replace_in_file( realdir, "REPLAD", inactive )
     backupdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc.base"
     realdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replace_inactive, inactive )
-        replace_in_file( realdir, replace_active, active )
+        replace_in_file( realdir, r_inactive, inactive )
+        replace_in_file( realdir, r_active, active )
         print( "CHANGED::OPENBOX" )
     else:
         print( "FAILED TO CHANGE::OPENBOX - BASE FILE DOES NOT EXIST" )
@@ -213,8 +213,8 @@ def change_colors_tint2( active, inactive ):
     realdir = homedir + "/.config/tint2/tint2rc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replace_inactive, inactive )
-        replace_in_file( realdir, replace_active, active )
+        replace_in_file( realdir, r_inactive, inactive )
+        replace_in_file( realdir, r_active, active )
         call( [ "killall", "-SIGUSR1", "tint2" ] )
         print( "CHANGED::TINT2" )
     else:
@@ -225,7 +225,7 @@ def change_colors_gtk2( active, inactive ):
     realdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replace_active, active )
+        replace_in_file( realdir, r_active, active )
         print( "CHANGED::GTK2" )
     else:
         print( "FAILED TO CHANGE::GTK2 - BASE FILE DOES NOT EXIST" )
@@ -235,7 +235,7 @@ def change_colors_gtk3( active, inactive ):
     realdir = homedir + "/.themes/FlatColor/gtk-3.0/gtk.css"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replace_active, active )
+        replace_in_file( realdir, r_active, active )
         print( "CHANGED::GTK3" )
     else:
         print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )
@@ -243,12 +243,12 @@ def change_colors_gtk3( active, inactive ):
     realdir = homedir + "/.themes/FlatColor/gtk-3.20/gtk.css"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, replace_active, active )
+        replace_in_file( realdir, r_active, active )
         print( "CHANGED::GTK3.20" )
     else:
         print( "FAILED TO CHANGE::GTK3.20 - BASE FILE DOES NOT EXIST" )
 
-def change_other_files( active, inactive ):
+def change_other_files( active, inactive, c_list ):
     other_path = "/home/" + getuser() + "/.themes/color_other/"
     files = []
     for( dirpath, dirnames, filenames ) in walk( other_path ):
@@ -258,8 +258,13 @@ def change_other_files( active, inactive ):
             if ".base" in word:
                 original = word.split( ".base", len(word) ).pop(0)
                 call([ "cp", other_path + word, other_path + original ])
-                replace_in_file( other_path + original, replace_inactive, active )
-                replace_in_file( other_path + original, replace_active, inactive )
+                replace_in_file( other_path + original, r_inactive, active )
+                replace_in_file( other_path + original, r_active, inactive )
+                for x in range( 0, 16 ):
+                    if x < 10:
+                        replace_in_file( other_path + original, "COLOR" + str(x), c_list[x] )
+                    else:
+                        replace_in_file( other_path + original,  "COLORX" + str(x), c_list[x] )
                 print( "CHANGED::OPTIONAL FILES - " + original )
     else:
         print( "NO OPTIONAL FILES DETECTED::NOT CHANGED" )
@@ -298,6 +303,7 @@ def define_redux( hexvalue ):
 
 def execute_gcolorchange( image_name ):
     #--Getting random color from an .Xres file--#
+    image_colors = read_colors( image_name )
     base_color = read_color_in_line( image_name )
     base_brightness = darkness( base_color )
     #--Defining how dark the windows have to be--#
@@ -320,7 +326,7 @@ def execute_gcolorchange( image_name ):
     change_colors_gtk2( active, inactive )
     change_colors_gtk3( active, inactive )
     change_colors_icons( fg_icon, bg_icon, glyph )
-    change_other_files( active, inactive )
+    change_other_files( active, inactive, image_colors )
     print( "SUCCESS" )
 
 if __name__ == "__main__":
