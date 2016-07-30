@@ -6,6 +6,7 @@ from subprocess import call
 import os.path #fetch filenames
 #making sure it uses v3.0
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib 
+from gi.repository.GdkPixbuf import Pixbuf
 from data.colorparser import execute_gcolorchange
 from data.colorparser import add_brightness
 from data.colorparser import read_colors
@@ -13,6 +14,7 @@ from data.colorparser import write_colors
 from data.colorparser import write_tmp
 from time import sleep
 from gui.colorpicker import ColorDialog
+from gui.basemaker import fileGrid
 
 version = "2.8"
 PAD = 10
@@ -230,6 +232,7 @@ class mainWindow( Gtk.Window ):
 
         image_name = filepath + ".current"
         image_name = os.path.realpath( image_name )
+        self.set_default_size( 200, 200 )
         
         print( "CURRENT WALLPAPER: " + image_name )
 
@@ -249,8 +252,11 @@ class mainWindow( Gtk.Window ):
         
         self.cpage = colorGrid( self )
 
+        self.fpage = fileGrid( self )
+
         self.notebook.append_page( self.wpage, Gtk.Label( "Wallpapers" ) )
         self.notebook.append_page( self.cpage, Gtk.Label( "Colors" ) )
+        self.notebook.append_page( self.fpage, Gtk.Label( "Optional Files" ) )
 
         option_list = Gtk.ListStore( str )
         for elem in list(current_walls.files):
