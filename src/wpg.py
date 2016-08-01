@@ -16,7 +16,7 @@ from time import sleep
 from gui.colorpicker import ColorDialog
 from gui.basemaker import fileGrid
 
-version = "2.8"
+version = "3.0"
 PAD = 10
 
 def hex_to_rgb( color ):
@@ -57,7 +57,7 @@ class fileList():
 #--some important global definitions
 filepath = GLib.get_home_dir() + "/.wallpapers/"
 current_walls = fileList( filepath )
-current_walls.show_files_only()
+#current_walls.show_files_only() #DEBUG ONLY
 #--some important global definitions
 
 class colorGrid( Gtk.Grid ):
@@ -234,7 +234,7 @@ class mainWindow( Gtk.Window ):
         image_name = os.path.realpath( image_name )
         self.set_default_size( 200, 200 )
         
-        print( "CURRENT WALLPAPER: " + image_name )
+        print( "CURRENT WALL: " + image_name )
 
         #these variables are just to get the image and preview of current wallpaper
         route_list = image_name.split( "/", image_name.count("/") )
@@ -305,7 +305,6 @@ class mainWindow( Gtk.Window ):
         self.current_walls = Gtk.ComboBox()
 
     def on_add_clicked( self, widget ):
-        print( "Adding..." )
         filechooser = Gtk.FileChooserDialog( "Select an Image", self, Gtk.FileChooserAction.OPEN,
                 (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                  Gtk.STOCK_OPEN, Gtk.ResponseType.OK) )

@@ -193,7 +193,6 @@ def change_colors_icons( active, inactive, glyph ):
         current_glyph = clean_icon_color( current_glyph )
         current_front = clean_icon_color( current_front )
         current_back = clean_icon_color( current_back )
-        print( current_front )
         file_current_glyph.close()
 
         replace_in_file( realdir, "l=178984", "l=" + current_glyph )
@@ -254,18 +253,21 @@ def change_other_files( active, inactive, c_list ):
     for( dirpath, dirnames, filenames ) in walk( other_path ):
         files.extend( filenames )
     if( files ):
-        for word in files:
-            if ".base" in word:
-                original = word.split( ".base", len(word) ).pop(0)
-                call([ "cp", other_path + word, other_path + original ])
-                replace_in_file( other_path + original, r_inactive, active )
-                replace_in_file( other_path + original, r_active, inactive )
-                for x in range( 0, 16 ):
-                    if x < 10:
-                        replace_in_file( other_path + original, "COLOR" + str(x), c_list[x] )
-                    else:
-                        replace_in_file( other_path + original,  "COLORX" + str(x), c_list[x] )
-                print( "CHANGED::OPTIONAL FILES - " + original )
+        try:
+            for word in files:
+                if ".base" in word:
+                    original = word.split( ".base", len(word) ).pop(0)
+                    call([ "cp", other_path + word, other_path + original ])
+                    replace_in_file( other_path + original, r_inactive, active )
+                    replace_in_file( other_path + original, r_active, inactive )
+                    for x in range( 0, 16 ):
+                        if x < 10:
+                            replace_in_file( other_path + original, "COLOR" + str(x), c_list[x] )
+                        else:
+                            replace_in_file( other_path + original,  "COLORX" + str(x), c_list[x] )
+                    print( "CHANGED::OPTIONAL FILES - " + original )
+        except Exception as e:
+            print( 'FAILED TO CHANGE::OPTIONAL FILE -' + original )
     else:
         print( "NO OPTIONAL FILES DETECTED::NOT CHANGED" )
 
@@ -315,7 +317,6 @@ def execute_gcolorchange( image_name ):
     fg_icon = active
     bg_icon = inactive
     glyph = reduce_brightness( inactive, 15 )
-    print( "BASE BRIGHTNESS: " + str( base_brightness ) )
     print( "FG: " + active )
     print( "BG: " + inactive )
     bg_fg_file = open( homedir + "/.main_colors", "w" )
