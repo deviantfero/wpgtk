@@ -1,7 +1,7 @@
 from os import walk, symlink, remove
 from gi import require_version
 from shutil import copy2
-from subprocess import Popen
+from subprocess import Popen, call
 require_version( "Gtk", "3.0" )
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib 
 from gi.repository.GdkPixbuf import Pixbuf
@@ -25,10 +25,11 @@ def connect_conf( filepath ):
         print( '::CREATING BASE' )
         copy2( filepath, config_path + filename + '.base' )
         copy2( filepath, config_path + filename )
-        Popen( [ 'rm', filepath ] )
+        call( [ 'rm', filepath ] )
         symlink( config_path + filename, filepath )
         print( '::CREATING SYMLINK' )
     except Exception as e:
+        print( e.message )
         print( "ERROR" )
 
 class fileGrid(Gtk.Grid):
