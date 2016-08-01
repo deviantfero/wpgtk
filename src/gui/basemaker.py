@@ -1,7 +1,7 @@
 from os import walk, symlink, remove
 from gi import require_version
 from shutil import copy2
-from subprocess import call
+from subprocess import Popen
 require_version( "Gtk", "3.0" )
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib 
 from gi.repository.GdkPixbuf import Pixbuf
@@ -25,7 +25,7 @@ def connect_conf( filepath ):
         print( '::CREATING BASE' )
         copy2( filepath, config_path + filename + '.base' )
         copy2( filepath, config_path + filename )
-        call( [ 'rm', filepath ] )
+        Popen( [ 'rm', filepath ] )
         symlink( config_path + filename, filepath )
         print( '::CREATING SYMLINK' )
     except Exception as e:
@@ -95,31 +95,32 @@ class fileGrid(Gtk.Grid):
 
         if response == Gtk.ResponseType.OK:
             filepath = filechooser.get_filename()
+            if( "\\" in filepath ):
+                filepath = filepath.replace( "\\", "\\\\" )
+            if( " " in filepath ):
+                filepath = filepath.replace( " ", "\ " )
+                filename = filepath.split( "/", len(filepath) )
+                filename = filename.pop()
+                if( " " in filename ):
+                    filename = filename.replace( " ", "\ " )
+                elif( "\\" in filename ):
+                    filename = filename.replace( "\\", "\\\\" )
+            connect_conf( filepath )
+            self.item_names = [ filen for filen in get_basef( config_path ) if '.base' in filen ]
+            self.liststore = Gtk.ListStore( Pixbuf, str )
+            for filen in self.item_names:
+                pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
+                self.liststore.append([pixbuf, filen])
+            self.file_view.set_model( self.liststore )
         filechooser.destroy()
-
-        if( "\\" in filepath ):
-            filepath = filepath.replace( "\\", "\\\\" )
-        if( " " in filepath ):
-            filepath = filepath.replace( " ", "\ " )
-            filename = filepath.split( "/", len(filepath) )
-            filename = filename.pop()
-            if( " " in filename ):
-                filename = filename.replace( " ", "\ " )
-            elif( "\\" in filename ):
-                filename = filename.replace( "\\", "\\\\" )
-        connect_conf( filepath )
-        self.item_names = [ filen for filen in get_basef( config_path ) if '.base' in filen ]
-        self.liststore = Gtk.ListStore( Pixbuf, str )
-        for filen in self.item_names:
-            pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
-            self.liststore.append([pixbuf, filen])
-        self.file_view.set_model( self.liststore )
+        self.file_view.unselect_all()
 
 
     def on_open_clicked( self, widget ):
         if self.current != None:
-            call( [ 'xdg-open', config_path + self.item_names[self.current] ] )
+            Popen( [ 'xdg-open', config_path + self.item_names[self.current] ] )
             self.current = None
+        self.file_view.unselect_all()
 
     def on_rm_clicked( self, widget ):
         if self.current != None:
@@ -131,6 +132,7 @@ class fileGrid(Gtk.Grid):
                 self.liststore.append([pixbuf, filen])
             self.file_view.set_model( self.liststore )
             self.current = None
+        self.file_view.unselect_all()
 
 
     def on_file_click(self, widget, pos):

@@ -2,7 +2,7 @@
 from gi import require_version
 require_version( "Gtk", "3.0" )
 from os import walk
-from subprocess import call
+from subprocess import Popen, call
 import os.path #fetch filenames
 #making sure it uses v3.0
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib 
@@ -324,11 +324,11 @@ class mainWindow( Gtk.Window ):
                 filename = filename.replace( " ", "\ " )
             elif( "\\" in filename ):
                 filename = filename.replace( "\\", "\\\\" )
-            call( "cp " + filepath + " ./" + filename, shell=True )
-            call( "wpcscript add " + "./" + filename, shell=True )
-            call( "rm ./" + filename, shell=True )
+            Popen( "cp " + filepath + " ./" + filename, shell=True )
+            Popen( "wpcscript add " + "./" + filename, shell=True )
+            Popen( "rm ./" + filename, shell=True )
         else:
-            call( "wpcscript add " + filepath, shell=True )
+            Popen( "wpcscript add " + filepath, shell=True )
         option_list = Gtk.ListStore( str )
         current_walls = fileList( filepath )
 
@@ -340,7 +340,6 @@ class mainWindow( Gtk.Window ):
         self.colorscheme.set_model( option_list )
         self.colorscheme.set_entry_text_column( 0 )
         self.cpage.update_combo( option_list )
-        print( "Done." )
 
 
     def on_set_clicked( self, widget ):
@@ -359,24 +358,23 @@ class mainWindow( Gtk.Window ):
                 call( [ "wpcscript", "add", path + filepath ] )
                 self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( path + colorscheme_sample, width=500, height=500 )
                 self.sample.set_from_pixbuf( self.pixbuf_sample )
-            call( [ "wpcscript", "change", filepath ] )
-            call( [ "xrdb", "-merge", path + colorscheme] )
+            Popen( [ "wpcscript", "change", filepath ] )
+            Popen( [ "xrdb", "-merge", path + colorscheme] )
             init_file = open( GLib.get_home_dir() + "/.wallpapers/wp_init.sh", "w" )
             init_file.writelines( [ "#!/bin/bash\n", "wpcscript change " + filepath + " && " ] )
             init_file.writelines( "xrdb -merge " + path + colorscheme + "\n" )
             init_file.close()
-            call( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
+            Popen( [ "chmod", "+x", GLib.get_home_dir() + "/.wallpapers/wp_init.sh" ] )
             if( os.path.isfile(GLib.get_home_dir() + "/.themes/colorbamboo/openbox-3/themerc.base") ):
                 execute_gcolorchange( colorscheme_file )
-            print( "Done." )
 
     def on_rm_clicked( self, widget ):
         x = self.option_combo.get_active()
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         if( len(current_walls.file_names_only) > 0 ):
             filepath = current_walls.file_names_only[x]
-            call( [ "wpcscript", "rm", filepath ] )
-            call( [ "rm", GLib.get_home_dir() + "/.wallpapers/" + "." + filepath + ".sample.png" ] )
+            Popen( [ "wpcscript", "rm", filepath ] )
+            Popen( [ "rm", GLib.get_home_dir() + "/.wallpapers/" + "." + filepath + ".sample.png" ] )
             option_list = Gtk.ListStore( str )
             current_walls = fileList( filepath )
             for elem in list(current_walls.files):
@@ -386,7 +384,6 @@ class mainWindow( Gtk.Window ):
             self.colorscheme.set_model( option_list )
             self.colorscheme.set_entry_text_column( 0 )
             self.cpage.update_combo( option_list )
-            print( "Done." )
 
     def combo_box_change( self, widget ):
         x = self.option_combo.get_active()
