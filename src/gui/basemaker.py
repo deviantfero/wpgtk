@@ -29,7 +29,6 @@ def connect_conf( filepath ):
         symlink( config_path + filename, filepath )
         print( '::CREATING SYMLINK' )
     except Exception as e:
-        print( e.message )
         print( "ERROR" )
 
 class fileGrid(Gtk.Grid):
