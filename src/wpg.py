@@ -325,10 +325,10 @@ class mainWindow( Gtk.Window ):
             elif( "\\" in filename ):
                 filename = filename.replace( "\\", "\\\\" )
             Popen( "cp " + filepath + " ./" + filename, shell=True )
-            Popen( "wpcscript add " + "./" + filename, shell=True )
+            call( "wpcscript add " + "./" + filename, shell=True )
             Popen( "rm ./" + filename, shell=True )
         else:
-            Popen( "wpcscript add " + filepath, shell=True )
+            call( "wpcscript add " + filepath, shell=True )
         option_list = Gtk.ListStore( str )
         current_walls = fileList( filepath )
 
