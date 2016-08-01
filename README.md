@@ -43,9 +43,11 @@ URxvt*background: 0
 
 * you can now modify the colorschemes you are provided color by color, no more same color in 2 spaces, now you are in control
 
-###### Important feature added
 
-* now wpgtk supports optional files, that means that it supports every window manager as long as it's colors are defined in a textfile and hexagesimal values
+
+### Optional config files ( support for other wm, and pretty much everything )
+
+----
 
 _**example**_
 just use the Optional Files tab in wpg, click on add and select the desired configuration file, wpg will automatically backup your current config, and will create a .base file for you which you can edit via the "edit" button in this tab.
@@ -66,10 +68,13 @@ this would be .base file of your wm config after you edit it of course
 #COLORIN (active color)
 #COLORACT (inactive color)
 ```
+
 so, this is the base file...
+
 ![INPUT](http://i.imgur.com/ZyxsoKi.png)
 
 this would be the output config that's already linked in your config's original folder, so it's all done on the fly.
+
 ![OUTPUT](http://i.imgur.com/lFkuQ8X.png)
 
 ---
