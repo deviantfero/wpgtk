@@ -57,7 +57,7 @@ class fileGrid(Gtk.Grid):
         self.button_add.connect( 'clicked', self.on_add_clicked )
         self.button_rm = Gtk.Button( 'Remove' )
         self.button_rm.connect( 'clicked', self.on_rm_clicked )
-        self.button_open = Gtk.Button( 'Open' )
+        self.button_open = Gtk.Button( 'Edit' )
         self.button_open.connect( 'clicked', self.on_open_clicked )
 
         self.liststore = Gtk.ListStore( Pixbuf, str )
