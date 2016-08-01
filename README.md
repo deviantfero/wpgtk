@@ -4,11 +4,10 @@
 See What it can do!
 
 http://webmshare.com/play/zMm1z
-![Dynamic themes](http://i.imgur.com/Bmjxh4d.png)
-![color editor](http://i.imgur.com/Cp0FzR6.png)
-![Borderless](http://i.imgur.com/jYTFbcL.png)
+![Dynamic themes](http://i.imgur.com/hLsd4jt.png)
+![Borderless](http://i.imgur.com/G2oTjMQ.png)
 
-wpg is a GUI for a little program called wp ( original source below ) to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper, you can now also modify this generated colorschemes color by color to your content.
+wpg is a GUI for a program called wp, to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper, you can also modify those generated colorschemes color by color to your content.
 
 **_it can take a little while to generate the color pallet._**
 
@@ -22,7 +21,7 @@ wpgtk-git
 ---
 
 ### Version
-2.8
+3.0
 
 ###### Features added
 
@@ -49,26 +48,29 @@ URxvt*background: 0
 * now wpgtk supports optional files, that means that it supports every window manager as long as it's colors are defined in a textfile and hexagesimal values
 
 _**example**_
+just use the Optional Files tab in wpg, click on add and select the desired configuration file, wpg will automatically backup your current config, and will create a .base file for you which you can edit via the "edit" button in this tab.
 
-all you need to do, is copy your config file to ~/.themes/color_other/
-add a ".base" at the end, and replace your active and inactive states colors with COLORACT and COLORIN respectively.
-wpg will generate a config file each time it runs with their respective color.
+this is how it looks when you add an extra config file
 
-this would be .base file of your wm config
-![INPUT](http://i.imgur.com/IYW7c7a.png)
+![WINDOW](http://i.imgur.com/Z49jP62.png)
+![RESULT](http://i.imgur.com/o18TSr9.png)
 
-this would be the output config
-![OUTPUT](http://i.imgur.com/spfrUFc.png)
+now your config is a symbolic link to the copy that is in the ~/.themes/colors_other directory, which gets modified each time you change your colorscheme according to a .base file matching the config's name.
 
-_**wpg and i3**_
-
-It then becomes possible to then replace  your WM's configuration file with a link to the output config of wpg:
-
-```sh
-
-ln -s  ~/.themes/color_other/config_i3 ~/.i3/config
-
+this would be .base file of your wm config after you edit it of course
 ```
+-- example 
+#COLOR0
+#COLOR1
+#COLORX10 it has the X so it doesn't conflict with COLOR1 when replacing, this is true from color 10 to 15
+#COLORIN (active color)
+#COLORACT (inactive color)
+```
+so, this is the base file...
+![INPUT](http://i.imgur.com/ZyxsoKi.png)
+
+this would be the output config that's already linked in your config's original folder, so it's all done on the fly.
+![OUTPUT](http://i.imgur.com/lFkuQ8X.png)
 
 ---
 
