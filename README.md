@@ -1,9 +1,15 @@
 # wpg
 ### An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK.
 
-See What it can do!
+#### Videos
 
-http://webmshare.com/play/zMm1z
+[Colorscheme Generator](http://webmshare.com/play/3vVjr)
+
+[Colorscheme Editor](http://webmshare.com/play/ZB7xX)
+
+[Config Manager](http://webmshare.com/play/6w3Vj)
+
+
 ![Dynamic themes](http://i.imgur.com/hLsd4jt.png)
 ![Borderless](http://i.imgur.com/G2oTjMQ.png)
 
