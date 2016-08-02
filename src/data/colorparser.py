@@ -258,8 +258,8 @@ def change_other_files( active, inactive, c_list ):
                 if ".base" in word:
                     original = word.split( ".base", len(word) ).pop(0)
                     call([ "cp", other_path + word, other_path + original ])
-                    replace_in_file( other_path + original, r_inactive, active )
-                    replace_in_file( other_path + original, r_active, inactive )
+                    replace_in_file( other_path + original, r_active, active )
+                    replace_in_file( other_path + original, r_inactive, inactive )
                     for x in range( 0, 16 ):
                         if x < 10:
                             replace_in_file( other_path + original, "COLOR" + str(x), c_list[x] )
