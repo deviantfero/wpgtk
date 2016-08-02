@@ -373,8 +373,8 @@ class mainWindow( Gtk.Window ):
         current_walls = fileList( GLib.get_home_dir() + "/.wallpapers" )
         if( len(current_walls.file_names_only) > 0 ):
             filepath = current_walls.file_names_only[x]
-            Popen( [ "wpcscript", "rm", filepath ] )
-            Popen( [ "rm", GLib.get_home_dir() + "/.wallpapers/" + "." + filepath + ".sample.png" ] )
+            call( [ "wpcscript", "rm", filepath ] )
+            call( [ "rm", GLib.get_home_dir() + "/.wallpapers/" + "." + filepath + ".sample.png" ] )
             option_list = Gtk.ListStore( str )
             current_walls = fileList( filepath )
             for elem in list(current_walls.files):
