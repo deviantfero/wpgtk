@@ -94,6 +94,7 @@ $ git clone http://github.com/deviantfero/wpgtk
 $ cd ~/wpgtk
 $ sh ./installcolor.sh
 ```
+Alternatively, there is also an AUR package (For arch users wpgtk-git,) which will handle the install and dependencies for you.
 
 after doing this there just a few more steps to get a dynamic theme going
 * Select colorbamboo or colorbamboo_nb (no_borders) as your openbox window theme
