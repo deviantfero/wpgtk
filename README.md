@@ -1,5 +1,7 @@
 # wpg
-### An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK.
+### An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK2/3.
+
+#### it's also compatible with most software that uses written configs, such as i3, bspwm, termite, etc.
 
 #### Videos
 
@@ -19,7 +21,7 @@ wpg is a GUI for a program called wp, to manage your wallpapers in a simple way,
 
 ----
 
-### Now avialable in AUR
+### in AUR
 
 ```sh
 wpgtk-git
