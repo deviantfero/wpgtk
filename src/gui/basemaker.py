@@ -1,4 +1,4 @@
-from os import walk, symlink, remove
+from os import walk, symlink, remove, getenv
 from gi import require_version
 from shutil import copy2
 from subprocess import Popen, call
@@ -118,7 +118,7 @@ class fileGrid(Gtk.Grid):
 
     def on_open_clicked( self, widget ):
         if self.current != None:
-            Popen( [ 'xdg-open', config_path + self.item_names[self.current] ] )
+            Popen( [ getenv('EDITOR'), config_path + self.item_names[self.current] ] )
             self.current = None
         self.file_view.unselect_all()
 
