@@ -118,7 +118,7 @@ class fileGrid(Gtk.Grid):
 
     def on_open_clicked( self, widget ):
         if self.current != None:
-            Popen( [ getenv('EDITOR'), config_path + self.item_names[self.current] ] )
+            Popen( [ 'xdg-open', config_path + self.item_names[self.current] ] )
             self.current = None
         self.file_view.unselect_all()
 
