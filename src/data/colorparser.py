@@ -207,13 +207,18 @@ def change_colors_icons( active, inactive, glyph ):
     else:
         print( "FAILED TO CHANGE::ICONS - BASE FILES DO NOT EXIST" )
 
-def change_colors_tint2( active, inactive ):
+def change_colors_tint2( active, inactive, c_list ):
     backupdir = homedir + "/.config/tint2/tint2rc.base"
     realdir = homedir + "/.config/tint2/tint2rc"
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
         replace_in_file( realdir, r_inactive, inactive )
         replace_in_file( realdir, r_active, active )
+        for x in range( 0, 16 ):
+            if x < 10:
+                replace_in_file( realdir, "COLOR" + str(x), c_list[x] )
+            else:
+                replace_in_file( realdir,  "COLORX" + str(x), c_list[x] )
         call( [ "killall", "-SIGUSR1", "tint2" ] )
         print( "CHANGED::TINT2" )
     else:
@@ -323,7 +328,7 @@ def execute_gcolorchange( image_name ):
     bg_fg_file.write( "FG:" + active + "\n" )
     bg_fg_file.write( "BG:" + inactive + "\n" )
     change_colors_ob( active, inactive )
-    change_colors_tint2( active, inactive )
+    change_colors_tint2( active, inactive, image_colors )
     change_colors_gtk2( active, inactive )
     change_colors_gtk3( active, inactive )
     change_colors_icons( fg_icon, bg_icon, glyph )
