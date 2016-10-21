@@ -18,10 +18,10 @@
 }
 
 .header-bar .title {
-    font: bold;
+    font-weight: bold;
 }
 
 .header-bar .subtitle {
-    font: smaller;
+    font-size: smaller;
 }
 

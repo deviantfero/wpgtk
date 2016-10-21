@@ -28,7 +28,7 @@
 }
 
 .titlebar .title {
-    font: bold;
+    font-weight: bold;
 }
 
 .titlebar:backdrop {

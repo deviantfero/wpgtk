@@ -18,7 +18,7 @@
     -GtkWindow-resize-grip-height: 0;
     -GtkWindow-resize-grip-width: 0;
     -WnckTasklist-fade-overlay-rect: 0;
-    -GtkWidget-horizontal-separator: 0;
+    /*-GtkWidget-horizontal-separator: 0;*/
     -GtkWidget-vertical-separator: 0;
     outline-color: transparent;
     outline-style: none;
@@ -135,7 +135,6 @@ GtkClutterOffscreen {
  *************/
 GtkAssistant .sidebar .highlight {
 	background-color: @theme_selected_bg_color;
-    font: bold;
 }
 
 GtkAssistant .sidebar {
