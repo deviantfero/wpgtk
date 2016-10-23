@@ -4,7 +4,7 @@
 check,
 radio {
 	color: alpha(currentColor, 0.75); 
-	background-color: #121212;
+	background-color: @base_color;
 	margin-right: 5px;
 }
 check:hover, check:active,

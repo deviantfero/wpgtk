@@ -14,6 +14,9 @@ walldir = homedir + "/.wallpapers/"
 
 r_active = "COLORACT"
 r_inactive = "COLORIN"
+r_bg = "COLORBG"
+r_base = "COLORBASE"
+r_tool = "COLORTOOL"
 
 def read_color_in_line( xres_file ):
     xres_file = "." + xres_file + ".Xres"
@@ -85,6 +88,13 @@ def replace_in_file( file_to_operate, target, newstring ):
         for line in file:
             print( line.replace( target, newstring ), end='' )
 
+def replace_colors( file_to_operate, c_list ):
+    for x, color in enumerate(c_list):
+        if x < 10:
+            replace_in_file( file_to_operate, "COLOR" + str(x), color )
+        else:
+            replace_in_file( file_to_operate,  "COLORX" + str(x), color )
+
 def clean_icon_color( dirty_list ):
     dirty_list = dirty_list.pop()
     dirty_list = dirty_list.strip( "\n" )
@@ -109,7 +119,7 @@ def reduce_brightness( hex_string, reduce_lvl ):
         rgb_int = []
         for elem in rgb:
             if( elem < 0 ):
-                elem = 0
+                elem = 1
             rgb_int.append( int(elem) )
         rgb_int = tuple( rgb_int )
         hex_result = '%02x%02x%02x' % rgb_int
@@ -127,7 +137,7 @@ def add_brightness( hex_string, reduce_lvl ):
         rgb_int = []
         for elem in rgb:
             if( elem > 255 ):
-                elem = 255
+                elem = 254
             rgb_int.append( int(elem) )
         rgb_int = tuple( rgb_int )
         hex_result = '%02x%02x%02x' % rgb_int
@@ -142,14 +152,18 @@ def add_brightness( hex_string, reduce_lvl ):
     hex_result = '%02x%02x%02x' % rgb_int
     return hex_result
 
-def change_colors_ob( active, inactive ):
+def change_colors_ob( active, inactive, cl ):
     backupdir = homedir + "/.themes/colorbamboo/openbox-3/themerc.base"
     realdir = homedir + "/.themes/colorbamboo/openbox-3/themerc"
     button_color_hover = add_brightness( active, 70 )
+    bgs = [ cl[0], reduce_brightness(cl[0], 2), add_brightness(cl[0],10) ]
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
-        replace_in_file( realdir, r_inactive, inactive )
         replace_in_file( realdir, r_active, active )
+        replace_in_file( realdir, r_inactive, inactive )
+        replace_in_file( realdir, r_bg, bgs[0] )
+        replace_in_file( realdir, r_base, bgs[1] )
+        replace_in_file( realdir, r_tool, bgs[2] )
         replace_in_file( realdir, "REPLAC", button_color_hover )
         replace_in_file( realdir, "REPLAD", inactive )
     backupdir = homedir + "/.themes/colorbamboo_nb/openbox-3/themerc.base"
@@ -214,32 +228,36 @@ def change_colors_tint2( active, inactive, c_list ):
         call( ["cp", backupdir, realdir] )
         replace_in_file( realdir, r_inactive, inactive )
         replace_in_file( realdir, r_active, active )
-        for x in range( 0, 16 ):
-            if x < 10:
-                replace_in_file( realdir, "COLOR" + str(x), c_list[x] )
-            else:
-                replace_in_file( realdir,  "COLORX" + str(x), c_list[x] )
+        replace_colors( realdir, c_list )
         call( [ "killall", "-SIGUSR1", "tint2" ] )
         print( "CHANGED::TINT2" )
     else:
         print( "FAILED TO CHANGE::TINT2 - BASE FILE DOES NOT EXIST" )
 
-def change_colors_gtk2( active, inactive ):
+def change_colors_gtk2( active, inactive, cl ):
     backupdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc.base"
     realdir = homedir + "/.themes/FlatColor/gtk-2.0/gtkrc"
+    bgs = [ cl[0], reduce_brightness(cl[0], 5), add_brightness(cl[0],10) ]
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
         replace_in_file( realdir, r_active, active )
+        replace_in_file( realdir, r_bg, bgs[0] )
+        replace_in_file( realdir, r_base, bgs[1] )
+        replace_in_file( realdir, r_tool, bgs[2] )
         print( "CHANGED::GTK2" )
     else:
         print( "FAILED TO CHANGE::GTK2 - BASE FILE DOES NOT EXIST" )
 
-def change_colors_gtk3( active, inactive ):
+def change_colors_gtk3( active, inactive, cl ): #cl is a color list
     backupdir = homedir + "/.themes/FlatColor/gtk-3.0/gtk.css.base"
     realdir = homedir + "/.themes/FlatColor/gtk-3.0/gtk.css"
+    bgs = [ cl[0], reduce_brightness(cl[0], 2), add_brightness(cl[0],10) ]
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
         replace_in_file( realdir, r_active, active )
+        replace_in_file( realdir, r_bg, bgs[0] )
+        replace_in_file( realdir, r_base, bgs[1] )
+        replace_in_file( realdir, r_tool, bgs[2] )
         print( "CHANGED::GTK3" )
     else:
         print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )
@@ -248,6 +266,9 @@ def change_colors_gtk3( active, inactive ):
     if( isfile( backupdir ) ):
         call( ["cp", backupdir, realdir] )
         replace_in_file( realdir, r_active, active )
+        replace_in_file( realdir, r_bg, bgs[0] )
+        replace_in_file( realdir, r_base, bgs[1] )
+        replace_in_file( realdir, r_tool, bgs[2] )
         print( "CHANGED::GTK3.20" )
     else:
         print( "FAILED TO CHANGE::GTK3.20 - BASE FILE DOES NOT EXIST" )
@@ -327,10 +348,10 @@ def execute_gcolorchange( image_name ):
     bg_fg_file = open( homedir + "/.main_colors", "w" )
     bg_fg_file.write( "FG:" + active + "\n" )
     bg_fg_file.write( "BG:" + inactive + "\n" )
-    change_colors_ob( active, inactive )
+    change_colors_ob( active, inactive, image_colors )
     change_colors_tint2( active, inactive, image_colors )
-    change_colors_gtk2( active, inactive )
-    change_colors_gtk3( active, inactive )
+    change_colors_gtk2( active, inactive, image_colors )
+    change_colors_gtk3( active, inactive, image_colors )
     change_colors_icons( fg_icon, bg_icon, glyph )
     change_other_files( active, inactive, image_colors )
     print( "SUCCESS" )

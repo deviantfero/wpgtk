@@ -3,7 +3,7 @@
  **************/
 scrollbar {
   transition: all 0.3s cubic-bezier(0, 0, 0.2, 1), color 0;
-  background-color: #202020;
+  background-color: @tooltip_bg_color;
   background-clip: padding-box; }
   * {
     -GtkScrollbar-has-backward-stepper: false;
@@ -44,18 +44,18 @@ scrollbar {
       min-width: 4px;
       min-height: 4px;
       margin: 2px;
-      border: 2px solid #202020; }
+      border: 2px solid @tooltip_bg_color; }
     scrollbar.overlay-indicator:not(.dragging):not(.hovering) button {
       min-width: 4px;
       min-height: 4px;
       margin: 2px;
       border: 2px solid @theme_selected_bg_color;
       border-radius: 100px;
-      background-color: #202020;
+      background-color: @tooltip_bg_color;
       background-clip: padding-box;
       -gtk-icon-source: none; }
       scrollbar.overlay-indicator:not(.dragging):not(.hovering) button:disabled {
-        background-color: #202020; }
+        background-color: @tooltip_bg_color; }
     scrollbar.overlay-indicator:not(.dragging):not(.hovering).horizontal slider {
       min-width: 24px; }
     scrollbar.overlay-indicator:not(.dragging):not(.hovering).horizontal button {
@@ -65,7 +65,7 @@ scrollbar {
     scrollbar.overlay-indicator:not(.dragging):not(.hovering).vertical button {
       min-height: 8px; }
   scrollbar.overlay-indicator.dragging, scrollbar.overlay-indicator.hovering {
-    background-color: #202020; }
+    background-color: @tooltip_bg_color; }
   scrollbar.horizontal slider {
     min-width: 24px; }
   scrollbar.vertical slider {

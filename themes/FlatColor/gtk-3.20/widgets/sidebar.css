@@ -3,7 +3,7 @@
  ***********/
 .sidebar {
   border-style: none;
-  background-color: #202020; }
+  background-color: @tooltip_bg_color; }
   stacksidebar.sidebar:dir(ltr) list, stacksidebar.sidebar.left list, stacksidebar.sidebar.left:dir(rtl) list, .sidebar:dir(ltr), .sidebar.left, .sidebar.left:dir(rtl) {
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     border-left-style: none; }

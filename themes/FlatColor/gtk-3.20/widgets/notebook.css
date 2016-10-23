@@ -13,7 +13,7 @@ notebook > header {
       notebook > header.top > tabs > tab:not(.reorderable-page):hover {
         background-color: shade( @theme_selected_bg_color, 0.70 ) }
       notebook > header.top > tabs > tab:not(.reorderable-page):checked {
-        background-color: #202020; }
+        background-color: @tooltip_bg_color; }
   notebook > header.bottom {
     border-top-style: solid; }
     notebook > header.bottom > tabs > tab:not(.reorderable-page) {
@@ -29,7 +29,7 @@ notebook > header {
       notebook > header.left > tabs > tab:not(.reorderable-page):hover {
         background-color: shade( @theme_selected_bg_color, 0.70 ); }
       notebook > header.left > tabs > tab:not(.reorderable-page):checked {
-        background-color: #202020; }
+        background-color: @tooltip_bg_color; }
   notebook > header.right {
     border-left-style: solid; }
     notebook > header.right > tabs > tab:not(.reorderable-page) {
@@ -82,7 +82,7 @@ notebook > header {
       color: #fff; }
       notebook > header tab:hover.reorderable-page {
         border-color: @theme_selected_bg_color;
-        background-color: #202020; }
+        background-color: @tooltip_bg_color; }
     notebook > header tab:disabled {
       color: #fff; }
     notebook > header tab:checked {
@@ -93,7 +93,7 @@ notebook > header {
         animation: tab_ripple_effect 0.6s ease-in-out; }
       notebook > header tab:checked.reorderable-page {
         border-color: rgba(0, 0, 0, 0.1);
-        background-color: #202020; }
+        background-color: @tooltip_bg_color; }
     notebook > header tab button.flat {
       min-width: 24px;
       min-height: 24px;
@@ -125,5 +125,5 @@ notebook > header {
       margin: -1px 0;
       border-style: solid none; }
 notebook > stack:not(:only-child) {
-  background-color: #202020; } /*aqui esta lo que debe modificars*/
+  background-color: @tooltip_bg_color; } /*aqui esta lo que debe modificars*/
 

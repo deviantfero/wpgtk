@@ -8,7 +8,7 @@ button {
     border-style: solid;
     border-color: transparent;
     border-radius: 0px;
-    background-color: shade( @theme_bg_color, 1.58 );
+    background-color: shade( @theme_tooltip_bg_color, 1.18 );
     background-image: none;
     color: @theme_text_color;
 }

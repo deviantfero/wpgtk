@@ -469,7 +469,7 @@ GtkStatusbar {
  ************/
 .view text, iconview text,
 textview text {
-  background-color: #121212;
+  background-color: @base_color;
   color: rgba(255, 255, 255, 0.8); }
   .view text:disabled, iconview text:disabled,
   textview text:disabled {
@@ -528,7 +528,7 @@ tooltip {
   border-radius: 2px;
   box-shadow: none; }
   tooltip.background {
-    background-color: #202020; }
+    background-color: @tooltip_bg_color; }
   tooltip decoration {
     background-color: transparent; }
   tooltip label {
