@@ -128,7 +128,16 @@ class ColorGrid( Gtk.Grid ):
         current_walls = FileList( GLib.get_home_dir() + "/.wallpapers" )
         self.color_list = self.color_list[:8:] + [ add_brightness( x, 50 ) for x in self.color_list[:8:] ]
         for x in range( 0, 16 ):
+            
+            color = Gdk.color_parse( '#' + self.color_list[x] )
+            if get_darkness( self.color_list[x] ) < 100:
+                fgcolor = Gdk.color_parse( '#FFFFFF' )
+            else:
+                fgcolor = Gdk.color_parse( '#101010' )
             self.button_list[x].set_label( self.color_list[x] )
+            self.button_list[x].set_sensitive( True )
+            self.button_list[x].modify_bg( Gtk.StateType.NORMAL, color )
+            self.button_list[x].modify_fg( Gtk.StateType.NORMAL, fgcolor )
         write_tmp( self.color_list )
         os.system( "wpcscript tmp 1>/dev/null" )
         sample_path = FILEPATH + ".tmp.sample.png"
@@ -149,6 +158,14 @@ class ColorGrid( Gtk.Grid ):
             rgb = [ color.red, color.green, color.blue ]
             hex_color = rgb_to_hex( rgb )
             widget.set_label( hex_color )
+            color = Gdk.color_parse( '#' + hex_color )
+            if get_darkness( hex_color ) < 100:
+                fgcolor = Gdk.color_parse( '#FFFFFF' )
+            else:
+                fgcolor = Gdk.color_parse( '#101010' )
+            widget.set_sensitive( True )
+            widget.modify_bg( Gtk.StateType.NORMAL, color )
+            widget.modify_fg( Gtk.StateType.NORMAL, fgcolor )
             for i, c in enumerate( self.button_list ):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
