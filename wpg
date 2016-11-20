@@ -2,7 +2,7 @@
 import sys
 import os
 from getpass import getuser
-from subprocess import call
+from subprocess import call, Popen
 from wpgtk.wpg import *
 import argparse
 
@@ -25,12 +25,23 @@ if __name__ == "__main__":
             try:
                 os.system( 'wpcscript change ' + args.set[0] )
                 execute_gcolorchange( args.set[0] )
+                init_file = open( WALLDIR + 'wp_init.sh', 'w' )
+                init_file.writelines( [ '#!/bin/bash\n', 'wpcscript change ' + args.set[0] + ' && ' ] )
+                init_file.writelines( 'xrdb -merge ' + WALLDIR + '.' + args.set[0] +'.Xres' + '\n' )
+                init_file.close()
+                Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
             except TypeError:
                 print( 'ERR:: file ' + args.set[0] + ' not found' )
         elif len(args.set) == 2:
             try:
                 os.system( 'wpcscript change ' + args.set[0] )
+                call( [ 'xrdb', '-merge', WALLDIR + '.' + args.set[1] + '.Xres'] )
                 execute_gcolorchange( args.set[1] )
+                init_file = open( WALLDIR + 'wp_init.sh', 'w' )
+                init_file.writelines( [ '#!/bin/bash\n', 'wpcscript change ' + args.set[0] + ' && ' ] )
+                init_file.writelines( 'xrdb -merge ' + WALLDIR + '.' + args.set[1] +'.Xres' + '\n' )
+                init_file.close()
+                Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
             except TypeError:
                 print( 'ERR:: file  not found' )
         elif len( args.set ) > 2:
