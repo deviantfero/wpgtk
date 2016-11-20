@@ -3,7 +3,7 @@ import sys
 import os
 from getpass import getuser
 from subprocess import call
-from wpgtk.src.wpg import *
+from wpgtk.wpg import *
 import argparse
 
 HOME = "/home/" + getuser()

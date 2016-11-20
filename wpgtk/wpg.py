@@ -13,7 +13,7 @@ from .gui.basemaker import FileGrid
 from .gui.ColorGrid import ColorGrid
 from .gui.OptionsGrid import OptionsGrid
 
-version = '3.0'
+version = '3.5'
 PAD = 10
 
 #GLOBAL DEFS

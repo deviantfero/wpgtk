@@ -46,7 +46,7 @@ function install_color {
 	mkdir -p ~/.themes/color_other
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"
-	sudo cp -r ./wpgtk/ /usr/local/bin/wpgtk
+	sudo cp -r ./wpgtk/ /usr/local/bin/
 	sudo chmod -R ugo+rx /usr/local/bin/wpgtk
 	sudo cp ./wpcscript ./wpg /usr/local/bin
 	sudo cp ./functions /usr/local/bin
