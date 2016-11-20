@@ -1,0 +1,91 @@
+/* Default color scheme */
+@define-color bg_color #181818;
+@define-color fg_color #fff;
+@define-color base_color #101010;
+@define-color text_color #fff;
+@define-color selected_bg_color #COLORACT;
+@define-color selected_fg_color #fff;
+@define-color tooltip_bg_color #202020;
+@define-color tooltip_fg_color #fff;
+
+/* colormap actually used by the theme, to be overridden in other css files */
+@define-color theme_bg_color @bg_color;
+@define-color theme_fg_color @fg_color;
+@define-color theme_base_color @base_color;
+@define-color theme_text_color @text_color;
+@define-color theme_selected_bg_color @selected_bg_color;
+@define-color theme_selected_fg_color @selected_fg_color;
+@define-color theme_tooltip_bg_color @tooltip_bg_color;
+@define-color theme_tooltip_fg_color @tooltip_fg_color;
+
+/* shadow effects */
+@define-color light_shadow #eeeeee;
+@define-color dark_shadow #222222;
+
+/* misc colors used by gtk+ */
+@define-color info_fg_color white;
+@define-color info_bg_color #BACF66;
+@define-color warning_fg_color white;
+@define-color warning_bg_color #E6A682;
+@define-color question_fg_color white;
+@define-color question_bg_color #74C47B;
+@define-color error_fg_color white;
+@define-color error_bg_color #E682C8;
+@define-color link_color mix (@theme_selected_bg_color, black, 0.15);
+@define-color success_color #53a93f;
+@define-color warning_color #f57900;
+@define-color error_color #cc0000;
+
+/* widget colors*/
+@define-color border_color #363D43;
+@define-color button_normal_color #3F474A;
+@define-color button_info_color #72B279;
+@define-color button_default_active_color shade(@theme_selected_bg_color, 0.857);
+@define-color entry_border_color shade(@theme_base_color, 0.9);
+@define-color frame_border_bottom_color #E3E4E7;
+@define-color sel_color #B98CD7;
+@define-color switch_bg_color #C9CBCF;
+@define-color panel_bg_color @bg_color;
+@define-color panel_fg_color @fg_color;
+@define-color borders #FAFAFA;
+@define-color scrollbar_trough shade(@theme_base_color, 0.9);
+@define-color scrollbar_slider_prelight mix(@scrollbar_trough, @theme_fg_color, 0.5);
+
+
+/* osd */
+@define-color osd_separator #49525B;
+@define-color osd_fg #ABB4BD;
+@define-color osd_bg #434A54;
+
+/* window manager colors */
+@define-color wm_bg @theme_bg_color;
+@define-color wm_title_focused @theme_fg_color;
+@define-color wm_title_unfocused @theme_text_color;
+@define-color wm_border_focused @border_color;
+@define-color wm_border_unfocused @border_color;
+
+@import url("gtk-widgets.css");
+@import url("unity.css");
+@import url("widgets/button.css");
+@import url("widgets/cell-row.css");
+@import url("widgets/check-radio.css");
+@import url("widgets/column-header.css");
+@import url("widgets/calendar.css");
+@import url("widgets/entry.css");
+@import url("widgets/infobar.css");
+@import url("widgets/menu.css");
+@import url("widgets/notebook.css");
+@import url("widgets/progress-scale.css");
+@import url("widgets/scrollbar.css");
+@import url("widgets/separator.css");
+@import url("widgets/sidebar.css");
+@import url("widgets/spinbutton.css");
+@import url("widgets/spinner.css");
+@import url("widgets/switch.css");
+@import url("widgets/color-chooser.css");
+@import url("widgets/toolbar.css");
+@import url("widgets/header-bar.css");
+@import url("widgets/osd.css");
+@import url("widgets/csd.css");
+@import url("widgets/combobox.css");
+@import url("widgets/selection-mode.css");

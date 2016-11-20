@@ -13,6 +13,7 @@ function tint2support {
 		echo "INSTALLING::TINT2-THEME"
 		cp ./themes/tint2rc ~/.config/tint2/
 		cp ./themes/tint2rc.base ~/.config/tint2/
+		cp ./themes/tint2rcnocolor.base ~/.config/tint2/
 	else
 		echo -e "\e[31mTINT2-THEME::NOT-INSTALLED"
 		return 1

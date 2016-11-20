@@ -31,7 +31,7 @@ def connect_conf( filepath ):
     except Exception as e:
         print( "ERROR" )
 
-class fileGrid(Gtk.Grid):
+class FileGrid(Gtk.Grid):
 
     """A helper for choosing config files
     that will be modified with wpgtk's help"""

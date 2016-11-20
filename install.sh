@@ -33,6 +33,7 @@ function tint2support {
 		echo "INSTALLING::TINT2-THEME"
 		cp ./themes/tint2rc ~/.config/tint2/
 		cp ./themes/tint2rc.base ~/.config/tint2/
+		cp ./themes/tint2rcnocolor.base ~/.config/tint2
 	else
 		echo -e "\e[31mTINT2-THEME::NOT-INSTALLED"
 		return 1
@@ -45,13 +46,11 @@ function install_color {
 	mkdir -p ~/.themes/color_other
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"
-	sudo cp -r ./py/ /usr/local/bin/
-	sudo chmod -R ugo+rx /usr/local/bin/py
-	sudo cp -r ./src/ /usr/local/bin/
-	sudo chmod -R ugo+rx /usr/local/bin/src
+	sudo cp -r ./wpgtk/ /usr/local/bin/wpgtk
+	sudo chmod -R ugo+rx /usr/local/bin/wpgtk
 	sudo cp ./wpcscript ./wpg /usr/local/bin
 	sudo cp ./functions /usr/local/bin
-	cp ./misc/.* ~/.wallpapers/
+	cp ./misc/* ~/.wallpapers/
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/
 	cp -r ./themes/colorbamboo_nb ~/.themes/

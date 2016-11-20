@@ -1,12 +1,12 @@
 from gi import require_version
 require_version( "Gtk", "3.0" )
-from gi.repository import Gtk, Gdk, GdkPixbuf, GLib 
+from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 
 class ColorDialog( Gtk.Dialog ):
 
     def __init__( self, parent ):
-        Gtk.Dialog.__init__(self, "Pick a Color", parent, 0, 
-                (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, 
+        Gtk.Dialog.__init__(self, "Pick a Color", parent, 0,
+                (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                     Gtk.STOCK_OK, Gtk.ResponseType.OK))
         self.set_default_size( 150, 100 )
 
