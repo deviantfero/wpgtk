@@ -56,7 +56,7 @@ this is how it looks when you add an extra config file
 ![WINDOW](http://i.imgur.com/TZbfCpV.png)
 ![RESULT](http://i.imgur.com/cT7OYwM.png)
 
-![Take a look](http://s1.webmshare.com/NdM8M.webm)
+[Take a look](http://s1.webmshare.com/NdM8M.webm)
 
 now your config is a symbolic link to the copy that is in the ~/.themes/colors_other directory, which gets modified each time you change your colorscheme according to a .base file matching the config's name.
 
