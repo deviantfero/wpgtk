@@ -6,6 +6,7 @@
 #### Video
 
 [Video DEMO](https://my.mixtape.moe/dpetjt.webm)
+[Console Commands DEMO](https://my.mixtape.moe/ghhfqf.webm)
 
 ![Dynamic themes](http://i.imgur.com/VNC7O57.png)
 ![Borderless](http://i.imgur.com/LXZKLRY.png)
