@@ -26,10 +26,11 @@ wpgtk-git
 ---
 
 ### Version
-3.0
+3.5
 
 ###### Features added
 
+* Console arguments
 * Special Openbox theme so that window borders change with your wallpaper
 * Special Icon set included that changes with your wallpaper
 * It also changes a special GTK theme automatically
