@@ -3,14 +3,9 @@
 
 #### it's also compatible with most software that uses written configs, such as i3, bspwm, termite, etc.
 
-#### Videos
+#### Video
 
-[Colorscheme Generator](http://webmshare.com/play/3vVjr)
-
-[Colorscheme Editor](http://webmshare.com/play/ZB7xX)
-
-[Config Manager](http://webmshare.com/play/6w3Vj)
-
+[Video DEMO](https://my.mixtape.moe/dpetjt.webm)
 
 ![Dynamic themes](http://i.imgur.com/VNC7O57.png)
 ![Borderless](http://i.imgur.com/LXZKLRY.png)
