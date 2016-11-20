@@ -1,5 +1,48 @@
 #!/bin/env python3
-
+import sys
+import os
+from getpass import getuser
+from subprocess import call
 from wpgtk.src.wpg import *
+import argparse
 
-run()
+HOME = "/home/" + getuser()
+WALLDIR = HOME + "/.wallpapers/"
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--set','-s', help='set the wallpaper and colorscheme', nargs='*')
+    parser.add_argument('--list','-l', help='see which wallpapers are available', action='store_true')
+    parser.add_argument('--version','-v', help='print the current version', action='store_true')
+    parser.add_argument('--remove','-r', help='removes the wallpaper(s) from wallpaper folder', nargs='*')
+    parser.add_argument('--current','-c', help='shows the current wallpaper', action='store_true')
+    args = parser.parse_args()
+    if len(sys.argv) < 2:
+        run()
+
+    if args.set:
+        if len(args.set) == 1:
+            try:
+                os.system( 'wpcscript change ' + args.set[0] )
+                execute_gcolorchange( args.set[0] )
+            except TypeError:
+                print( 'ERR:: file ' + args.set[0] + ' not found' )
+        elif len(args.set) == 2:
+            try:
+                os.system( 'wpcscript change ' + args.set[0] )
+                execute_gcolorchange( args.set[1] )
+            except TypeError:
+                print( 'ERR:: file  not found' )
+        elif len( args.set ) > 2:
+            print( 'ERR:: Specify just 2 filenames' )
+
+    if args.list:
+        os.system( 'wpcscript ls' )
+    if args.version:
+        print( 'current version: ' + version )
+    if args.remove:
+        for e in args.remove:
+            call( [ 'wpcscript', 'rm', e ] )
+            call( [ 'rm', WALLDIR + '.' + e + '.sample.png' ] )
+    if args.current:
+        os.system( 'wpcscript current' )
