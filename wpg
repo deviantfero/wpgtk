@@ -2,7 +2,7 @@
 import sys
 import os
 from getpass import getuser
-from subprocess import call
+from subprocess import call, Popen
 from wpgtk.wpg import *
 import argparse
 
@@ -12,6 +12,7 @@ WALLDIR = HOME + "/.wallpapers/"
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--set','-s', help='set the wallpaper and colorscheme', nargs='*')
+    parser.add_argument('--add','-a', help='add images to the wallpaper folder and generate colorschemes', nargs='*')
     parser.add_argument('--list','-l', help='see which wallpapers are available', action='store_true')
     parser.add_argument('--version','-v', help='print the current version', action='store_true')
     parser.add_argument('--remove','-r', help='removes the wallpaper(s) from wallpaper folder', nargs='*')
@@ -46,3 +47,6 @@ if __name__ == "__main__":
             call( [ 'rm', WALLDIR + '.' + e + '.sample.png' ] )
     if args.current:
         os.system( 'wpcscript current' )
+    if args.add:
+        for e in args.add:
+            call( [ 'wpcscript', 'add', e ] )
