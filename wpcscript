@@ -63,8 +63,8 @@ function main {
               ;;
           tmp)
               shift
-			  if [ -f /usr/local/bin/py/make_sample.py ]; then
-				  /usr/local/bin/py/make_sample.py
+			  if [ -f /usr/local/bin/wpgtk/py/make_sample.py ]; then
+				  /usr/local/bin/wpgtk/py/make_sample.py
 			  else
 				  /usr/bin/wpgtk/py/make_sample.py
 			  fi
@@ -114,7 +114,7 @@ function add {
 
   for file in $*; do
     echo ":: Generating .$file.colors and .$file.Xres in $PWD"
-    python2 $DIR/py/color_detect.py $file $K_MEANS
+    python2 $DIR/wpgtk/py/color_detect.py $file $K_MEANS
   done
 }
 
