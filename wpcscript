@@ -14,9 +14,10 @@ function main {
   done
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
   if [[ "$SOURCE" ==  "/usr/bin/wpcscript" ]]; then
-	  DIR="/usr/bin/wpgtk"
+	  DIR="/usr/bin/"
 	  echo ":: installed by AUR"
   else
+	  DIR="/usr/local/bin/"
 	  echo ":: not installed by AUR"
   fi
   K_MEANS=16
@@ -114,6 +115,7 @@ function add {
 
   for file in $*; do
     echo ":: Generating .$file.colors and .$file.Xres in $PWD"
+	echo "$DIR"
     python2 $DIR/wpgtk/py/color_detect.py $file $K_MEANS
   done
 }
