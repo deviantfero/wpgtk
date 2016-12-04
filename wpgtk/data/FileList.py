@@ -7,7 +7,7 @@ import re
 
 class FileList():
     def __init__( self, path ):
-        valid = re.compile('^[^\.](.*\.png$|.*\.jpg$)')
+        valid = re.compile('^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$)')
         self.files = []
         self.file_names_only = []
         number_list = []
