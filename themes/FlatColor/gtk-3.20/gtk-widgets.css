@@ -302,10 +302,11 @@ GtkHTML {
  * frame *
  *********/
 
-.frame {
+frame {
     border-radius: 0;
-    border-width:  0;
-    border-style: none;
+    border-width: 2px;
+    border-style: solid;
+	border-color: shade( @theme_bg_color, 1.2 );
 }
 
 /*******************
@@ -540,24 +541,89 @@ tooltip {
     color: inherit; }
 
 
-/************
- * treeview *
- ************/
-GtkTreeView {
-    -GtkTreeView-vertical-separator: 0;
-}
 
-GtkTreeView.dnd {
+/**************
+ * Tree Views *
+ **************/
+treeview.view {
+  -GtkTreeView-grid-line-width: 1;
+  -GtkTreeView-grid-line-pattern: '';
+  -GtkTreeView-tree-line-width: 1;
+  -GtkTreeView-tree-line-pattern: '';
+  -GtkTreeView-expander-size: 16;
+  border-left-color: alpha(currentColor, 0.3);
+  border-top-color: rgba(0, 0, 0, 0.1); }
+  treeview.view:hover, treeview.view:active, treeview.view:selected {
+    border-radius: 0; }
+  treeview.view.separator {
+    min-height: 5px;
+    color: rgba(0, 0, 0, 0.1); }
+  treeview.view:drop(active) {
+    border-style: solid none;
     border-width: 1px;
-    border-style: solid;
-    border-color: shade(@theme_selected_bg_color, 0.9);
+    border-color: #448AFF; }
+    treeview.view:drop(active).after {
+      border-top-style: none; }
+    treeview.view:drop(active).before {
+      border-bottom-style: none; }
+  treeview.view.expander {
+    -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+    -gtk-icon-transform: rotate(-90deg);
+    color: shade( @theme_selected_bg_color, 0.8 ); }
+    treeview.view.expander:dir(rtl) {
+      -gtk-icon-transform: rotate(90deg); }
+    treeview.view.expander:checked {
+      -gtk-icon-transform: unset; }
+    treeview.view.expander:hover, treeview.view.expander:active {
+      color: shade( @theme_selected_bg_color, 0.8 ); }
+    treeview.view.expander:disabled {
+      color: shade( @theme_selected_bg_color, 0.24 ); }
+    treeview.view.expander:selected {
+      color: shade( @theme_selected_bg_color, 0.8 ); }
+      treeview.view.expander:selected:hover, treeview.view.expander:selected:active {
+        color: shade( @theme_selected_bg_color, 1.0 ); }
+      treeview.view.expander:selected:disabled {
+        color: shade( @theme_selected_bg_color, 1.0 ); }
+  treeview.view.progressbar {
+    border-style: none none solid;
+    border-width: 21px;
+    border-color: @theme_selected_bg_color;
+    background-color: transparent;
+    background-image: none; }
+    treeview.view.progressbar:selected {
+      border-color: shade(@theme_selected_bg_color, 0.3); }
+  treeview.view.trough {
+    border-style: none none solid;
+    border-width: 21px;
+    border-color: shade( @theme_selected_bg_color, 0.3 );
+    background-color: transparent;
+    background-image: none; }
+    treeview.view.trough:selected {
+      border-color: alpha(@theme_selected_bg_color, 0.3); }
+  treeview.view header button {
+    padding: 2px 6px;
+    border-style: none solid solid none;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.1);
     border-radius: 0;
-}
-
-GtkTreeView .entry {
+    background-clip: border-box; }
+    treeview.view header button, treeview.view header button:hover, treeview.view header button:active {
+      box-shadow: none; }
+    treeview.view header button, treeview.view header button:disabled {
+      background-color: shade(@theme_bg_color, 1.2); }
+    treeview.view header button:last-child {
+      border-right-style: none; }
+  treeview.view button.dnd,
+  treeview.view header.button.dnd {
+    padding: 2px 6px;
+    border-style: none solid solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    box-shadow: none;
     background-color: @theme_bg_color;
-    background-image: none;
-}
+    background-clip: border-box;
+    color: @theme_selected_bg_color; }
 
 /************
  * viewport *
@@ -670,3 +736,33 @@ GtkBubbleWindow .toolbar {
     background-color: transparent;
 }
 
+
+/**********************
+ * Window Decorations *
+ *********************/
+decoration {
+  transition: box-shadow 0.3s cubic-bezier(0, 0, 0.2, 1);
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 14px 14px rgba(0, 0, 0, 0.25), 0 10px 5px rgba(0, 0, 0, 0.22), 0 16px 16px transparent;
+  margin: 8px; }
+  decoration:backdrop {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16), 0 3px 3px rgba(0, 0, 0, 0.23), 0 16px 16px transparent; }
+  .fullscreen decoration, .tiled decoration {
+    border-radius: 0; }
+  .popup decoration {
+    box-shadow: none; }
+  .ssd decoration {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16); }
+  .csd.popup decoration {
+    border-radius: 2px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16), 0 3px 3px rgba(0, 0, 0, 0.23); }
+  tooltip.csd decoration {
+    border-radius: 2px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16), 0 3px 3px rgba(0, 0, 0, 0.23); }
+  messagedialog.csd decoration {
+    border-radius: 2px; }
+  .solid-csd decoration {
+    margin: 4px;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: shade( @theme_bg_color, 1.0 ); }
