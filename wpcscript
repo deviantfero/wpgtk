@@ -14,9 +14,10 @@ function main {
   done
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
   if [[ "$SOURCE" ==  "/usr/bin/wpcscript" ]]; then
-	  DIR="/usr/bin/wpgtk"
+	  DIR="/usr/bin/"
 	  echo ":: installed by AUR"
   else
+	  DIR="/usr/local/bin/"
 	  echo ":: not installed by AUR"
   fi
   K_MEANS=16
@@ -63,8 +64,8 @@ function main {
               ;;
           tmp)
               shift
-			  if [ -f /usr/local/bin/py/make_sample.py ]; then
-				  /usr/local/bin/py/make_sample.py
+			  if [ -f /usr/local/bin/wpgtk/py/make_sample.py ]; then
+				  /usr/local/bin/wpgtk/py/make_sample.py
 			  else
 				  /usr/bin/wpgtk/py/make_sample.py
 			  fi
@@ -114,7 +115,8 @@ function add {
 
   for file in $*; do
     echo ":: Generating .$file.colors and .$file.Xres in $PWD"
-    python2 $DIR/py/color_detect.py $file $K_MEANS
+	echo "$DIR"
+    python2 $DIR/wpgtk/py/color_detect.py $file $K_MEANS
   done
 }
 
@@ -138,7 +140,7 @@ function remove {
 function change {
   #:: Select a random background from WALLPAPER_DIR, or use the passed background
   if [ -z $1 ]; then
-    background=$(find $WALLPAPER_DIR -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n1)
+    background=$(find $WALLPAPER_DIR -type f \( -name '*.jpg' -o -name '*.png' -o  name '*.jpeg' -o name '*.jpe'\) | shuf -n1)
   else
     background=$WALLPAPER_DIR/$1
 
