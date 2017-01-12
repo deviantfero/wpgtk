@@ -155,13 +155,14 @@ class mainWindow( Gtk.Window ):
                 self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( path + colorscheme_sample, width=500, height=500 )
                 self.sample.set_from_pixbuf( self.pixbuf_sample )
             call( [ 'wpcscript', 'change', FILEPATH ] )
-            call( [ 'xrdb', '-merge', path + colorscheme] )
             init_file = open( GLib.get_home_dir() + '/.wallpapers/wp_init.sh', 'w' )
             init_file.writelines( [ '#!/bin/bash\n', 'wpcscript change ' + FILEPATH + ' && ' ] )
             init_file.writelines( 'xrdb -merge ' + path + colorscheme + '\n' )
             init_file.close()
             Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
             execute_gcolorchange( colorscheme_file, self.optpage.opt_list )
+            call( [ 'xrdb', '-merge', path + colorscheme] )
+            call( [ 'xrdb', '-merge', GLib.get_home_dir() + '/.Xresources'] )
 
     def on_rm_clicked( self, widget ):
         x = self.option_combo.get_active()
@@ -189,7 +190,14 @@ class mainWindow( Gtk.Window ):
         selected_sample = '.' + selected_file + '.sample.png'
         FILEPATH = GLib.get_home_dir() + '/.wallpapers/' + selected_file
         samplepath = GLib.get_home_dir() + '/.wallpapers/' + selected_sample
-        self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale( FILEPATH, width=500, height=333, preserve_aspect_ratio=False )
+
+        self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+            FILEPATH,
+            width=500,
+            height=333,
+            preserve_aspect_ratio=False
+        )
+
         self.preview.set_from_pixbuf( self.pixbuf_preview )
 
     def colorscheme_box_change( self, widget ):
