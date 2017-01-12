@@ -161,8 +161,8 @@ class mainWindow( Gtk.Window ):
             init_file.close()
             Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
             execute_gcolorchange( colorscheme_file, self.optpage.opt_list )
-            call( [ 'xrdb', '-merge', path + colorscheme] )
             call( [ 'xrdb', '-merge', GLib.get_home_dir() + '/.Xresources'] )
+            call( [ 'xrdb', '-merge', path + colorscheme] )
 
     def on_rm_clicked( self, widget ):
         x = self.option_combo.get_active()
