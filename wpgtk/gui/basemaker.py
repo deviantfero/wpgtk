@@ -17,7 +17,8 @@ def get_basef( directory ):
     return files
 
 def connect_conf( filepath ):
-    filename = filepath.split( '/', len(filepath) ).pop()
+    l = filepath.split( '/', len(filepath) )
+    filename = l[-2].lstrip('.') + '.' + l[-1].lstrip('.') #we remove dots from possible dotfiles
     print( 'ADD::' + filename + '@' + filepath )
     try:
         copy2( filepath, filepath + '.bak' )
