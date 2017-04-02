@@ -3,12 +3,9 @@ require_version( "Gtk", "3.0" )
 #making sure it uses v3.0
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 from getpass import getuser
-from ..data.confparser import *
+from ..data.conf_parser import *
 
 PAD = 10
-ACT = 0
-TN2 = 1
-GTK = 2
 HOME = "/home/" + getuser()
 WALLDIR = HOME + "/.wallpapers/"
 
@@ -53,6 +50,9 @@ class OptionsGrid( Gtk.Grid ):
         #--Button
         self.color_button = Gtk.Button()
         self.lbl_active = Gtk.Label( 'Active/Inactive Color:' )
+        self.save_button = Gtk.Button('Save')
+        self.save_button.connect("pressed", self.on_save_button)
+        self.lbl_save = Gtk.Label( '' )
 
         #--Switches
         self.tint2_switch = Gtk.Switch()
@@ -75,28 +75,37 @@ class OptionsGrid( Gtk.Grid ):
         self.active_grid.attach( self.lbl_active, 1,1,1,1 )
         self.active_grid.attach( self.color_combo, 1,2,1,1 )
         self.active_grid.attach( self.color_button, 2,2,1,1 )
+        self.active_grid.attach( self.save_button, 1,3,2,1 )
+        self.active_grid.attach( self.lbl_save, 1,4,2,1 )
 
         self.attach( self.switch_grid, 1, 1, 1, 1 )
         self.attach( self.active_grid, 1, 2, 1, 1 )
 
     def on_tint2_active( self, switch, gparam ):
         if switch.get_active():
-            self.opt_list[TN2] = True
+            self.opt_list['TN2'] = True
         else:
-            self.opt_list[TN2] = False
+            self.opt_list['TN2'] = False
+        self.lbl_save.set_text( '' )
 
     def on_gtk_active( self, switch, gparam ):
         if switch.get_active():
-            self.opt_list[GTK] = True
+            self.opt_list['GTK'] = True
         else:
-            self.opt_list[GTK] = False
+            self.opt_list['GTK'] = False
+        self.lbl_save.set_text( '' )
 
     def load_opt_list( self ):
-        self.color_combo.set_active( self.opt_list[ACT] )
-        self.gtk_switch.set_active( self.opt_list[GTK] )
-        self.tint2_switch.set_active( self.opt_list[TN2] )
+        self.color_combo.set_active( self.opt_list['ACT'] )
+        self.gtk_switch.set_active( self.opt_list['GTK'] )
+        self.tint2_switch.set_active( self.opt_list['TN2'] )
 
     def combo_box_change( self, combo ):
-        self.opt_list[ACT] = combo.get_active()
+        self.opt_list['ACT'] = combo.get_active()
         color = Gdk.color_parse( '#' + self.parent.cpage.color_list[combo.get_active()] )
         self.color_button.modify_bg( Gtk.StateType.NORMAL, color )
+        self.lbl_save.set_text( '' )
+
+    def on_save_button(self, button):
+        write_conf(opt=self.opt_list)
+        self.lbl_save.set_text( 'Saved' )

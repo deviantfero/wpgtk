@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import fileinput
+import sys
 from subprocess import call
 from os import walk
 from sys import argv
@@ -11,6 +12,7 @@ from os.path import isfile
 
 HOME = "/home/" + getuser()
 WALLDIR = HOME + "/.wallpapers/"
+DEFAULT = { 'ACT': 0, 'TN2': True, 'GTK': True }
 
 r_active = "COLORACT"
 r_inactive = "COLORIN"
@@ -23,9 +25,9 @@ def read_color_in_line( xres_file, line_get=0 ):
     try:
         f = open( WALLDIR + xres_file, "r" )
     except IOError as err:
-        print( err )
-        print( err.args )
-        print( err.filename )
+        print( err, file=sys.stderr )
+        print( err.args, file=sys.stderr )
+        print( err.filename, file=sys.stderr )
         return "4A838F"
     if line_get == 0 and line_get < 16:
         line_get = randint( 1, 15 )
@@ -45,9 +47,9 @@ def read_colors( xres_file ):
     try:
         f = open( WALLDIR + xres_file, "r" )
     except IOError as err:
-        print( err )
-        print( err.args )
-        print( err.filename )
+        print( err, file=sys.stderr )
+        print( err.args, file=sys.stderr )
+        print( err.filename, file=sys.stderr )
         empty = []
         for x in range( 0, 16 ):
             empty.append( '000000' )
@@ -66,16 +68,16 @@ def write_colors( xres_file, color_list ):
         fc = open( WALLDIR + col_file, "w" )
         temp = open( WALLDIR + ".tmp.colors", "w" )
     except IOError as err:
-        print( err )
-        print( err.args )
-        print( err.filename )
+        print( err, file=sys.stderr )
+        print( err.args, file=sys.stderr )
+        print( err.filename, file=sys.stderr )
     if( isfile( WALLDIR + xres_file ) and isfile( WALLDIR + col_file) ):
         for i, c in enumerate(color_list):
             f.write( "*color" + str(i) + ": #" + c + "\n" )
             fc.write( "export COLOR" + str(i) + '="#' + c + '"\n' )
             temp.write( "#" + c + "\n" )
     else:
-        print( "not writing" )
+        print( "ERR::NOT WRITING", file=sys.stderr )
     f.close()
     fc.close()
     temp.close()
@@ -175,14 +177,14 @@ def change_colors_ob( active, inactive, cl ):
         call( ["cp", backupdir, realdir] )
         replace_in_file( realdir, r_inactive, inactive )
         replace_in_file( realdir, r_active, active )
-        print( "CHANGED::OPENBOX" )
+        print( "OK::OPENBOX" )
     else:
-        print( "FAILED TO CHANGE::OPENBOX - BASE FILE DOES NOT EXIST" )
+        print( "ERR::OPENBOX - BASE FILE DOES NOT EXIST", file=sys.stderr )
 
     if( isfile(HOME + "/.config/openbox/menu.xml") ):
         call( ["openbox", "--reconfigure"] )
     else:
-        print( "NO OPENBOX INSTALL!" )
+        print( "ERR::NO OPENBOX INSTALL!", file=sys.stderr )
 
 def change_colors_icons( active, inactive, glyph ):
     backupdir = HOME + "/.icons/flattrcolor/scripts/replace_folder_file.sh.base"
@@ -219,10 +221,10 @@ def change_colors_icons( active, inactive, glyph ):
         replace_in_file( realdir, "l=1ba39c", "l=" + current_back )
         replace_in_file( realdir, "w=1ba39c", "w=" + inactive )
         call( executable, shell=True )
-        print( "CHANGED::ICONS" )
-        print( "CURRENT GLYPH: " + current_glyph )
+        print( "OK::ICONS" )
+        print( "INF::CURRENT GLYPH: " + current_glyph )
     else:
-        print( "FAILED TO CHANGE::ICONS - BASE FILES DO NOT EXIST" )
+        print( "ERR::ICONS - BASE FILES DO NOT EXIST", file=sys.stderr )
 
 def change_colors_tint2( active, inactive, c_list, colorize=True ):
     if colorize:
@@ -237,9 +239,9 @@ def change_colors_tint2( active, inactive, c_list, colorize=True ):
         if colorize:
             replace_colors( realdir, c_list )
         call( [ "killall", "-SIGUSR1", "tint2" ] )
-        print( "CHANGED::TINT2" )
+        print( "OK::TINT2" )
     else:
-        print( "FAILED TO CHANGE::TINT2 - BASE FILE DOES NOT EXIST" )
+        print( "ERR::TINT2 - BASE FILE DOES NOT EXIST", file=sys.stderr )
 
 def change_colors_gtk2( active, inactive, cl, colorize=True ):
     if colorize:
@@ -255,9 +257,9 @@ def change_colors_gtk2( active, inactive, cl, colorize=True ):
             replace_in_file( realdir, r_bg, bgs[0] )
             replace_in_file( realdir, r_base, bgs[1] )
             replace_in_file( realdir, r_tool, bgs[2] )
-        print( "CHANGED::GTK2" )
+        print( "OK::GTK2" )
     else:
-        print( "FAILED TO CHANGE::GTK2 - BASE FILE DOES NOT EXIST" )
+        print( "ERR::GTK2 - BASE FILE DOES NOT EXIST", file=sys.stderr )
 
 def change_colors_gtk3( active, inactive, cl, colorize=True ): #cl is a color list
     backupdir = HOME + "/.themes/FlatColor/gtk-3.0/gtk.css.base"
@@ -270,9 +272,9 @@ def change_colors_gtk3( active, inactive, cl, colorize=True ): #cl is a color li
             replace_in_file( realdir, r_bg, bgs[0] )
             replace_in_file( realdir, r_base, bgs[1] )
             replace_in_file( realdir, r_tool, bgs[2] )
-        print( "CHANGED::GTK3" )
+        print( "OK::GTK3" )
     else:
-        print( "FAILED TO CHANGE::GTK3 - BASE FILE DOES NOT EXIST" )
+        print( "ERR::GTK3 - BASE FILE DOES NOT EXIST", file=sys.stderr )
     if colorize:
         backupdir = HOME + "/.themes/FlatColor/gtk-3.20/gtk.css.base"
     else:
@@ -284,9 +286,9 @@ def change_colors_gtk3( active, inactive, cl, colorize=True ): #cl is a color li
         replace_in_file( realdir, r_bg, bgs[0] )
         replace_in_file( realdir, r_base, bgs[1] )
         replace_in_file( realdir, r_tool, bgs[2] )
-        print( "CHANGED::GTK3.20" )
+        print( "OK::GTK3.20" )
     else:
-        print( "FAILED TO CHANGE::GTK3.20 - BASE FILE DOES NOT EXIST" )
+        print( "ERR::GTK3.20 - BASE FILE DOES NOT EXIST", file=sys.stderr )
 
 def change_other_files( active, inactive, c_list ):
     other_path = "/home/" + getuser() + "/.themes/color_other/"
@@ -306,11 +308,12 @@ def change_other_files( active, inactive, c_list ):
                             replace_in_file( other_path + original, "COLOR" + str(x), c_list[x] )
                         else:
                             replace_in_file( other_path + original,  "COLORX" + str(x), c_list[x] )
-                    print( "CHANGED::OPTIONAL FILES - " + original )
+                    print( "OK::OPTIONAL FILES - " + original )
         except Exception as e:
-            print( 'FAILED TO CHANGE::OPTIONAL FILE -' + original )
+            print( 'ERR:: ' + str(e), file=sys.stderr )
+            print( 'ERR::OPTIONAL FILE -' + original, file=sys.stderr )
     else:
-        print( "NO OPTIONAL FILES DETECTED::NOT CHANGED" )
+        print( "INF::NO OPTIONAL FILES DETECTED" )
 
 def define_redux( hexvalue ):
     base_brightness = get_darkness(hexvalue)
@@ -344,10 +347,10 @@ def define_redux( hexvalue ):
         redux_list.append(75)
     return redux_list
 
-def execute_gcolorchange( image_name, opt=[0,True, True] ):
+def execute_gcolorchange( image_name, opt=DEFAULT ):
     #--Getting random color from an .Xres file--#
     image_colors = read_colors( image_name )
-    base_color = read_color_in_line( image_name, opt[0] )
+    base_color = read_color_in_line( image_name, opt['ACT'] )
     base_brightness = get_darkness( base_color )
     #--Defining how dark the windows have to be--#
     redux_list = define_redux( base_color )
@@ -355,21 +358,19 @@ def execute_gcolorchange( image_name, opt=[0,True, True] ):
     inact_redux = redux_list[1]
     active = reduce_brightness( base_color, base_redux )
     inactive = reduce_brightness( base_color, inact_redux )
-    fg_icon = active
-    bg_icon = inactive
     glyph = reduce_brightness( inactive, 15 )
-    print( "FG: " + active )
-    print( "BG: " + inactive )
+    print( "INF::FG: " + active )
+    print( "INF::BG: " + inactive )
     bg_fg_file = open( HOME + "/.main_colors", "w" )
     bg_fg_file.write( "FG:" + active + "\n" )
     bg_fg_file.write( "BG:" + inactive + "\n" )
     change_colors_ob( active, inactive, image_colors )
-    change_colors_tint2( active, inactive, image_colors, opt[1] )
-    change_colors_gtk2( active, inactive, image_colors, opt[2] )
-    change_colors_gtk3( active, inactive, image_colors, opt[2] )
-    change_colors_icons( fg_icon, bg_icon, glyph )
+    change_colors_tint2( active, inactive, image_colors, opt['TN2'] )
+    change_colors_gtk2( active, inactive, image_colors, opt['GTK'] )
+    change_colors_gtk3( active, inactive, image_colors, opt['GTK'] )
+    change_colors_icons( active, inactive, glyph )
     change_other_files( active, inactive, image_colors )
-    print( "SUCCESS" )
+    print( "OK::FINISHED" )
 
 if __name__ == "__main__":
     image_name = argv[1]

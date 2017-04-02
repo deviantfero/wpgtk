@@ -3,10 +3,10 @@ require_version( "Gtk", "3.0" )
 #making sure it uses v3.0
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 from gi.repository.GdkPixbuf import Pixbuf
-from ..data.colorparser import *
-from ..data.FileList import *
+from ..data.color_parser import *
+from ..data.file_list import *
 from ..data.transformers import *
-from .colorpicker import ColorDialog
+from .color_picker import ColorDialog
 
 FILEPATH = GLib.get_home_dir() + "/.wallpapers/"
 current_walls = FileList( FILEPATH )

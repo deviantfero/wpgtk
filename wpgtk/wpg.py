@@ -4,16 +4,16 @@ require_version( 'Gtk', '3.0' )
 #making sure it uses v3.0
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 from gi.repository.GdkPixbuf import Pixbuf
-from .data.colorparser import *
-from .data.FileList import *
+from .data.color_parser import *
+from .data.file_list import *
 from .data.transformers import *
 from time import sleep
-from .gui.colorpicker import ColorDialog
-from .gui.basemaker import FileGrid
-from .gui.ColorGrid import ColorGrid
-from .gui.OptionsGrid import OptionsGrid
+from .gui.color_picker import ColorDialog
+from .gui.base_maker import FileGrid
+from .gui.color_grid import ColorGrid
+from .gui.option_grid import OptionsGrid
 
-version = '3.5'
+version = '3.6'
 PAD = 10
 
 #GLOBAL DEFS
@@ -29,11 +29,11 @@ class mainWindow( Gtk.Window ):
         image_name = os.path.realpath( image_name )
         self.set_default_size( 200, 200 )
 
-        print( 'CURRENT WALL: ' + image_name )
 
         #these variables are just to get the image and preview of current wallpaper
         route_list = image_name.split( '/', image_name.count('/') )
         file_name = route_list[4]
+        print( 'INF::CURRENT WALL: ' + file_name )
         sample_name = FILEPATH + '.' + file_name + '.sample.png'
 
         self.notebook = Gtk.Notebook()
