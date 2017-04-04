@@ -13,7 +13,9 @@ class FileList():
         number_list = []
         elem_counter = 1
         for( dirpath, dirnames, filenames ) in walk( GLib.get_home_dir() + "/.wallpapers" ):
-            self.files.extend( filenames )
+            for f in filenames:
+                self.files.append(f)
+            break
         self.files = [ elem for elem in self.files if valid.fullmatch(elem) ]
         self.file_names_only = self.files
 

@@ -20,30 +20,9 @@ r_bg = "COLORBG"
 r_base = "COLORBASE"
 r_tool = "COLORTOOL"
 
-def read_color_in_line( xres_file, line_get=0 ):
-    xres_file = "." + xres_file + ".Xres"
-    try:
-        f = open( WALLDIR + xres_file, "r" )
-    except IOError as err:
-        print( err, file=sys.stderr )
-        print( err.args, file=sys.stderr )
-        print( err.filename, file=sys.stderr )
-        return "4A838F"
-    if line_get == 0 and line_get < 16:
-        line_get = randint( 1, 15 )
-    else:
-        line_get = int(line_get)
-    xres_list = [ line for line in f ]
-    color = xres_list[ line_get ]
-    color = color.split( " ", len( color ) )
-    color = color[1]
-    color = color.strip( '#' )
-    color = color.strip( '\n' )
-    f.close()
-    return color
 
 def read_colors( xres_file ):
-    xres_file = "." + xres_file + ".Xres"
+    xres_file = "xres/" + xres_file + ".Xres"
     try:
         f = open( WALLDIR + xres_file, "r" )
     except IOError as err:
@@ -60,13 +39,20 @@ def read_colors( xres_file ):
     f.close()
     return xres_list
 
+def read_color_in_line( cfile, line_get=0 ):
+    color_list = read_colors(cfile)
+    if line_get == 0 and line_get < 16:
+        color = color_list[randint(1, 15)]
+    else:
+        color = color_list[int(line_get)]
+    return color
+
 def write_colors( xres_file, color_list ):
-    col_file = "." + xres_file + ".colors"
-    xres_file = "." + xres_file + ".Xres"
+    col_file = "cache/" + xres_file + ".col"
+    xres_file = "xres/" + xres_file + ".Xres"
     try:
         f = open( WALLDIR + xres_file, "w" )
         fc = open( WALLDIR + col_file, "w" )
-        temp = open( WALLDIR + ".tmp.colors", "w" )
     except IOError as err:
         print( err, file=sys.stderr )
         print( err.args, file=sys.stderr )
@@ -74,19 +60,11 @@ def write_colors( xres_file, color_list ):
     if( isfile( WALLDIR + xres_file ) and isfile( WALLDIR + col_file) ):
         for i, c in enumerate(color_list):
             f.write( "*color" + str(i) + ": #" + c + "\n" )
-            fc.write( "export COLOR" + str(i) + '="#' + c + '"\n' )
-            temp.write( "#" + c + "\n" )
+            fc.write( '#' + c + '\n' )
     else:
         print( "ERR::NOT WRITING", file=sys.stderr )
     f.close()
     fc.close()
-    temp.close()
-
-def write_tmp( color_list ):
-    f = open( WALLDIR + ".tmp.colors", "w" )
-    for c in color_list:
-        f.write( "#" + c + "\n" )
-    f.close()
 
 def replace_in_file( file_to_operate, target, newstring ):
     with fileinput.FileInput( file_to_operate, inplace=True, backup=False ) as file:
@@ -123,11 +101,12 @@ def reduce_brightness( hex_string, reduce_lvl ):
         rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
         rgb_int = []
         for elem in rgb:
-            if( elem < 0 ):
-                elem = 1
+            if( elem <= 0 ):
+                elem = 5
             rgb_int.append( int(elem) )
         rgb_int = tuple( rgb_int )
         hex_result = '%02x%02x%02x' % rgb_int
+        print(hex_result)
         return hex_result
     else:
         reduce_brightness( hex_string, reduce_lvl - 5 )

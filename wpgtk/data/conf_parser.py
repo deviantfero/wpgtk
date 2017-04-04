@@ -4,7 +4,12 @@ import sys
 
 HOME = "/home/" + getuser()
 CONFDIR = HOME + "/.wallpapers/"
-DEFAULT = { 'ACT': 0, 'TN2': True, 'GTK': True }
+DEFAULT = {
+    'ACT': 0,
+    'TN2': True,
+    'GTK': True,
+    'INV': False
+}
 
 
 def parse_conf( filename=CONFDIR+'wpg.conf' ):
@@ -31,15 +36,11 @@ def parse_conf( filename=CONFDIR+'wpg.conf' ):
                 else:
                     tmp['ACT'] = 0
             elif el[0] == 'tint2_colorize':
-                if el[1].lower() == 'false':
-                    tmp['TN2'] = False
-                else:
-                    tmp['TN2'] = True
+                tmp['TN2'] = not el[1].lower() == 'false'
             elif el[0] == 'gtk_colorize':
-                if el[1].lower() == 'false':
-                    tmp['GTK'] = False
-                else:
-                    tmp['GTK'] = True
+                tmp['GTK'] = not el[1].lower() == 'false'
+            elif el[0] == 'clear_theme':
+                tmp['INV'] = not el[1].lower() == 'false'
     except Exception as e:
         print( 'ERR:: ' + str(e), file=sys.stderr )
         print( 'ERR:: ' + filename + ' Corrupt loading default', file=sys.stderr )

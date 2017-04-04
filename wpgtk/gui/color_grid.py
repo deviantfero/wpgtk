@@ -4,11 +4,14 @@ require_version( "Gtk", "3.0" )
 from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 from gi.repository.GdkPixbuf import Pixbuf
 from ..data.color_parser import *
+from ..data.conf_parser import *
 from ..data.file_list import *
 from ..data.transformers import *
+from ..data.make_sample import *
 from .color_picker import ColorDialog
 
 FILEPATH = GLib.get_home_dir() + "/.wallpapers/"
+OPTIONS = parse_conf()
 current_walls = FileList( FILEPATH )
 PAD = 10
 
@@ -115,20 +118,23 @@ class ColorGrid( Gtk.Grid ):
             tmpfile = FILEPATH + ".tmp.sample.png"
             if( os.path.isfile(tmpfile) ):
                 os.system( "mv " + FILEPATH + ".tmp.sample.png "
-                        + FILEPATH + "." + current_walls.file_names_only[x] + ".sample.png" )
+                        + FILEPATH + "sample/" + current_walls.file_names_only[x] + ".sample.png" )
                 self.done_lbl.set_text( "Changes saved" )
                 x = self.parent.colorscheme.get_active()
                 selected_file = current_walls.file_names_only[x]
-                selected_sample = "." + selected_file + ".sample.png"
+                selected_sample = "sample/" + selected_file + ".sample.png"
                 sample_path = FILEPATH + selected_sample
                 self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
                 self.parent.sample.set_from_pixbuf( self.pixbuf_sample )
 
     def on_auto_click( self, widget ):
         current_walls = FileList( GLib.get_home_dir() + "/.wallpapers" )
-        self.color_list = self.color_list[:8:] + [ add_brightness( x, 50 ) for x in self.color_list[:8:] ]
+        if(not OPTIONS['INV']):
+            self.color_list = self.color_list[:8:] + [ add_brightness( x, 50 ) for x in self.color_list[:8:] ]
+        else:
+            self.color_list = self.color_list[:8:] + [ reduce_brightness(x, 50) for x in self.color_list[:8:] ]
+        print(self.color_list)
         for x in range( 0, 16 ):
-            
             color = Gdk.color_parse( '#' + self.color_list[x] )
             if get_darkness( self.color_list[x] ) < 100:
                 fgcolor = Gdk.color_parse( '#FFFFFF' )
@@ -138,8 +144,7 @@ class ColorGrid( Gtk.Grid ):
             self.button_list[x].set_sensitive( True )
             self.button_list[x].modify_bg( Gtk.StateType.NORMAL, color )
             self.button_list[x].modify_fg( Gtk.StateType.NORMAL, fgcolor )
-        write_tmp( self.color_list )
-        os.system( "wpcscript tmp 1>/dev/null" )
+        create_sample(['#' + x for x in self.color_list])
         sample_path = FILEPATH + ".tmp.sample.png"
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
         self.sample.set_from_pixbuf( self.pixbuf_sample )
@@ -169,8 +174,7 @@ class ColorGrid( Gtk.Grid ):
             for i, c in enumerate( self.button_list ):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
-            write_tmp( self.color_list )
-            os.system( "wpcscript tmp 1>/dev/null" )
+            create_sample(['#' + x for x in self.color_list])
             sample_path = FILEPATH + ".tmp.sample.png"
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
             self.sample.set_from_pixbuf( self.pixbuf_sample )
@@ -184,7 +188,7 @@ class ColorGrid( Gtk.Grid ):
         self.ok_button.set_sensitive( True )
         current_walls = FileList( GLib.get_home_dir() + "/.wallpapers" )
         selected_file = current_walls.file_names_only[x]
-        selected_sample = "." + selected_file + ".sample.png"
+        selected_sample = "sample/" + selected_file + ".sample.png"
         sample_path = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
         self.color_list = read_colors( selected_file )
         for x in range( 0, 16 ):
@@ -199,3 +203,5 @@ class ColorGrid( Gtk.Grid ):
             self.button_list[x].modify_fg( Gtk.StateType.NORMAL, fgcolor )
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
         self.sample.set_from_pixbuf( self.pixbuf_sample )
+        if(OPTIONS['INV']):
+            self.color_list = self.color_list[::-1]

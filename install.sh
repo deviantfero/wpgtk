@@ -42,14 +42,16 @@ function tint2support {
 
 function install_color {
 	echo "CREATING::DIRECTORIES"
-	mkdir ~/.wallpapers 
+	mkdir -p ~/.wallpapers/xres
+	mkdir -p ~/.wallpapers/sample
+	mkdir -p ~/.wallpapers/cache
 	mkdir -p ~/.themes/color_other
 	mkdir ~/.icons
 	echo "INSTALLING::WPG"
 	sudo cp -r ./wpgtk/ /usr/local/bin/
 	sudo chmod -R ugo+rx /usr/local/bin/wpgtk
-	sudo cp ./wpcscript ./wpg /usr/local/bin
-	sudo cp ./functions /usr/local/bin
+	echo "INSTALLING::WAL"
+	sudo cp ./wal ./wpg /usr/local/bin
 	cp ./misc/* ~/.wallpapers/
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/

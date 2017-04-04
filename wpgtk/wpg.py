@@ -7,6 +7,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 from .data.color_parser import *
 from .data.file_list import *
 from .data.transformers import *
+from .data.color_generator import *
 from time import sleep
 from .gui.color_picker import ColorDialog
 from .gui.base_maker import FileGrid
@@ -34,7 +35,7 @@ class mainWindow( Gtk.Window ):
         route_list = image_name.split( '/', image_name.count('/') )
         file_name = route_list[4]
         print( 'INF::CURRENT WALL: ' + file_name )
-        sample_name = FILEPATH + '.' + file_name + '.sample.png'
+        sample_name = FILEPATH + 'sample/' + file_name + '.sample.png'
 
         self.notebook = Gtk.Notebook()
         self.add( self.notebook )
@@ -102,6 +103,7 @@ class mainWindow( Gtk.Window ):
         self.current_walls = Gtk.ComboBox()
 
     def on_add_clicked( self, widget ):
+        FILEPATH = ""
         filechooser = Gtk.FileChooserDialog( 'Select an Image', self, Gtk.FileChooserAction.OPEN,
                 (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                  Gtk.STOCK_OPEN, Gtk.ResponseType.OK) )
@@ -122,10 +124,10 @@ class mainWindow( Gtk.Window ):
             elif( '\\' in filename ):
                 filename = filename.replace( '\\', '\\\\' )
             Popen( 'cp ' + FILEPATH + ' ./' + filename, shell=True )
-            call( 'wpcscript add ' + './' + filename, shell=True )
+            create_theme('./' + filename)
             Popen( 'rm ./' + filename, shell=True )
         else:
-            call( 'wpcscript add ' + FILEPATH, shell=True )
+            create_theme(FILEPATH)
         option_list = Gtk.ListStore( str )
         current_walls = FileList( FILEPATH )
 
@@ -144,19 +146,19 @@ class mainWindow( Gtk.Window ):
         path = GLib.get_home_dir() + '/.wallpapers/'
         current_walls = FileList( path )
         if( len(current_walls.file_names_only) > 0 ):
-            FILEPATH = current_walls.file_names_only[x]
+            FILENAME = current_walls.file_names_only[x]
             colorscheme_file = current_walls.file_names_only[y]
-            colorscheme = '.' + colorscheme_file + '.Xres'
-            colorscheme_sample = '.' + current_walls.file_names_only[y] + '.sample.png'
+            colorscheme = 'xres/' + colorscheme_file + '.Xres'
+            colorscheme_sample = 'sample/' + current_walls.file_names_only[y] + '.sample.png'
             if( not os.path.isfile( path + colorscheme ) or not os.path.isfile( path + colorscheme_sample ) ):
                 print( ':: ' + path + colorscheme + ' NOT FOUND' )
                 print( ':: GENERATING COLORS' )
-                call( [ 'wpcscript', 'add', path + FILEPATH ] )
+                create_theme(path + FILENAME)
                 self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( path + colorscheme_sample, width=500, height=500 )
                 self.sample.set_from_pixbuf( self.pixbuf_sample )
-            call( [ 'wpcscript', 'change', FILEPATH ] )
+            set_theme(FILENAME)
             init_file = open( GLib.get_home_dir() + '/.wallpapers/wp_init.sh', 'w' )
-            init_file.writelines( [ '#!/bin/bash\n', 'wpcscript change ' + FILEPATH + ' && ' ] )
+            init_file.writelines( [ '#!/bin/bash\n', 'wal -si ' + FILENAME + ' && ' ] )
             init_file.writelines( 'xrdb -merge ' + path + colorscheme + '\n' )
             init_file.close()
             Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
@@ -168,11 +170,10 @@ class mainWindow( Gtk.Window ):
         x = self.option_combo.get_active()
         current_walls = FileList( GLib.get_home_dir() + '/.wallpapers' )
         if( len(current_walls.file_names_only) > 0 ):
-            FILEPATH = current_walls.file_names_only[x]
-            call( [ 'wpcscript', 'rm', FILEPATH ] )
-            call( [ 'rm', GLib.get_home_dir() + '/.wallpapers/' + '.' + FILEPATH + '.sample.png' ] )
+            FILENAME = current_walls.file_names_only[x]
+            remove_theme(FILENAME)
             option_list = Gtk.ListStore( str )
-            current_walls = FileList( FILEPATH )
+            current_walls = FileList( FILENAME )
             for elem in list(current_walls.files):
                 option_list.append( [elem] )
             self.option_combo.set_model( option_list )
@@ -187,7 +188,7 @@ class mainWindow( Gtk.Window ):
         self.colorscheme.set_active( x )
         current_walls = FileList( GLib.get_home_dir() + '/.wallpapers' )
         selected_file = current_walls.file_names_only[x]
-        selected_sample = '.' + selected_file + '.sample.png'
+        selected_sample = 'sample/' + selected_file + '.sample.png'
         FILEPATH = GLib.get_home_dir() + '/.wallpapers/' + selected_file
         samplepath = GLib.get_home_dir() + '/.wallpapers/' + selected_sample
 
@@ -204,7 +205,7 @@ class mainWindow( Gtk.Window ):
         x = self.colorscheme.get_active()
         current_walls = FileList( GLib.get_home_dir() + '/.wallpapers' )
         selected_file = current_walls.file_names_only[x]
-        selected_sample = '.' + selected_file + '.sample.png'
+        selected_sample = 'sample/' + selected_file + '.sample.png'
         samplepath = GLib.get_home_dir() + '/.wallpapers/' + selected_sample
         nosamplepath = GLib.get_home_dir() + '/.wallpapers/' + '.no_sample.sample.png'
         if( os.path.isfile( samplepath ) ):
