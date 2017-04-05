@@ -27,40 +27,29 @@ if __name__ == "__main__":
     if args.set:
         if len(args.set) == 1:
             try:
-                set_theme(args.set[0])
+                set_theme(args.set[0], args.set[0])
                 execute_gcolorchange( args.set[0], CONFIG )
-                init_file = open( WALLDIR + 'wp_init.sh', 'w' )
-                init_file.writelines( [ '#!/bin/bash\n', 'wpg -s ' + args.set[0] + ' && ' ] )
-                init_file.writelines( 'xrdb -merge ' + WALLDIR + 'xres/' + args.set[0] +'.Xres' + '\n' )
-                init_file.close()
-                Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
-            except TypeError:
+            except TypeError as e:
                 print( 'ERR:: file ' + args.set[0] + ' not found' )
+                raise e
         elif len(args.set) == 2:
             try:
-                set_theme(args.set[0])
-                execute_gcolorchange( args.set[0], CONFIG )
-                call( [ 'xrdb', '-merge', WALLDIR + '.' + args.set[1] + '.Xres'] )
+                set_theme(args.set[0], args.set[1])
                 execute_gcolorchange( args.set[1], CONFIG )
-                init_file = open( WALLDIR + 'wp_init.sh', 'w' )
-                init_file.writelines( [ '#!/bin/bash\n', 'wpg -s ' + args.set[0] + ' && ' ] )
-                init_file.writelines( 'xrdb -merge ' + WALLDIR + 'xres/' + args.set[1] +'.Xres' + '\n' )
-                init_file.close()
-                Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
             except TypeError:
                 print( 'ERR:: file  not found' )
         elif len( args.set ) > 2:
             print( 'ERR:: Specify just 2 filenames' )
 
     if args.list:
-        os.system( 'wpcscript ls' )
+        show_wallpapers()
     if args.version:
         print( 'current version: ' + version )
     if args.remove:
         for e in args.remove:
             remove_theme(e)
     if args.current:
-        os.system( 'wpcscript current' )
+        show_current()
     if args.add:
         for e in args.add:
             create_theme(e)

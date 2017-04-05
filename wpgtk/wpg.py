@@ -14,7 +14,7 @@ from .gui.base_maker import FileGrid
 from .gui.color_grid import ColorGrid
 from .gui.option_grid import OptionsGrid
 
-version = '3.6'
+version = '4.0'
 PAD = 10
 
 #GLOBAL DEFS
@@ -156,15 +156,8 @@ class mainWindow( Gtk.Window ):
                 create_theme(path + FILENAME)
                 self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( path + colorscheme_sample, width=500, height=500 )
                 self.sample.set_from_pixbuf( self.pixbuf_sample )
-            set_theme(FILENAME)
-            init_file = open( GLib.get_home_dir() + '/.wallpapers/wp_init.sh', 'w' )
-            init_file.writelines( [ '#!/bin/bash\n', 'wal -si ' + FILENAME + ' && ' ] )
-            init_file.writelines( 'xrdb -merge ' + path + colorscheme + '\n' )
-            init_file.close()
-            Popen( [ 'chmod', '+x', GLib.get_home_dir() + '/.wallpapers/wp_init.sh' ] )
+            set_theme(FILENAME, colorscheme_file)
             execute_gcolorchange( colorscheme_file, self.optpage.opt_list )
-            call( [ 'xrdb', '-merge', GLib.get_home_dir() + '/.Xresources'] )
-            call( [ 'xrdb', '-merge', path + colorscheme] )
 
     def on_rm_clicked( self, widget ):
         x = self.option_combo.get_active()

@@ -23,6 +23,10 @@ function tint2support {
 function install_color {
 	echo "CREATING::DIRECTORIES"
 	mkdir ~/.wallpapers 
+	mkdir -p ~/.wallpapers/xres
+	mkdir -p ~/.wallpapers/sample
+	mkdir -p ~/.wallpapers/cache
+	mkdir -p ~/.themes/color_other
 	cp ./misc/* ~/.wallpapers
 	mkdir -p ~/.themes/color_other
 	mkdir ~/.icons

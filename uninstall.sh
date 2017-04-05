@@ -6,7 +6,7 @@ function install_dependencies {
 
 	if [ -n "$version"  ]; then
 		echo "ARCH LINUX DETECTED::"
-		sh -c "sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt"
+		sh -c "sudo pacman -Rs python-pillow feh python-gobject gtk3 libxslt"
 		echo "DEPENDENCIES INSTALL COMPLETE"
 	else
 		version="$( uname -r | grep -Eo "(eneric|64)" )"
@@ -43,8 +43,7 @@ function uninstall_color {
 	echo "UNINSTALLING::WPG"
 	sudo rm -r /usr/local/bin/wpgtk/
 	sudo rm /usr/local/bin/wpg
-	sudo rm /usr/local/bin/wpcscript
-	sudo rm /usr/local/bin/functions
+	sudo rm /usr/local/bin/wal
 	echo "DONE - wpg HAS BEEN UNINSTALLED"
 }
 

@@ -1,3 +1,4 @@
+from random import shuffle
 from gi import require_version
 require_version( "Gtk", "3.0" )
 #making sure it uses v3.0
@@ -69,6 +70,10 @@ class ColorGrid( Gtk.Grid ):
             self.sampler.set_from_pixbuf( self.pixbuf_sampler )
 
 
+        self.shuffle_button = Gtk.Button( "Shuffle colors" )
+        self.shuffle_button.connect( "pressed", self.on_shuffle_click )
+        self.shuffle_button.set_sensitive( False )
+
         self.ok_button = Gtk.Button( "Save" )
         self.ok_button.connect( "pressed", self.on_ok_click )
         self.ok_button.set_sensitive( False )
@@ -89,8 +94,9 @@ class ColorGrid( Gtk.Grid ):
         self.option_combo.set_entry_text_column( 0 )
         self.option_combo.connect( "changed", self.combo_box_change )
 
-        self.button_grid.attach( self.ok_button, 0, 1, 1, 1 )
-        self.button_grid.attach( self.auto_button, 1, 1, 1, 1 )
+        self.button_grid.attach( self.ok_button, 0, 0, 1, 1 )
+        self.button_grid.attach( self.auto_button, 1, 0, 1, 1 )
+        self.button_grid.attach( self.shuffle_button, 2, 0, 1, 1 )
 
         self.attach( self.option_combo, 0, 0, 1, 1 )
         self.attach( self.button_grid, 0, 1, 1, 1 )
@@ -99,9 +105,28 @@ class ColorGrid( Gtk.Grid ):
         self.attach( self.sampler, 0, 4, 1, 1 )
         self.attach( self.done_lbl, 0, 5, 1, 1 )
 
+
     def make_button( self, hex_color ):
         button = Gtk.Button( hex_color )
         return button
+
+    def render_buttons(self):
+        for x in range( 0, 16 ):
+            color = Gdk.color_parse( '#' + self.color_list[x] )
+            if get_darkness( self.color_list[x] ) < 100:
+                fgcolor = Gdk.color_parse( '#FFFFFF' )
+            else:
+                fgcolor = Gdk.color_parse( '#101010' )
+            self.button_list[x].set_label( self.color_list[x] )
+            self.button_list[x].set_sensitive( True )
+            self.button_list[x].modify_bg( Gtk.StateType.NORMAL, color )
+            self.button_list[x].modify_fg( Gtk.StateType.NORMAL, fgcolor )
+
+    def render_sample(self):
+        sample_path = FILEPATH + ".tmp.sample.png"
+        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
+        self.sample.set_from_pixbuf( self.pixbuf_sample )
+        self.done_lbl.set_text( "Auto-adjust done" )
 
     def update_combo( self, option_list ):
         self.option_combo.set_model( option_list )
@@ -128,27 +153,23 @@ class ColorGrid( Gtk.Grid ):
                 self.parent.sample.set_from_pixbuf( self.pixbuf_sample )
 
     def on_auto_click( self, widget ):
-        current_walls = FileList( GLib.get_home_dir() + "/.wallpapers" )
+        color8 = self.color_list[0:1][0]
         if(not OPTIONS['INV']):
-            self.color_list = self.color_list[:8:] + [ add_brightness( x, 50 ) for x in self.color_list[:8:] ]
+            color8 = [add_brightness(color8, 18)]
+            self.color_list = self.color_list[:8:] + color8 + [add_brightness( x, 50 ) for x in self.color_list[1:8:]]
         else:
-            self.color_list = self.color_list[:8:] + [ reduce_brightness(x, 50) for x in self.color_list[:8:] ]
-        print(self.color_list)
-        for x in range( 0, 16 ):
-            color = Gdk.color_parse( '#' + self.color_list[x] )
-            if get_darkness( self.color_list[x] ) < 100:
-                fgcolor = Gdk.color_parse( '#FFFFFF' )
-            else:
-                fgcolor = Gdk.color_parse( '#101010' )
-            self.button_list[x].set_label( self.color_list[x] )
-            self.button_list[x].set_sensitive( True )
-            self.button_list[x].modify_bg( Gtk.StateType.NORMAL, color )
-            self.button_list[x].modify_fg( Gtk.StateType.NORMAL, fgcolor )
-        create_sample(['#' + x for x in self.color_list])
-        sample_path = FILEPATH + ".tmp.sample.png"
-        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
-        self.sample.set_from_pixbuf( self.pixbuf_sample )
-        self.done_lbl.set_text( "Auto-adjust done" )
+            color8 = [reduce_brightness(color8, 18)]
+            self.color_list = self.color_list[:8:] + color8 + [reduce_brightness(x, 50) for x in self.color_list[1:8:]]
+        self.render_buttons()
+        create_sample(self.color_list[:])
+        self.render_sample()
+
+    def on_shuffle_click(self, widget):
+        shuffled_colors = self.color_list[1:8]
+        shuffle(shuffled_colors)
+        list_tail = shuffled_colors + self.color_list[8:]
+        self.color_list = self.color_list[:1] + list_tail
+        self.on_auto_click(widget)
 
     def on_color_click( self, widget ):
         self.done_lbl.set_text( "" )
@@ -174,33 +195,22 @@ class ColorGrid( Gtk.Grid ):
             for i, c in enumerate( self.button_list ):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
-            create_sample(['#' + x for x in self.color_list])
-            sample_path = FILEPATH + ".tmp.sample.png"
-            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
-            self.sample.set_from_pixbuf( self.pixbuf_sample )
-
+            create_sample(self.color_list[:])
+            self.render_sample()
         dialog.destroy()
 
     def combo_box_change( self, widget ):
         self.done_lbl.set_text( "" )
         x = self.option_combo.get_active()
         self.auto_button.set_sensitive( True )
+        self.shuffle_button.set_sensitive( True )
         self.ok_button.set_sensitive( True )
         current_walls = FileList( GLib.get_home_dir() + "/.wallpapers" )
         selected_file = current_walls.file_names_only[x]
         selected_sample = "sample/" + selected_file + ".sample.png"
         sample_path = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
         self.color_list = read_colors( selected_file )
-        for x in range( 0, 16 ):
-            color = Gdk.color_parse( '#' + self.color_list[x] )
-            if get_darkness( self.color_list[x] ) < 100:
-                fgcolor = Gdk.color_parse( '#FFFFFF' )
-            else:
-                fgcolor = Gdk.color_parse( '#101010' )
-            self.button_list[x].set_label( self.color_list[x] )
-            self.button_list[x].set_sensitive( True )
-            self.button_list[x].modify_bg( Gtk.StateType.NORMAL, color )
-            self.button_list[x].modify_fg( Gtk.StateType.NORMAL, fgcolor )
+        self.render_buttons()
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( sample_path, width=500, height=300 )
         self.sample.set_from_pixbuf( self.pixbuf_sample )
         if(OPTIONS['INV']):

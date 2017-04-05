@@ -6,13 +6,13 @@ function install_dependencies {
 
 	if [ -n "$version"  ]; then
 		echo ":: ARCH LINUX DETECTED"
-		sh -c "sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt"
+		sh -c "sudo pacman -S python-pillow feh python-gobject gtk3 libxslt"
 		echo ":: DEPENDENCIES INSTALL COMPLETE"
 	else
 		version="$( uname -a | grep -Eo "(eneric|bian)" )"
 		if [ -n "$version" ]; then
 			echo ":: DEBIAN OR *BUNTU DETECTED"
-			sh -c "sudo apt-get install feh python3-gi python-gobject xsltproc python-pip python-imaging && pip install Pillow"
+			sh -c "sudo apt-get install feh python3-gi python-gobject xsltproc python3-pip python-imaging && pip3 install Pillow"
 		else
 			echo ":: ANOTHER DISTRO DETECTED:: INSTALL DEPENDENCIES FOR YOUR DISTRO"
 			echo
@@ -51,7 +51,9 @@ function install_color {
 	sudo cp -r ./wpgtk/ /usr/local/bin/
 	sudo chmod -R ugo+rx /usr/local/bin/wpgtk
 	echo "INSTALLING::WAL"
-	sudo cp ./wal ./wpg /usr/local/bin
+	git clone https://github.com/deviantfero/wal
+	sudo cp ./wal/wal ./wpg /usr/local/bin
+	rm -rf ./wal
 	cp ./misc/* ~/.wallpapers/
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/
@@ -62,7 +64,7 @@ function install_color {
 	cp -r ./themes/FlatColor ~/.themes/
 	tint2support
 	echo -e "\e[34m:: DONE - SET THEMES AND RUN wpg\e[0m"
-	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wpcscript
+	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wal
 }
 
 usr="$(whoami)"

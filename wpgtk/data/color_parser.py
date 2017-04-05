@@ -26,8 +26,7 @@ def read_colors( xres_file ):
     try:
         f = open( WALLDIR + xres_file, "r" )
     except IOError as err:
-        print( err, file=sys.stderr )
-        print( err.args, file=sys.stderr )
+        print( "file could not open", file=sys.stderr )
         print( err.filename, file=sys.stderr )
         empty = []
         for x in range( 0, 16 ):
@@ -109,7 +108,7 @@ def reduce_brightness( hex_string, reduce_lvl ):
         print(hex_result)
         return hex_result
     else:
-        reduce_brightness( hex_string, reduce_lvl - 5 )
+        return reduce_brightness( hex_string, reduce_lvl - 5 )
 
 def add_brightness( hex_string, reduce_lvl ):
     rgb = list( int(hex_string[i:i+2], 16) for i in ( 0, 2, 4 ) )
@@ -127,7 +126,7 @@ def add_brightness( hex_string, reduce_lvl ):
         hex_result = '%02x%02x%02x' % rgb_int
         return hex_result
     else:
-        add_brightness( hex_string, reduce_lvl - 5 )
+        return add_brightness( hex_string, reduce_lvl - 5 )
     rgb = hls_to_rgb( hls[0], hls[1], hls[2] )
     rgb_int = []
     for elem in rgb:
