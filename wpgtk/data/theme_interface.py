@@ -25,7 +25,7 @@ def set_theme(filename, cs_file, opt=DEFAULT, restore=False):
             execute_gcolorchange(cs_file, opt)
         call( 'wal -si ' + WAL_DIR + filename, shell=True )
         init_file = open( WAL_DIR +'wp_init.sh', 'w' )
-        init_file.writelines( [ '#!/bin/bash\n', 'wpg -s ' + filename + ' ' + cs_file + ' ' + '-r'] )
+        init_file.writelines( [ '#!/bin/bash\n', 'wpg -r -s ' + filename + ' ' + cs_file] )
         init_file.close()
         Popen( [ 'chmod', '+x', WAL_DIR + 'wp_init.sh' ] )
         call( [ 'xrdb', '-merge', expanduser('~') + '/.Xresources'] )
