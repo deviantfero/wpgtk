@@ -5,7 +5,7 @@ from getpass import getuser
 from subprocess import call, Popen
 from wpgtk.wpg import *
 from wpgtk.data.conf_parser import *
-from wpgtk.data.color_generator import *
+from wpgtk.data.theme_interface import *
 import argparse
 
 HOME = "/home/" + getuser()
@@ -14,11 +14,12 @@ CONFIG = parse_conf()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--set','-s', help='set the wallpaper and colorscheme', nargs='*')
+    parser.add_argument('--set','-s', help='set the wallpaper and colorscheme, apply changes system-wide', nargs='*')
+    parser.add_argument('--restore','-r', help='restore the wallpaper and colorscheme', action='store_true')
     parser.add_argument('--add','-a', help='add images to the wallpaper folder and generate colorschemes', nargs='*')
     parser.add_argument('--list','-l', help='see which wallpapers are available', action='store_true')
     parser.add_argument('--version','-v', help='print the current version', action='store_true')
-    parser.add_argument('--remove','-r', help='removes the wallpaper(s) from wallpaper folder', nargs='*')
+    parser.add_argument('--delete','-d', help='delete the wallpaper(s) from wallpaper folder', nargs='*')
     parser.add_argument('--current','-c', help='shows the current wallpaper', action='store_true')
     args = parser.parse_args()
     if len(sys.argv) < 2:
@@ -27,15 +28,13 @@ if __name__ == "__main__":
     if args.set:
         if len(args.set) == 1:
             try:
-                set_theme(args.set[0], args.set[0])
-                execute_gcolorchange( args.set[0], CONFIG )
+                set_theme(args.set[0], args.set[0], CONFIG, args.restore)
             except TypeError as e:
                 print( 'ERR:: file ' + args.set[0] + ' not found' )
                 raise e
         elif len(args.set) == 2:
             try:
-                set_theme(args.set[0], args.set[1])
-                execute_gcolorchange( args.set[1], CONFIG )
+                set_theme(args.set[0], args.set[1], CONFIG, args.restore)
             except TypeError:
                 print( 'ERR:: file  not found' )
         elif len( args.set ) > 2:
@@ -45,9 +44,9 @@ if __name__ == "__main__":
         show_wallpapers()
     if args.version:
         print( 'current version: ' + version )
-    if args.remove:
+    if args.delete:
         for e in args.remove:
-            remove_theme(e)
+            delete_theme(e)
     if args.current:
         show_current()
     if args.add:
