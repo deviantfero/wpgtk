@@ -7,7 +7,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 from .data.color_parser import *
 from .data.file_list import *
 from .data.transformers import *
-from .data.color_generator import *
+from .data.theme_interface import *
 from time import sleep
 from .gui.color_picker import ColorDialog
 from .gui.base_maker import FileGrid
@@ -156,8 +156,7 @@ class mainWindow( Gtk.Window ):
                 create_theme(path + FILENAME)
                 self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size( path + colorscheme_sample, width=500, height=500 )
                 self.sample.set_from_pixbuf( self.pixbuf_sample )
-            set_theme(FILENAME, colorscheme_file)
-            execute_gcolorchange( colorscheme_file, self.optpage.opt_list )
+            set_theme(FILENAME, colorscheme_file, self.optpage.opt_list)
 
     def on_rm_clicked( self, widget ):
         x = self.option_combo.get_active()
