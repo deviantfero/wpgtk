@@ -12,7 +12,6 @@ from os.path import isfile
 
 HOME = "/home/" + getuser()
 WALLDIR = HOME + "/.wallpapers/"
-DEFAULT = { 'ACT': 0, 'TN2': True, 'GTK': True }
 
 r_active = "COLORACT"
 r_inactive = "COLORIN"
@@ -325,7 +324,7 @@ def define_redux( hexvalue ):
         redux_list.append(75)
     return redux_list
 
-def execute_gcolorchange( image_name, opt=DEFAULT ):
+def execute_gcolorchange( image_name, opt ):
     #--Getting random color from an .Xres file--#
     image_colors = read_colors( image_name )
     base_color = read_color_in_line( image_name, opt['ACT'] )
