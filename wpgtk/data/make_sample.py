@@ -16,7 +16,6 @@ def hex_color_to_rgb(color):
         )
 
 def create_sample(colors, f=WALLDIR + ".tmp.sample.png"):
-    colors.pop()
     im = Image.new("RGB", (1000, 100), "white")
     pix = im.load()
 
