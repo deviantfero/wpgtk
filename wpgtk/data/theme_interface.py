@@ -11,6 +11,7 @@ WAL_DIR = expanduser( '~' ) + "/.wallpapers/"
 SAMPLE_DIR = WAL_DIR + "sample/"
 CACHE_DIR = WAL_DIR + "cache/"
 XRES_DIR = WAL_DIR + "xres/"
+DEFAULT = { 'ACT': 0, 'TN2': True, 'GTK': True }
 
 def create_theme(filepath):
     call( 'wal -i ' + filepath, shell=True )
@@ -18,11 +19,13 @@ def create_theme(filepath):
     color_list = read_colors(filename)
     create_sample(color_list, f=SAMPLE_DIR + filename + '.sample.png')
 
-def set_theme(filename, cs_file):
+def set_theme(filename, cs_file, opt=DEFAULT, restore=False):
     if(isfile(WAL_DIR + filename)):
+        if(not restore):
+            execute_gcolorchange(cs_file, opt)
         call( 'wal -si ' + WAL_DIR + filename, shell=True )
         init_file = open( WAL_DIR +'wp_init.sh', 'w' )
-        init_file.writelines( [ '#!/bin/bash\n', 'wpg -s ' + filename + ' ' + cs_file] )
+        init_file.writelines( [ '#!/bin/bash\n', 'wpg -s ' + filename + ' ' + cs_file + ' ' + '-r'] )
         init_file.close()
         Popen( [ 'chmod', '+x', WAL_DIR + 'wp_init.sh' ] )
         call( [ 'xrdb', '-merge', expanduser('~') + '/.Xresources'] )
@@ -39,7 +42,7 @@ def set_theme(filename, cs_file):
         print("no such file, available files:")
         show_wallpapers()
 
-def remove_theme(filename):
+def delete_theme(filename):
     remove(WAL_DIR + filename)
     remove(SAMPLE_DIR + filename + ".sample.png")
     remove(CACHE_DIR + filename + ".col")
