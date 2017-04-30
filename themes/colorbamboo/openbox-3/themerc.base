@@ -29,7 +29,7 @@ osd.border.color: #COLORACT
 osd.border.width: 3
 osd.label.bg: parentrelative
 osd.label.text.color: #f0f0f0
-padding.height: 6
+padding.height: 5
 window.active.border.color: #COLORACT
 window.inactive.border.color: #COLORIN
 window.active.button.disabled.bg: Solid Flat
