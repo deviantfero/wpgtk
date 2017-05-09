@@ -163,7 +163,7 @@ class mainWindow( Gtk.Window ):
         current_walls = FileList( GLib.get_home_dir() + '/.wallpapers' )
         if( len(current_walls.file_names_only) > 0 ):
             FILENAME = current_walls.file_names_only[x]
-            remove_theme(FILENAME)
+            delete_theme(FILENAME)
             option_list = Gtk.ListStore( str )
             current_walls = FileList( FILENAME )
             for elem in list(current_walls.files):
