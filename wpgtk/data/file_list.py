@@ -21,8 +21,7 @@ class FileList():
 
     def show_list( self ):
         for f in self.files:
-            print( f, end=' ' )
-        print('')
+            print(f)
 
     def show_files_only( self ):
         print( self.file_names_only )
