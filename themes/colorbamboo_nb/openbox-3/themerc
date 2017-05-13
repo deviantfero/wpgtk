@@ -25,7 +25,7 @@ osd.border.color: #4A838F
 osd.border.width: 3
 osd.label.bg: parentrelative
 osd.label.text.color: #f0f0f0
-padding.height: 6
+padding.height: 0
 window.active.border.color: #4A838F
 window.inactive.border.color: #2C4448
 window.active.button.disabled.bg: Solid Flat
