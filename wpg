@@ -62,5 +62,6 @@ if __name__ == "__main__":
     if args.shuffle:
         for arg in args.shuffle:
             shuffle_colors(arg)
+            auto_adjust_colors(arg, CONFIG)
             print('OK:: shuffled {}'.format(arg))
 
