@@ -64,7 +64,7 @@ def shuffle_colors(filename):
         shuffled_colors = colors[1:8]
         shuffle(shuffled_colors)
         colors = colors[:1] + shuffled_colors + colors[8:]
-        create_sample(colors)
+        create_sample(colors, f=SAMPLE_DIR + filename + '.sample.png')
         write_colors(filename, colors)
 
 def auto_adjust_colors(filename, opt=DEFAULT):
