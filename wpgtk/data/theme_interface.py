@@ -11,8 +11,9 @@ WAL_DIR = expanduser( '~' ) + "/.wallpapers/"
 SAMPLE_DIR = WAL_DIR + "sample/"
 CACHE_DIR = WAL_DIR + "cache/"
 XRES_DIR = WAL_DIR + "xres/"
-DEFAULT = { 'ACT': 0, 'TN2': True, 'GTK': True }
+DEFAULT = { 'ACT': 0, 'TN2': True, 'GTK': True, 'INV': False }
 
+##TODO: add options to create_theme
 def create_theme(filepath):
     call( 'wal -i ' + filepath, shell=True )
     filename = filepath.split("/").pop()
@@ -55,6 +56,7 @@ def show_wallpapers():
 def show_current():
     image = realpath(WAL_DIR + '.current').split('/').pop()
     print(image)
+    return image
 
 def shuffle_colors(filename):
     if(isfile(WAL_DIR + filename)):
@@ -64,3 +66,16 @@ def shuffle_colors(filename):
         colors = colors[:1] + shuffled_colors + colors[8:]
         create_sample(colors)
         write_colors(filename, colors)
+
+def auto_adjust_colors(filename, opt=DEFAULT):
+    if(isfile(WAL_DIR + filename)):
+        color_list = read_colors(filename)
+        color8 = color_list[0:1][0]
+        if(not opt['INV']):
+            color8 = [add_brightness(color8, 18)]
+            color_list = color_list[:8:] + color8 + [add_brightness( x, 50 ) for x in color_list[1:8:]]
+        else:
+            color8 = [reduce_brightness(color8, 18)]
+            color_list = color_list[:8:] + color8 + [reduce_brightness(x, 50) for x in color_list[1:8:]]
+        create_sample(color_list, f=SAMPLE_DIR + filename + '.sample.png')
+        write_colors(filename, color_list)

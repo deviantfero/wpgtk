@@ -21,6 +21,8 @@ if __name__ == "__main__":
     parser.add_argument('--version','-v', help='print the current version', action='store_true')
     parser.add_argument('--delete','-d', help='delete the wallpaper(s) from wallpaper folder', nargs='*')
     parser.add_argument('--current','-c', help='shows the current wallpaper', action='store_true')
+    parser.add_argument('--auto','-e', help='auto adjusts the given colorschemes', nargs='*')
+    parser.add_argument('--shuffle','-z', help='shuffles the given colorschemes', nargs='*')
     args = parser.parse_args()
     if len(sys.argv) < 2:
         run()
@@ -45,10 +47,20 @@ if __name__ == "__main__":
     if args.version:
         print( 'current version: ' + version )
     if args.delete:
-        for e in args.remove:
+        for e in args.delete:
             delete_theme(e)
     if args.current:
         show_current()
     if args.add:
         for e in args.add:
             create_theme(e)
+    if args.auto:
+        for arg in args.auto:
+            auto_adjust_colors(arg, CONFIG)
+            print('OK:: Auto-adjusted {}'.format(arg))
+
+    if args.shuffle:
+        for arg in args.shuffle:
+            auto_adjust_colors(arg, CONFIG)
+            print('OK:: shuffled {}'.format(arg))
+
