@@ -1,136 +1,142 @@
-# wpg
-### An accesible and easy to install colorscheme and theme generator for Openbox, tint2 and GTK2/3.
 
-#### it's also compatible with most software that uses written configs, such as i3, bspwm, termite, etc.
+# wpgtk
 
-#### Video
+A universal theming software for all themes 
+defined in text files, compatible with all terminals, 
+with default themes for GTK2, GTK+, openbox and Tint2, that uses 
+[wal](https://github.com/dylanaraps/wal) as it's core, in which 
+you can choose to interact with in two possible ways, so you can
+enjoy the powerful `wal` while having an easy to use GUI AND a powerful cli tool.
 
-[Video DEMO](https://my.mixtape.moe/dpetjt.webm)
+#### GUI
+![gui](http://i.imgur.com/oJ0yakG.gif)
 
-[Console Commands DEMO](https://my.mixtape.moe/ghhfqf.webm)
+#### Powerful command line interface
+![cli](http://i.imgur.com/MM5yVZq.gif)
 
-![Dynamic themes](http://i.imgur.com/VNC7O57.png)
-![Borderless](http://i.imgur.com/LXZKLRY.png)
+#### Combine wallpapers and colors
+![combine](http://i.imgur.com/qo5Hsoh.gif)
 
-wpg is a GUI for a program called wp, to manage your wallpapers in a simple way, it integrates a script wich takes the colors in the image of your preference and sets up an .Xresources file to match your term colors with your wallpaper, you can also modify those generated colorschemes color by color to your content.
 
-**_it can take a little while to generate the color pallet._**
+## Getting Started
 
-----
+### Dependencies
 
-### in AUR
+this dependencies are included in the install scripts for apt distros and arch
+
+* feh
+* python-gobject
+* python-imaging
+* Pillow (python)
+* xsltproc
+* wal
+* urxvt or xterm for it to work on your terminal colors without the need of optional configs
+
+
+# Installing
+
+**_Warning:_** If you have a previous version of wpgtk installed
+this upgrade will delete the contents of your current `~/.wallpapers`
+directory.
+
+You can either clone this repository by doing
 
 ```sh
-wpgtk-git
+$ git clone https://github.com/deviantfero/wpgtk
 ```
----
 
-### Version
-3.5
+or install the `wpgtk-git` package via the AUR.
 
-###### Features added
+If you cloned the repository  and have either Arch linux or a debian based
+distribution directly you can run the `install.sh` script inside the 
+cloned repository.
 
-* Console arguments
-* Special Openbox theme so that window borders change with your wallpaper
-* Special Icon set included that changes with your wallpaper
-* It also changes a special GTK theme automatically
-* It uses random colors from the image, so you can repeat until you're satisfied
-* It comes with special themes solely for the purpose of being dynamic, so no need for any complicated configuration
-* you can modify the themes to a certain degree. So feel free to do it!
-* It saves all colors of the current wallpapers in two files, one named ".colors" and another named ".main_colors" the latter contains the colors used by window borders at that time.
-* If you specify a color in your .Xresources, it will not be overriden by wpgtk
-* If you need a pair of colors predefined, just specify them on your .Xresources
-* you can now modify the colorschemes you are provided color by color.
-
-
-
-### Optional config files ( support for other wm, and pretty much everything )
-
-----
-
-_**example**_
-just use the Optional Files tab in wpg, click on add and select the desired configuration file, wpg will automatically backup your current config, and will create a .base file for you which you can edit via the "edit" button in this tab.
-
-this is how it looks when you add an extra config file
-
-![WINDOW](http://i.imgur.com/TZbfCpV.png)
-![RESULT](http://i.imgur.com/cT7OYwM.png)
-
-[Take a look](http://s1.webmshare.com/NdM8M.webm)
-
-now your config is a symbolic link to the copy that is in the ~/.themes/colors_other directory, which gets modified each time you change your colorscheme according to a .base file matching the config's name.
-
-this would be .base file of your wm config after you edit it of course
 ```
--- example 
-#COLOR0
-#COLOR1
-#COLORX10 it has the X so it doesn't conflict with COLOR1 when replacing, this is true from color 10 to 15
+$ ./install.sh
+```
+
+And if everything went fine you can now execute `wpg` and it will take
+you to the user interface.
+
+You can set the default themes that the application installs if you want
+to use color adaptable themes out of the box, these are installed under 
+`~/.themes/`, `FlatColor` for gtk and GTK+, `colorbamboo` and `colorbamboo-nb` for openbox.
+
+for more details on the cli interface do:
+```
+$ wpg -h
+```
+
+# Theming
+
+### General Usage
+In order to start creating colorschemes and themes in `wpgtk` you need
+to add wallpapers, there's two ways you can do this:
+
+### Console
+```
+$ wpg -a /path/to/image
+```
+
+### GUI
+![add](http://i.imgur.com/0y4qHJx.png)
+
+this is a list of useful wpg commands that you will be using if you want to use
+the cli:
+```
+$ wpg -l #lists the currently added wallpapers
+$ wpg -c #prints the current wallpaper
+$ wpg -t #apply colorscheme to terminal (equivalent to wal -r)
+$ wpg -z wallpaper #shuffles the given wallpaper's colorscheme
+$ wpg --auto wallpaper #generates fg versions of the first 8 colors of the given wallpaper
+$ wpg -d wallpaper #remove an existing wallpaper
+$ wpg -h #display usage
+$ wpg -s wallpaper1 [wallpaper2] #sets the current wallpaper and colorscheme, wallpaper2 is optional
+```
+
+Files exported when creating a theme are all under the same directory `$HOME/.wallpapers`
+this directory contains all exported formats that `wall` and `wpgtk` have to offer, such
+as:
+
+* scss variables under `$HOME/.wallpapers/cache/scss`
+* simple hexes under `$HOME/.wallpapers/cache/wallpaper_name.col`
+* xres files under `$HOME/.wallpapers/xres/wallpaper_name.Xres`
+* environment variables under `$HOME/.colors` 
+
+### Optional files
+
+Using the GUI you can add optional files for which `wpgtk` will create a copy and
+add a modifiable file to the `~/.themes/color_other` under the file extension `.base`
+in which some keywords will be replaced with the respective colors matching 
+those keywords, these keywords are:
+
+```assembly
+from color 0 to color 9
+#COLORY
+where Y is the number of color
+
+from color 10 to 15
+#COLORXYY 
+where Y is the number of color desired
+
+also
 #COLORIN (active color)
 #COLORACT (inactive color)
 ```
 
-so, this is the base file...
+after doing this `wpgtk` will replace this new file with the original.
 
-![INPUT](http://i.imgur.com/ZyxsoKi.png)
-
-this would be the output config that's already linked in your config's original folder, so it's all done on the fly.
-
-![OUTPUT](http://i.imgur.com/lFkuQ8X.png)
-
----
-
-### Installation 
-
-###### Dependencies
-
-wpg has some dependencies:
-
-* python2-pillow ( on arch )
-* feh
-* python-gobject
-* you need to use urxvt or xterm for it to work on your terminal colors without the need of optional configs
-
-#### Ubuntu or Debian
-```sh
-$ sudo apt-get install feh python3-gi python-gobject python-pip python-imaging xsltproc && pip install Pillow
-```
-
-```sh
-$ git clone http://github.com/deviantfero/wpgtk
-$ cd ~/wpgtk
-$ sh ./installcolor.sh
-```
-#### Arch
-
-```sh
-$ sudo pacman -S python2-pillow feh python-gobject gtk3 libxslt
-```
-Alternatively, there is also an AUR package (For arch users wpgtk-git,) which will handle the install and dependencies for you.
-
-after doing this there just a few more steps to get a dynamic theme going
-* Select colorbamboo or colorbamboo_nb (no_borders) as your openbox window theme
-* Select Flatcolor as your GTK theme
-* Select flattrcolor as your Icon theme
-
-**_you need to uninstall any other wallpaper manager as it will override this one at startup._**
-
-now to actually run the program just
-```sh
-$ wpg
-```
-
-#### Loading at Startup
+# Loading at Startup
 to load your new wallpaper at startup along with the colors add the following to your startup script or simply add it into your startup apps in your DE of choice, if you already use feh as your wallpaper manager, remember to remove it from your start up config.
 
 ```sh
 bash ~/.wallpapers/wp_init.sh
 ```
----
 
-### Credit
-I found the script by other means, but i found out the author of the color script that i made
-the GUI for, i'll leave the link to the original repo down below 
+# License
 
-it's http://github.com/everett1992/wp
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
+# Acknowledgments
+
+* A big thanks to 
