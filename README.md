@@ -8,14 +8,11 @@ with default themes for GTK2, GTK+, openbox and Tint2, that uses
 you can choose to interact with in two possible ways, so you can
 enjoy the powerful `wal` while having an easy to use GUI AND a powerful cli tool.
 
-#### GUI
-![gui](http://i.imgur.com/oJ0yakG.gif)
+#### [GUI](http://i.imgur.com/oJ0yakG.gif)
 
-#### Powerful command line interface
-![cli](http://i.imgur.com/MM5yVZq.gif)
+#### [Powerful command line interface](http://i.imgur.com/MM5yVZq.gif)
 
-#### Combine wallpapers and colors
-![combine](http://i.imgur.com/qo5Hsoh.gif)
+#### [Combine wallpapers and colors](http://i.imgur.com/qo5Hsoh.gif)
 
 
 ## Getting Started
