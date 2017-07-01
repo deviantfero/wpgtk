@@ -136,7 +136,3 @@ bash ~/.wallpapers/wp_init.sh
 # License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-# Acknowledgments
-
-* A big thanks to 
