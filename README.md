@@ -33,8 +33,8 @@ this dependencies are included in the install scripts for apt distros and arch
 # Installing
 
 **_Warning:_** If you have a previous version of wpgtk installed
-this upgrade will delete the contents of your current `~/.wallpapers`
-directory.
+please delete the contents of your current `~/.wallpapers` as 
+they may conflict with the new folder structure.
 
 You can either clone this repository by doing
 
