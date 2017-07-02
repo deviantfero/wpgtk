@@ -29,6 +29,9 @@ this dependencies are included in the install scripts for apt distros and arch
 * wal
 * urxvt or xterm for it to work on your terminal colors without the need of optional configs
 
+**_Attention:_** If you're using another terminals, you can load colors upon opening terminals
+by running `(wpg -t)` in your terminal, you can add this to your terminal's settings or anywhere
+where it allows it to run on startup.
 
 # Installing
 
