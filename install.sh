@@ -51,9 +51,8 @@ function install_color {
 	sudo cp -r ./wpgtk/ /usr/local/bin/
 	sudo chmod -R ugo+rx /usr/local/bin/wpgtk
 	echo "INSTALLING::WAL"
-	git clone https://github.com/deviantfero/wal
-	sudo cp ./wal/wal ./wpg /usr/local/bin
-	rm -rf ./wal
+	wget https://raw.githubusercontent.com/deviantfero/wal/master/wal
+	sudo cp ./wal ./wpg /usr/local/bin
 	cp ./misc/* ~/.wallpapers/
 	echo "INSTALLING::OPENBOX-THEME"
 	cp -r ./themes/colorbamboo ~/.themes/
@@ -63,8 +62,8 @@ function install_color {
 	echo "INSTALLING::GTK-THEME"
 	cp -r ./themes/FlatColor ~/.themes/
 	tint2support
-	echo -e "\e[34m:: DONE - SET THEMES AND RUN wpg\e[0m"
 	sudo chmod +x /usr/local/bin/wpg && sudo chmod +x /usr/local/bin/wal
+	echo -e "\e[34m:: DONE - SET THEMES AND RUN wpg\e[0m"
 }
 
 usr="$(whoami)"
