@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Wpgtk 4.0, color scheme generator</title>
+</head>
+<style>
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    --fg: rgb(37, 205, 228);
+    font-family: monospace;
+  }
+  .container {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 20px
+  }
+  .hero {
+    width: 100%;
+    background: linear-gradient(#111111 75%, #999 75%, white 76%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: var(--fg);
+    text-align: center;
+  }
+  .hero h1 {
+    margin-bottom: 0
+  }
+  img {
+    width: 100%
+  }
+  .video {
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.3), 0px 6px 23px 0px rgba(0, 0, 0, 0.3)
+  }
+  pre {
+    margin: 5px 0;
+    background: #111111;
+    color: var(--fg);
+    padding: 5px;
+    line-height: 25px
+  }
+  button {
+    color: var(--fg);
+    padding: 7px;
+    font-size: 16px;
+    border: 1px solid var(--fg);
+    border-radius: 10px;
+    background: transparent;
+  }
+</style>
+<body>
+  <div class="hero">
+    <h1>Wpgtk 4.0</h1>
+    <h2>Generate a color scheme for literally anything from any wallpaper.</h2>
+    <div>
+      <a href="#install"><button>Install</button></a>
+      <a href="https://github.com/deviantfero/wpgtk"><button>Github</button></a>
+
+    </div>
+
+    <div class="container">
+      <img class="video" src="http://i.imgur.com/MM5yVZq.gif" alt="">
+    </div>
+  </div>
+  <div class="container">
+    <h1>Wpgtk</h1>
+    <p>A universal theming software for all themes defined in text files,
+       compatible with all terminals, with default themes for GTK2, GTK+,
+       openbox and Tint2, that uses wal as it's core, in which you can
+       choose to interact with in two possible ways, so you can enjoy
+       the powerful wal while having an easy to use GUI AND a powerful
+       cli tool.
+</p>
+    <h3>Install:</h3>
+    <p>You can either clone this repository by doing</p>
+    <pre><code>git clone https://github.com/deviantfero/wpgtk</code></pre>
+    <p>Then you have to open the folder of the repository in a terminal and type</p>
+    <pre><code>$ ./install.sh</code></pre>
+  <h3>Usage:</h3>
+<p>you can use the gui or the cli...</p>
+<pre><code>$ wpg -a /path/to/image #add a wallpaper
+$ wpg -l #lists the currently added wallpapers
+$ wpg -c #prints the current wallpaper
+$ wpg -t #apply colorscheme to terminal (equivalent to wal -r)
+$ wpg -z wallpaper #shuffles the given wallpaper's colorscheme
+$ wpg --auto wallpaper #generates fg versions of the first 8 colors of the given wallpaper
+$ wpg -d wallpaper #remove an existing wallpaper
+$ wpg -h #display usage
+$ wpg -s wallpaper1 [wallpaper2] #sets the current wallpaper and colorscheme, wallpaper2 is optional
+</code></pre>
+  </div>
+</body>
+</html>
