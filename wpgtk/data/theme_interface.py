@@ -1,3 +1,4 @@
+import ast
 from os.path import expanduser, realpath, isfile
 from random import shuffle
 import errno
@@ -15,7 +16,9 @@ DEFAULT = { 'ACT': 0, 'TN2': True, 'GTK': True, 'INV': False }
 
 ##TODO: add options to create_theme
 def create_theme(filepath):
-    call( 'wal -i ' + filepath, shell=True )
+    #TODO: wal does not support spaces or special characters in file name
+    #probably fixed in python version
+    call(['wal', '-i', filepath])
     filename = filepath.split("/").pop()
     color_list = read_colors(filename)
     create_sample(color_list, f=SAMPLE_DIR + filename + '.sample.png')

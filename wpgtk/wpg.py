@@ -114,17 +114,17 @@ class mainWindow( Gtk.Window ):
             FILEPATH = filechooser.get_filename()
         filechooser.destroy()
 
-        if( '\\' in FILEPATH ):
-            FILEPATH = FILEPATH.replace( '\\', '\\\\' )
-        if( ' ' in FILEPATH ):
-            FILEPATH = FILEPATH.replace( ' ', '\ ' )
+        if( '\\' in FILEPATH or ' ' in FILEPATH):
             filename = FILEPATH.split( '/', len(FILEPATH) )
             filename = filename.pop()
             if( ' ' in filename ):
-                filename = filename.replace( ' ', '\ ' )
+                filename = filename.replace( ' ', '' )
             elif( '\\' in filename ):
-                filename = filename.replace( '\\', '\\\\' )
-            shutil.copy2( FILEPATH, filename)
+                filename = filename.replace( '\\', '' )
+            try:
+                shutil.copy( FILEPATH, filename)
+            except Exception:
+                print("ERROR:: file {} already exists".format(filename), file=sys.stderr)
             create_theme(filename)
             os.remove(filename)
         else:
