@@ -13,6 +13,7 @@ from .gui.color_picker import ColorDialog
 from .gui.base_maker import FileGrid
 from .gui.color_grid import ColorGrid
 from .gui.option_grid import OptionsGrid
+import shutil
 
 version = '4.0'
 PAD = 10
@@ -123,9 +124,9 @@ class mainWindow( Gtk.Window ):
                 filename = filename.replace( ' ', '\ ' )
             elif( '\\' in filename ):
                 filename = filename.replace( '\\', '\\\\' )
-            Popen( 'cp ' + FILEPATH + ' ./' + filename, shell=True )
-            create_theme('./' + filename)
-            Popen( 'rm ./' + filename, shell=True )
+            shutil.copy2( FILEPATH, filename)
+            create_theme(filename)
+            os.remove(filename)
         else:
             create_theme(FILEPATH)
         option_list = Gtk.ListStore( str )
