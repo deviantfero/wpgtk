@@ -30,7 +30,7 @@ this dependencies are included in the install scripts for apt distros and arch
 * urxvt or xterm for it to work on your terminal colors without the need of optional configs
 
 **_Attention:_** If you're using another terminal, you can load the colors on terminal startup
-by running `(wpg -t)` in your terminal (if you use gnome-terminal, xfce4-terminal, Termite add `(wpg -V)` instead).  
+by running `(wpg -t)` in your terminal (if you use gnome-terminal, xfce4-terminal or Termite add `(wpg -V)` instead).  
 You can add this to your terminal's settings, your shell `rc` file or anywhere else 
 that allows you to run commands on startup.
 
