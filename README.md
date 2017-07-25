@@ -29,9 +29,10 @@ this dependencies are included in the install scripts for apt distros and arch
 * wal
 * urxvt or xterm for it to work on your terminal colors without the need of optional configs
 
-**_Attention:_** If you're using another terminals, you can load colors upon opening terminals
-by running `(wpg -t)` in your terminal, you can add this to your terminal's settings or anywhere
-where it allows it to run on startup.
+**_Attention:_** If you're using another terminal, you can load the colors on terminal startup
+by running `(wpg -t)` in your terminal (if you use gnome-terminal, xfce4-terminal or Termite add `(wpg -V)` instead).  
+You can add this to your terminal's settings, your shell `rc` file or anywhere else 
+that allows you to run commands on startup.
 
 # Installing
 
@@ -87,6 +88,7 @@ the cli:
 $ wpg -l #lists the currently added wallpapers
 $ wpg -c #prints the current wallpaper
 $ wpg -t #apply colorscheme to terminal (equivalent to wal -r)
+$ wpg -V #apply colorscheme to terminal with VTE fix (equivalent to wal -rt)
 $ wpg -z wallpaper #shuffles the given wallpaper's colorscheme
 $ wpg --auto wallpaper #generates fg versions of the first 8 colors of the given wallpaper
 $ wpg -d wallpaper #remove an existing wallpaper

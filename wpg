@@ -24,6 +24,7 @@ if __name__ == "__main__":
     parser.add_argument('--auto','-e', help='auto adjusts the given colorschemes', nargs='*')
     parser.add_argument('--shuffle','-z', help='shuffles the given colorschemes', nargs='*')
     parser.add_argument('--tty','-t', help='send sequences to terminal equivalent to (wal -r)', action='store_true')
+    parser.add_argument('--vte','-V', help='fix artifacts in VTE terminals (Termite, xfce4-terminal, gnome-terminal)', action='store_true')
     args = parser.parse_args()
     if len(sys.argv) < 2:
         run()
@@ -46,7 +47,10 @@ if __name__ == "__main__":
     if args.list:
         show_wallpapers()
     if args.tty:
-        call(['wal','-r'])
+        if args.vte:
+            call(['wal','-r','-t'])
+        else:
+            call(['wal','-r'])
     if args.version:
         print( 'current version: ' + version )
     if args.delete:
@@ -67,4 +71,3 @@ if __name__ == "__main__":
             shuffle_colors(arg)
             auto_adjust_colors(arg, CONFIG)
             print('OK:: shuffled {}'.format(arg))
-
