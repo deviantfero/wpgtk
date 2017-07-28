@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from gi import require_version
-from .gui import color_grid, base_maker, option_grid
-from .data import file_list, theme_interface
+from . import color_grid, base_maker, option_grid
+from core.data import file_list, theme_interface
 from gi.repository import Gtk, GdkPixbuf, GLib
 import shutil
 import os

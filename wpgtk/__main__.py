@@ -2,9 +2,9 @@
 import sys
 from getpass import getuser
 from subprocess import call
-from wpgtk import wpg
-from wpgtk import data
-from wpgtk.data import conf_parser
+from core.gui import theme_picker
+import core.data as data
+from core.data import conf_parser
 import argparse
 
 HOME = "/home/" + getuser()
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if len(sys.argv) < 2:
-        wpg.run()
+        theme_picker.run()
 
     if args.set:
         if len(args.set) == 1:
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     if args.tty:
         call(['wal', '-r'])
     if args.version:
-        print('current version: ' + wpg.version)
+        print('current version: ' + theme_picker.version)
     if args.delete:
         for e in args.delete:
             data.delete_theme(e)

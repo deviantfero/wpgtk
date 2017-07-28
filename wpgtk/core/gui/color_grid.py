@@ -1,15 +1,15 @@
 import os
-from ..data import color_parser as cp
-from ..data import conf_parser as cfp
-from ..data import file_list as fl
-from ..data import transformers
-from ..data import make_sample as ms
+from core.data import color_parser as cp
+from core.data import conf_parser as cfp
+from core.data import file_list as fl
+from core.data import transformers
+from core.data import make_sample as ms
 from .color_picker import ColorDialog
 from random import shuffle
 from gi import require_version
+from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 # making sure it uses v3.0
 require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 
 FILEPATH = GLib.get_home_dir() + "/.wallpapers/"
 OPTIONS = cfp.parse_conf()
