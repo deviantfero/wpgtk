@@ -1,7 +1,7 @@
 from gi.repository import Gtk, Gdk
 from getpass import getuser
 from gi import require_version
-from ..data.conf_parser import parse_conf, write_conf
+from core.data import config
 # making sure it uses v3.0
 require_version("Gtk",  "3.0")
 
@@ -62,7 +62,6 @@ class OptionsGrid(Gtk.Grid):
         self.gtk_switch.connect('notify::active',  self.on_gtk_active)
         self.lbl_gtk = Gtk.Label('Colorize GTK')
 
-        self.opt_list = parse_conf()
         self.load_opt_list()
 
         # Switch Grid attach
@@ -82,31 +81,25 @@ class OptionsGrid(Gtk.Grid):
         self.attach(self.active_grid,  1,  2,  1,  1)
 
     def on_tint2_active(self,  switch,  gparam):
-        if switch.get_active():
-            self.opt_list['TN2'] = True
-        else:
-            self.opt_list['TN2'] = False
+        config.wpgtk['tint2'] = str(switch.get_active()).lower()
         self.lbl_save.set_text('')
 
     def on_gtk_active(self,  switch,  gparam):
-        if switch.get_active():
-            self.opt_list['GTK'] = True
-        else:
-            self.opt_list['GTK'] = False
+        config.wpgtk['gtk'] = str(switch.get_active()).lower()
         self.lbl_save.set_text('')
 
     def load_opt_list(self):
-        self.color_combo.set_active(self.opt_list['ACT'])
-        self.gtk_switch.set_active(self.opt_list['GTK'])
-        self.tint2_switch.set_active(self.opt_list['TN2'])
+        self.color_combo.set_active(config.wpgtk.getint('active'))
+        self.gtk_switch.set_active(config.wpgtk.getboolean('gtk'))
+        self.tint2_switch.set_active(config.wpgtk.getboolean('tint2'))
 
     def combo_box_change(self,  combo):
-        self.opt_list['ACT'] = combo.get_active()
+        config.wpgtk['active'] = str(combo.get_active())
         color = Gdk.color_parse(
                 '#' + self.parent.cpage.color_list[combo.get_active()])
         self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
         self.lbl_save.set_text('')
 
     def on_save_button(self,  button):
-        write_conf(opt=self.opt_list)
+        config.conf_file.write_conf()
         self.lbl_save.set_text('Saved')

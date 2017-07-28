@@ -1,6 +1,6 @@
 import os
 from core.data import color_parser as cp
-from core.data import conf_parser as cfp
+from core.data import config
 from core.data import file_list as fl
 from core.data import transformers
 from core.data import make_sample as ms
@@ -12,7 +12,6 @@ from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 require_version("Gtk", "3.0")
 
 FILEPATH = GLib.get_home_dir() + "/.wallpapers/"
-OPTIONS = cfp.parse_conf()
 current_walls = fl.FileList(FILEPATH)
 PAD = 10
 
@@ -169,7 +168,7 @@ class ColorGrid(Gtk.Grid):
 
     def on_auto_click(self, widget):
         color8 = self.color_list[0:1][0]
-        if(not OPTIONS['INV']):
+        if not config.wpgtk.getboolean('light_theme'):
             color8 = [cp.add_brightness(color8, 18)]
             self.color_list = self.color_list[:8:] + color8 + \
                 [cp.add_brightness(x, 50) for x in self.color_list[1:8:]]
@@ -233,5 +232,5 @@ class ColorGrid(Gtk.Grid):
                                                                     width=500,
                                                                     height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
-        if(OPTIONS['INV']):
+        if config.wpgtk.getboolean('light_theme'):
             self.color_list = self.color_list[::-1]

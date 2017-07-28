@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 import fileinput
-import sys
 import shutil
+import sys
 from subprocess import call
 from os import walk
-from sys import argv
-from colorsys import rgb_to_hls
-from colorsys import hls_to_rgb
+from colorsys import rgb_to_hls, hls_to_rgb
 from getpass import getuser
 from random import randint
 from os.path import isfile
+from . import config
 
 HOME = "/home/" + getuser()
 WALLDIR = HOME + "/.wallpapers/"
@@ -241,20 +240,16 @@ def change_colors_tint2(active, inactive, c_list, colorize=True):
         print("ERR::TINT2 - BASE FILE DOES NOT EXIST", file=sys.stderr)
 
 
-def change_colors_gtk2(active, inactive, cl, colorize=True):
-    if colorize:
-        backupdir = HOME + "/.themes/FlatColor/gtk-2.0/gtkrc.base"
-    else:
-        backupdir = HOME + "/.themes/FlatColor/gtk-2.0/gtkrcnocolor.base"
+def change_colors_gtk2(active, inactive, cl):
+    backupdir = HOME + "/.themes/FlatColor/gtk-2.0/gtkrc.base"
     realdir = HOME + "/.themes/FlatColor/gtk-2.0/gtkrc"
-    bgs = [cl[0], reduce_brightness(cl[0], 5), add_brightness(cl[0],10)]
+    bgs = [cl[0], reduce_brightness(cl[0], 5), add_brightness(cl[0], 10)]
     try:
         shutil.copy2(backupdir, realdir)
         replace_in_file(realdir, r_active, active)
-        if colorize:
-            replace_in_file(realdir, r_bg, bgs[0])
-            replace_in_file(realdir, r_base, bgs[1])
-            replace_in_file(realdir, r_tool, bgs[2])
+        replace_in_file(realdir, r_bg, bgs[0])
+        replace_in_file(realdir, r_base, bgs[1])
+        replace_in_file(realdir, r_tool, bgs[2])
         print("OK::GTK2")
     except IOError:
         print("ERR::GTK2 - BASE FILE DOES NOT EXIST", file=sys.stderr)
@@ -267,17 +262,13 @@ def change_colors_gtk3(active, inactive, cl, colorize=True):
     if(isfile(backupdir)):
         shutil.copy2(backupdir, realdir)
         replace_in_file(realdir, r_active, active)
-        if colorize:
-            replace_in_file(realdir, r_bg, bgs[0])
-            replace_in_file(realdir, r_base, bgs[1])
-            replace_in_file(realdir, r_tool, bgs[2])
+        replace_in_file(realdir, r_bg, bgs[0])
+        replace_in_file(realdir, r_base, bgs[1])
+        replace_in_file(realdir, r_tool, bgs[2])
         print("OK::GTK3")
     else:
         print("ERR::GTK3 - BASE FILE DOES NOT EXIST", file=sys.stderr)
-    if colorize:
-        backupdir = HOME + "/.themes/FlatColor/gtk-3.20/gtk.css.base"
-    else:
-        backupdir = HOME + "/.themes/FlatColor/gtk-3.20/gtknocolor.css.base"
+    backupdir = HOME + "/.themes/FlatColor/gtk-3.20/gtk.css.base"
     realdir = HOME + "/.themes/FlatColor/gtk-3.20/gtk.css"
     if(isfile(backupdir)):
         shutil.copy2(backupdir, realdir)
@@ -295,7 +286,7 @@ def change_other_files(active, inactive, c_list):
     files = []
     for(dirpath, dirnames, filenames) in walk(other_path):
         files.extend(filenames)
-    if(files):
+    if files:
         try:
             for word in files:
                 if ".base" in word:
@@ -338,10 +329,10 @@ def define_redux(hexvalue):
         return [30, 75]
 
 
-def execute_gcolorchange(image_name, opt):
+def execute_gcolorchange(image_name):
     # Getting random color from an .Xres file--#
     image_colors = read_colors(image_name)
-    base_color = read_color_in_line(image_name, opt['ACT'])
+    base_color = read_color_in_line(image_name, config.wpgtk.getint('active'))
     # Defining how dark the windows have to be--#
     redux_list = define_redux(base_color)
     base_redux = redux_list[0]
@@ -354,15 +345,13 @@ def execute_gcolorchange(image_name, opt):
     bg_fg_file = open(HOME + "/.main_colors", "w")
     bg_fg_file.write("FG:" + active + "\n")
     bg_fg_file.write("BG:" + inactive + "\n")
-    change_colors_ob(active, inactive, image_colors)
-    change_colors_tint2(active, inactive, image_colors, opt['TN2'])
-    change_colors_gtk2(active, inactive, image_colors, opt['GTK'])
-    change_colors_gtk3(active, inactive, image_colors, opt['GTK'])
+    if config.wpgtk.getboolean('openbox'):
+        change_colors_ob(active, inactive, image_colors)
+    if config.wpgtk.getboolean('tint2'):
+        change_colors_tint2(active, inactive, image_colors)
+    if config.wpgtk.getboolean('gtk'):
+        change_colors_gtk2(active, inactive, image_colors)
+        change_colors_gtk3(active, inactive, image_colors)
     change_colors_icons(active, inactive, glyph)
     change_other_files(active, inactive, image_colors)
     print("OK::FINISHED")
-
-
-if __name__ == "__main__":
-    image_name = argv[1]
-    execute_gcolorchange(image_name)

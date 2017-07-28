@@ -172,8 +172,7 @@ class mainWindow(Gtk.Window):
                         path + colorscheme_sample, width=500, height=500)
                 self.sample.set_from_pixbuf(self.pixbuf_sample)
             theme_interface.set_theme(FILENAME,
-                                      colorscheme_file,
-                                      self.optpage.opt_list)
+                                      colorscheme_file)
 
     def on_rm_clicked(self, widget):
         x = self.option_combo.get_active()

@@ -6,12 +6,12 @@ from subprocess import Popen, call
 from . import color_parser as cp
 from . import make_sample as ms
 from .file_list import FileList
+from . import config
 
 WAL_DIR = expanduser('~') + "/.wallpapers/"
 SAMPLE_DIR = WAL_DIR + "sample/"
 CACHE_DIR = WAL_DIR + "cache/"
 XRES_DIR = WAL_DIR + "xres/"
-DEFAULT = {'ACT': 0, 'TN2': True, 'GTK': True, 'INV': False}
 
 
 # TODO: add options to create_theme
@@ -24,10 +24,10 @@ def create_theme(filepath):
     ms.create_sample(color_list, f=SAMPLE_DIR + filename + '.sample.png')
 
 
-def set_theme(filename, cs_file, opt=DEFAULT, restore=False):
+def set_theme(filename, cs_file, restore=False):
     if(isfile(WAL_DIR + filename)):
         if(not restore):
-            cp.execute_gcolorchange(cs_file, opt)
+            cp.execute_gcolorchange(cs_file)
         call('wal -si ' + WAL_DIR + filename, shell=True)
         init_file = open(WAL_DIR + 'wp_init.sh', 'w')
         init_file.writelines(['#!/bin/bash\n', 'wpg -r -s ' +
@@ -77,11 +77,11 @@ def shuffle_colors(filename):
         cp.write_colors(filename, colors)
 
 
-def auto_adjust_colors(filename, opt=DEFAULT):
+def auto_adjust_colors(filename):
     if(isfile(WAL_DIR + filename)):
         color_list = cp.read_colors(filename)
         color8 = color_list[0:1][0]
-        if(not opt['INV']):
+        if not config.wpgtk.getboolean('light_theme'):
             color8 = [cp.add_brightness(color8, 18)]
             color_list = color_list[:8:]
             color_list += color8

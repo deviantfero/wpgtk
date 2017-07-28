@@ -4,12 +4,10 @@ from getpass import getuser
 from subprocess import call
 from core.gui import theme_picker
 import core.data as data
-from core.data import conf_parser
 import argparse
 
 HOME = "/home/" + getuser()
 WALLDIR = HOME + "/.wallpapers/"
-CONFIG = conf_parser.parse_conf()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -55,13 +53,13 @@ if __name__ == "__main__":
     if args.set:
         if len(args.set) == 1:
             try:
-                data.set_theme(args.set[0], args.set[0], CONFIG, args.restore)
+                data.set_theme(args.set[0], args.set[0], args.restore)
             except TypeError as e:
                 print('ERR:: file ' + args.set[0] + ' not found')
                 raise e
         elif len(args.set) == 2:
             try:
-                data.set_theme(args.set[-1], args.set[1], CONFIG, args.restore)
+                data.set_theme(args.set[-1], args.set[1], args.restore)
             except TypeError:
                 print('ERR:: file  not found')
         elif len(args.set) > 2:
@@ -83,11 +81,11 @@ if __name__ == "__main__":
             data.create_theme(e)
     if args.auto:
         for arg in args.auto:
-            data.auto_adjust_colors(arg, CONFIG)
+            data.auto_adjust_colors(arg)
             print('OK:: Auto-adjusted {}'.format(arg))
 
     if args.shuffle:
         for arg in args.shuffle:
             data.shuffle_colors(arg)
-            data.auto_adjust_colors(arg, CONFIG)
+            data.auto_adjust_colors(arg)
             print('OK:: shuffled {}'.format(arg))
