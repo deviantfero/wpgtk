@@ -4,7 +4,7 @@
 .toolbar {
     padding: 4px;
     border-style: none;
-    background-color: @theme_bg_color;
+    background-color: @theme_tooltip_bg_color;
     background-image: none;
 }
 
@@ -40,7 +40,7 @@
     padding: 3px;
     border-width: 0;
     border-style: none;
-    background-color: @theme_bg_color;
+    background-color: @theme_tooltip_bg_color;
     background-image: none;
     color: @theme_fg_color;
 }

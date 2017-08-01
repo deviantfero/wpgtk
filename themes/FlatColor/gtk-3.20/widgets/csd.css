@@ -2,9 +2,9 @@
  * CSD *
  *******/
 .titlebar {
-    border-width: 0;
-    border-style: none;
-    border-color: transparent;
+    /* border-width: 5px; */
+    border-style: solid;
+    border-color: @tooltip_bg_color;
 /*    border-image: linear-gradient(to left,
 		shade(@theme_selected_bg_color, 1.20) 25%,
 		shade(@theme_selected_bg_color, 1.05) 25%,
@@ -13,7 +13,7 @@
 		shade(@theme_selected_bg_color, 0.90) 75%,
 		shade(@theme_selected_bg_color, 0.75) 75%) 5 0 0 0/ 5px 0 0 0;*/
     background-image: none;
-    background-color: @theme_bg_color;
+    background-color: @tooltip_bg_color;
     color: @theme_fg_color;
     text-shadow: none;
 }
@@ -38,18 +38,18 @@
     text-shadow: none;
 }
 
-.titlebar .titlebutton {
+.titlebutton {
     padding: 4px;
     border-style: none;
-    background: none;
+    background-color: shade(@theme_tooltip_bg_color, 1.5);
     color: mix(@theme_fg_color, @theme_bg_color, 0.1);
     -gtk-icon-shadow: none;
 }
 
 .titlebar .titlebutton:hover,
 .titlebar .titlebutton:hover:focus {
-    background: none;
-    color: @theme_selected_bg_color;
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
     -gtk-icon-shadow: none;
 }
 

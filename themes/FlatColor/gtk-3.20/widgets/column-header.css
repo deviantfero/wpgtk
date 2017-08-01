@@ -5,6 +5,7 @@ column-header.button,
 column-header.button:active,
 column-header .button,
 column-header .button:active {
+    max-height: 10px;
     font-weight: bold;
     border-width: 0;
     border-radius: 0;
@@ -17,7 +18,6 @@ column-header .button,
 column-header .button:active,
 column-header .button:focus,
 column-header .button:active:focus {
-
     box-shadow: none;
     background-color: inherit;
     background-image: none;
@@ -43,11 +43,12 @@ column-header.button,
 column-header .button,
 column-header.button:focus,
 column-header .button:focus {
+    background-color: @theme_tooltip_bg_color;
     color: shade(@theme_text_color, 1.1);
 }
 column-header.button:active,
 column-header .button:active,
 column-header.button:active:focus,
 column-header .button:active:focus {
-    color: @theme_selected_bg_color;
+    background-color: @theme_tooltip_bg_color;
 }

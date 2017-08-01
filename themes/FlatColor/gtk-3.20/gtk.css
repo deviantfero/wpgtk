@@ -1,12 +1,12 @@
 
 /* Default color scheme */
-@define-color bg_color #181818;
+@define-color bg_color #191C26;
 @define-color fg_color #fff;
-@define-color base_color #101010;
+@define-color base_color #171a23;
 @define-color text_color #fff;
-@define-color selected_bg_color #747780;
+@define-color selected_bg_color #8e8976;
 @define-color selected_fg_color #fff;
-@define-color tooltip_bg_color #202020;
+@define-color tooltip_bg_color #202432;
 @define-color tooltip_fg_color #fff;
 
 /* colormap actually used by the theme, to be overridden in other css files */
