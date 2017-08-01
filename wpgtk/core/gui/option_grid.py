@@ -62,6 +62,11 @@ class OptionsGrid(Gtk.Grid):
         self.gtk_switch.connect('notify::active',  self.on_gtk_active)
         self.lbl_gtk = Gtk.Label('Colorize GTK')
 
+        # edit cmd
+        self.editor_lbl = Gtk.Label('Open optional files with:')
+        self.editor_txt = Gtk.Entry()
+        self.editor_txt.connect("changed", self.on_txt_editor_change)
+
         self.load_opt_list()
 
         # Switch Grid attach
@@ -74,8 +79,10 @@ class OptionsGrid(Gtk.Grid):
         self.active_grid.attach(self.lbl_active, 1, 1, 1, 1)
         self.active_grid.attach(self.color_combo, 1, 2, 1, 1)
         self.active_grid.attach(self.color_button, 2, 2, 1, 1)
-        self.active_grid.attach(self.save_button, 1, 3, 2, 1)
-        self.active_grid.attach(self.lbl_save, 1, 4, 2, 1)
+        self.active_grid.attach(self.editor_lbl, 1, 3, 1, 1)
+        self.active_grid.attach(self.editor_txt, 2, 3, 1, 1)
+        self.active_grid.attach(self.save_button, 1, 4, 2, 1)
+        self.active_grid.attach(self.lbl_save, 1, 5, 2, 1)
 
         self.attach(self.switch_grid,  1,  1,  1,  1)
         self.attach(self.active_grid,  1,  2,  1,  1)
@@ -92,12 +99,17 @@ class OptionsGrid(Gtk.Grid):
         self.color_combo.set_active(config.wpgtk.getint('active'))
         self.gtk_switch.set_active(config.wpgtk.getboolean('gtk'))
         self.tint2_switch.set_active(config.wpgtk.getboolean('tint2'))
+        self.editor_txt.set_text(config.wpgtk['editor'])
 
     def combo_box_change(self,  combo):
         config.wpgtk['active'] = str(combo.get_active())
         color = Gdk.color_parse(
                 '#' + self.parent.cpage.color_list[combo.get_active()])
         self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
+        self.lbl_save.set_text('')
+
+    def on_txt_editor_change(self, gtk_entry):
+        config.wpgtk['editor'] = gtk_entry.get_text()
         self.lbl_save.set_text('')
 
     def on_save_button(self,  button):

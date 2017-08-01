@@ -1,9 +1,11 @@
+import shutil
+import sys
 from gi.repository import Gtk, GLib
 from gi.repository.GdkPixbuf import Pixbuf
 from os import walk, symlink, remove
 from gi import require_version
-from shutil import copy2
-from subprocess import Popen, call
+from subprocess import Popen
+from core.data import config
 require_version("Gtk", "3.0")
 
 PAD = 10
@@ -24,12 +26,12 @@ def connect_conf(filepath):
     filename = l[-2].lstrip('.') + '.' + l[-1].lstrip('.')
     print('ADD::' + filename + '@' + filepath)
     try:
-        copy2(filepath, filepath + '.bak')
+        shutil.copy2(filepath, filepath + '.bak')
         print('::MAKING BACKUP CONFIG')
         print('::CREATING BASE')
-        copy2(filepath, config_path + filename + '.base')
-        copy2(filepath, config_path + filename)
-        call(['rm', filepath])
+        shutil.copy2(filepath, config_path + filename + '.base')
+        shutil.copy2(filepath, config_path + filename)
+        remove(filepath)
         symlink(config_path + filename, filepath)
         print('::CREATING SYMLINK')
     except Exception as e:
@@ -132,7 +134,13 @@ class FileGrid(Gtk.Grid):
 
     def on_open_clicked(self, widget):
         if self.current is not None:
-            Popen(['xdg-open', config_path])
+            item = self.item_names[self.current]
+            args_list = config.wpgtk['editor'].split(' ')
+            args_list.append(config_path + item)
+            try:
+                Popen(args_list)
+            except Exception as e:
+                print("ERR:: malformed editor command", sys.stderr)
             self.current = None
         self.file_view.unselect_all()
 
