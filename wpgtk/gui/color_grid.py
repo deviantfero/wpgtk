@@ -1,9 +1,9 @@
 import os
-from core.data import color_parser as cp
-from core.data import config
-from core.data import file_list as fl
-from core.data import transformers
-from core.data import make_sample as ms
+from wpgtk.data import color_parser as cp
+from wpgtk.data import config
+from wpgtk.data import file_list as fl
+from wpgtk.data import transformers
+from wpgtk.data import make_sample as ms
 from .color_picker import ColorDialog
 from random import shuffle
 from gi import require_version
@@ -116,7 +116,7 @@ class ColorGrid(Gtk.Grid):
 
     def render_buttons(self):
         for x in range(0, 16):
-            color = Gdk.color_parse('#' + self.color_list[x])
+            color = Gdk.color_parse(self.color_list[x])
             if cp.get_darkness(self.color_list[x]) < 99:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
@@ -191,7 +191,7 @@ class ColorGrid(Gtk.Grid):
     def on_color_click(self, widget):
         self.done_lbl.set_text("")
         color = Gdk.RGBA()
-        color.parse("#" + widget.get_label())
+        color.parse(widget.get_label())
         dialog = ColorDialog(self.parent)
         dialog.colorchooser.set_rgba(color)
         response = dialog.run()
@@ -199,9 +199,9 @@ class ColorGrid(Gtk.Grid):
         if response == Gtk.ResponseType.OK:
             color = dialog.colorchooser.get_rgba()
             rgb = [color.red, color.green, color.blue]
-            hex_color = transformers.rgb_to_hex(rgb)
+            hex_color = '#' + transformers.rgb_to_hex(rgb)
             widget.set_label(hex_color)
-            color = Gdk.color_parse('#' + hex_color)
+            color = Gdk.color_parse(hex_color)
             if cp.get_darkness(hex_color) < 100:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
@@ -226,7 +226,7 @@ class ColorGrid(Gtk.Grid):
         selected_file = current_walls.file_names_only[x]
         selected_sample = "sample/" + selected_file + ".sample.png"
         sample_path = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
-        self.color_list = cp.read_colors(selected_file)
+        self.color_list = cp.get_color_list(selected_file)
         self.render_buttons()
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(sample_path,
                                                                     width=500,

@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 from gi import require_version
 from . import color_grid, base_maker, option_grid
-from core.data import file_list, theme_interface
+from wpgtk.data import file_list, theme_interface, config
 from gi.repository import Gtk, GdkPixbuf, GLib
 import shutil
 import os
 import sys
 require_version('Gtk', '3.0')
 
-version = '4.0'
 PAD = 10
 
 # GLOBAL DEFS
@@ -20,7 +19,7 @@ current_walls = file_list.FileList(FILEPATH)
 class mainWindow(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title='wpgtk ' + version)
+        Gtk.Window.__init__(self, title='wpgtk ' + config.__version__)
 
         image_name = FILEPATH + '.current'
         image_name = os.path.realpath(image_name)

@@ -1,5 +1,5 @@
 from os import walk
-from gi.repository import GLib
+from . import config
 import re
 
 
@@ -8,8 +8,7 @@ class FileList():
         valid = re.compile('^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$)')
         self.files = []
         self.file_names_only = []
-        for(dirpath, dirnames, filenames) in walk(GLib.get_home_dir()
-                                                  + "/.wallpapers"):
+        for(dirpath, dirnames, filenames) in walk(config.WALL_DIR):
             for f in filenames:
                 self.files.append(f)
             break

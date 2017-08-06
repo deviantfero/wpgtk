@@ -1,7 +1,7 @@
 from gi.repository import Gtk, Gdk
 from getpass import getuser
 from gi import require_version
-from core.data import config
+from wpgtk.data import config
 # making sure it uses v3.0
 require_version("Gtk",  "3.0")
 

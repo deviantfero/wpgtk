@@ -1,21 +1,20 @@
-from os.path import expanduser
-
+from . import config
 try:
     import Image
 except ImportError:
     from PIL import Image
 
-WALLDIR = expanduser( '~' ) + "/.wallpapers/"
 
 def hex_color_to_rgb(color):
-    color = color[1:] if color[0]=="#" else color
+    color = color[1:] if color[0] == "#" else color
     return (
         int(color[:2], 16),
         int(color[2:4], 16),
         int(color[4:], 16)
         )
 
-def create_sample(colors, f=WALLDIR + ".tmp.sample.png"):
+
+def create_sample(colors, f=config.WALL_DIR / ".tmp.sample.png"):
     im = Image.new("RGB", (1000, 100), "white")
     pix = im.load()
 

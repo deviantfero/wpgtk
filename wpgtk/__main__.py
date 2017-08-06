@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 import sys
-from getpass import getuser
-from subprocess import call
-from core.gui import theme_picker
-import core.data as data
+import wpgtk.data.config as config
+from wpgtk.data import file_list, theme_interface
+from wpgtk.data.config import __version__
+try:
+    from wpgtk.gui import theme_picker
+except ModuleNotFoundError as err:
+    pass
 import argparse
+import pywal
 
-HOME = "/home/" + getuser()
-WALLDIR = HOME + "/.wallpapers/"
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--set', '-s',
@@ -48,44 +50,56 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if len(sys.argv) < 2:
-        theme_picker.run()
+        try:
+            theme_picker.run()
+        except NameError:
+            print('ERR:: missing pygobject module, use cli', file=sys.stderr)
 
     if args.set:
         if len(args.set) == 1:
             try:
-                data.set_theme(args.set[0], args.set[0], args.restore)
+                theme_interface.set_theme(args.set[0],
+                                          args.set[0],
+                                          args.restore)
             except TypeError as e:
                 print('ERR:: file ' + args.set[0] + ' not found')
                 raise e
         elif len(args.set) == 2:
             try:
-                data.set_theme(args.set[-1], args.set[1], args.restore)
+                theme_interface.set_theme(args.set[0],
+                                          args.set[1],
+                                          args.restore)
             except TypeError:
                 print('ERR:: file  not found')
         elif len(args.set) > 2:
             print('ERR:: Specify just 2 filenames')
 
     if args.list:
-        data.show_wallpapers()
+        files = file_list.FileList(config.WALL_DIR)
+        files.show_list()
     if args.tty:
-        call(['wal', '-r'])
+        pywal.reload.colors(True, config.WALL_DIR)
     if args.version:
-        print('current version: ' + theme_picker.version)
+        print('current version: ' + __version__)
     if args.delete:
         for e in args.delete:
-            data.delete_theme(e)
+            theme_interface.delete_theme(e)
     if args.current:
-        data.show_current()
+        theme_interface.show_current()
     if args.add:
         for e in args.add:
-            data.create_theme(e)
+            theme_interface.create_theme(e)
     if args.auto:
         for arg in args.auto:
-            data.auto_adjust_colors(arg)
+            theme_interface.auto_adjust_colors(arg)
             print('OK:: Auto-adjusted {}'.format(arg))
 
     if args.shuffle:
         for arg in args.shuffle:
-            data.shuffle_colors(arg)
-            data.auto_adjust_colors(arg)
-            print('OK:: shuffled {}'.format(arg))
+            theme_interface.shuffle_colors(arg)
+            theme_interface.auto_adjust_colors(arg)
+            print(f'OK:: shuffled {arg}')
+
+
+if __name__ == "__main__":
+    main()
