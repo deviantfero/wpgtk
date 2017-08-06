@@ -5,7 +5,6 @@ column-header.button,
 column-header.button:active,
 column-header .button,
 column-header .button:active {
-    max-height: 10px;
     font-weight: bold;
     border-width: 0;
     border-radius: 0;
@@ -30,7 +29,6 @@ column-header .button:hover,
 column-header .button:active:hover,
 column-header .button:hover:focus,
 column-header .button:active:hover:focus {
- 
     box-shadow: none;
     background-color: inherit;
     background-image: none;
