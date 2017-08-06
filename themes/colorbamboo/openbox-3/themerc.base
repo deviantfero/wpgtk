@@ -43,7 +43,7 @@ window.active.button.hover.image.color: #REPLAC
 window.active.button.pressed.bg: Solid Flat
 window.active.button.pressed.bg.color: #COLORACT
 window.active.button.pressed.bg.border.color: #COLORACT
-window.active.button.pressed.image.color: #REPLAD
+window.active.button.pressed.image.color: #COLORIN
 Window.active.button.toggled.bg: Solid Flat
 window.active.button.toggled.bg.color: #COLORACT
 window.active.button.toggled.bg.border.color: #COLORACT
