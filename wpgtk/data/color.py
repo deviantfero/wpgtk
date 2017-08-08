@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-import fileinput
 import shutil
 import sys
 from subprocess import call
@@ -74,49 +72,34 @@ def get_darkness(hexv):
     return hls[1]
 
 
-def reduce_brightness(hex_string, reduce_lvl):
+def reduce_brightness(hex_string, amount):
     rgb = list(int(hex_string.strip('#')[i:i+2], 16) for i in (0, 2, 4))
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
-    if(hls[1] - reduce_lvl > 0):
-        hls[1] = hls[1] - reduce_lvl
+    if(hls[1] - amount > 0):
+        hls[1] = hls[1] - amount
         rgb = hls_to_rgb(hls[0], hls[1], hls[2])
-        rgb_int = []
-        for elem in rgb:
-            if(elem <= 0):
-                elem = 5
-            rgb_int.append(int(elem))
+        rgb_int = [5 if elem <= 0 else int(elem) for elem in rgb]
         rgb_int = tuple(rgb_int)
         hex_result = '%02x%02x%02x' % rgb_int
         return f"#{hex_result}"
     else:
-        return reduce_brightness(hex_string, reduce_lvl - 5)
+        return reduce_brightness(hex_string, amount - 5)
 
 
-def add_brightness(hex_string, reduce_lvl):
-    rgb = list(int(hex_string.strip('#')[i:i+2], 16) for i in (0, 2, 4))
+def add_brightness(hex_string, amount):
+    rgb = pywal.util.hex_to_rgb(hex_string)
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
-    if(hls[1] + reduce_lvl < 250):
-        hls[1] = hls[1] + reduce_lvl
+    if(hls[1] + amount < 250):
+        hls[1] += amount
         rgb = hls_to_rgb(hls[0], hls[1], hls[2])
-        rgb_int = []
-        for elem in rgb:
-            if(elem > 255):
-                elem = 254
-            rgb_int.append(int(elem))
+        rgb_int = [254 if elem > 255 else int(elem) for elem in rgb]
         rgb_int = tuple(rgb_int)
         hex_result = '%02x%02x%02x' % rgb_int
         return f"#{hex_result}"
     else:
-        return add_brightness(hex_string, reduce_lvl - 5)
-    rgb = hls_to_rgb(hls[0], hls[1], hls[2])
-    rgb_int = []
-    for elem in rgb:
-        rgb_int.append(int(elem))
-    rgb_int = tuple(rgb_int)
-    hex_result = '%02x%02x%02x' % rgb_int
-    return f"#{hex_result}"
+        return add_brightness(hex_string, amount - 5)
 
 
 def prepare_icon_colors(colors):
@@ -170,26 +153,10 @@ def change_other_files(colors):
         print("INF::NO OPTIONAL FILES DETECTED")
 
 
-def define_redux(hexvalue):
-    base_brightness = get_darkness(hexvalue)
-    if(hexvalue == "4A838F"):
-        return [0, 50]
-    elif base_brightness >= 190:
-        return [60, 115]
-    elif base_brightness >= 160:
-        return [50, 105]
-    elif base_brightness <= 10:
-        return [-35, -15]
-    elif base_brightness <= 60:
-        return [-20, -5]
-    elif base_brightness <= 70:
-        return [0, 15]
-    elif base_brightness <= 80:
-        return [5, 20]
-    elif base_brightness <= 125:
-        return [20, 55]
-    else:
-        return [30, 75]
+def split_active(hexc):
+    brightness = get_darkness(hexc)
+    return [reduce_brightness(hexc, brightness * 0.31),
+            reduce_brightness(hexc, brightness * 0.61)]
 
 
 def prepare_colors(image_name):
@@ -205,10 +172,10 @@ def prepare_colors(image_name):
         print(f"random: {cl[randint(0,15)]}")
         wpcol['BASECOLOR'] = cl[randint(0, 15)]
 
-    reduce_levels = define_redux(wpcol['BASECOLOR'])
+    active_colors = split_active(wpcol['BASECOLOR'])
 
-    wpcol['COLORACT'] = reduce_brightness(wpcol['BASECOLOR'], reduce_levels[0])
-    wpcol['COLORIN'] = reduce_brightness(wpcol['BASECOLOR'], reduce_levels[1])
+    wpcol['COLORACT'] = active_colors[0]
+    wpcol['COLORIN'] = active_colors[1]
     wpcol['COLORBASE'] = cl[0]
     wpcol['COLORBG'] = reduce_brightness(cl[0], 5)
     wpcol['COLORTOOL'] = add_brightness(cl[0], 10)

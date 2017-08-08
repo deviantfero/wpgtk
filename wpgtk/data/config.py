@@ -1,16 +1,17 @@
 import configparser
 import pathlib
 
-__version__ = "4.5"
+__version__ = '4.5'
 
 HOME = pathlib.Path.home()
-CONF_FILE = HOME / ".wallpapers/wpg.conf"
-WALL_DIR = HOME / ".wallpapers"
-SAMPLE_DIR = WALL_DIR / "sample"
-XRES_DIR = WALL_DIR / "xres"
-CSS_DIR = WALL_DIR / "css"
-SHELL_DIR = WALL_DIR / "shell"
-SCHEME_DIR = WALL_DIR / "schemes"
+CONF_FILE = HOME / '.wallpapers/wpg.conf'
+WALL_DIR = HOME / '.wallpapers'
+SAMPLE_DIR = WALL_DIR / 'sample'
+XRES_DIR = WALL_DIR / 'xres'
+CSS_DIR = WALL_DIR / 'css'
+SHELL_DIR = WALL_DIR / 'shell'
+SCHEME_DIR = WALL_DIR / 'schemes'
+OPT_DIR = HOME / '.themes/color_other/'
 
 FILE_DIC = {'openbox':    HOME / '.themes/colorbamboo/openbox-3/themerc',
             'openbox-nb': HOME / '.themes/colorbamboo-nb/openbox-3/themerc',
