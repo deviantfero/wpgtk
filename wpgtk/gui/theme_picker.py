@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 from gi import require_version
 from . import color_grid, base_maker, option_grid
-from wpgtk.data import file_list, theme_interface, config
-from gi.repository import Gtk, GdkPixbuf, GLib
+from wpgtk.data import files, themer, config
+from gi.repository import Gtk, GdkPixbuf
 import shutil
 import os
 import sys
@@ -10,18 +9,13 @@ require_version('Gtk', '3.0')
 
 PAD = 10
 
-# GLOBAL DEFS
-FILEPATH = GLib.get_home_dir() + '/.wallpapers/'
-HOME = GLib.get_home_dir()
-current_walls = file_list.FileList(FILEPATH)
-
 
 class mainWindow(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title='wpgtk ' + config.__version__)
 
-        image_name = FILEPATH + '.current'
+        image_name = config.WALL_DIR / '.current'
         image_name = os.path.realpath(image_name)
         self.set_default_size(200, 200)
 
@@ -30,7 +24,7 @@ class mainWindow(Gtk.Window):
         route_list = image_name.split('/', image_name.count('/'))
         file_name = route_list[4]
         print('INF::CURRENT WALL: ' + file_name)
-        sample_name = FILEPATH + 'sample/' + file_name + '.sample.png'
+        sample_name = config.SAMPLE_DIR / (file_name + '.sample.png')
 
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
@@ -51,7 +45,7 @@ class mainWindow(Gtk.Window):
         self.notebook.append_page(self.optpage, Gtk.Label('Options'))
 
         option_list = Gtk.ListStore(str)
-        for elem in list(current_walls.files):
+        for elem in list(files.get_file_list()):
             option_list.append([elem])
         self.option_combo = Gtk.ComboBox.new_with_model(option_list)
         self.renderer_text = Gtk.CellRendererText()
@@ -78,7 +72,7 @@ class mainWindow(Gtk.Window):
                                   width=500,
                                   height=333, preserve_aspect_ratio=False)
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                 sample_name,
+                                 str(sample_name),
                                  width=500, height=500)
             self.preview.set_from_pixbuf(self.pixbuf_preview)
             self.sample.set_from_pixbuf(self.pixbuf_sample)
@@ -135,14 +129,13 @@ class mainWindow(Gtk.Window):
             except Exception:
                 print("ERROR:: file {} already exists".format(filename),
                       file=sys.stderr)
-            theme_interface.create_theme(filename)
+            themer.create_theme(filename)
             os.remove(filename)
         else:
-            theme_interface.create_theme(filepath)
+            themer.create_theme(filepath)
         option_list = Gtk.ListStore(str)
-        current_walls = file_list.FileList(filepath)
 
-        for elem in list(current_walls.files):
+        for elem in list(files.get_file_list()):
             option_list.append([elem])
         self.option_combo.set_model(option_list)
         self.option_combo.set_entry_text_column(0)
@@ -153,35 +146,20 @@ class mainWindow(Gtk.Window):
     def on_set_clicked(self, widget):
         x = self.option_combo.get_active()
         y = self.colorscheme.get_active()
-        path = FILEPATH
-        current_walls = file_list.FileList(path)
-        if(len(current_walls.file_names_only) > 0):
-            FILENAME = current_walls.file_names_only[x]
-            colorscheme_file = current_walls.file_names_only[y]
-            colorscheme = 'xres/' + colorscheme_file + '.Xres'
-            colorscheme_sample = 'sample/'
-            colorscheme_sample += current_walls.file_names_only[y]
-            colorscheme_sample += '.sample.png'
-            if(not os.path.isfile(path + colorscheme) or
-                    not os.path.isfile(path + colorscheme_sample)):
-                print(':: ' + path + colorscheme + ' NOT FOUND')
-                print(':: GENERATING COLORS')
-                theme_interface.create_theme(path + FILENAME)
-                self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                        path + colorscheme_sample, width=500, height=500)
-                self.sample.set_from_pixbuf(self.pixbuf_sample)
-            theme_interface.set_theme(FILENAME,
-                                      colorscheme_file)
+        current_walls = files.get_file_list()
+        if current_walls:
+            filename = current_walls[x]
+            colorscheme_file = current_walls[y]
+            themer.set_theme(filename, colorscheme_file)
 
     def on_rm_clicked(self, widget):
         x = self.option_combo.get_active()
-        current_walls = file_list.FileList(FILEPATH)
-        if(len(current_walls.file_names_only) > 0):
-            FILENAME = current_walls.file_names_only[x]
-            theme_interface.delete_theme(FILENAME)
+        current_walls = files.get_file_list()
+        if current_walls:
+            filename = current_walls[x]
+            themer.delete_theme(filename)
             option_list = Gtk.ListStore(str)
-            current_walls = file_list.FileList(FILENAME)
-            for elem in list(current_walls.files):
+            for elem in list(files.get_file_list()):
                 option_list.append([elem])
             self.option_combo.set_model(option_list)
             self.option_combo.set_entry_text_column(0)
@@ -193,31 +171,23 @@ class mainWindow(Gtk.Window):
         self.set_button.set_sensitive(True)
         x = self.option_combo.get_active()
         self.colorscheme.set_active(x)
-        current_walls = file_list.FileList(FILEPATH)
-        selected_file = current_walls.file_names_only[x]
-        filepath = FILEPATH + selected_file
+        selected_file = files.get_file_list()[x]
+        filepath = config.WALL_DIR / selected_file
 
         self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-            filepath,
+            str(filepath),
             width=500,
             height=333,
             preserve_aspect_ratio=False)
-
         self.preview.set_from_pixbuf(self.pixbuf_preview)
 
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
-        current_walls = file_list.FileList(FILEPATH)
-        selected_file = current_walls.file_names_only[x]
-        selected_sample = 'sample/' + selected_file + '.sample.png'
-        samplepath = FILEPATH + selected_sample
-        nosamplepath = FILEPATH + '/.wallpapers/.no_sample.sample.png'
+        selected_file = files.get_file_list()[x]
+        samplepath = config.SAMPLE_DIR / (selected_file + '.sample.png')
         if(os.path.isfile(samplepath)):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                 samplepath, width=500, height=500)
-        else:
-            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                 nosamplepath, width=500, height=500)
+                                 str(samplepath), width=500, height=500)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
         self.cpage.set_edit_combo(x)
 

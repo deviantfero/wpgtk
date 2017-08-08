@@ -1,23 +1,15 @@
 import shutil
 import sys
-from gi.repository import Gtk, GLib
+from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
-from os import walk, symlink, remove
+from os import symlink, remove
 from gi import require_version
 from subprocess import Popen
-from wpgtk.data import config
+from wpgtk.data import config, files
 require_version("Gtk", "3.0")
 
 PAD = 10
-config_path = GLib.get_home_dir() + '/.themes/color_other/'
 icon = 'document-open'
-
-
-def get_basef(directory):
-    files = []
-    for(dirpath, dirnames, filenames) in walk(directory):
-        files.extend(filenames)
-    return files
 
 
 def connect_conf(filepath):
@@ -29,10 +21,10 @@ def connect_conf(filepath):
         shutil.copy2(filepath, filepath + '.bak')
         print('::MAKING BACKUP CONFIG')
         print('::CREATING BASE')
-        shutil.copy2(filepath, config_path + filename + '.base')
-        shutil.copy2(filepath, config_path + filename)
+        shutil.copy2(filepath, config.OPT_DIR / (filename + '.base'))
+        shutil.copy2(filepath, config.OPT_DIR / filename)
         remove(filepath)
-        symlink(config_path + filename, filepath)
+        symlink(config.OPT_DIR / filename, filepath)
         print('::CREATING SYMLINK')
     except Exception as e:
         print("ERROR")
@@ -79,7 +71,8 @@ class FileGrid(Gtk.Grid):
         self.scroll.set_min_content_height(400)
         self.scroll.add(self.file_view)
 
-        self.item_names = [filen for filen in get_basef(config_path)
+        self.item_names = [filen for filen in
+                           files.get_file_list(config.OPT_DIR, False)
                            if '.base' in filen]
 
         for filen in self.item_names:
@@ -121,8 +114,8 @@ class FileGrid(Gtk.Grid):
                 elif("\\" in filename):
                     filename = filename.replace("\\", "\\\\")
             connect_conf(filepath)
-            self.item_names = [filen for
-                               filen in get_basef(config_path)
+            self.item_names = [filen for filen in
+                               files.get_file_list(config.OPT_DIR, False)
                                if '.base' in filen]
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
@@ -136,7 +129,7 @@ class FileGrid(Gtk.Grid):
         if self.current is not None:
             item = self.item_names[self.current]
             args_list = config.wpgtk['editor'].split(' ')
-            args_list.append(config_path + item)
+            args_list.append(config.OPT_DIR / item)
             try:
                 Popen(args_list)
             except Exception as e:
@@ -147,7 +140,7 @@ class FileGrid(Gtk.Grid):
     def on_rm_clicked(self, widget):
         if self.current is not None:
             item = self.item_names.pop(self.current)
-            remove(config_path + item)
+            remove(config.OPT_DIR / item)
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)

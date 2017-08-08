@@ -1,13 +1,10 @@
 from gi.repository import Gtk, Gdk
-from getpass import getuser
 from gi import require_version
 from wpgtk.data import config
 # making sure it uses v3.0
 require_version("Gtk",  "3.0")
 
 PAD = 10
-HOME = "/home/" + getuser()
-WALLDIR = HOME + "/.wallpapers/"
 
 
 class OptionsGrid(Gtk.Grid):
@@ -67,6 +64,15 @@ class OptionsGrid(Gtk.Grid):
         self.editor_txt = Gtk.Entry()
         self.editor_txt.connect("changed", self.on_txt_editor_change)
 
+        # cmd
+
+        self.command_lbl = Gtk.Label('Run command after Colorize')
+        self.command_exe_lbl = Gtk.Label('Command: ')
+        self.command_txt = Gtk.Entry()
+        self.command_txt.connect("changed", self.on_txt_command_change)
+        self.command_switch = Gtk.Switch()
+        self.command_switch.connect('notify::active', self.on_command_active)
+
         self.load_opt_list()
 
         # Switch Grid attach
@@ -74,15 +80,21 @@ class OptionsGrid(Gtk.Grid):
         self.switch_grid.attach(self.tint2_switch, 4, 1, 1, 1)
         self.switch_grid.attach(self.lbl_gtk, 5, 1, 3, 1)
         self.switch_grid.attach(self.gtk_switch, 9, 1, 1, 1)
+        self.switch_grid.attach(self.command_lbl, 1, 2, 3, 1)
+        self.switch_grid.attach(self.command_switch, 4, 2, 1, 1)
+
+        # cmd Grid attach
 
         # Active Grid attach
-        self.active_grid.attach(self.lbl_active, 1, 1, 1, 1)
+        self.active_grid.attach(self.lbl_active, 1, 1, 2, 1)
         self.active_grid.attach(self.color_combo, 1, 2, 1, 1)
         self.active_grid.attach(self.color_button, 2, 2, 1, 1)
         self.active_grid.attach(self.editor_lbl, 1, 3, 1, 1)
         self.active_grid.attach(self.editor_txt, 2, 3, 1, 1)
-        self.active_grid.attach(self.save_button, 1, 4, 2, 1)
-        self.active_grid.attach(self.lbl_save, 1, 5, 2, 1)
+        self.active_grid.attach(self.command_exe_lbl, 1, 4, 1, 1)
+        self.active_grid.attach(self.command_txt, 2, 4, 1, 1)
+        self.active_grid.attach(self.save_button, 1, 5, 2, 1)
+        self.active_grid.attach(self.lbl_save, 1, 6, 2, 1)
 
         self.attach(self.switch_grid,  1,  1,  1,  1)
         self.attach(self.active_grid,  1,  2,  1,  1)
@@ -95,21 +107,33 @@ class OptionsGrid(Gtk.Grid):
         config.wpgtk['gtk'] = str(switch.get_active()).lower()
         self.lbl_save.set_text('')
 
+    def on_command_active(self,  switch,  gparam):
+        config.wpgtk['execute_cmd'] = str(switch.get_active()).lower()
+        self.command_txt.set_editable(switch.get_active())
+        self.lbl_save.set_text('')
+
     def load_opt_list(self):
         self.color_combo.set_active(config.wpgtk.getint('active'))
         self.gtk_switch.set_active(config.wpgtk.getboolean('gtk'))
         self.tint2_switch.set_active(config.wpgtk.getboolean('tint2'))
+        self.command_switch.set_active(config.wpgtk.getboolean('execute_cmd'))
         self.editor_txt.set_text(config.wpgtk['editor'])
+        self.command_txt.set_text(config.wpgtk['command'])
+        self.command_txt.set_editable(config.wpgtk.getboolean('execute_cmd'))
 
     def combo_box_change(self,  combo):
         config.wpgtk['active'] = str(combo.get_active())
         color = Gdk.color_parse(
-                '#' + self.parent.cpage.color_list[combo.get_active()])
+                self.parent.cpage.color_list[combo.get_active()])
         self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
         self.lbl_save.set_text('')
 
     def on_txt_editor_change(self, gtk_entry):
         config.wpgtk['editor'] = gtk_entry.get_text()
+        self.lbl_save.set_text('')
+
+    def on_txt_command_change(self, gtk_entry):
+        config.wpgtk['command'] = gtk_entry.get_text()
         self.lbl_save.set_text('')
 
     def on_save_button(self,  button):

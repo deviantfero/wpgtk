@@ -1,18 +1,15 @@
 import os
-from wpgtk.data import color_parser as cp
-from wpgtk.data import config
-from wpgtk.data import file_list as fl
+import shutil
+from wpgtk.data import color
+from wpgtk.data import config, files, sample
 from wpgtk.data import transformers
-from wpgtk.data import make_sample as ms
 from .color_picker import ColorDialog
 from random import shuffle
 from gi import require_version
-from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
-# making sure it uses v3.0
+from gi.repository import Gtk, Gdk, GdkPixbuf
 require_version("Gtk", "3.0")
 
-FILEPATH = GLib.get_home_dir() + "/.wallpapers/"
-current_walls = fl.FileList(FILEPATH)
+current_walls = files.get_file_list()
 PAD = 10
 
 
@@ -57,7 +54,7 @@ class ColorGrid(Gtk.Grid):
                 self.colorgrid.attach(self.button_list[cont], x, y, 1, 1)
                 cont += 1
 
-        sample_name = FILEPATH + ".no_sample.sample.png"
+        sample_name = config.WALL_DIR / ".no_sample.sample.png"
         self.sample = Gtk.Image()
         if(os.path.isfile(sample_name)):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
@@ -66,7 +63,7 @@ class ColorGrid(Gtk.Grid):
                                                             height=300)
             self.sample.set_from_pixbuf(self.pixbuf_sample)
 
-        sampler_name = FILEPATH + ".nsampler.sample.png"
+        sampler_name = config.WALL_DIR / ".nsampler.sample.png"
         self.sampler = Gtk.Image()
         if(os.path.isfile(sampler_name)):
             self.pixbuf_sampler = GdkPixbuf.Pixbuf.new_from_file_at_size(
@@ -90,7 +87,7 @@ class ColorGrid(Gtk.Grid):
         self.done_lbl = Gtk.Label("")
 
         option_list = Gtk.ListStore(str)
-        for elem in list(current_walls.files):
+        for elem in list(files.get_file_list()):
             option_list.append([elem])
         self.option_combo = Gtk.ComboBox.new_with_model(option_list)
         self.renderer_text = Gtk.CellRendererText()
@@ -116,20 +113,20 @@ class ColorGrid(Gtk.Grid):
 
     def render_buttons(self):
         for x in range(0, 16):
-            color = Gdk.color_parse(self.color_list[x])
-            if cp.get_darkness(self.color_list[x]) < 99:
+            gcolor = Gdk.color_parse(self.color_list[x])
+            if color.get_darkness(self.color_list[x]) < 99:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
                 fgcolor = Gdk.color_parse('#101010')
             self.button_list[x].set_label(self.color_list[x])
             self.button_list[x].set_sensitive(True)
-            self.button_list[x].modify_bg(Gtk.StateType.NORMAL, color)
+            self.button_list[x].modify_bg(Gtk.StateType.NORMAL, gcolor)
             self.button_list[x].modify_fg(Gtk.StateType.NORMAL, fgcolor)
 
     def render_sample(self):
-        sample_path = FILEPATH + ".tmp.sample.png"
+        sample_path = config.WALL_DIR / ".tmp.sample.png"
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                sample_path,
+                str(sample_path),
                 width=500,
                 height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
@@ -143,25 +140,22 @@ class ColorGrid(Gtk.Grid):
         self.option_combo.set_active(x)
 
     def on_ok_click(self, widget):
-        current_walls = fl.FileList(GLib.get_home_dir() + "/.wallpapers")
-        if(len(current_walls.file_names_only) > 0):
+        current_walls = files.get_file_list()
+        if len(current_walls) > 0:
             x = self.option_combo.get_active()
-            cp.write_colors(current_walls.file_names_only[x], self.color_list)
-            tmpfile = FILEPATH + ".tmp.sample.png"
+            color.write_colors(current_walls[x], self.color_list)
+            tmpfile = config.WALL_DIR / ".tmp.sample.png"
             if(os.path.isfile(tmpfile)):
-
-                os.system("mv " + FILEPATH + ".tmp.sample.png "
-                          + FILEPATH + "sample/" +
-                          current_walls.file_names_only[x]
-                          + ".sample.png")
-
+                shutil.move(config.WALL_DIR / ".tmp.sample.png",
+                            config.SAMPLE_DIR /
+                            (current_walls[x] + ".sample.png"))
                 self.done_lbl.set_text("Changes saved")
                 x = self.parent.colorscheme.get_active()
-                selected_file = current_walls.file_names_only[x]
+                selected_file = current_walls[x]
                 selected_sample = "sample/" + selected_file + ".sample.png"
-                sample_path = FILEPATH + selected_sample
+                sample_path = config.WALL_DIR / selected_sample
                 self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                                                   sample_path,
+                                                                   str(sample_path),
                                                                    width=500,
                                                                    height=300)
                 self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
@@ -169,16 +163,16 @@ class ColorGrid(Gtk.Grid):
     def on_auto_click(self, widget):
         color8 = self.color_list[0:1][0]
         if not config.wpgtk.getboolean('light_theme'):
-            color8 = [cp.add_brightness(color8, 18)]
+            color8 = [color.add_brightness(color8, 18)]
             self.color_list = self.color_list[:8:] + color8 + \
-                [cp.add_brightness(x, 50) for x in self.color_list[1:8:]]
+                [color.add_brightness(x, 50) for x in self.color_list[1:8:]]
         else:
-            color8 = [cp.reduce_brightness(color8, 18)]
+            color8 = [color.reduce_brightness(color8, 18)]
             self.color_list = self.color_list[:8:] + \
-                color8 + [cp.reduce_brightness(x, 49) for x
+                color8 + [color.reduce_brightness(x, 49) for x
                           in self.color_list[1:8:]]
         self.render_buttons()
-        ms.create_sample(self.color_list[:])
+        sample.create_sample(self.color_list[:])
         self.render_sample()
 
     def on_shuffle_click(self, widget):
@@ -190,29 +184,29 @@ class ColorGrid(Gtk.Grid):
 
     def on_color_click(self, widget):
         self.done_lbl.set_text("")
-        color = Gdk.RGBA()
-        color.parse(widget.get_label())
+        gcolor = Gdk.RGBA()
+        gcolor.parse(widget.get_label())
         dialog = ColorDialog(self.parent)
-        dialog.colorchooser.set_rgba(color)
+        dialog.colorchooser.set_rgba(gcolor)
         response = dialog.run()
 
         if response == Gtk.ResponseType.OK:
-            color = dialog.colorchooser.get_rgba()
-            rgb = [color.red, color.green, color.blue]
+            gcolor = dialog.colorchooser.get_rgba()
+            rgb = [gcolor.red, gcolor.green, gcolor.blue]
             hex_color = '#' + transformers.rgb_to_hex(rgb)
             widget.set_label(hex_color)
-            color = Gdk.color_parse(hex_color)
-            if cp.get_darkness(hex_color) < 100:
+            gcolor = Gdk.color_parse(hex_color)
+            if color.get_darkness(hex_color) < 100:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
                 fgcolor = Gdk.color_parse('#101010')
             widget.set_sensitive(True)
-            widget.modify_bg(Gtk.StateType.NORMAL, color)
+            widget.modify_bg(Gtk.StateType.NORMAL, gcolor)
             widget.modify_fg(Gtk.StateType.NORMAL, fgcolor)
             for i, c in enumerate(self.button_list):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
-            ms.create_sample(self.color_list[:])
+            sample.create_sample(self.color_list[:])
             self.render_sample()
         dialog.destroy()
 
@@ -222,13 +216,12 @@ class ColorGrid(Gtk.Grid):
         self.auto_button.set_sensitive(True)
         self.shuffle_button.set_sensitive(True)
         self.ok_button.set_sensitive(True)
-        current_walls = fl.FileList(GLib.get_home_dir() + "/.wallpapers")
-        selected_file = current_walls.file_names_only[x]
-        selected_sample = "sample/" + selected_file + ".sample.png"
-        sample_path = GLib.get_home_dir() + "/.wallpapers/" + selected_sample
-        self.color_list = cp.get_color_list(selected_file)
+        current_walls = files.get_file_list()
+        selected_file = current_walls[x]
+        sample_path = config.SAMPLE_DIR / (selected_file + '.sample.png')
+        self.color_list = color.get_color_list(selected_file)
         self.render_buttons()
-        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(sample_path,
+        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(str(sample_path),
                                                                     width=500,
                                                                     height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
