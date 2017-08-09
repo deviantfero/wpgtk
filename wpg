@@ -15,6 +15,7 @@ CONFIG = parse_conf()
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--set','-s', help='set the wallpaper and colorscheme, apply changes system-wide', nargs='*')
+    parser.add_argument('--random','-m', help='set random theme from list, apply changes system-wide', action='store_true')
     parser.add_argument('--restore','-r', help='restore the wallpaper and colorscheme', action='store_true')
     parser.add_argument('--add','-a', help='add images to the wallpaper folder and generate colorschemes', nargs='*')
     parser.add_argument('--list','-l', help='see which wallpapers are available', action='store_true')
@@ -43,6 +44,10 @@ if __name__ == "__main__":
                 print( 'ERR:: file  not found' )
         elif len( args.set ) > 2:
             print( 'ERR:: Specify just 2 filenames' )
+
+    if args.random:
+        theme = random_theme()
+        set_theme(theme, theme, CONFIG, args.restore)
 
     if args.list:
         show_wallpapers()
