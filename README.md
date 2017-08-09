@@ -68,6 +68,16 @@ for more details on the cli interface do:
 $ wpg -h
 ```
 
+## Caveats
+wpg install itself and its ```wal``` to ```/usr/local/bin``` and expects therefore, that its ```wal``` is run when it calls ```wal``` without a path. If you have a newer ```wal``` in your path, that shadows ```/usr/local/bin/wal```, wpg might not work properly. 
+
+You will most likely see errors like this, if that is the case:
+```
+file could not open
+/home/<user>/.wallpapers/xres/<wallpaper.jpg>.Xres
+```
+To get wpg to work, alter it to call its ```wal``` by path, remove or rename your newer ```wal``` or call wpg with an altered ```PATH```.
+
 # Theming
 
 ### General Usage
