@@ -24,8 +24,8 @@ if __name__ == "__main__":
     parser.add_argument('--current','-c', help='shows the current wallpaper', action='store_true')
     parser.add_argument('--auto','-e', help='auto adjusts the given colorschemes', nargs='*')
     parser.add_argument('--shuffle','-z', help='shuffles the given colorschemes', nargs='*')
-    parser.add_argument('--tty','-t', help='send sequences to terminal equivalent to (wal -r)', action='store_true')
-    parser.add_argument('--vte','-V', help='fix artifacts in VTE terminals (Termite, xfce4-terminal, gnome-terminal)', action='store_true')
+    parser.add_argument('--tty','-t', help='send sequences to terminal equivalent to "wal -r"', action='store_true')
+    parser.add_argument('--vte','-V', help='send sequences to terminal equivalent to "wal -rt" ("-t" fixes artifacts in VTE terminals like Termite, xfce4-terminal and gnome-terminal)', action='store_true')
     args = parser.parse_args()
     if len(sys.argv) < 2:
         run()
