@@ -97,13 +97,13 @@ def main():
     if args.auto:
         for arg in args.auto:
             themer.auto_adjust_colors(arg)
-            print('OK:: Auto-adjusted {}'.format(arg))
+            print('OK:: Auto-adjusted %s' % arg)
 
     if args.shuffle:
         for arg in args.shuffle:
             themer.shuffle_colors(arg)
             themer.auto_adjust_colors(arg)
-            print(f'OK:: shuffled {arg}')
+            print('OK:: shuffled %s' % arg)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,6 @@
+import os
 from . import config
+
 try:
     import Image
 except ImportError:
@@ -14,7 +16,7 @@ def hex_color_to_rgb(color):
         )
 
 
-def create_sample(colors, f=config.WALL_DIR / ".tmp.sample.png"):
+def create_sample(colors, f=os.path.join(config.WALL_DIR, ".tmp.sample.png")):
     im = Image.new("RGB", (1000, 100), "white")
     pix = im.load()
 

@@ -42,7 +42,7 @@ setuptools.setup(
     entry_points={
         "console_scripts": ["wpg=wpgtk.__main__:main"]
     },
-    python_requires=">=3.6",
+    python_requires=">=3.5",
     install_requires=[
         'certifi>=2017.7.27.1',
         'chardet>=3.0.4',

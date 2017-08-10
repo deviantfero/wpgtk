@@ -1,7 +1,7 @@
 import shutil
 import sys
 from subprocess import call
-from os import walk
+import os
 from colorsys import rgb_to_hls, hls_to_rgb
 from random import randint
 from . import config
@@ -9,13 +9,13 @@ import pywal
 
 
 def get_color_list(image_name):
-    image = pywal.image.get(config.WALL_DIR / image_name)
+    image = pywal.image.get(os.path.join(config.WALL_DIR, image_name))
     color_dict = pywal.colors.get(image, config.WALL_DIR)
     return [v for v in color_dict['colors'].values()]
 
 
 def write_colors(img, color_list):
-    image = pywal.image.get(config.WALL_DIR / img)
+    image = pywal.image.get(os.path.join(config.WALL_DIR, img))
     color_dict = pywal.colors.get(image, config.WALL_DIR)
 
     for i, key in enumerate(color_dict['colors'].keys()):
@@ -23,14 +23,14 @@ def write_colors(img, color_list):
     color_dict['special']['background'] = color_list[0]
     color_dict['special']['foreground'] = color_list[15]
 
-    cache_file = config.SCHEME_DIR / \
-        str(image).replace('/', '_').replace('.', '_')
-    cache_file = cache_file.with_suffix('.json')
+    cache_file = os.path.join(config.SCHEME_DIR,
+                              str(image).replace('/', '_').replace('.', '_'))
+    cache_file += ".json"
 
     pywal.export.color(color_dict, "json", cache_file)
     pywal.export.color(color_dict,
                        "xresources",
-                       config.XRES_DIR / (img + ".Xres"))
+                       os.path.join(config.XRES_DIR, (img + ".Xres")))
 
 
 def change_colors(colors, which):
@@ -38,24 +38,24 @@ def change_colors(colors, which):
     if which in config.FILE_DIC:
         which = config.FILE_DIC[which]
     try:
-        tmp_filename = str(which) + '.base'
+        tmp_filename = which + '.base'
         with open(tmp_filename, 'r') as tmp_file:
             tmp_data = tmp_file.read()
 
         for k, v in colors['wpgtk'].items():
             tmp_data = tmp_data.replace(k, v.strip('#'))
         for i, v in enumerate(colors['colors'].values()):
-            replace_word = f'COLOR{i}' if i < 10 else f'COLORX{i}'
+            replace_word = 'COLOR%d' % i if i < 10 else 'COLORX%d' % i
             tmp_data = tmp_data.replace(replace_word, v.strip('#'))
         for k, v in colors['icons'].items():
             tmp_data = tmp_data.replace(k, v.replace('#', ''))
 
-        with open(str(which), 'w') as target_file:
+        with open(which, 'w') as target_file:
             target_file.write(tmp_data)
-        print(f"OK:: {str(opt).upper()} - CHANGED SUCCESSFULLY")
+        print("OK:: %s - CHANGED SUCCESSFULLY" % opt.upper())
     except IOError as err:
-        print(f"ERR::{str(opt).upper()} - \
-              BASE FILE DOES NOT EXIST", file=sys.stderr)
+        print("ERR::%s - \
+              BASE FILE DOES NOT EXIST" % opt.upper(), file=sys.stderr)
 
 
 def clean_icon_color(dirty_string):
@@ -82,7 +82,7 @@ def reduce_brightness(hex_string, amount):
         rgb_int = [5 if elem <= 0 else int(elem) for elem in rgb]
         rgb_int = tuple(rgb_int)
         hex_result = '%02x%02x%02x' % rgb_int
-        return f"#{hex_result}"
+        return "#%s" % hex_result
     else:
         return reduce_brightness(hex_string, amount - 5)
 
@@ -97,7 +97,7 @@ def add_brightness(hex_string, amount):
         rgb_int = [254 if elem > 255 else int(elem) for elem in rgb]
         rgb_int = tuple(rgb_int)
         hex_result = '%02x%02x%02x' % rgb_int
-        return f"#{hex_result}"
+        return "#%s" % hex_result
     else:
         return add_brightness(hex_string, amount - 5)
 
@@ -136,16 +136,16 @@ def prepare_icon_colors(colors):
 
 
 def change_other_files(colors):
-    other_path = config.HOME / ".themes/color_other"
+    other_path = os.path.join(config.HOME, ".themes/color_other")
     files = []
-    for(dirpath, dirnames, filenames) in walk(other_path):
+    for(dirpath, dirnames, filenames) in os.walk(other_path):
         files.extend(filenames)
     if files:
         try:
             for word in files:
                 if ".base" in word:
                     original = word.split(".base", len(word)).pop(0)
-                    change_colors(colors, other_path / original)
+                    change_colors(colors, os.path.join(other_path, original))
         except Exception as e:
             print('ERR:: ' + str(e), file=sys.stderr)
             print('ERR::OPTIONAL FILE -' + original, file=sys.stderr)
@@ -160,7 +160,7 @@ def split_active(hexc):
 
 
 def prepare_colors(image_name):
-    image = pywal.image.get(config.WALL_DIR / image_name)
+    image = pywal.image.get(os.path.join(config.WALL_DIR, image_name))
     cdic = pywal.colors.get(image, config.WALL_DIR)
 
     wpcol = cdic['wpgtk'] = {}
@@ -169,7 +169,6 @@ def prepare_colors(image_name):
     if(config.wpgtk.getint('active') > 0):
         wpcol['BASECOLOR'] = cl[config.wpgtk.getint('active') - 1]
     else:
-        print(f"random: {cl[randint(0,15)]}")
         wpcol['BASECOLOR'] = cl[randint(0, 15)]
 
     active_colors = split_active(wpcol['BASECOLOR'])
@@ -190,8 +189,6 @@ def prepare_colors(image_name):
 
 
 def execute_gcolorchange(image_name):
-    # Getting random color from an .Xres file--#
-    # Defining how dark the windows have to be--#
     colors = prepare_colors(image_name)
     if config.wpgtk.getboolean('openbox') or not shutil.which('openbox'):
         change_colors(colors, 'openbox')
@@ -208,7 +205,6 @@ def execute_gcolorchange(image_name):
         pywal.reload.gtk()
 
     change_other_files(colors)
-
     change_colors(colors, 'icon-step1')
     call(str(config.FILE_DIC['icon-step2']))
     print("OK::FINISHED")

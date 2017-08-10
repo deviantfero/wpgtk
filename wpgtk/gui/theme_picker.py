@@ -15,7 +15,7 @@ class mainWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title='wpgtk ' + config.__version__)
 
-        image_name = config.WALL_DIR / '.current'
+        image_name = os.path.join(config.WALL_DIR, '.current')
         image_name = os.path.realpath(image_name)
         self.set_default_size(200, 200)
 
@@ -24,7 +24,8 @@ class mainWindow(Gtk.Window):
         route_list = image_name.split('/', image_name.count('/'))
         file_name = route_list[4]
         print('INF::CURRENT WALL: ' + file_name)
-        sample_name = config.SAMPLE_DIR / (file_name + '.sample.png')
+        sample_name = os.path.join(config.SAMPLE_DIR,
+                                   (file_name + '.sample.png'))
 
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
@@ -72,7 +73,7 @@ class mainWindow(Gtk.Window):
                                   width=500,
                                   height=333, preserve_aspect_ratio=False)
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                 str(sample_name),
+                                 sample_name,
                                  width=500, height=500)
             self.preview.set_from_pixbuf(self.pixbuf_preview)
             self.sample.set_from_pixbuf(self.pixbuf_sample)
@@ -172,7 +173,7 @@ class mainWindow(Gtk.Window):
         x = self.option_combo.get_active()
         self.colorscheme.set_active(x)
         selected_file = files.get_file_list()[x]
-        filepath = config.WALL_DIR / selected_file
+        filepath = os.path.join(config.WALL_DIR, selected_file)
 
         self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
             str(filepath),
@@ -184,10 +185,11 @@ class mainWindow(Gtk.Window):
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
         selected_file = files.get_file_list()[x]
-        samplepath = config.SAMPLE_DIR / (selected_file + '.sample.png')
+        samplepath = os.path.join(config.SAMPLE_DIR,
+                                  (selected_file + '.sample.png'))
         if(os.path.isfile(samplepath)):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                 str(samplepath), width=500, height=500)
+                                 samplepath, width=500, height=500)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
         self.cpage.set_edit_combo(x)
 

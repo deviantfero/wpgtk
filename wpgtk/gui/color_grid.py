@@ -54,7 +54,7 @@ class ColorGrid(Gtk.Grid):
                 self.colorgrid.attach(self.button_list[cont], x, y, 1, 1)
                 cont += 1
 
-        sample_name = config.WALL_DIR / ".no_sample.sample.png"
+        sample_name = os.path.join(config.WALL_DIR, ".no_sample.sample.png")
         self.sample = Gtk.Image()
         if(os.path.isfile(sample_name)):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
@@ -63,7 +63,7 @@ class ColorGrid(Gtk.Grid):
                                                             height=300)
             self.sample.set_from_pixbuf(self.pixbuf_sample)
 
-        sampler_name = config.WALL_DIR / ".nsampler.sample.png"
+        sampler_name = os.path.join(config.WALL_DIR, ".nsampler.sample.png")
         self.sampler = Gtk.Image()
         if(os.path.isfile(sampler_name)):
             self.pixbuf_sampler = GdkPixbuf.Pixbuf.new_from_file_at_size(
@@ -124,7 +124,7 @@ class ColorGrid(Gtk.Grid):
             self.button_list[x].modify_fg(Gtk.StateType.NORMAL, fgcolor)
 
     def render_sample(self):
-        sample_path = config.WALL_DIR / ".tmp.sample.png"
+        sample_path = os.path.join(config.WALL_DIR, ".tmp.sample.png")
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
                 str(sample_path),
                 width=500,
@@ -144,18 +144,18 @@ class ColorGrid(Gtk.Grid):
         if len(current_walls) > 0:
             x = self.option_combo.get_active()
             color.write_colors(current_walls[x], self.color_list)
-            tmpfile = config.WALL_DIR / ".tmp.sample.png"
+            tmpfile = os.path.join(config.WALL_DIR, ".tmp.sample.png")
             if(os.path.isfile(tmpfile)):
-                shutil.move(config.WALL_DIR / ".tmp.sample.png",
-                            config.SAMPLE_DIR /
-                            (current_walls[x] + ".sample.png"))
+                shutil.move(os.path.join(config.WALL_DIR, ".tmp.sample.png"),
+                            os.path.join(config.SAMPLE_DIR,
+                            (current_walls[x] + ".sample.png")))
                 self.done_lbl.set_text("Changes saved")
                 x = self.parent.colorscheme.get_active()
                 selected_file = current_walls[x]
                 selected_sample = "sample/" + selected_file + ".sample.png"
-                sample_path = config.WALL_DIR / selected_sample
+                sample_path = os.path.join(config.WALL_DIR, selected_sample)
                 self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                                                   str(sample_path),
+                                                                   sample_path,
                                                                    width=500,
                                                                    height=300)
                 self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
@@ -218,10 +218,11 @@ class ColorGrid(Gtk.Grid):
         self.ok_button.set_sensitive(True)
         current_walls = files.get_file_list()
         selected_file = current_walls[x]
-        sample_path = config.SAMPLE_DIR / (selected_file + '.sample.png')
+        sample_path = os.path.join(config.SAMPLE_DIR,
+                                   (selected_file + '.sample.png'))
         self.color_list = color.get_color_list(selected_file)
         self.render_buttons()
-        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(str(sample_path),
+        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(sample_path,
                                                                     width=500,
                                                                     height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
