@@ -113,4 +113,4 @@ def auto_adjust_colors(filename):
                                          (filename + '.sample.png')))
         color.write_colors(filename, color_list)
     except IOError:
-        print(f'ERR:: file not available')
+        print('ERR:: file not available')
