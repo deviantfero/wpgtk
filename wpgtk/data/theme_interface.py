@@ -21,6 +21,11 @@ def create_theme(filepath):
     call(['wal', '-i', filepath])
     filename = filepath.split("/").pop()
     color_list = read_colors(filename)
+
+    # Write terminal, rofi and emacs config
+    # Can be remove, if wal fork is ever updated
+    write_colors(filename, color_list)
+
     create_sample(color_list, f=SAMPLE_DIR + filename + '.sample.png')
 
 def set_theme(filename, cs_file, opt=DEFAULT, restore=False):

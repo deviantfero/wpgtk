@@ -27,10 +27,10 @@ r_words = {"active":     "COLORACT",
            "tooltip":    "COLORTOOL" }
 
 
-def read_colors( xres_file ):
-    xres_file = "xres/" + xres_file + ".Xres"
+def read_colors( name ):
+    col_file = "cache/" + name + ".col"
     try:
-        f = open( WALLDIR + xres_file, "r" )
+        f = open( WALLDIR + col_file, "r" )
     except IOError as err:
         print( "file could not open", file=sys.stderr )
         print( err.filename, file=sys.stderr )
@@ -38,11 +38,10 @@ def read_colors( xres_file ):
         for x in range( 0, 16 ):
             empty.append( '000000' )
         return empty
-    xres_list = [ line for line in f ]
-    xres_list = list( map(lambda x: x.split("#", len(x)), xres_list ) )
-    xres_list = [ word[1].strip( "\n" ) for word in xres_list ]
+
+    colors = [c[1:-1] for c in f]
     f.close()
-    return xres_list
+    return colors
 
 def read_color_in_line( cfile, line_get=0 ):
     color_list = read_colors(cfile)
@@ -52,9 +51,9 @@ def read_color_in_line( cfile, line_get=0 ):
         color = color_list[int(line_get)]
     return color
 
-def write_colors( xres_file, color_list ):
-    col_file = "cache/" + xres_file + ".col"
-    xres_file = "xres/" + xres_file + ".Xres"
+def write_colors( name, color_list ):
+    col_file = "cache/" + name + ".col"
+    xres_file = "xres/" + name + ".Xres"
     try:
         f = open( WALLDIR + xres_file, "w" )
         fc = open( WALLDIR + col_file, "w" )
@@ -66,8 +65,27 @@ def write_colors( xres_file, color_list ):
         for i, c in enumerate(color_list):
             f.write( "*color" + str(i) + ": #" + c + "\n" )
             fc.write( '#' + c + '\n' )
+
+        # Write terminal config
+        for term in ["URxvt", "XTerm"]:
+            f.write(term + "*foreground: #" + color_list[15] + "\n")
+            f.write(term + "*background: #" + color_list[0] + "\n")
+
+        f.write("URxvt*cursorColor: #" + color_list[15] + "\n")
+        f.write("XTerm*cursorColor: #" + color_list[0] + "\n")
+
+        # Write emacs config
+        f.write("emacs*background: #{}\n".format(color_list[0]))
+        f.write("emacs*foreground: #{}\n".format(color_list[15]))
+
+        # Write rofi config
+        f.write("rofi.color-window: argb:FF{0[0]}, #{0[0]}, #{0[10]}\n".format(color_list))
+        f.write("rofi.color-normal: argb:FF{0[0]}, #{0[15]}, #{0[0]}, #{0[10]}, #{0[0]}\n".format(color_list))
+        f.write("rofi.color-active: argb:FF{0[0]}, #{0[15]}, #{0[0]}, #{0[10]}, #{0[0]}\n".format(color_list))
+        f.write("rofi.color-urgent: argb:FF{0[0]}, #{0[9]}, #{0[0]}, #{0[9]}, #{0[15]}\n".format(color_list))
     else:
         print( "ERR::NOT WRITING", file=sys.stderr )
+
     f.close()
     fc.close()
 
