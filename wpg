@@ -47,10 +47,9 @@ if __name__ == "__main__":
     if args.list:
         show_wallpapers()
     if args.tty:
-        if args.vte:
-            call(['wal','-r','-t'])
-        else:
-            call(['wal','-r'])
+        call(['wal','-r'])
+    if args.vte:
+        call(['wal','-r','-t'])
     if args.version:
         print( 'current version: ' + version )
     if args.delete:
