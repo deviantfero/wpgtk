@@ -11,15 +11,15 @@ import pywal
 def get_color_list(image_name):
     image = pywal.image.get(os.path.join(config.WALL_DIR, image_name))
     color_dict = pywal.colors.get(image, config.WALL_DIR)
-    return [v for v in color_dict['colors'].values()]
+    return [color_dict['colors']['color%s' % i] for i in range(16)]
 
 
 def write_colors(img, color_list):
     image = pywal.image.get(os.path.join(config.WALL_DIR, img))
     color_dict = pywal.colors.get(image, config.WALL_DIR)
 
-    for i, key in enumerate(color_dict['colors'].keys()):
-        color_dict['colors'][key] = color_list[i]
+    for i in range(16):
+        color_dict['colors']['color%s' % i] = color_list[i]
     color_dict['special']['background'] = color_list[0]
     color_dict['special']['foreground'] = color_list[15]
 
@@ -44,9 +44,10 @@ def change_colors(colors, which):
 
         for k, v in colors['wpgtk'].items():
             tmp_data = tmp_data.replace(k, v.strip('#'))
-        for i, v in enumerate(colors['colors'].values()):
+        for i in range(16):
             replace_word = 'COLOR%d' % i if i < 10 else 'COLORX%d' % i
-            tmp_data = tmp_data.replace(replace_word, v.strip('#'))
+            replace_val = colors['colors']['color%s' % i].strip('#')
+            tmp_data = tmp_data.replace(replace_word, replace_val)
         for k, v in colors['icons'].items():
             tmp_data = tmp_data.replace(k, v.replace('#', ''))
 
@@ -164,7 +165,7 @@ def prepare_colors(image_name):
     cdic = pywal.colors.get(image, config.WALL_DIR)
 
     wpcol = cdic['wpgtk'] = {}
-    cl = [val for val in cdic['colors'].values()]
+    cl = [cdic['colors']['color%s' % i] for i in range(16)]
 
     if(config.wpgtk.getint('active') > 0):
         wpcol['BASECOLOR'] = cl[config.wpgtk.getint('active') - 1]

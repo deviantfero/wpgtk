@@ -17,7 +17,7 @@ def create_theme(filepath):
     pywal.export.color(colors,
                        "xresources",
                        path.join(config.XRES_DIR, (filename + ".Xres")))
-    color_list = [val for val in colors['colors'].values()]
+    color_list = [colors['colors']['color%s' % i] for i in range(16)]
     sample.create_sample(color_list,
                          f=path.join(config.SAMPLE_DIR,
                                      (filename + '.sample.png')))
