@@ -53,25 +53,30 @@ class OptionsGrid(Gtk.Grid):
 
         # Switches
         self.tint2_switch = Gtk.Switch()
-        self.tint2_switch.connect('notify::active',  self.on_tint2_active)
+        self.tint2_switch.connect('notify::active',  self.on_activate, 'tint2')
         self.lbl_tint2 = Gtk.Label('Colorize Tint2')
         self.gtk_switch = Gtk.Switch()
-        self.gtk_switch.connect('notify::active',  self.on_gtk_active)
+        self.gtk_switch.connect('notify::active',  self.on_activate, 'gtk')
         self.lbl_gtk = Gtk.Label('Colorize GTK')
+        self.openbox_switch = Gtk.Switch()
+        self.openbox_switch.connect('notify::active',
+                                    self.on_activate, 'openbox')
+        self.lbl_openbox = Gtk.Label('Colorize OpenBox')
 
         # edit cmd
         self.editor_lbl = Gtk.Label('Open optional files with:')
         self.editor_txt = Gtk.Entry()
-        self.editor_txt.connect("changed", self.on_txt_editor_change)
+        self.editor_txt.connect("changed", self.on_txt_change, 'editor')
 
         # cmd
 
         self.command_lbl = Gtk.Label('Run command after Colorize')
         self.command_exe_lbl = Gtk.Label('Command: ')
         self.command_txt = Gtk.Entry()
-        self.command_txt.connect("changed", self.on_txt_command_change)
+        self.command_txt.connect("changed", self.on_txt_change, 'command')
         self.command_switch = Gtk.Switch()
-        self.command_switch.connect('notify::active', self.on_command_active)
+        self.command_switch.connect('notify::active',
+                                    self.on_activate, 'execute_cmd')
 
         self.load_opt_list()
 
@@ -82,6 +87,8 @@ class OptionsGrid(Gtk.Grid):
         self.switch_grid.attach(self.gtk_switch, 9, 1, 1, 1)
         self.switch_grid.attach(self.command_lbl, 1, 2, 3, 1)
         self.switch_grid.attach(self.command_switch, 4, 2, 1, 1)
+        self.switch_grid.attach(self.lbl_openbox, 5, 2, 3, 1)
+        self.switch_grid.attach(self.openbox_switch, 9, 2, 1, 1)
 
         # cmd Grid attach
 
@@ -99,17 +106,8 @@ class OptionsGrid(Gtk.Grid):
         self.attach(self.switch_grid,  1,  1,  1,  1)
         self.attach(self.active_grid,  1,  2,  1,  1)
 
-    def on_tint2_active(self,  switch,  gparam):
-        config.wpgtk['tint2'] = str(switch.get_active()).lower()
-        self.lbl_save.set_text('')
-
-    def on_gtk_active(self,  switch,  gparam):
-        config.wpgtk['gtk'] = str(switch.get_active()).lower()
-        self.lbl_save.set_text('')
-
-    def on_command_active(self,  switch,  gparam):
-        config.wpgtk['execute_cmd'] = str(switch.get_active()).lower()
-        self.command_txt.set_editable(switch.get_active())
+    def on_activate(self,  switch,  *gparam):
+        config.wpgtk[gparam[1]] = str(switch.get_active()).lower()
         self.lbl_save.set_text('')
 
     def load_opt_list(self):
@@ -128,12 +126,8 @@ class OptionsGrid(Gtk.Grid):
         self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
         self.lbl_save.set_text('')
 
-    def on_txt_editor_change(self, gtk_entry):
-        config.wpgtk['editor'] = gtk_entry.get_text()
-        self.lbl_save.set_text('')
-
-    def on_txt_command_change(self, gtk_entry):
-        config.wpgtk['command'] = gtk_entry.get_text()
+    def on_txt_change(self, gtk_entry, *gparam):
+        config.wpgtk[gparam[0]] = gtk_entry.get_text()
         self.lbl_save.set_text('')
 
     def on_save_button(self,  button):
