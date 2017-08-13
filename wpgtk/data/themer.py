@@ -51,7 +51,6 @@ def set_theme(filename, cs_file, restore=False):
         try:
             if config.wpgtk.getboolean('execute_cmd'):
                 Popen(config.wpgtk['command'].split(' '))
-                print("ERR:: malformed editor command", sys.stderr)
             symlink(path.join(config.WALL_DIR, filename),
                     path.join(config.WALL_DIR, ".current"))
         except Exception as e:

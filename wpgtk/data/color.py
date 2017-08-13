@@ -48,15 +48,16 @@ def change_colors(colors, which):
             replace_word = 'COLOR%d' % i if i < 10 else 'COLORX%d' % i
             replace_val = colors['colors']['color%s' % i].strip('#')
             tmp_data = tmp_data.replace(replace_word, replace_val)
-        for k, v in colors['icons'].items():
-            tmp_data = tmp_data.replace(k, v.replace('#', ''))
+        if colors['icons']:
+            for k, v in colors['icons'].items():
+                tmp_data = tmp_data.replace(k, v.replace('#', ''))
 
         with open(which, 'w') as target_file:
             target_file.write(tmp_data)
         print("OK:: %s - CHANGED SUCCESSFULLY" % opt.upper())
     except IOError as err:
-        print("ERR::%s - \
-              BASE FILE DOES NOT EXIST" % opt.upper(), file=sys.stderr)
+        print("ERR::%s - "
+              "BASE FILE DOES NOT EXIST" % opt.upper(), file=sys.stderr)
 
 
 def clean_icon_color(dirty_string):
@@ -191,7 +192,7 @@ def prepare_colors(image_name):
 
 def execute_gcolorchange(image_name):
     colors = prepare_colors(image_name)
-    if config.wpgtk.getboolean('openbox') or not shutil.which('openbox'):
+    if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
         change_colors(colors, 'openbox')
         call(["openbox", "--reconfigure"])
 
@@ -205,7 +206,8 @@ def execute_gcolorchange(image_name):
         change_colors(colors, 'gtk3.20')
         pywal.reload.gtk()
 
+    if os.path.isfile(config.FILE_DIC['icon-step2']):
+        change_colors(colors, 'icon-step1')
+        call(config.FILE_DIC['icon-step2'])
     change_other_files(colors)
-    change_colors(colors, 'icon-step1')
-    call(str(config.FILE_DIC['icon-step2']))
     print("OK::FINISHED")
