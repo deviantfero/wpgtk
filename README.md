@@ -8,11 +8,10 @@ with default themes for GTK2, GTK+, openbox and Tint2, that uses
 you can choose to interact with in two possible ways, so you can
 manage your themes from either a cli applications or using a GUI.
 
-#### [GUI](http://i.imgur.com/oJ0yakG.gif)
+#### [GUI](https://gfycat.com/DefinitiveSpiffyJohndory)
 
-#### [Powerful command line interface](http://i.imgur.com/MM5yVZq.gif)
+#### [Powerful command line interface](https://gfycat.com/NeighboringSarcasticEquine)
 
-#### [Combine wallpapers and colors](http://i.imgur.com/qo5Hsoh.gif)
 
 ![interface_image](http://i.imgur.com/aWgqJPG.png)
 
@@ -37,7 +36,7 @@ that allows you to run commands on startup.
 
 **_Warning:_** If you have a previous version of wpgtk installed
 please delete the contents of your current `~/.wallpapers` as 
-they may conflict with the new folder structure.
+they may conflict with the new folder structure (for versions < 4.0 upgrading).
 
 You can install via pip:
 
@@ -45,9 +44,25 @@ You can install via pip:
 $ pip install wpgtk
 ```
 
-or install the `wpgtk-git` package via the AUR.  You can then install color-adaptable themes with
+or install the `wpgtk-git` package via the AUR.  
+
+You can install color-adaptable themes with an included script,
+after you install `wpg` you can run `wpg-install.sh`:
+
 ```
-$ wpg-install.sh
+  Options:
+  -h|help       Display this message
+  -v|version    Display script version
+  -o|openbox    Install openbox themes
+  -t|tint2      Install tint2 theme
+  -g|gtk        Install gtk theme
+  -i|icons      Install icon-set
+  -a|all        Install all themes
+  ```
+
+This will install all themes:
+  ```
+$ wpg-install.sh -a 
 ```
 
 And if everything went fine you can now execute `wpg` and it will take
@@ -57,7 +72,6 @@ you did not install from the AUR).
 
 for more details on the cli interface do:
 ```
-$ wpg-install.sh -h
 $ wpg -h
 ```
 
@@ -109,6 +123,11 @@ also
 ```
 
 after doing this `wpgtk` will replace this new file with the original.
+
+### Configuration
+
+The configuration file should be located at `$HOME/.wallpapers/wpg.conf`
+There you can edit settings without the use of the gui.
 
 # Loading at Startup
 to load your new wallpaper at startup along with the colors add the following to your 
