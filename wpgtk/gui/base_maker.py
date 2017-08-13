@@ -1,8 +1,7 @@
-import shutil
 import sys
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
-from os import symlink, remove, path
+import os
 from gi import require_version
 from subprocess import Popen
 from wpgtk.data import config, files
@@ -10,24 +9,6 @@ require_version("Gtk", "3.0")
 
 PAD = 10
 icon = 'document-open'
-
-
-def connect_conf(filepath):
-    l = filepath.split('/', len(filepath))
-    # we remove dots from possible dotfiles
-    filename = l[-2].lstrip('.') + '.' + l[-1].lstrip('.')
-    print('ADD::' + filename + '@' + filepath)
-    try:
-        shutil.copy2(filepath, filepath + '.bak')
-        print('::MAKING BACKUP CONFIG')
-        print('::CREATING BASE')
-        shutil.copy2(filepath, path.join(config.OPT_DIR, (filename + '.base')))
-        shutil.copy2(filepath, path.join(config.OPT_DIR, filename))
-        remove(filepath)
-        symlink(path.join(config.OPT_DIR, filename), filepath)
-        print('::CREATING SYMLINK')
-    except Exception as e:
-        print("ERROR")
 
 
 class FileGrid(Gtk.Grid):
@@ -87,7 +68,6 @@ class FileGrid(Gtk.Grid):
         self.attach(self.grid_edit, 0, 0, 1, 1)
 
     def on_add_clicked(self, widget):
-        print("Adding...")
         filechooser = Gtk.FileChooserDialog("Select an Image", self.parent,
                                             Gtk.FileChooserAction.OPEN,
                                             (Gtk.STOCK_CANCEL,
@@ -103,17 +83,7 @@ class FileGrid(Gtk.Grid):
 
         if response == Gtk.ResponseType.OK:
             filepath = filechooser.get_filename()
-            if("\\" in filepath):
-                filepath = filepath.replace("\\", "\\\\")
-            if(" " in filepath):
-                filepath = filepath.replace(" ", "\ ")
-                filename = filepath.split("/", len(filepath))
-                filename = filename.pop()
-                if(" " in filename):
-                    filename = filename.replace(" ", "\ ")
-                elif("\\" in filename):
-                    filename = filename.replace("\\", "\\\\")
-            connect_conf(filepath)
+            files.connect_conf(filepath)
             self.item_names = [filen for filen in
                                files.get_file_list(config.OPT_DIR, False)
                                if '.base' in filen]
@@ -129,7 +99,7 @@ class FileGrid(Gtk.Grid):
         if self.current is not None:
             item = self.item_names[self.current]
             args_list = config.wpgtk['editor'].split(' ')
-            args_list.append(path.join(config.OPT_DIR, item))
+            args_list.append(os.path.join(config.OPT_DIR, item))
             try:
                 Popen(args_list)
             except Exception as e:
@@ -140,7 +110,7 @@ class FileGrid(Gtk.Grid):
     def on_rm_clicked(self, widget):
         if self.current is not None:
             item = self.item_names.pop(self.current)
-            remove(path.join(config.OPT_DIR, item))
+            os.remove(os.path.join(config.OPT_DIR, item))
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
