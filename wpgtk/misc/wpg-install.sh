@@ -24,12 +24,14 @@ function usage ()
 
 function checkgit () 
 {
-  command -v git || $(echo "Please install git before proceeding"; exit 1);
+  command -v git 2>&1 > /dev/null || (echo "Please install git before proceeding" && exit 1);
 }
 
 function getfiles () 
 {
   checkgit;
+  mkdir -p $HOME/.themes;
+  mkdir -p $HOME/.icons;
   git clone https://github.com/deviantfero/wpgtk-themes $THEME_DIR;
   cd $THEME_DIR;
 }
