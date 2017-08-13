@@ -1,7 +1,6 @@
 import errno
 import pywal
 import shutil
-import sys
 from random import shuffle
 from os.path import realpath, isfile
 from os import symlink, remove, path
@@ -10,7 +9,7 @@ from . import color, sample, config, files
 
 
 def create_theme(filepath):
-    filename = filepath.split("/").pop()
+    filename = filepath.split("/").pop().replace(" ", "_")
     shutil.copy2(filepath, path.join(config.WALL_DIR, filename))
     image = pywal.image.get(path.join(config.WALL_DIR, filename))
     colors = pywal.colors.get(image, config.WALL_DIR)
