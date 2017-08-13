@@ -79,7 +79,7 @@ this directory contains all exported formats that `pywal` and `wpgtk` have to of
 as:
 
 * css variables under `$HOME/.wallpapers/current.css`
-* josn under `$HOME/.wallpapers/schemes/{image_name}.json`
+* json under `$HOME/.wallpapers/schemes/{image_name}.json`
 * xres files under `$HOME/.wallpapers/xres/{image_name}.Xres`
 * environment variables under `$HOME/.wallpapers/current.sh` 
 
