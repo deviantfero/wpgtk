@@ -35,7 +35,7 @@ where it allows it to run on startup.
 please delete the contents of your current `~/.wallpapers` as 
 they may conflict with the new folder structure.
 
-You can either clone this repository by doing:
+You can install via pip:
 
 ```sh
 $ pip install wpgtk
