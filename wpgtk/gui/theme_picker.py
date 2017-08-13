@@ -2,9 +2,7 @@ from gi import require_version
 from . import color_grid, base_maker, option_grid
 from wpgtk.data import files, themer, config
 from gi.repository import Gtk, GdkPixbuf
-import shutil
 import os
-import sys
 require_version('Gtk', '3.0')
 
 PAD = 10
@@ -118,22 +116,7 @@ class mainWindow(Gtk.Window):
             filepath = filechooser.get_filename()
         filechooser.destroy()
 
-        if('\\' in filepath or ' ' in filepath):
-            filename = filepath.split('/', len(filepath))
-            filename = filename.pop()
-            if(' ' in filename):
-                filename = filename.replace(' ', '')
-            elif('\\' in filename):
-                filename = filename.replace('\\', '')
-            try:
-                shutil.copy(filepath, filename)
-            except Exception:
-                print("ERROR:: file {} already exists".format(filename),
-                      file=sys.stderr)
-            themer.create_theme(filename)
-            os.remove(filename)
-        else:
-            themer.create_theme(filepath)
+        themer.create_theme(filepath)
         option_list = Gtk.ListStore(str)
 
         for elem in list(files.get_file_list()):

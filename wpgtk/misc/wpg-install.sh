@@ -44,7 +44,7 @@ function install_tint2 ()
     echo "Installing tint2 config";
     cp ./tint2/* $HOME/.config/tint2/ && \
       echo ":: tint2 conf install done.";
-    return true;
+    return 0;
   fi
   echo ":: tint2 conf not installed";
 }

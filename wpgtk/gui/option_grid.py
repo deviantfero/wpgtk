@@ -115,6 +115,7 @@ class OptionsGrid(Gtk.Grid):
         self.gtk_switch.set_active(config.wpgtk.getboolean('gtk'))
         self.tint2_switch.set_active(config.wpgtk.getboolean('tint2'))
         self.command_switch.set_active(config.wpgtk.getboolean('execute_cmd'))
+        self.openbox_switch.set_active(config.wpgtk.getboolean('openbox'))
         self.editor_txt.set_text(config.wpgtk['editor'])
         self.command_txt.set_text(config.wpgtk['command'])
         self.command_txt.set_editable(config.wpgtk.getboolean('execute_cmd'))
