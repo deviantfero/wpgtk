@@ -1,10 +1,13 @@
 import configparser
+import shutil
 import os
+import sys
 
 __version__ = '4.5'
 
 HOME = os.path.expanduser('~')
 CONF_FILE = os.path.join(HOME, '.wallpapers/wpg.conf')
+CONF_BACKUP = '/etc/wpgtk/wpg.conf'
 WALL_DIR = os.path.join(HOME, '.wallpapers')
 SAMPLE_DIR = os.path.join(WALL_DIR, 'sample')
 XRES_DIR = os.path.join(WALL_DIR, 'xres')
@@ -12,6 +15,7 @@ CSS_DIR = os.path.join(WALL_DIR, 'css')
 SHELL_DIR = os.path.join(WALL_DIR, 'shell')
 SCHEME_DIR = os.path.join(WALL_DIR, 'schemes')
 OPT_DIR = os.path.join(HOME, '.themes/color_other')
+
 
 FILE_DIC = {'openbox':    os.path.join(HOME, '.themes/colorbamboo/openbox-3/themerc'),
             'openbox-nb': os.path.join(HOME, '.themes/colorbamboo-nb/openbox-3/themerc'),
@@ -58,6 +62,21 @@ class Config():
             self.options.write(config_file)
 
 
-conf_file = Config(CONF_FILE)
-wpgtk = conf_file.options['wpgtk']
-wal = conf_file.options['wal']
+try:
+    if not os.path.isdir(SCHEME_DIR):
+        print('INF:: Creating dirs...')
+        os.makedirs(XRES_DIR, exist_ok=True)
+        os.makedirs(SAMPLE_DIR, exist_ok=True)
+        os.makedirs(SCHEME_DIR, exist_ok=True)
+        os.makedirs(OPT_DIR, exist_ok=True)
+
+    conf_file = Config(CONF_FILE)
+    wpgtk = conf_file.options['wpgtk']
+    wal = conf_file.options['wal']
+except:
+    print('ERR:: Not a valid config file', file=sys.stderr)
+    print('INF:: Copying default config file')
+    shutil.copy(CONF_BACKUP, CONF_FILE)
+    conf_file = Config(CONF_FILE)
+    wpgtk = conf_file.options['wpgtk']
+    wal = conf_file.options['wal']
