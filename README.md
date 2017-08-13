@@ -14,6 +14,9 @@ manage your themes from either a cli applications or using a GUI.
 
 #### [Combine wallpapers and colors](http://i.imgur.com/qo5Hsoh.gif)
 
+![interface_image](http://i.imgur.com/aWgqJPG.png)
+
+
 
 ## Getting Started
 
