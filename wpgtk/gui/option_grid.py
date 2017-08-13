@@ -61,7 +61,7 @@ class OptionsGrid(Gtk.Grid):
         self.openbox_switch = Gtk.Switch()
         self.openbox_switch.connect('notify::active',
                                     self.on_activate, 'openbox')
-        self.lbl_openbox = Gtk.Label('Colorize OpenBox')
+        self.lbl_openbox = Gtk.Label('Colorize openbox')
 
         # edit cmd
         self.editor_lbl = Gtk.Label('Open optional files with:')
