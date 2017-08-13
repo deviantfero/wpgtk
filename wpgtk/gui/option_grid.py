@@ -107,6 +107,8 @@ class OptionsGrid(Gtk.Grid):
         self.attach(self.active_grid,  1,  2,  1,  1)
 
     def on_activate(self,  switch,  *gparam):
+        if(gparam[1] == 'execute_cmd'):
+            self.command_txt.set_editable(switch.get_active())
         config.wpgtk[gparam[1]] = str(switch.get_active()).lower()
         self.lbl_save.set_text('')
 
