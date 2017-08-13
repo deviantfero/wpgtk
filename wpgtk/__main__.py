@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import random
 import wpgtk.data.config as config
 from wpgtk.data import files, themer
 from wpgtk.data.config import __version__
@@ -20,6 +21,9 @@ def main():
                         nargs='*')
     parser.add_argument('--restore', '-r',
                         help='restore the wallpaper and colorscheme',
+                        action='store_true')
+    parser.add_argument('--random', '-m',
+                        help='pick a random wallpaper and set it',
                         action='store_true')
     parser.add_argument('--add', '-a',
                         help='add images to the wallpaper folder and generate \
@@ -93,6 +97,10 @@ def main():
     if args.add:
         for e in args.add:
             themer.create_theme(e)
+
+    if args.random:
+        filename = random.choice(files.get_file_list())
+        themer.set_theme(filename, filename)
 
     if args.auto:
         for arg in args.auto:
