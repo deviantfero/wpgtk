@@ -1,12 +1,12 @@
 """wpgtk - setup.py"""
 import setuptools
 import os
-import sys
+import shutil
 
 try:
     import wpgtk
 except (ImportError, SyntaxError):
-    print("error: wpgtk requires Python 3.6 or greater.")
+    print("error: wpgtk requires Python 3.5 or greater.")
     quit(1)
 
 
@@ -28,7 +28,7 @@ setuptools.setup(
     version=VERSION,
     author="Fernando Vásquez",
     author_email="fmorataya.04@gmail.com",
-    description="GTK+ theme/wallpaper manager which uses wal as it's core",
+    description="GTK+ theme/wallpaper manager which uses pywal as it's core",
     long_description=LONG_DESC,
     license="GPL2",
     url="https://github.com/deviantfero/wpgtk",
@@ -49,18 +49,12 @@ setuptools.setup(
         'idna<2.6',
         'olefile>=0.44',
         'Pillow>=4.2.1',
-        'pywal>=0.5.12',
         'requests>=2.18.3',
+        'pywal>=0.6.0',
         'ruamel.yaml>=0.15.23',
         'urllib3>=1.22',
     ],
     include_package_data=True,
+    data_files=[('/etc/wpgtk', ['wpgtk/misc/wpg.conf']),
+                ('/usr/local/bin/', ['wpgtk/misc/wpg-install.sh'])]
 )
-# setup for later
-try:
-    os.mkdir(WALL_DIR)
-    os.mkdir(WALL_DIR + '/schemas')
-    os.mkdir(WALL_DIR + '/xres')
-    os.mkdir(WALL_DIR + '/sample')
-except FileExistsError as err:
-    print('ERR:: {FileExistsError.__file__}')
