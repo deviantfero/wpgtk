@@ -2,12 +2,13 @@ import os
 import shutil
 from wpgtk.data import color
 from wpgtk.data import config, files, sample
-from wpgtk.data import transformers
 from .color_picker import ColorDialog
 from random import shuffle
 from gi import require_version
 from gi.repository import Gtk, Gdk, GdkPixbuf
 require_version("Gtk", "3.0")
+
+import pywal
 
 current_walls = files.get_file_list()
 PAD = 10
@@ -192,8 +193,8 @@ class ColorGrid(Gtk.Grid):
 
         if response == Gtk.ResponseType.OK:
             gcolor = dialog.colorchooser.get_rgba()
-            rgb = [gcolor.red, gcolor.green, gcolor.blue]
-            hex_color = '#' + transformers.rgb_to_hex(rgb)
+            rgb = list(map(lambda x:round(x*100*2.55), [gcolor.red, gcolor.green, gcolor.blue]))
+            hex_color = pywal.util.rgb_to_hex(rgb)
             widget.set_label(hex_color)
             gcolor = Gdk.color_parse(hex_color)
             if color.get_darkness(hex_color) < 100:
