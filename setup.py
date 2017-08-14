@@ -13,7 +13,7 @@ except (ImportError, SyntaxError):
 LONG_DESC = open('README.md').read()
 
 
-VERSION = "4.5"
+VERSION = "4.5.1"
 DOWNLOAD = "https://github.com/dylanaraps/pywal/archive/%s.tar.gz" % VERSION
 WALL_DIR = os.path.expanduser('~') + '/.wallpapers'
 
@@ -28,7 +28,7 @@ setuptools.setup(
     long_description=LONG_DESC,
     license="GPL2",
     url="https://github.com/deviantfero/wpgtk",
-    download_url="https://github.com/deviantfero/wpgtk/archive/4.5.tar.gz",
+    download_url="https://github.com/deviantfero/wpgtk/archive/4.5.1.tar.gz",
     classifiers=[
         "Environment :: X11 Applications",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
