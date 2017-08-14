@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 __ScriptVersion="0.1"
-THEME_DIR=$PWD/wpgtk-themes
+THEME_DIR="${PWD}/wpgtk-themes"
 
 #===  FUNCTION  ================================================================
 #         NAME:  wpg-install
@@ -20,29 +20,30 @@ function usage ()
   -i|icons      Install icon-set
   -a|all        Install all themes
   "
-} 
-
-function checkgit () 
-{
-  command -v git 2>&1 > /dev/null || (echo "Please install git before proceeding" && exit 1);
 }
 
-function getfiles () 
+function checkgit ()
+{
+  command -v git >/dev/null 2>&1 || \
+      (echo "Please install git before proceeding" && exit 1);
+}
+
+function getfiles ()
 {
   checkgit;
-  mkdir -p $HOME/.themes;
-  mkdir -p $HOME/.icons;
-  git clone https://github.com/deviantfero/wpgtk-themes $THEME_DIR;
-  cd $THEME_DIR;
+  mkdir -p "${HOME}/.themes";
+  mkdir -p "${HOME}/.icons";
+  git clone https://github.com/deviantfero/wpgtk-themes "$THEME_DIR";
+  cd "$THEME_DIR";
 }
 
-function install_tint2 () 
+function install_tint2 ()
 {
   echo -n "This might override your tint2 config, Continue?[Y/n]: ";
-  read response;
+  read -r response;
   if [[ ! "$response" == "n" ]]; then
     echo "Installing tint2 config";
-    cp ./tint2/* $HOME/.config/tint2/ && \
+    cp ./tint2/* "${HOME}/.config/tint2/" && \
       echo ":: tint2 conf install done.";
     return 0;
   fi
@@ -52,21 +53,21 @@ function install_tint2 ()
 function install_gtk ()
 {
   echo "Installing gtk themes";
-  cp -r ./FlatColor $HOME/.themes/ && \
+  cp -r ./FlatColor "${HOME}/.themes/" && \
     echo ":: gtk themes install done."
 }
 
 function install_icons()
 {
   echo "Installing icon pack";
-  cp -r flattrcolor $HOME/.icons/ && \
+  cp -r flattrcolor "${HOME}/.icons/" && \
     echo ":: icons install done."
 }
 
 function install_openbox()
 {
   echo "Installing openbox themes";
-  cp -r ./openbox/* $HOME/.themes/ && \
+  cp -r ./openbox/* "${HOME}/.themes/" && \
     echo ":: openbox themes install done.";
 }
 
@@ -80,7 +81,7 @@ function install_all()
 
 function clean_up()
 {
-  rm -rf $THEME_DIR;
+  rm -rf "$THEME_DIR";
 }
 
 
@@ -91,12 +92,12 @@ function clean_up()
 while getopts ":hvotgia" opt
 do
   case $opt in
-    h|help)  
-      usage; 
-      exit 0   
+    h|help)
+      usage;
+      exit 0
       ;;
-    v|version)  
-      echo "$0 -- Version $__ScriptVersion"; 
+    v|version)
+      echo "$0 -- Version $__ScriptVersion";
       exit 0;
       ;;
     o|openbox)
@@ -129,12 +130,12 @@ do
       clean_up;
       exit 0;
       ;;
-    *)  
+    *)
       echo -e "\n  Option does not exist : $OPTARG\n"
-      usage; 
-      exit 1   
+      usage;
+      exit 1
       ;;
 
-    esac    
+    esac
   done
-  shift $(($OPTIND-1))
+  shift "$((OPTIND - 1))"
