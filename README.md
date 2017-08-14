@@ -4,9 +4,9 @@
 A universal theming software for all themes 
 defined in text files, compatible with all terminals, 
 with default themes for GTK2, GTK+, openbox and Tint2, that uses 
-[pywal](https://github.com/dylanaraps/pywal) as it's core, in which 
-you can choose to interact with in two possible ways, so you can
-manage your themes from either a cli applications or using a GUI.
+[pywal](https://github.com/dylanaraps/pywal) as it's core,  
+you can choose to interact with it in two ways, manage your themes 
+from either a cli application or using a GUI.
 
 #### [GUI](https://gfycat.com/DefinitiveSpiffyJohndory)
 
