@@ -21,6 +21,7 @@ manage your themes from either a cli applications or using a GUI.
 
 ### Dependencies
 
+* feh, or any other wallpaper setting software
 * python-gobject
 * python-imaging
 * Pillow (python)
