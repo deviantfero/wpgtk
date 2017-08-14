@@ -3,7 +3,7 @@ import shutil
 import os
 import sys
 
-__version__ = '4.5.6'
+__version__ = '4.5.7'
 
 conf_file = None
 wpgtk = None
@@ -95,5 +95,6 @@ def init():
     except:
         print('ERR:: Not in default prefix')
         print('ERR:: Attempting in /usr/local prefix')
-        shutil.copy(os.path.join('/usr/local/etc', 'wpg.conf'), CONF_FILE)
+        shutil.copy(os.path.join('/usr/local/etc',
+                    'wpgtk/wpg.conf'), CONF_FILE)
         load_sections()
