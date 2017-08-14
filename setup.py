@@ -1,7 +1,6 @@
 """wpgtk - setup.py"""
-import setuptools
 import os
-import shutil
+import setuptools
 
 try:
     import wpgtk
@@ -17,7 +16,7 @@ except(IOError, ImportError, RuntimeError):
     LONG_DESC = open('README.md').read()
 
 
-VERSION = "4.5"
+VERSION = wpgtk.__version__
 DOWNLOAD = "https://github.com/dylanaraps/pywal/archive/%s.tar.gz" % VERSION
 WALL_DIR = os.path.expanduser('~') + '/.wallpapers'
 

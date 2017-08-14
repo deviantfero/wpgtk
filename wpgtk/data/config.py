@@ -62,21 +62,22 @@ class Config():
             self.options.write(config_file)
 
 
-try:
-    if not os.path.isdir(SCHEME_DIR):
-        print('INF:: Creating dirs...')
-        os.makedirs(XRES_DIR, exist_ok=True)
-        os.makedirs(SAMPLE_DIR, exist_ok=True)
-        os.makedirs(SCHEME_DIR, exist_ok=True)
-        os.makedirs(OPT_DIR, exist_ok=True)
+if __name__ == "__main__":
+    try:
+        if not os.path.isdir(SCHEME_DIR):
+            print('INF:: Creating dirs...')
+            os.makedirs(XRES_DIR, exist_ok=True)
+            os.makedirs(SAMPLE_DIR, exist_ok=True)
+            os.makedirs(SCHEME_DIR, exist_ok=True)
+            os.makedirs(OPT_DIR, exist_ok=True)
 
-    conf_file = Config(CONF_FILE)
-    wpgtk = conf_file.options['wpgtk']
-    wal = conf_file.options['wal']
-except:
-    print('ERR:: Not a valid config file', file=sys.stderr)
-    print('INF:: Copying default config file')
-    shutil.copy(CONF_BACKUP, CONF_FILE)
-    conf_file = Config(CONF_FILE)
-    wpgtk = conf_file.options['wpgtk']
-    wal = conf_file.options['wal']
+        conf_file = Config(CONF_FILE)
+        wpgtk = conf_file.options['wpgtk']
+        wal = conf_file.options['wal']
+    except:
+        print('ERR:: Not a valid config file', file=sys.stderr)
+        print('INF:: Copying default config file')
+        shutil.copy(CONF_BACKUP, CONF_FILE)
+        conf_file = Config(CONF_FILE)
+        wpgtk = conf_file.options['wpgtk']
+        wal = conf_file.options['wal']
