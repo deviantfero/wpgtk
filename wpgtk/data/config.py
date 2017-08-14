@@ -66,10 +66,16 @@ class Config():
             self.options.write(config_file)
 
 
-def init():
+def load_sections():
     global conf_file
     global wpgtk
     global wal
+    conf_file = Config(CONF_FILE)
+    wpgtk = conf_file.options['wpgtk']
+    wal = conf_file.options['wal']
+
+
+def init():
     try:
         if not os.path.isdir(SCHEME_DIR):
             print('INF:: Creating dirs...')
@@ -77,14 +83,17 @@ def init():
             os.makedirs(SAMPLE_DIR, exist_ok=True)
             os.makedirs(SCHEME_DIR, exist_ok=True)
             os.makedirs(OPT_DIR, exist_ok=True)
-
-        conf_file = Config(CONF_FILE)
-        wpgtk = conf_file.options['wpgtk']
-        wal = conf_file.options['wal']
+        load_sections()
+        return 0
     except:
         print('ERR:: Not a valid config file', file=sys.stderr)
         print('INF:: Copying default config file')
+        pass
+    try:
         shutil.copy(CONF_BACKUP, CONF_FILE)
-        conf_file = Config(CONF_FILE)
-        wpgtk = conf_file.options['wpgtk']
-        wal = conf_file.options['wal']
+        load_sections()
+    except:
+        print('ERR:: Not in default prefix')
+        print('ERR:: Attempting in /usr/local prefix')
+        shutil.copy(os.path.join('/usr/local/etc', 'wpg.conf'), CONF_FILE)
+        load_sections()
