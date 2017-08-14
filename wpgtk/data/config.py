@@ -5,6 +5,10 @@ import sys
 
 __version__ = '4.5.3'
 
+conf_file = None
+wpgtk = None
+wal = None
+
 HOME = os.path.expanduser('~')
 CONF_FILE = os.path.join(HOME, '.wallpapers/wpg.conf')
 CONF_BACKUP = '/etc/wpgtk/wpg.conf'
@@ -62,7 +66,10 @@ class Config():
             self.options.write(config_file)
 
 
-if __name__ == "__main__":
+def init():
+    global conf_file
+    global wpgtk
+    global wal
     try:
         if not os.path.isdir(SCHEME_DIR):
             print('INF:: Creating dirs...')

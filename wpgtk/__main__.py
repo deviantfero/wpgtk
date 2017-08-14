@@ -51,6 +51,7 @@ def main():
                         help='send sequences to terminal equivalent to wal -r',
                         action='store_true')
 
+    config.init()
     args = parser.parse_args()
 
     if len(sys.argv) < 2:
