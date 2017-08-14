@@ -13,10 +13,11 @@ except (ImportError, SyntaxError):
 try:
     LONG_DESC = open('README.md').read()
 except:
+    LONG_DESC = '-'
     pass
 
-VERSION = "4.5.2"
-DOWNLOAD = "https://github.com/dylanaraps/pywal/archive/%s.tar.gz" % VERSION
+VERSION = "4.5.3"
+DOWNLOAD = "https://github.com/deviantfero/wpgtk/archive/%s.tar.gz" % VERSION
 WALL_DIR = os.path.expanduser('~') + '/.wallpapers'
 
 
@@ -30,7 +31,7 @@ setuptools.setup(
     long_description=LONG_DESC,
     license="GPL2",
     url="https://github.com/deviantfero/wpgtk",
-    download_url="https://github.com/deviantfero/wpgtk/archive/4.5.2.tar.gz",
+    download_url=DOWNLOAD,
     classifiers=[
         "Environment :: X11 Applications",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
