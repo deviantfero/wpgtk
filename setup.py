@@ -15,7 +15,6 @@ except:
     LONG_DESC = '-'
     pass
 
-  
 VERSION = wpgtk.__version__
 DOWNLOAD = "https://github.com/deviantfero/wpgtk/archive/%s.tar.gz" % VERSION
 WALL_DIR = os.path.expanduser('~') + '/.wallpapers'
