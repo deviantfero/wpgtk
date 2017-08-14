@@ -6,7 +6,7 @@ from wpgtk.data import files, themer
 from wpgtk.data.config import __version__
 try:
     from wpgtk.gui import theme_picker
-except (ModuleNotFoundError, ImportError) as err:
+except:
     pass
 import argparse
 import pywal

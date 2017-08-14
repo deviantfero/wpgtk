@@ -11,7 +11,7 @@ wal = None
 
 HOME = os.path.expanduser('~')
 CONF_FILE = os.path.join(HOME, '.wallpapers/wpg.conf')
-CONF_BACKUP = '/etc/wpgtk/wpg.conf'
+CONF_BACKUP = os.path.join(sys.prefix, 'etc/wpgtk/wpg.conf')
 WALL_DIR = os.path.join(HOME, '.wallpapers')
 SAMPLE_DIR = os.path.join(WALL_DIR, 'sample')
 XRES_DIR = os.path.join(WALL_DIR, 'xres')

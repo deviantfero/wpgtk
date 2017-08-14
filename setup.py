@@ -47,6 +47,6 @@ setuptools.setup(
         'pywal>=0.6.0',
     ],
     include_package_data=True,
-    data_files=[('/etc/wpgtk', ['wpgtk/misc/wpg.conf']),
-                ('/usr/local/bin/', ['wpgtk/misc/wpg-install.sh'])]
+    data_files=[('etc/wpgtk', ['wpgtk/misc/wpg.conf']),
+                ('bin/', ['wpgtk/misc/wpg-install.sh'])]
 )
