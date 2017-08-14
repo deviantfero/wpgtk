@@ -1,7 +1,6 @@
 """wpgtk - setup.py"""
-import setuptools
 import os
-import shutil
+import setuptools
 
 try:
     import wpgtk
@@ -16,7 +15,8 @@ except:
     LONG_DESC = '-'
     pass
 
-VERSION = "4.5.3"
+  
+VERSION = wpgtk.__version__
 DOWNLOAD = "https://github.com/deviantfero/wpgtk/archive/%s.tar.gz" % VERSION
 WALL_DIR = os.path.expanduser('~') + '/.wallpapers'
 
