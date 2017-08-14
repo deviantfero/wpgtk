@@ -3,7 +3,7 @@ import shutil
 import os
 import sys
 
-__version__ = '4.5'
+__version__ = '4.5.2'
 
 HOME = os.path.expanduser('~')
 CONF_FILE = os.path.join(HOME, '.wallpapers/wpg.conf')
