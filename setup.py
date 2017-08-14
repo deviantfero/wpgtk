@@ -32,7 +32,7 @@ setuptools.setup(
     long_description=LONG_DESC,
     license="GPL2",
     url="https://github.com/deviantfero/wpgtk",
-    download_url=DOWNLOAD,
+    download_url="https://github.com/deviantfero/wpgtk/archive/4.5.tar.gz",
     classifiers=[
         "Environment :: X11 Applications",
         "License :: OSI Approved :: MIT License",
