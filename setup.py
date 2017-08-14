@@ -38,6 +38,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.5",
     ],
     entry_points={
         "console_scripts": ["wpg=wpgtk.__main__:main"]
