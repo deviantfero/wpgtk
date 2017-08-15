@@ -43,7 +43,7 @@ they may conflict with the new folder structure (for versions < 4.0 upgrading).
 You can install via pip:
 
 ```sh
-$ pip install wpgtk
+$ pip3 install wpgtk
 ```
 
 or install the `wpgtk-git` package via the AUR.  
