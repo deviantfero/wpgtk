@@ -9,14 +9,10 @@ conf_file = None
 wpgtk = None
 wal = None
 
-def install_path():
-    import wpgtk
-    import inspect
-    return os.path.dirname(inspect.getfile(wpgtk))
-
 HOME = os.path.expanduser('~')
 CONF_FILE = os.path.join(HOME, '.wallpapers/wpg.conf')
-CONF_BACKUP = os.path.join(install_path(), 'misc/wpg.conf')
+MODULE_DIR = os.path.abspath(os.path.join(__file__, "../../"))
+CONF_BACKUP = os.path.join(MODULE_DIR, 'misc/wpg.conf')
 WALL_DIR = os.path.join(HOME, '.wallpapers')
 SAMPLE_DIR = os.path.join(WALL_DIR, 'sample')
 XRES_DIR = os.path.join(WALL_DIR, 'xres')
@@ -94,12 +90,6 @@ def init():
         print('ERR:: Not a valid config file', file=sys.stderr)
         print('INF:: Copying default config file')
         pass
-    try:
-        shutil.copy(CONF_BACKUP, CONF_FILE)
-        load_sections()
-    except:
-        print('ERR:: Not in default prefix')
-        print('ERR:: Attempting in /usr/local prefix')
-        shutil.copy(os.path.join('/usr/local/etc',
-                    'wpgtk/wpg.conf'), CONF_FILE)
-        load_sections()
+
+    shutil.copy(CONF_BACKUP, CONF_FILE)
+    load_sections()
