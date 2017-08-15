@@ -40,10 +40,10 @@ that allows you to run commands on startup.
 please delete the contents of your current `~/.wallpapers` as 
 they may conflict with the new folder structure (for versions < 4.0 upgrading).
 
-You can install via pip:
+You can install via pip (as root):
 
 ```sh
-$ pip3 install wpgtk
+# pip3 install wpgtk
 ```
 
 or install the `wpgtk-git` package via the AUR.  
