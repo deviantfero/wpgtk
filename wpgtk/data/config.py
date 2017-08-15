@@ -9,9 +9,14 @@ conf_file = None
 wpgtk = None
 wal = None
 
+def install_path():
+    import wpgtk
+    import inspect
+    return os.path.dirname(inspect.getfile(wpgtk))
+
 HOME = os.path.expanduser('~')
 CONF_FILE = os.path.join(HOME, '.wallpapers/wpg.conf')
-CONF_BACKUP = os.path.join(sys.prefix, 'etc/wpgtk/wpg.conf')
+CONF_BACKUP = os.path.join(install_path(), 'misc/wpg.conf')
 WALL_DIR = os.path.join(HOME, '.wallpapers')
 SAMPLE_DIR = os.path.join(WALL_DIR, 'sample')
 XRES_DIR = os.path.join(WALL_DIR, 'xres')
