@@ -30,7 +30,7 @@ from either a cli application or using a GUI.
 * pywal
 
 **_Attention:_** If you're using another terminal, you can load the colors on terminal startup
-by running `(wpg -t)` in your terminal (if you use gnome-terminal, xfce4-terminal or Termite add `(wpg -V)` instead).  
+by running `(wpg -t &)` in your terminal (if you use gnome-terminal, xfce4-terminal or Termite add `(wpg -V &)` instead).  
 You can add this to your terminal's settings, your shell `rc` file or anywhere else 
 that allows you to run commands on startup.
 
@@ -42,7 +42,7 @@ they may conflict with the new folder structure (for versions < 4.0 upgrading).
 
 You can install via pip (as root):
 
-```sh
+```c
 # pip3 install wpgtk
 ```
 
