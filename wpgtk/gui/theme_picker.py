@@ -35,7 +35,7 @@ class mainWindow(Gtk.Window):
         self.wpage.set_column_spacing(PAD)
 
         self.cpage = color_grid.ColorGrid(self)
-        self.fpage = base_maker.TemplateGrid(self)
+        self.fpage = template_grid.TemplateGrid(self)
         self.optpage = option_grid.OptionsGrid(self)
 
         self.notebook.append_page(self.wpage, Gtk.Label('Wallpapers'))
