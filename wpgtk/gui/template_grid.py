@@ -11,7 +11,7 @@ PAD = 10
 icon = 'document-open'
 
 
-class FileGrid(Gtk.Grid):
+class TemplateGrid(Gtk.Grid):
 
     """A helper for choosing config files
     that will be modified with wpgtk's help"""
