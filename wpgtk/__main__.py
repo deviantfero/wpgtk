@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import os
 import random
 import wpgtk.data.config as config
 from wpgtk.data import files, themer
@@ -50,6 +51,9 @@ def main():
     parser.add_argument('--tty', '-t',
                         help='send sequences to terminal equivalent to wal -r',
                         action='store_true')
+    parser.add_argument('--create-template', '-x',
+                        help='create template(s) from text file(s)',
+                        nargs='*')
 
     config.init()
     args = parser.parse_args()
@@ -113,6 +117,11 @@ def main():
             themer.shuffle_colors(arg)
             themer.auto_adjust_colors(arg)
             print('OK:: shuffled %s' % arg)
+
+    if args.create_template:
+        for arg in args.create_template:
+            themer.connect_conf(os.path.abspath(arg))
+            print('OK:: added %s.base' % arg)
 
 
 if __name__ == "__main__":
