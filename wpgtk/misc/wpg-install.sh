@@ -54,21 +54,21 @@ function install_gtk ()
 {
   echo "Installing gtk themes";
   cp -r ./FlatColor "${HOME}/.themes/" && \
-    echo ":: gtk themes install done."
+    echo ":: FlatColor gtk themes install done."
 }
 
 function install_icons()
 {
   echo "Installing icon pack";
   cp -r flattrcolor "${HOME}/.icons/" && \
-    echo ":: icons install done."
+    echo ":: flattr icons install done."
 }
 
 function install_openbox()
 {
   echo "Installing openbox themes";
   cp -r ./openbox/* "${HOME}/.themes/" && \
-    echo ":: openbox themes install done.";
+    echo ":: colorbamboo openbox themes install done.";
 }
 
 function install_all()
