@@ -103,20 +103,20 @@ as:
 * xres files under `$HOME/.wallpapers/xres/{image_name}.Xres`
 * environment variables under `$HOME/.wallpapers/current.sh` 
 
-### Optional files
+### Templates
 
-Using the GUI you can add optional files for which `wpgtk` will create a copy and
-add a modifiable file to the `~/.themes/color_other` under the file extension `.base`
-in which some keywords will be replaced with the respective colors matching 
-those keywords, these keywords are:
+Using the GUI you can add config files for which `wpgtk` will create a copy and
+add a modifiable `template` file to the `~/.themes/color_other` under the file extension `.base`
+in which some keywords will be read and replaced in the original with the respective colors
+matching those keywords, these keywords are:
 
-```assembly
+```
 from color 0 to color 9
 #COLORY
 where Y is the number of color
 
 from color 10 to 15
-#COLORXYY 
+#COLORXY
 where Y is the number of color desired
 
 also
@@ -124,7 +124,40 @@ also
 #COLORACT (inactive color)
 ```
 
-after doing this `wpgtk` will replace this new file with the original.
+##### Example
+I added a script called `rofi.sh` and wpgtk created a copy under `~/.themes/color_other/rofi.sh.base` 
+in which I can put keywords that will later be replaced when I change colorschemes with `wpgtk` in the
+original file.
+
+```
+# location: ~/.themes/color_other/rofi.sh.base
+
+rofi -color-window "#COLOR0, #COLOR0, #COLOR0" \
+	-color-normal "#COLOR0, white, #COLOR0, #COLORACT, white" \
+	-color-active "#COLOR0, #COLORACT, #COLOR0, #COLORACT, white" \
+	-tokenize \
+	-hide-scrollbar \
+	-lines 10 \
+	-width 600 \
+	-font "Droid sans mono 8" \
+	-show $1
+```
+
+This is the result after applying a colorscheme:
+
+```
+# location: ~/Code/scripts/rofi.sh
+
+rofi -color-window "#22231D, #22231D, #22231D" \
+	-color-normal "#22231D, white, #22231D, #4c837b, white" \
+	-color-active "#22231D, #4c837b, #22231D, #4c837b, white" \
+	-tokenize \
+	-hide-scrollbar \
+	-lines 10 \
+	-width 600 \
+	-font "Droid sans mono 8" \
+	-show $1
+```
 
 ### Configuration
 
