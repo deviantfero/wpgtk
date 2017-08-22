@@ -5,7 +5,7 @@ import sys
 
 __version__ = '4.5.8'
 
-conf_file = None
+options = None
 wpgtk = None
 wal = None
 
@@ -32,48 +32,20 @@ FILE_DIC = {'openbox':    os.path.join(HOME, '.themes/colorbamboo/openbox-3/them
             'icon-step2': os.path.join(HOME, '.icons/flattrcolor/scripts/replace_script.sh')}
 
 
-class Config():
-
-    """This class contains the parsed configuration
-       File and is to be a singleton for use in all
-       other modules and classes"""
-
-    class __Config():
-        def __init__(self, config_path):
-            self.config_path = config_path
-            self.options = configparser.ConfigParser()
-            self.options.read(self.config_path)
-
-    options = None
-    instance = None
-
-    # Just parse the configuration once, unless reload_config
-    # Method is called, the configuration file is never refreshed
-
-    def __init__(self, config_path=CONF_FILE):
-        if not self.instance:
-            self.instance = self.__Config(config_path)
-            self.options = self.instance.options
-        elif config_path != self.instance.config_path:
-            self.instance = self.__Config(config_path)
-            self.options = self.instance.options
-
-    def reload_conf(self, config_path=CONF_FILE):
-        self.instance = self.__Config(config_path)
-        self.options = self.instance.options
-
-    def write_conf(self, config_path=CONF_FILE):
-        with open(config_path, 'w') as config_file:
-            self.options.write(config_file)
+def write_conf(config_path=CONF_FILE):
+    global options
+    with open(config_path, 'w') as config_file:
+        options.write(config_file)
 
 
 def load_sections():
-    global conf_file
+    global options
     global wpgtk
     global wal
-    conf_file = Config(CONF_FILE)
-    wpgtk = conf_file.options['wpgtk']
-    wal = conf_file.options['wal']
+    options = configparser.ConfigParser()
+    options.read(CONF_FILE)
+    wpgtk = options['wpgtk']
+    wal = options['wal']
 
 
 def init():

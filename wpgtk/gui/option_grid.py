@@ -134,5 +134,5 @@ class OptionsGrid(Gtk.Grid):
         self.lbl_save.set_text('')
 
     def on_save_button(self,  button):
-        config.conf_file.write_conf()
+        config.write_conf()
         self.lbl_save.set_text('Saved')
