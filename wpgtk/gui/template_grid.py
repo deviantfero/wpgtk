@@ -4,7 +4,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 import os
 from gi import require_version
 from subprocess import Popen
-from wpgtk.data import config, files
+from wpgtk.data import config, files, themer
 require_version("Gtk", "3.0")
 
 PAD = 10
@@ -83,7 +83,7 @@ class TemplateGrid(Gtk.Grid):
 
         if response == Gtk.ResponseType.OK:
             filepath = filechooser.get_filename()
-            files.connect_conf(filepath)
+            themer.connect_conf(filepath)
             self.item_names = [filen for filen in
                                files.get_file_list(config.OPT_DIR, False)
                                if '.base' in filen]
