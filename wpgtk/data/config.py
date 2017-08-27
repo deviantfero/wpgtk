@@ -22,10 +22,7 @@ SCHEME_DIR = os.path.join(WALL_DIR, 'schemes')
 OPT_DIR = os.path.join(HOME, '.themes/color_other')
 
 
-FILE_DIC = {'openbox':    os.path.join(HOME, '.themes/colorbamboo/openbox-3/themerc'),
-            'openbox-nb': os.path.join(HOME, '.themes/colorbamboo-nb/openbox-3/themerc'),
-            'tint2':      os.path.join(HOME, '.config/tint2/tint2rc'),
-            'gtk2':       os.path.join(HOME, '.themes/FlatColor/gtk-2.0/gtkrc'),
+FILE_DIC = {'gtk2':       os.path.join(HOME, '.themes/FlatColor/gtk-2.0/gtkrc'),
             'gtk3.0':     os.path.join(HOME, '.themes/FlatColor/gtk-3.0/gtk.css'),
             'gtk3.20':    os.path.join(HOME, '.themes/FlatColor/gtk-3.20/gtk.css'),
             'icon-step1': os.path.join(HOME, '.icons/flattrcolor/scripts/replace_folder_file.sh'),
