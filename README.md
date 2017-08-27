@@ -30,7 +30,7 @@ from either a cli application or using a GUI.
 * pywal
 
 **_Attention:_** If you're using another terminal, you can load the colors on terminal startup
-by running `(wpg -t &)` in your terminal (if you use gnome-terminal, xfce4-terminal or Termite add `(wpg -V &)` instead).  
+by running `(wpg -t &)` in your terminal.  
 You can add this to your terminal's settings, your shell `rc` file or anywhere else 
 that allows you to run commands on startup.
 
@@ -80,17 +80,27 @@ $ wpg -h
 
 ### General Usage
 
-this is a list of useful wpg commands that you will be using if you want to use
-the cli:
 ```
-$ wpg -l #lists the currently added wallpapers
-$ wpg -c #prints the current wallpaper
-$ wpg -t #apply colorscheme to terminal (equivalent to wal -r)
-$ wpg -z {wallpaper} #shuffles the given wallpaper's colorscheme
-$ wpg --auto {wallpaper} #generates fg versions of the first 8 colors of the given wallpaper
-$ wpg -d {wallpaper} #remove an existing wallpaper
-$ wpg -h #display usage
-$ wpg -s {wallpaper1} [{wallpaper2}] #sets the current wallpaper and colorscheme, wallpaper2 is optional
+usage: wpg [-h] [-s [S [S ...]]] [-r] [-m] [-a [A [A ...]]] [-l]
+                   [--version] [-d [D [D ...]]] [-c] [-e [E [E ...]]]
+                   [-z [Z [Z ...]]] [-t] [-x] [-y [Y [Y ...]]]
+
+optional arguments:
+  -h, --help      show this help message and exit
+  -s [S [S ...]]  set the wallpaper and colorscheme, apply changes system-wide
+  -r              restore the wallpaper and colorscheme
+  -m              pick a random wallpaper and set it
+  -a [A [A ...]]  add images to the wallpaper folder and generate colorschemes
+  -l              see which wallpapers are available
+  --version, -v   print the current version
+  -d [D [D ...]]  delete the wallpaper(s) from wallpaper folder
+  -c              shows the current wallpaper
+  -e [E [E ...]]  auto adjusts the given colorscheme(s)
+  -z [Z [Z ...]]  shuffles the given colorscheme(s)
+  -t              send color sequences to all terminals
+  -x              add, remove and list templates instead of themes
+  -y [Y [Y ...]]  add an existent basefile template
+
 ```
 
 Files exported when creating a theme are all under the same directory `$HOME/.wallpapers`
@@ -104,42 +114,38 @@ as:
 
 ### Templates
 
-Using the GUI you can add config files for which `wpgtk` will create a copy and
+You can add config files for which `wpgtk` will create a copy and
 add a modifiable `template` file to the `~/.themes/color_other` under the file extension `.base`
 in which some keywords will be read and replaced in the original with the respective colors
 matching those keywords, these keywords are:
 
 ```
-from color 0 to color 9
-#COLORY
-where Y is the number of color
+#COLOR0 #COLORX10
+#COLOR1 #COLORX11
+#COLOR2 #COLORX12
+#COLOR3 #COLORX13
+#COLOR4 #COLORX14
+#COLOR5 #COLORX15
+#COLOR6
+#COLOR7
+#COLOR8
+#COLOR9
 
-from color 10 to 15
-#COLORXY
-where Y is the number of color desired
-
-also
 #COLORIN (active color)
 #COLORACT (inactive color)
 ```
 
 ##### Example
-I added a script called `rofi.sh` and wpgtk created a copy under `~/.themes/color_other/rofi.sh.base` 
+I added a file called `rofi.txt` and wpgtk created a template under `~/.themes/color_other/rofi.sh.base` 
 in which I can put keywords that will later be replaced when I change colorschemes with `wpgtk` in the
-original file.
+original file, giving me a dynamic file that changes with my colorscheme.
 
 ```
 # location: ~/.themes/color_other/rofi.sh.base
 
-rofi -color-window "#COLOR0, #COLOR0, #COLOR0" \
-	-color-normal "#COLOR0, white, #COLOR0, #COLORACT, white" \
-	-color-active "#COLOR0, #COLORACT, #COLOR0, #COLORACT, white" \
-	-tokenize \
-	-hide-scrollbar \
-	-lines 10 \
-	-width 600 \
-	-font "Droid sans mono 8" \
-	-show $1
+color-window "#COLOR0, #COLOR0, #COLOR0"
+color-normal "#COLOR0, white, #COLOR0, #COLORACT, white"
+color-active "#COLOR0, #COLORACT, #COLOR0, #COLORACT, white"
 ```
 
 This is the result after applying a colorscheme:
@@ -147,15 +153,9 @@ This is the result after applying a colorscheme:
 ```
 # location: ~/Code/scripts/rofi.sh
 
-rofi -color-window "#22231D, #22231D, #22231D" \
-	-color-normal "#22231D, white, #22231D, #4c837b, white" \
-	-color-active "#22231D, #4c837b, #22231D, #4c837b, white" \
-	-tokenize \
-	-hide-scrollbar \
-	-lines 10 \
-	-width 600 \
-	-font "Droid sans mono 8" \
-	-show $1
+color-window "#22231D, #22231D, #22231D"
+color-normal "#22231D, white, #22231D, #4c837b, white"
+color-active "#22231D, #4c837b, #22231D, #4c837b, white"
 ```
 
 ### Configuration
