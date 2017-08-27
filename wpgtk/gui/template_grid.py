@@ -79,11 +79,10 @@ class TemplateGrid(Gtk.Grid):
         filefilter.add_mime_type("text/*")
         filechooser.add_filter(filefilter)
         response = filechooser.run()
-        response = filechooser.run()
 
         if response == Gtk.ResponseType.OK:
             filepath = filechooser.get_filename()
-            themer.connect_conf(filepath)
+            files.connect_conf(filepath)
             self.item_names = [filen for filen in
                                files.get_file_list(config.OPT_DIR, False)
                                if '.base' in filen]

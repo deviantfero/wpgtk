@@ -1,10 +1,9 @@
 import errno
 import pywal
 import shutil
-import sys
 from random import shuffle
 from os.path import realpath
-from os import symlink, remove, path, makedirs
+from os import symlink, remove, path
 from subprocess import Popen, call
 from . import color, sample, config, files
 
@@ -115,25 +114,3 @@ def auto_adjust_colors(filename):
         color.write_colors(filename, color_list)
     except IOError:
         print('ERR:: file not available')
-
-
-def connect_conf(filepath):
-    l = filepath.split('/', len(filepath))
-
-    # we remove dots from possible dotfiles
-    filename = l[-2].lstrip('.') + '.' + l[-1].lstrip('.')
-    print('ADD::' + filename + '@' + filepath)
-    try:
-        shutil.copy2(filepath, filepath + '.bak')
-        print('::MAKING BACKUP CONFIG')
-        print('::CREATING BASE')
-        shutil.copy2(filepath, path.join(config.OPT_DIR,
-                                         (filename + '.base')))
-        shutil.copy2(filepath, path.join(config.OPT_DIR, filename))
-        remove(filepath)
-        symlink(path.join(config.OPT_DIR, filename), filepath)
-        print('::CREATING SYMLINK')
-    except FileNotFoundError as e:
-        print('ERR::' + str(e.__class__), file=sys.stderr)
-        makedirs(config.OPT_DIR)
-        print('INF:: directory created')

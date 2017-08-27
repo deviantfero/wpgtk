@@ -120,7 +120,7 @@ def main():
 
     if args.create_template:
         for arg in args.create_template:
-            themer.connect_conf(os.path.abspath(arg))
+            files.connect_conf(os.path.abspath(arg))
             print('OK:: added %s.base' % arg)
 
 

@@ -1,4 +1,6 @@
 import os
+import shutil
+import sys
 import re
 from . import config
 
@@ -32,3 +34,28 @@ def get_file_list(path=config.WALL_DIR, images=True):
 def show_files(path=config.WALL_DIR, images=True):
     for f in get_file_list(path, images):
         print(f)
+
+
+def connect_conf(filepath):
+
+    # we remove dots from possible dotfiles
+    l = [atom.lstrip('.') for atom in filepath.split('/')
+         if atom is not 'home']
+    if len(l) > 3:
+        l = l[-3::]
+    filename = '.'.join(l)
+    print('ADD::' + filename + '@' + filepath)
+    try:
+        shutil.copy2(filepath, filepath + '.bak')
+        print('::MAKING BACKUP CONFIG')
+        print('::CREATING BASE')
+        shutil.copy2(filepath, os.path.join(config.OPT_DIR,
+                     (filename + '.base')))
+        shutil.copy2(filepath, os.path.join(config.OPT_DIR, filename))
+        os.remove(filepath)
+        os.symlink(os.path.join(config.OPT_DIR, filename), filepath)
+        print('::CREATING SYMLINK')
+    except FileNotFoundError as e:
+        print('ERR::' + str(e.__class__), file=sys.stderr)
+        os.makedirs(config.OPT_DIR)
+        print('INF:: directory created')
