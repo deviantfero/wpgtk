@@ -66,7 +66,7 @@ def add_template(cfile, basefile=None):
 
 def remove_template(basefile):
     basefile_path = os.path.join(config.OPT_DIR, basefile)
-    configfile_path = basefile_path.rstrip('.base')
+    configfile_path = basefile_path.replace('.base', '')
 
     try:
         os.remove(basefile_path)
