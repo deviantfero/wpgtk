@@ -4,7 +4,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 import os
 from gi import require_version
 from subprocess import Popen
-from wpgtk.data import config, files, themer
+from wpgtk.data import config, files
 require_version("Gtk", "3.0")
 
 PAD = 10
@@ -82,7 +82,7 @@ class TemplateGrid(Gtk.Grid):
 
         if response == Gtk.ResponseType.OK:
             filepath = filechooser.get_filename()
-            files.connect_conf(filepath)
+            files.add_template(filepath)
             self.item_names = [filen for filen in
                                files.get_file_list(config.OPT_DIR, False)
                                if '.base' in filen]
@@ -109,7 +109,7 @@ class TemplateGrid(Gtk.Grid):
     def on_rm_clicked(self, widget):
         if self.current is not None:
             item = self.item_names.pop(self.current)
-            os.remove(os.path.join(config.OPT_DIR, item))
+            files.remove_template(item)
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
