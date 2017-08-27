@@ -59,12 +59,11 @@ after you install `wpg` you can run `wpg-install.sh`:
   -t|tint2      Install tint2 theme
   -g|gtk        Install gtk theme
   -i|icons      Install icon-set
-  -a|all        Install all themes
   ```
 
 This will install all themes:
   ```
-$ wpg-install.sh -a 
+$ wpg-install.sh -otgi 
 ```
 
 And if everything went fine you can now execute `wpg` and it will take
