@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import sys
-import os
 import random
 import wpgtk.data.config as config
 from wpgtk.data import files, themer
@@ -16,43 +15,47 @@ import pywal
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--set', '-s',
+    parser.add_argument('-s',
                         help='set the wallpaper and colorscheme, apply \
                         changes system-wide',
                         nargs='*')
-    parser.add_argument('--restore', '-r',
+    parser.add_argument('-r',
                         help='restore the wallpaper and colorscheme',
                         action='store_true')
-    parser.add_argument('--random', '-m',
+    parser.add_argument('-m',
                         help='pick a random wallpaper and set it',
                         action='store_true')
-    parser.add_argument('--add', '-a',
+    parser.add_argument('-a',
                         help='add images to the wallpaper folder and generate \
                         colorschemes',
                         nargs='*')
-    parser.add_argument('--list', '-l',
+    parser.add_argument('-l',
                         help='see which wallpapers are available',
                         action='store_true')
     parser.add_argument('--version', '-v',
                         help='print the current version',
                         action='store_true')
-    parser.add_argument('--delete', '-d',
+    parser.add_argument('-d',
                         help='delete the wallpaper(s) from wallpaper folder',
                         nargs='*')
-    parser.add_argument('--current', '-c',
+    parser.add_argument('-c',
                         help='shows the current wallpaper',
                         action='store_true')
-    parser.add_argument('--auto', '-e',
-                        help='auto adjusts the given colorschemes',
+    parser.add_argument('-e',
+                        help='auto adjusts the given colorscheme(s)',
                         nargs='*')
-    parser.add_argument('--shuffle', '-z',
-                        help='shuffles the given colorschemes',
+    parser.add_argument('-z',
+                        help='shuffles the given colorscheme(s)',
                         nargs='*')
-    parser.add_argument('--tty', '-t',
-                        help='send sequences to terminal equivalent to wal -r',
+    parser.add_argument('-t',
+                        help='send color sequences to all terminals',
                         action='store_true')
-    parser.add_argument('--create-template', '-x',
-                        help='create template(s) from text file(s)',
+    parser.add_argument('-x',
+                        help='add, remove and list \
+                             templates instead of themes',
+                        action='store_true')
+    parser.add_argument('-y',
+                        help='add an existent basefile template',
                         nargs='*')
 
     config.init()
@@ -64,64 +67,68 @@ def main():
         except NameError:
             print('ERR:: missing pygobject module, use cli', file=sys.stderr)
 
-    if args.set:
-        if len(args.set) == 1:
+    if args.s:
+        if len(args.s) == 1:
             try:
-                themer.set_theme(args.set[0],
-                                 args.set[0],
-                                 args.restore)
+                themer.set_theme(args.s[0], args.s[0], args.r)
             except TypeError as e:
-                print('ERR:: file ' + args.set[0] + ' not found')
+                print('ERR:: file ' + args.s[0] + ' not found')
                 raise e
-        elif len(args.set) == 2:
+        elif len(args.s) == 2:
             try:
-                themer.set_theme(args.set[0],
-                                 args.set[1],
-                                 args.restore)
+                themer.set_theme(args.s[0], args.s[1], args.r)
             except TypeError:
                 print('ERR:: file  not found')
-        elif len(args.set) > 2:
+        elif len(args.s) > 2:
             print('ERR:: Specify just 2 filenames')
 
-    if args.list:
-        files.show_files()
+    if args.l:
+        if args.x:
+            templates = files.get_file_list(config.OPT_DIR, False)
+            [print(t) for t in templates if '.base' in t]
+        else:
+            files.show_files()
 
-    if args.tty:
+    if args.t:
         pywal.reload.colors(True, config.WALL_DIR)
 
     if args.version:
         print('current version: ' + __version__)
 
-    if args.delete:
-        for e in args.delete:
-            themer.delete_theme(e)
+    if args.d:
+        for e in args.d:
+            if args.x:
+                files.remove_template(e)
+            else:
+                themer.delete_theme(e)
 
-    if args.current:
+    if args.c:
         themer.show_current()
 
-    if args.add:
-        for e in args.add:
-            themer.create_theme(e)
+    if args.a:
+        if args.x:
+            files.add_template(args.a[0])
+        else:
+            for e in args.a:
+                themer.create_theme(e)
 
-    if args.random:
+    if args.m:
         filename = random.choice(files.get_file_list())
         themer.set_theme(filename, filename)
 
-    if args.auto:
-        for arg in args.auto:
+    if args.e:
+        for arg in args.e:
             themer.auto_adjust_colors(arg)
             print('OK:: Auto-adjusted %s' % arg)
 
-    if args.shuffle:
-        for arg in args.shuffle:
+    if args.z:
+        for arg in args.z:
             themer.shuffle_colors(arg)
             themer.auto_adjust_colors(arg)
             print('OK:: shuffled %s' % arg)
 
-    if args.create_template:
-        for arg in args.create_template:
-            files.connect_conf(os.path.abspath(arg))
-            print('OK:: added %s.base' % arg)
+    if args.y:
+        files.add_template(arg.y[0], arg.y[1])
 
 
 if __name__ == "__main__":
