@@ -54,14 +54,14 @@ class OptionsGrid(Gtk.Grid):
         # Switches
         self.tint2_switch = Gtk.Switch()
         self.tint2_switch.connect('notify::active',  self.on_activate, 'tint2')
-        self.lbl_tint2 = Gtk.Label('Colorize Tint2')
+        self.lbl_tint2 = Gtk.Label('Reload Tint2')
         self.gtk_switch = Gtk.Switch()
         self.gtk_switch.connect('notify::active',  self.on_activate, 'gtk')
         self.lbl_gtk = Gtk.Label('Colorize GTK')
         self.openbox_switch = Gtk.Switch()
         self.openbox_switch.connect('notify::active',
                                     self.on_activate, 'openbox')
-        self.lbl_openbox = Gtk.Label('Colorize openbox')
+        self.lbl_openbox = Gtk.Label('Reload openbox')
 
         # edit cmd
         self.editor_lbl = Gtk.Label('Open optional files with:')
@@ -134,5 +134,5 @@ class OptionsGrid(Gtk.Grid):
         self.lbl_save.set_text('')
 
     def on_save_button(self,  button):
-        config.conf_file.write_conf()
+        config.write_conf()
         self.lbl_save.set_text('Saved')

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-__ScriptVersion="0.1"
-THEME_DIR="${PWD}/wpgtk-themes"
+__ScriptVersion="0.1.5";
+THEME_DIR="${PWD}/wpgtk-themes";
+COLOR_OTHER="${HOME}/.themes/color_other";
 
 #===  FUNCTION  ================================================================
 #         NAME:  wpg-install
@@ -12,29 +13,39 @@ function usage ()
   echo "Usage :  $0 [options] [--]
 
   Options:
-  -h|help       Display this message
-  -v|version    Display script version
-  -o|openbox    Install openbox themes
-  -t|tint2      Install tint2 theme
-  -g|gtk        Install gtk theme
-  -i|icons      Install icon-set
-  -a|all        Install all themes
+  -h   Display this message
+  -v   Display script version
+  -o   Install openbox themes
+  -t   Install tint2 theme
+  -g   Install gtk theme
+  -i   Install icon-set
+  -r   Install rofi theme
+  -a   Install all themes
   "
 }
 
-function checkgit ()
+function checkprogram ()
 {
-  command -v git >/dev/null 2>&1 || \
-      (echo "Please install git before proceeding" && exit 1);
+  command -v $1 >/dev/null 2>&1;
+  if [[ $? -eq 1 ]]; then
+    echo "Please install $1 before proceeding"; 
+    exit 1;
+  fi
 }
 
 function getfiles ()
 {
-  checkgit;
-  mkdir -p "${HOME}/.themes";
+  checkprogram 'git';
+  checkprogram 'wpg';
+  mkdir -p "${HOME}/.themes/color_other";
   mkdir -p "${HOME}/.icons";
   git clone https://github.com/deviantfero/wpgtk-themes "$THEME_DIR";
-  cd "$THEME_DIR";
+  if [[ $? -eq 0 ]]; then
+    cd "$THEME_DIR";
+    return 0;
+  else
+    exit 1;
+  fi
 }
 
 function install_tint2 ()
@@ -43,40 +54,57 @@ function install_tint2 ()
   read -r response;
   if [[ ! "$response" == "n" ]]; then
     echo "Installing tint2 config";
-    cp ./tint2/* "${HOME}/.config/tint2/" && \
-      echo ":: tint2 conf install done.";
+    echo ":: backing up current tint2 conf in tint2rc.old.bak";
+    cp "${HOME}/.config/tint2/tint2rc" "${HOME}/.config/tint2/tint2rc.old.bak" 2>/dev/null;
+    cp --remove-destination ./tint2/tint2rc "${HOME}/.config/tint2/tint2rc" && \
+    cp --remove-destination ./tint2/tint2rc.base "${COLOR_OTHER}" && \
+      ln -sf "${HOME}/.config/tint2/tint2rc" "${COLOR_OTHER}/tint2rc" && \
+      echo ":: tint2 template install done."
     return 0;
   fi
-  echo ":: tint2 conf not installed";
+  echo ":: tint2 template not installed";
+}
+
+function install_rofi ()
+{
+  echo -n "This might override your rofi config, Continue?[Y/n]: ";
+  read -r response;
+  if [[ ! "$response" == "n" ]]; then
+    echo "Installing rofi config";
+    echo ":: backing up current rofi conf in rofi.bak";
+    cp "${HOME}/.config/rofi/config" "${HOME}/.config/rofi/config.bak" 2>/dev/null;
+    cp --remove-destination ./rofi/config "${HOME}/.config/rofi/config" && \
+    cp --remove-destination ./rofi/rofi.base "${COLOR_OTHER}" && \
+      ln -sf "${HOME}/.config/rofi/config" "${COLOR_OTHER}/rofi" && \
+      echo ":: rofi template install done."
+    return 0;
+  fi
+  echo ":: rofi template not installed";
 }
 
 function install_gtk ()
 {
   echo "Installing gtk themes";
   cp -r ./FlatColor "${HOME}/.themes/" && \
-    echo ":: gtk themes install done."
+    echo ":: FlatColor gtk themes install done."
 }
 
 function install_icons()
 {
   echo "Installing icon pack";
   cp -r flattrcolor "${HOME}/.icons/" && \
-    echo ":: icons install done."
+    echo ":: flattr icons install done."
 }
 
 function install_openbox()
 {
   echo "Installing openbox themes";
-  cp -r ./openbox/* "${HOME}/.themes/" && \
-    echo ":: openbox themes install done.";
-}
-
-function install_all()
-{
-  install_tint2;
-  install_gtk;
-  install_icons;
-  install_openbox;
+  cp --remove-destination -r ./openbox/colorbamboo/* "${HOME}/.themes/colorbamboo"
+  if [[ $? -eq 0 ]]; then
+    mv "${HOME}/.themes/colorbamboo/openbox-3/themerc.base" "${COLOR_OTHER}/ob_colorbamboo.base";
+    ln -sf "${HOME}/.themes/colorbamboo/openbox-3/themerc" "${COLOR_OTHER}/ob_colorbamboo" && \
+      echo ":: colorbamboo openbox themes install done.";
+  fi
 }
 
 function clean_up()
@@ -89,53 +117,45 @@ function clean_up()
 #  Handle command line arguments
 #-----------------------------------------------------------------------
 
-while getopts ":hvotgia" opt
-do
-  case $opt in
-    h|help)
-      usage;
-      exit 0
-      ;;
-    v|version)
-      echo "$0 -- Version $__ScriptVersion";
-      exit 0;
-      ;;
-    o|openbox)
-      getfiles;
-      install_openbox;
-      clean_up;
-      exit 0;
-      ;;
-    i|icons)
-      getfiles;
-      install_icons;
-      clean_up;
-      exit 0;
-      ;;
-    g|gtk)
-      getfiles;
-      install_gtk;
-      clean_up;
-      exit 0;
-      ;;
-    t|tint2)
-      getfiles;
-      install_tint2;
-      clean_up;
-      exit 0;
-      ;;
-    a|all)
-      getfiles;
-      install_all;
-      clean_up;
-      exit 0;
-      ;;
-    *)
-      echo -e "\n  Option does not exist : $OPTARG\n"
-      usage;
-      exit 1
-      ;;
+function getargs()
+{
+  while getopts ":hvotgir" opt
+  do
+    case $opt in
+      h)
+        usage;
+        exit 0
+        ;;
+      v)
+        echo "$0 -- Version $__ScriptVersion";
+        exit 0;
+        ;;
+      o) openbox="true" ;;
+      i)   icons="true" ;;
+      g)     gtk="true" ;;
+      t)   tint2="true" ;;
+      r)    rofi="true" ;;
+      *)
+        echo -e "\n  Option does not exist : $OPTARG\n"
+        usage;
+        exit 1
+        ;;
 
-    esac
-  done
-  shift "$((OPTIND - 1))"
+      esac
+    done
+    shift "$((OPTIND - 1))"
+}
+
+function main()
+{
+  getargs "$@";
+  getfiles;
+  [[ "$openbox" == "true" ]] && install_openbox;
+  [[ "$tint2" == "true" ]] && install_tint2;
+  [[ "$rofi" == "true" ]] && install_rofi;
+  [[ "$gtk" == "true" ]] && install_gtk;
+  [[ "$icons" == "true" ]] && install_icons;
+  clean_up;
+}
+
+main "$@"

@@ -1,5 +1,6 @@
 import os
 import shutil
+import pywal
 from wpgtk.data import color
 from wpgtk.data import config, files, sample
 from .color_picker import ColorDialog
@@ -8,7 +9,6 @@ from gi import require_version
 from gi.repository import Gtk, Gdk, GdkPixbuf
 require_version("Gtk", "3.0")
 
-import pywal
 
 current_walls = files.get_file_list()
 PAD = 10
@@ -177,9 +177,9 @@ class ColorGrid(Gtk.Grid):
         self.render_sample()
 
     def on_shuffle_click(self, widget):
-        shuffled_colors = self.color_list[1:8]
+        shuffled_colors = self.color_list[1:7]
         shuffle(shuffled_colors)
-        list_tail = shuffled_colors + self.color_list[8:]
+        list_tail = shuffled_colors + self.color_list[7:]
         self.color_list = self.color_list[:1] + list_tail
         self.on_auto_click(widget)
 
@@ -193,7 +193,8 @@ class ColorGrid(Gtk.Grid):
 
         if response == Gtk.ResponseType.OK:
             gcolor = dialog.colorchooser.get_rgba()
-            rgb = list(map(lambda x:round(x*100*2.55), [gcolor.red, gcolor.green, gcolor.blue]))
+            rgb = list(map(lambda x: round(x*100*2.55),
+                           [gcolor.red, gcolor.green, gcolor.blue]))
             hex_color = pywal.util.rgb_to_hex(rgb)
             widget.set_label(hex_color)
             gcolor = Gdk.color_parse(hex_color)
@@ -223,9 +224,8 @@ class ColorGrid(Gtk.Grid):
                                    (selected_file + '.sample.png'))
         self.color_list = color.get_color_list(selected_file)
         self.render_buttons()
-        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(sample_path,
-                                                                    width=500,
-                                                                    height=300)
+        self.pixbuf_sample = GdkPixbuf.Pixbuf\
+            .new_from_file_at_size(sample_path, width=500, height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
         if config.wpgtk.getboolean('light_theme'):
             self.color_list = self.color_list[::-1]

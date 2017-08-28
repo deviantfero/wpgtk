@@ -11,7 +11,7 @@ PAD = 10
 icon = 'document-open'
 
 
-class FileGrid(Gtk.Grid):
+class TemplateGrid(Gtk.Grid):
 
     """A helper for choosing config files
     that will be modified with wpgtk's help"""
@@ -79,11 +79,10 @@ class FileGrid(Gtk.Grid):
         filefilter.add_mime_type("text/*")
         filechooser.add_filter(filefilter)
         response = filechooser.run()
-        response = filechooser.run()
 
         if response == Gtk.ResponseType.OK:
             filepath = filechooser.get_filename()
-            files.connect_conf(filepath)
+            files.add_template(filepath)
             self.item_names = [filen for filen in
                                files.get_file_list(config.OPT_DIR, False)
                                if '.base' in filen]
@@ -110,7 +109,7 @@ class FileGrid(Gtk.Grid):
     def on_rm_clicked(self, widget):
         if self.current is not None:
             item = self.item_names.pop(self.current)
-            os.remove(os.path.join(config.OPT_DIR, item))
+            files.remove_template(item)
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)

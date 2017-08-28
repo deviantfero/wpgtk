@@ -25,9 +25,7 @@ def write_colors(img, color_list):
 
     cache_file = os.path.join(config.SCHEME_DIR,
                               str(image).replace('/', '_').replace('.', '_'))
-    cache_file += ".json"
-
-    pywal.export.color(color_dict, "json", cache_file)
+    pywal.export.color(color_dict, "json", cache_file + ".json")
     pywal.export.color(color_dict,
                        "xresources",
                        os.path.join(config.XRES_DIR, (img + ".Xres")))
@@ -40,24 +38,30 @@ def change_colors(colors, which):
     try:
         tmp_filename = which + '.base'
         with open(tmp_filename, 'r') as tmp_file:
+            top = tmp_file.tell()
+            first_line = tmp_file.readline()
+            tmp_file.seek(top)
             tmp_data = tmp_file.read()
 
-        for k, v in colors['wpgtk'].items():
-            tmp_data = tmp_data.replace(k, v.strip('#'))
-        for i in range(16):
-            replace_word = 'COLOR%d' % i if i < 10 else 'COLORX%d' % i
-            replace_val = colors['colors']['color%s' % i].strip('#')
-            tmp_data = tmp_data.replace(replace_word, replace_val)
-        if colors['icons']:
-            for k, v in colors['icons'].items():
-                tmp_data = tmp_data.replace(k, v.replace('#', ''))
+        # ignore the template if it has wpgtk-ignore in it
+        if 'wpgtk-ignore' not in first_line:
+            for k, v in colors['wpgtk'].items():
+                tmp_data = tmp_data.replace(k, v.strip('#'))
+            for i in range(16):
+                replace_word = 'COLOR%d' % i if i < 10 else 'COLORX%d' % i
+                replace_val = colors['colors']['color%s' % i].strip('#')
+                tmp_data = tmp_data.replace(replace_word, replace_val)
+            if colors['icons'] and opt == 'icon-step1':
+                for k, v in colors['icons'].items():
+                    tmp_data = tmp_data.replace(k, v.replace('#', ''))
 
-        with open(which, 'w') as target_file:
-            target_file.write(tmp_data)
-        print("OK:: %s - CHANGED SUCCESSFULLY" % opt.upper())
+            with open(which, 'w') as target_file:
+                target_file.write(tmp_data)
+            print("OK:: %s - CHANGED SUCCESSFULLY" %
+                  opt.replace(config.OPT_DIR + '/', 'template :: '))
     except IOError as err:
         print("ERR::%s - "
-              "BASE FILE DOES NOT EXIST" % opt.upper(), file=sys.stderr)
+              "BASE FILE DOES NOT EXIST" % opt, file=sys.stderr)
 
 
 def clean_icon_color(dirty_string):
@@ -75,7 +79,7 @@ def get_darkness(hexv):
 
 
 def reduce_brightness(hex_string, amount):
-    rgb = list(int(hex_string.strip('#')[i:i+2], 16) for i in (0, 2, 4))
+    rgb = pywal.util.hex_to_rgb(hex_string)
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
     if(hls[1] - amount > 0):
@@ -142,17 +146,15 @@ def change_other_files(colors):
     files = []
     for(dirpath, dirnames, filenames) in os.walk(other_path):
         files.extend(filenames)
-    if files:
-        try:
-            for word in files:
-                if ".base" in word:
-                    original = word.split(".base", len(word)).pop(0)
-                    change_colors(colors, os.path.join(other_path, original))
-        except Exception as e:
-            print('ERR:: ' + str(e), file=sys.stderr)
-            print('ERR::OPTIONAL FILE -' + original, file=sys.stderr)
-    else:
-        print("INF::NO OPTIONAL FILES DETECTED")
+
+    try:
+        for word in files:
+            if '.base' in word:
+                original = word.split('.base', len(word)).pop(0)
+                change_colors(colors, os.path.join(other_path, original))
+    except Exception as e:
+        print('ERR:: ' + str(e), file=sys.stderr)
+        print('ERR::OPTIONAL FILE -' + original, file=sys.stderr)
 
 
 def split_active(hexc):
@@ -192,13 +194,6 @@ def prepare_colors(image_name):
 
 def execute_gcolorchange(image_name):
     colors = prepare_colors(image_name)
-    if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
-        change_colors(colors, 'openbox')
-        call(["openbox", "--reconfigure"])
-
-    if config.wpgtk.getboolean('tint2') or not shutil.which('tint2'):
-        change_colors(colors, 'tint2')
-        call(["killall", "-SIGUSR1", "tint2"])
 
     if config.wpgtk.getboolean('gtk'):
         change_colors(colors, 'gtk2')
@@ -209,5 +204,10 @@ def execute_gcolorchange(image_name):
     if os.path.isfile(config.FILE_DIC['icon-step2']):
         change_colors(colors, 'icon-step1')
         call(config.FILE_DIC['icon-step2'])
+
     change_other_files(colors)
+    if config.wpgtk.getboolean('tint2') or not shutil.which('tint2'):
+        call(["pkill", "-SIGUSR1", "tint2"])
+    if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
+        call(["openbox", "--reconfigure"])
     print("OK::FINISHED")

@@ -1,7 +1,7 @@
 import os
+import shutil
 import sys
 import re
-import shutil
 from . import config
 
 
@@ -36,23 +36,41 @@ def show_files(path=config.WALL_DIR, images=True):
         print(f)
 
 
-def connect_conf(filepath):
-    l = filepath.split('/', len(filepath))
+def add_template(cfile, basefile=None):
 
     # we remove dots from possible dotfiles
-    filename = l[-2].lstrip('.') + '.' + l[-1].lstrip('.')
-    print('ADD::' + filename + '@' + filepath)
+    if not basefile:
+        l = [atom.lstrip('.') for atom in cfile.split('/')
+             if atom is not 'home']
+        if len(l) > 3:
+            l = l[-3::]
+        templatename = '.'.join(l) + '.base'
+    else:
+        templatename = basefile.split('/').pop()
+    print('ADD::' + templatename + '@' + cfile)
     try:
-        shutil.copy2(filepath, filepath + '.bak')
         print('::MAKING BACKUP CONFIG')
+        shutil.copy2(cfile, cfile + '.bak')
         print('::CREATING BASE')
-        shutil.copy2(filepath, os.path.join(config.OPT_DIR,
-                                            (filename + '.base')))
-        shutil.copy2(filepath, os.path.join(config.OPT_DIR, filename))
-        os.remove(filepath)
-        os.symlink(os.path.join(config.OPT_DIR, filename), filepath)
+        if basefile:
+            shutil.copy2(basefile, os.path.join(config.OPT_DIR, templatename))
+        else:
+            shutil.copy2(cfile, os.path.join(config.OPT_DIR, templatename))
         print('::CREATING SYMLINK')
-    except FileNotFoundError as e:
-        print('ERR::' + str(e.__class__), file=sys.stderr)
-        os.makedirs(config.OPT_DIR)
-        print('INF:: directory created')
+        os.symlink(cfile, os.path.join(config.OPT_DIR,
+                   templatename.replace('.base', '')))
+    except Exception as e:
+        print('ERR::' + str(e.strerror), file=sys.stderr)
+        raise e
+
+
+def remove_template(basefile):
+    basefile_path = os.path.join(config.OPT_DIR, basefile)
+    configfile_path = basefile_path.replace('.base', '')
+
+    try:
+        os.remove(basefile_path)
+        if os.path.islink(configfile_path):
+            os.remove(configfile_path)
+    except Exception as e:
+        print('ERR::' + str(e.strerror), file=sys.stderr)

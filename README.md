@@ -9,12 +9,16 @@ with default themes for GTK2, GTK+, openbox and Tint2, that uses
 you can choose to interact with it in two ways, manage your themes 
 from either a cli application or using a GUI.
 
-#### [GUI](https://gfycat.com/DefinitiveSpiffyJohndory)
+### Features
 
-#### [Powerful command line interface](https://gfycat.com/NeighboringSarcasticEquine)
+* #### [GUI](https://gfycat.com/RigidAnxiousElk)
+
+* #### [Powerful command line interface](https://gfycat.com/NeighboringSarcasticEquine)
+
+* #### [Templates](https://gfycat.com/VacantHeavyAmericansaddlebred)
 
 
-![interface_image](http://i.imgur.com/aWgqJPG.png)
+![interface_image](http://i.imgur.com/2cquXzm.png)
 
 
 
@@ -30,7 +34,7 @@ from either a cli application or using a GUI.
 * pywal
 
 **_Attention:_** If you're using another terminal, you can load the colors on terminal startup
-by running `(wpg -t &)` in your terminal (if you use gnome-terminal, xfce4-terminal or Termite add `(wpg -V &)` instead).  
+by running `(wpg -t &)` in your terminal.  
 You can add this to your terminal's settings, your shell `rc` file or anywhere else 
 that allows you to run commands on startup.
 
@@ -55,16 +59,16 @@ after you install `wpg` you can run `wpg-install.sh`:
   Options:
   -h|help       Display this message
   -v|version    Display script version
-  -o|openbox    Install openbox themes
-  -t|tint2      Install tint2 theme
-  -g|gtk        Install gtk theme
-  -i|icons      Install icon-set
-  -a|all        Install all themes
+  -o            Install openbox template
+  -t            Install tint2 template
+  -g            Install gtk theme
+  -r            Install rofi template
+  -i            Install icon-set
   ```
 
 This will install all themes:
   ```
-$ wpg-install.sh -a 
+$ wpg-install.sh -otgir
 ```
 
 And if everything went fine you can now execute `wpg` and it will take
@@ -81,17 +85,27 @@ $ wpg -h
 
 ### General Usage
 
-this is a list of useful wpg commands that you will be using if you want to use
-the cli:
 ```
-$ wpg -l #lists the currently added wallpapers
-$ wpg -c #prints the current wallpaper
-$ wpg -t #apply colorscheme to terminal (equivalent to wal -r)
-$ wpg -z {wallpaper} #shuffles the given wallpaper's colorscheme
-$ wpg --auto {wallpaper} #generates fg versions of the first 8 colors of the given wallpaper
-$ wpg -d {wallpaper} #remove an existing wallpaper
-$ wpg -h #display usage
-$ wpg -s {wallpaper1} [{wallpaper2}] #sets the current wallpaper and colorscheme, wallpaper2 is optional
+usage: wpg [-h] [-s [S [S ...]]] [-r] [-m] [-a [A [A ...]]] [-l]
+                   [--version] [-d [D [D ...]]] [-c] [-e [E [E ...]]]
+                   [-z [Z [Z ...]]] [-t] [-x] [-y [Y [Y ...]]]
+
+optional arguments:
+  -h, --help      show this help message and exit
+  -s [S [S ...]]  set the wallpaper and colorscheme, apply changes system-wide
+  -r              restore the wallpaper and colorscheme
+  -m              pick a random wallpaper and set it
+  -a [A [A ...]]  add images to the wallpaper folder and generate colorschemes
+  -l              see which wallpapers are available
+  --version, -v   print the current version
+  -d [D [D ...]]  delete the wallpaper(s) from wallpaper folder
+  -c              shows the current wallpaper
+  -e [E [E ...]]  auto adjusts the given colorscheme(s)
+  -z [Z [Z ...]]  shuffles the given colorscheme(s)
+  -t              send color sequences to all terminals
+  -x              add, remove and list templates instead of themes
+  -y [Y [Y ...]]  add an existent basefile template
+
 ```
 
 Files exported when creating a theme are all under the same directory `$HOME/.wallpapers`
@@ -103,33 +117,73 @@ as:
 * xres files under `$HOME/.wallpapers/xres/{image_name}.Xres`
 * environment variables under `$HOME/.wallpapers/current.sh` 
 
-### Optional files
-
-Using the GUI you can add optional files for which `wpgtk` will create a copy and
-add a modifiable file to the `~/.themes/color_other` under the file extension `.base`
-in which some keywords will be replaced with the respective colors matching 
-those keywords, these keywords are:
-
-```assembly
-from color 0 to color 9
-#COLORY
-where Y is the number of color
-
-from color 10 to 15
-#COLORXYY 
-where Y is the number of color desired
-
-also
-#COLORIN (active color)
-#COLORACT (inactive color)
-```
-
-after doing this `wpgtk` will replace this new file with the original.
-
 ### Configuration
 
 The configuration file should be located at `$HOME/.wallpapers/wpg.conf`
 There you can edit settings without the use of the gui.
+
+# Templates
+
+You can add text files for which `wpgtk` will create a copy and a backup and
+add a modifiable `template` file to `~/.themes/color_other` with file extension `.base`
+in this files some keywords will be searched and replaced with the respective hexcodematching those keywords, 
+an thenm replace the original configuration keeping it in sync with the colorscheme, these keywords are:
+
+```
+#COLOR0 #COLORX10
+#COLOR1 #COLORX11
+#COLOR2 #COLORX12
+#COLOR3 #COLORX13
+#COLOR4 #COLORX14
+#COLOR5 #COLORX15
+#COLOR6
+#COLOR7
+#COLOR8
+#COLOR9
+
+#COLORIN (active color)
+#COLORACT (inactive color)
+
+wpgtk-ignore: by placing this keyword on the first line of a basefile,
+it will be temporarily disabled, leaving you with the last theme you chose.
+```
+
+#### Example
+I added a file called `rofi.txt` and wpgtk created a template under `~/.themes/color_other/rofi.txt.base` 
+in which I can put keywords that will later be replaced when I change colorschemes with `wpgtk` in the
+original file, giving me a dynamic file that changes with my colorscheme.
+
+```
+# location: ~/.themes/color_other/rofi.txt.base
+
+color-window "#COLOR0, #COLOR0, #COLOR0"
+color-normal "#COLOR0, white, #COLOR0, #COLORACT, white"
+color-active "#COLOR0, #COLORACT, #COLOR0, #COLORACT, white"
+```
+
+This is the result after applying a colorscheme:
+
+```
+# location: ~/Code/scripts/rofi.txt
+
+color-window "#22231D, #22231D, #22231D"
+color-normal "#22231D, white, #22231D, #4c837b, white"
+color-active "#22231D, #4c837b, #22231D, #4c837b, white"
+```
+
+
+### Restoring old templates
+
+You can also re-add old templates you archive, to do this, you must use the cli and execute the following
+command:
+
+```
+$ wpg -y /path/to/config-file /path/to/saved-base-file
+```
+
+This will reconnect the base file template to the original configuration file and keep it in sync again
+with the colorscheme.
+
 
 # Loading at Startup
 to load your new wallpaper at startup along with the colors add the following to your 

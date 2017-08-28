@@ -82,9 +82,9 @@ def show_current():
 def shuffle_colors(filename):
     try:
         colors = color.get_color_list(filename)
-        shuffled_colors = colors[1:8]
+        shuffled_colors = colors[1:7]
         shuffle(shuffled_colors)
-        colors = colors[:1] + shuffled_colors + colors[8:]
+        colors = colors[:1] + shuffled_colors + colors[7:]
         sample.create_sample(colors, f=path.join(config.SAMPLE_DIR,
                              filename + '.sample.png'))
         color.write_colors(filename, colors)
