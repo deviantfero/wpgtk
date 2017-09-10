@@ -61,7 +61,6 @@ def add_template(cfile, basefile=None):
                    templatename.replace('.base', '')))
     except Exception as e:
         print('ERR::' + str(e.strerror), file=sys.stderr)
-        raise e
 
 
 def remove_template(basefile):

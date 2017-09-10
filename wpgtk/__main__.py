@@ -55,7 +55,7 @@ def main():
                              templates instead of themes',
                         action='store_true')
     parser.add_argument('-y',
-                        help='add an existent basefile template [base, config]',
+                        help='add an existent basefile template [config, basefile]',
                         nargs='*')
 
     config.init()
