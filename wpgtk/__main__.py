@@ -55,7 +55,7 @@ def main():
                              templates instead of themes',
                         action='store_true')
     parser.add_argument('-y',
-                        help='add an existent basefile template',
+                        help='add an existent basefile template [base, config]',
                         nargs='*')
 
     config.init()
@@ -128,7 +128,7 @@ def main():
             print('OK:: shuffled %s' % arg)
 
     if args.y:
-        files.add_template(arg.y[0], arg.y[1])
+        files.add_template(args.y[0], args.y[1])
 
 
 if __name__ == "__main__":
