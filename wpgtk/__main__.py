@@ -103,7 +103,7 @@ def main():
                 themer.delete_theme(e)
 
     if args.c:
-        themer.show_current()
+        themer.get_current(show=True)
 
     if args.a:
         if args.x:
