@@ -3,7 +3,7 @@ import shutil
 import os
 import sys
 
-__version__ = '4.6.0'
+__version__ = '4.6.1'
 
 options = None
 wpgtk = None
@@ -20,6 +20,7 @@ CSS_DIR = os.path.join(WALL_DIR, 'css')
 SHELL_DIR = os.path.join(WALL_DIR, 'shell')
 SCHEME_DIR = os.path.join(WALL_DIR, 'schemes')
 OPT_DIR = os.path.join(HOME, '.themes/color_other')
+RCC = [] #random color cache
 
 
 FILE_DIC = {'gtk2':       os.path.join(HOME, '.themes/FlatColor/gtk-2.0/gtkrc'),

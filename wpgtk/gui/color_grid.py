@@ -35,6 +35,7 @@ class ColorGrid(Gtk.Grid):
 
         self.color_list = []
         self.button_list = []
+        self.selected_file = ""
         for x in range(0, 16):
             self.color_list.append('000000')
         for x in range(0, 16):
@@ -152,8 +153,7 @@ class ColorGrid(Gtk.Grid):
                             (current_walls[x] + ".sample.png")))
                 self.done_lbl.set_text("Changes saved")
                 x = self.parent.colorscheme.get_active()
-                selected_file = current_walls[x]
-                selected_sample = "sample/" + selected_file + ".sample.png"
+                selected_sample = "sample/" + self.selected_file + ".sample.png"
                 sample_path = os.path.join(config.WALL_DIR, selected_sample)
                 self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
                                                                    sample_path,
@@ -187,7 +187,7 @@ class ColorGrid(Gtk.Grid):
         self.done_lbl.set_text("")
         gcolor = Gdk.RGBA()
         gcolor.parse(widget.get_label())
-        dialog = ColorDialog(self.parent)
+        dialog = ColorDialog(self.parent, self.selected_file)
         dialog.colorchooser.set_rgba(gcolor)
         response = dialog.run()
 
@@ -214,15 +214,16 @@ class ColorGrid(Gtk.Grid):
 
     def combo_box_change(self, widget):
         self.done_lbl.set_text("")
+        config.RCC = []
         x = self.option_combo.get_active()
         self.auto_button.set_sensitive(True)
         self.shuffle_button.set_sensitive(True)
         self.ok_button.set_sensitive(True)
         current_walls = files.get_file_list()
-        selected_file = current_walls[x]
+        self.selected_file = current_walls[x]
         sample_path = os.path.join(config.SAMPLE_DIR,
-                                   (selected_file + '.sample.png'))
-        self.color_list = color.get_color_list(selected_file)
+                                   (self.selected_file + '.sample.png'))
+        self.color_list = color.get_color_list(self.selected_file)
         self.render_buttons()
         self.pixbuf_sample = GdkPixbuf.Pixbuf\
             .new_from_file_at_size(sample_path, width=500, height=300)

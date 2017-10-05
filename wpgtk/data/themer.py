@@ -73,9 +73,10 @@ def delete_theme(filename):
            (cache_file.replace('/', '_').replace('.', '_') + ".json")))
 
 
-def show_current():
+def get_current(show=False):
     image = realpath(path.join(config.WALL_DIR, '.current')).split('/').pop()
-    print(image)
+    if show:
+        print(image)
     return image
 
 

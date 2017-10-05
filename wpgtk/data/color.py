@@ -14,6 +14,13 @@ def get_color_list(image_name):
     return [color_dict['colors']['color%s' % i] for i in range(16)]
 
 
+def get_random_color(image_name):
+    image_path = os.path.join(config.WALL_DIR, image_name)
+    if not config.RCC:
+        config.RCC = pywal.colors.gen_colors(image_path, 36)
+    return config.RCC[randint(0, len(config.RCC))]
+
+
 def write_colors(img, color_list):
     image = pywal.image.get(os.path.join(config.WALL_DIR, img))
     color_dict = pywal.colors.get(image, config.WALL_DIR)
