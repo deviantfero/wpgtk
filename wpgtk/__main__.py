@@ -48,10 +48,10 @@ def main():
                         help='shuffles the given colorscheme(s)',
                         nargs='*')
     parser.add_argument('-t',
-                        help='send color sequences to all terminals',
+                        help='send color sequences to all terminals VTE true',
                         action='store_true')
     parser.add_argument('-T',
-                        help='send color sequences to all terminals VTE',
+                        help='send color sequences to all terminals VTE false',
                         action='store_true')
     parser.add_argument('-x',
                         help='add, remove and list \
