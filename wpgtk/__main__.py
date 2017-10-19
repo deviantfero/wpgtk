@@ -50,6 +50,9 @@ def main():
     parser.add_argument('-t',
                         help='send color sequences to all terminals',
                         action='store_true')
+    parser.add_argument('-T',
+                        help='send color sequences to all terminals VTE',
+                        action='store_true')
     parser.add_argument('-x',
                         help='add, remove and list \
                              templates instead of themes',
@@ -91,6 +94,9 @@ def main():
 
     if args.t:
         pywal.reload.colors(True, config.WALL_DIR)
+
+    if args.T:
+        pywal.reload.colors(False, config.WALL_DIR)
 
     if args.version:
         print('current version: ' + __version__)
