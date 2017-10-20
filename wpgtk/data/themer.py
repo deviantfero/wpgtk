@@ -40,7 +40,8 @@ def set_theme(filename, cs_file, vte, restore=False):
                            path.join(config.WALL_DIR, 'current.sh'))
 
         init_file = open(path.join(config.WALL_DIR, 'wp_init.sh'), 'w')
-        init_file.writelines(['#!/bin/bash\n', 'wpg -r -s ' +
+        wpg_string = 'wpg -rvs ' if vte else 'wpg -rs '
+        init_file.writelines(['#!/bin/bash\n', wpg_string +
                               filename + ' ' + cs_file])
         init_file.close()
         Popen(['chmod', '+x', path.join(config.WALL_DIR, 'wp_init.sh')])
