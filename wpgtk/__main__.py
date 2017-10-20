@@ -32,7 +32,7 @@ def main():
     parser.add_argument('-l',
                         help='see which wallpapers are available',
                         action='store_true')
-    parser.add_argument('--version', '-v',
+    parser.add_argument('--version',
                         help='print the current version',
                         action='store_true')
     parser.add_argument('-d',
@@ -48,7 +48,10 @@ def main():
                         help='shuffles the given colorscheme(s)',
                         nargs='*')
     parser.add_argument('-t',
-                        help='send color sequences to all terminals',
+                        help='send color sequences to all terminals VTE true',
+                        action='store_true')
+    parser.add_argument('-v',
+                        help='use VTE sequences to generate and set themes',
                         action='store_true')
     parser.add_argument('-x',
                         help='add, remove and list \
@@ -61,22 +64,21 @@ def main():
     config.init()
     args = parser.parse_args()
 
-    if len(sys.argv) < 2:
-        try:
-            theme_picker.run()
-        except NameError:
-            print('ERR:: missing pygobject module, use cli', file=sys.stderr)
+    if args.m:
+        filename = random.choice(files.get_file_list())
+        themer.set_theme(filename, filename, args.v)
+        exit(0)
 
     if args.s:
         if len(args.s) == 1:
             try:
-                themer.set_theme(args.s[0], args.s[0], args.r)
+                themer.set_theme(args.s[0], args.s[0], args.v, args.r)
             except TypeError as e:
                 print('ERR:: file ' + args.s[0] + ' not found')
                 raise e
         elif len(args.s) == 2:
             try:
-                themer.set_theme(args.s[0], args.s[1], args.r)
+                themer.set_theme(args.s[0], args.s[1], args.v, args.r)
             except TypeError:
                 print('ERR:: file  not found')
         elif len(args.s) > 2:
@@ -88,12 +90,15 @@ def main():
             [print(t) for t in templates if '.base' in t]
         else:
             files.show_files()
+        exit(0)
 
     if args.t:
-        pywal.reload.colors(True, config.WALL_DIR)
+        pywal.reload.colors(args.v, config.WALL_DIR)
+        exit(0)
 
     if args.version:
         print('current version: ' + __version__)
+        exit(0)
 
     if args.d:
         for e in args.d:
@@ -101,6 +106,7 @@ def main():
                 files.remove_template(e)
             else:
                 themer.delete_theme(e)
+        exit(0)
 
     if args.c:
         themer.get_current(show=True)
@@ -111,24 +117,30 @@ def main():
         else:
             for e in args.a:
                 themer.create_theme(e)
-
-    if args.m:
-        filename = random.choice(files.get_file_list())
-        themer.set_theme(filename, filename)
+        exit(0)
 
     if args.e:
         for arg in args.e:
             themer.auto_adjust_colors(arg)
             print('OK:: Auto-adjusted %s' % arg)
+        exit(0)
 
     if args.z:
         for arg in args.z:
             themer.shuffle_colors(arg)
             themer.auto_adjust_colors(arg)
             print('OK:: shuffled %s' % arg)
+        exit(0)
 
     if args.y:
         files.add_template(args.y[0], args.y[1])
+        exit(0)
+
+    if (len(sys.argv) < 2 or (len(sys.argv) == 2 and args.v)):
+        try:
+            theme_picker.run(args)
+        except NameError:
+            print('ERR:: missing pygobject module, use cli', file=sys.stderr)
 
 
 if __name__ == "__main__":

@@ -10,12 +10,13 @@ PAD = 10
 
 class mainWindow(Gtk.Window):
 
-    def __init__(self):
+    def __init__(self, args):
         Gtk.Window.__init__(self, title='wpgtk ' + config.__version__)
 
         image_name = os.path.join(config.WALL_DIR, '.current')
         image_name = os.path.realpath(image_name)
         self.set_default_size(200, 200)
+        self.args = args
 
         # these variables are just to get the image
         # and preview of current wallpaper
@@ -134,7 +135,7 @@ class mainWindow(Gtk.Window):
         if current_walls:
             filename = current_walls[x]
             colorscheme_file = current_walls[y]
-            themer.set_theme(filename, colorscheme_file)
+            themer.set_theme(filename, colorscheme_file, self.args.v)
 
     def on_rm_clicked(self, widget):
         x = self.option_combo.get_active()
@@ -177,8 +178,8 @@ class mainWindow(Gtk.Window):
         self.cpage.set_edit_combo(x)
 
 
-def run():
-    win = mainWindow()
+def run(args):
+    win = mainWindow(args)
     win.connect('delete-event', Gtk.main_quit)
     win.show_all()
     Gtk.main()

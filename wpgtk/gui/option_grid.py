@@ -113,14 +113,14 @@ class OptionsGrid(Gtk.Grid):
         self.lbl_save.set_text('')
 
     def load_opt_list(self):
-        self.color_combo.set_active(config.wpgtk.getint('active'))
-        self.gtk_switch.set_active(config.wpgtk.getboolean('gtk'))
-        self.tint2_switch.set_active(config.wpgtk.getboolean('tint2'))
-        self.command_switch.set_active(config.wpgtk.getboolean('execute_cmd'))
-        self.openbox_switch.set_active(config.wpgtk.getboolean('openbox'))
-        self.editor_txt.set_text(config.wpgtk['editor'])
-        self.command_txt.set_text(config.wpgtk['command'])
-        self.command_txt.set_editable(config.wpgtk.getboolean('execute_cmd'))
+        self.color_combo.set_active(config.wpgtk.getint('active', 0))
+        self.gtk_switch.set_active(config.wpgtk.getboolean('gtk', True))
+        self.tint2_switch.set_active(config.wpgtk.getboolean('tint2', True))
+        self.command_switch.set_active(config.wpgtk.getboolean('execute_cmd', False))
+        self.openbox_switch.set_active(config.wpgtk.getboolean('openbox', True))
+        self.editor_txt.set_text(config.wpgtk.get('editor', 'urxvt -e vim'))
+        self.command_txt.set_text(config.wpgtk.get('command', 'yes hi'))
+        self.command_txt.set_editable(config.wpgtk.getboolean('execute_cmd', False))
 
     def combo_box_change(self,  combo):
         config.wpgtk['active'] = str(combo.get_active())
