@@ -34,7 +34,7 @@ from either a cli application or using a GUI.
 * pywal
 
 **_Attention:_** If you're using another terminal, you can load the colors on terminal startup
-by running `(wpg -t &)` in your terminal.  
+by running `(wpg -t &)` in your terminal or `(wpg -vt &)` if you're using a VTE terminal.  
 You can add this to your terminal's settings, your shell `rc` file or anywhere else 
 that allows you to run commands on startup.
 
@@ -86,9 +86,9 @@ $ wpg -h
 ### General Usage
 
 ```
-usage: wpg [-h] [-s [S [S ...]]] [-r] [-m] [-a [A [A ...]]] [-l]
-                   [--version] [-d [D [D ...]]] [-c] [-e [E [E ...]]]
-                   [-z [Z [Z ...]]] [-t] [-x] [-y [Y [Y ...]]]
+usage: wpg [-h] [-s [S [S ...]]] [-r] [-m] [-a [A [A ...]]] [-l] [--version]
+           [-d [D [D ...]]] [-c] [-e [E [E ...]]] [-z [Z [Z ...]]] [-t] [-v]
+           [-x] [-y [Y [Y ...]]]
 
 optional arguments:
   -h, --help      show this help message and exit
@@ -97,16 +97,21 @@ optional arguments:
   -m              pick a random wallpaper and set it
   -a [A [A ...]]  add images to the wallpaper folder and generate colorschemes
   -l              see which wallpapers are available
-  --version, -v   print the current version
+  --version       print the current version
   -d [D [D ...]]  delete the wallpaper(s) from wallpaper folder
   -c              shows the current wallpaper
   -e [E [E ...]]  auto adjusts the given colorscheme(s)
   -z [Z [Z ...]]  shuffles the given colorscheme(s)
-  -t              send color sequences to all terminals
+  -t              send color sequences to all terminals VTE true
+  -v              use VTE sequences to generate and set themes
   -x              add, remove and list templates instead of themes
-  -y [Y [Y ...]]  add an existent basefile template
+  -y [Y [Y ...]]  add an existent basefile template [config, basefile]
 
 ```
+
+for those using VTE terminals such as `termite` or `xfce4-terminal` you can suffix -v to all
+previous flags to get rid of incompatible artifacts showing up in your screen, for example
+to pick a random wallpaper you would do `wpg -vm` to avoid those artifacts in your terminal.
 
 Files exported when creating a theme are all under the same directory `$HOME/.wallpapers`
 this directory contains all exported formats that `pywal` and `wpgtk` have to offer, such
