@@ -49,7 +49,6 @@ setuptools.setup(
     include_package_data=True,
     data_files=[('etc/wpgtk', ['wpgtk/misc/wpg.conf']),
                 ('bin/', ['wpgtk/misc/wpg-install.sh']),
-                ('usr/share/bash-completion/completions', ['completions/bash/wpg'])]
-    if(shutil.which("zsh") != None):
-        data_files.append(('usr/bin/share/zsh/site-functions/', ['completions/zsh/_wpg'])
+                ('share/bash-completion/completions/', ['completions/bash/wpg']),
+                ('share/zsh/site-functions/', ['completions/zsh/_wpg'])]
 )
