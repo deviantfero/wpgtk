@@ -20,7 +20,8 @@ function usage ()
   -g   Install gtk theme
   -i   Install icon-set
   -r   Install rofi theme
-  -a   Install all themes
+  -I   Install i3 theme
+  -p   Install polybar theme
   "
 }
 
@@ -82,6 +83,40 @@ function install_rofi ()
   echo ":: rofi template not installed";
 }
 
+function install_i3 () 
+{
+  echo -n "This might override your i3 config, Continue?[Y/n]: ";
+  read -r response;
+  if [[ ! "$response" == "n" ]]; then
+    echo "Installing i3 config";
+    echo ":: backing up current i3 conf in config.bak";
+    cp "${HOME}/.config/i3/config" "${HOME}/.config/i3/config.bak" 2>/dev/null;
+    cp --remove-destination ./i3/config "${HOME}/.config/i3/config" && \
+    cp --remove-destination ./i3/i3.base "${COLOR_OTHER}" && \
+      ln -sf "${HOME}/.config/i3/config" "${COLOR_OTHER}/i3.base" && \
+      echo ":: i3 template install done."
+    return 0;
+  fi
+  echo ":: i3 template not installed";
+}
+
+function install_polybar () 
+{
+  echo -n "This might override your polybar config, Continue?[Y/n]: ";
+  read -r response;
+  if [[ ! "$response" == "n" ]]; then
+    echo "Installing polybar config";
+    echo ":: backing up current polybar conf in config.bak";
+    cp "${HOME}/.config/polyba/config" "${HOME}/.config/polybar/config.bak" 2>/dev/null;
+    cp --remove-destination ./polybar/config "${HOME}/.config/polybar/config" && \
+    cp --remove-destination ./polybar/polybar.base "${COLOR_OTHER}" && \
+      ln -sf "${HOME}/.config/polybar/config" "${COLOR_OTHER}/polybar.base" && \
+      echo ":: polybar template install done."
+    return 0;
+  fi
+  echo ":: polybar template not installed";
+}
+
 function install_gtk ()
 {
   echo "Installing gtk themes";
@@ -119,7 +154,7 @@ function clean_up()
 
 function getargs()
 {
-  while getopts ":hvotgir" opt
+  while getopts ":hvotgiIpr" opt
   do
     case $opt in
       h)
@@ -135,6 +170,8 @@ function getargs()
       g)     gtk="true" ;;
       t)   tint2="true" ;;
       r)    rofi="true" ;;
+      I)      i3="true" ;;
+      p) polybar="true" ;;
       *)
         echo -e "\n  Option does not exist : $OPTARG\n"
         usage;
@@ -155,6 +192,8 @@ function main()
   [[ "$rofi" == "true" ]] && install_rofi;
   [[ "$gtk" == "true" ]] && install_gtk;
   [[ "$icons" == "true" ]] && install_icons;
+  [[ "$polybar" == "true" ]] && install_polybar;
+  [[ "$i3" == "true" ]] && install_i3;
   clean_up;
 }
 

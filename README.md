@@ -56,19 +56,33 @@ You can install color-adaptable themes with an included script,
 after you install `wpg` you can run `wpg-install.sh`:
 
 ```
+  echo "Usage :  wpg-install.sh [options] [--]
+
   Options:
-  -h|help       Display this message
-  -v|version    Display script version
-  -o            Install openbox template
-  -t            Install tint2 template
-  -g            Install gtk theme
-  -r            Install rofi template
-  -i            Install icon-set
+  -h   Display this message
+  -v   Display script version
+  -o   Install openbox themes
+  -t   Install tint2 theme
+  -g   Install gtk theme
+  -i   Install icon-set
+  -r   Install rofi theme
+  -I   Install i3 theme
+  -p   Install polybar theme
   ```
 
-This will install all themes:
-  ```
+You can combine this flags to install only the themes you need.
+  ```sh
+# install everything!
+
+$ wpg-install.sh -otgirIp
+
+# maybe you want an openbox setup
+
 $ wpg-install.sh -otgir
+
+# or maybe an i3 setup
+
+$ wpg-install.sh -rgIp
 ```
 
 And if everything went fine you can now execute `wpg` and it will take
