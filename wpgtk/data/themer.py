@@ -38,6 +38,8 @@ def set_theme(filename, cs_file, vte, restore=False):
                            path.join(config.WALL_DIR, 'current.css'))
         pywal.export.color(colors, 'shell',
                            path.join(config.WALL_DIR, 'current.sh'))
+        pywal.export.color(colors, 'xresources',
+                           path.join(config.WALL_DIR, 'current.Xres'))
 
         init_file = open(path.join(config.WALL_DIR, 'wp_init.sh'), 'w')
         wpg_string = 'wpg -rvs ' if vte else 'wpg -rs '
