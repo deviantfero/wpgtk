@@ -93,7 +93,7 @@ function install_i3 ()
     cp "${HOME}/.config/i3/config" "${HOME}/.config/i3/config.bak" 2>/dev/null;
     cp --remove-destination ./i3/config "${HOME}/.config/i3/config" && \
     cp --remove-destination ./i3/i3.base "${COLOR_OTHER}" && \
-      ln -sf "${HOME}/.config/i3/config" "${COLOR_OTHER}/i3.base" && \
+      ln -sf "${HOME}/.config/i3/config" "${COLOR_OTHER}/i3" && \
       echo ":: i3 template install done."
     return 0;
   fi
@@ -110,7 +110,7 @@ function install_polybar ()
     cp "${HOME}/.config/polyba/config" "${HOME}/.config/polybar/config.bak" 2>/dev/null;
     cp --remove-destination ./polybar/config "${HOME}/.config/polybar/config" && \
     cp --remove-destination ./polybar/polybar.base "${COLOR_OTHER}" && \
-      ln -sf "${HOME}/.config/polybar/config" "${COLOR_OTHER}/polybar.base" && \
+      ln -sf "${HOME}/.config/polybar/config" "${COLOR_OTHER}/polybar" && \
       echo ":: polybar template install done."
     return 0;
   fi
