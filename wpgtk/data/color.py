@@ -203,8 +203,7 @@ def split_active(hexc, is_dark_theme=True):
         return [reduce_brightness(hexc, brightness * 0.31),
                 reduce_brightness(hexc, brightness * 0.61)]
     else:
-        return [add_brightness(hexc, brightness * 0.61, 0),
-                add_brightness(hexc, brightness * 0.31, 0)]
+        return [add_brightness(hexc, brightness * 0.31, 0), hexc]
 
 
 def prepare_colors(image_name):
