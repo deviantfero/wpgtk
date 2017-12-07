@@ -1,0 +1,33 @@
+#compdef wpg
+
+_profiles() {
+    local -a profiles               #
+    profiles=(`wpg -l`)             # use output of wpg -l for completion
+    _describe 'profiles' profiles   #
+}
+
+_wpg() {
+    local state optforprofiles
+    optforprofiles=(-s -e -d -z)    # options for which profiles should be completed
+
+    _arguments \
+        '1: :->generic' \
+        '*: :->listprofiles'
+
+    case $state in
+        (generic)
+            _gnu_generic
+            ;;
+        (listprofiles)
+            if [[ $CURRENT < 5 || ${words[2]} != "-s" ]]; then
+                for opt in $optforprofiles; do
+                    if [[ $opt = ${words[2]} ]]; then
+                        _profiles
+                    fi
+                done
+            fi
+            ;;
+    esac
+}
+
+_wpg "$@"

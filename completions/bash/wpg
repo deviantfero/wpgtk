@@ -1,0 +1,17 @@
+function _wpg() {
+    local optforprofiles
+    _get_comp_words_by_ref cur
+    optforprofiles="-s -e -d -z"
+
+    if [[ $COMP_CWORD = 1 ]]; then
+        COMPREPLY=($(compgen -W "$(_parse_usage wpg)" -- "$cur"))
+    elif [[ $COMP_CWORD < 4 || ${COMP_WORDS[1]} != "-s" ]]; then
+        for opt in $optforprofiles; do
+            if [[ $opt = ${COMP_WORDS[1]} ]]; then
+                COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
+            fi
+        done
+    fi
+}
+
+complete -F _wpg wpg
