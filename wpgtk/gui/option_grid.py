@@ -62,6 +62,10 @@ class OptionsGrid(Gtk.Grid):
         self.openbox_switch.connect('notify::active',
                                     self.on_activate, 'openbox')
         self.lbl_openbox = Gtk.Label('Reload openbox')
+        self.light_theme_switch = Gtk.Switch()
+        self.light_theme_switch.connect('notify::active',
+                                        self.on_activate, 'light_theme')
+        self.lbl_light_theme = Gtk.Label('Use Light Theme')
 
         # edit cmd
         self.editor_lbl = Gtk.Label('Open optional files with:')
@@ -89,6 +93,8 @@ class OptionsGrid(Gtk.Grid):
         self.switch_grid.attach(self.command_switch, 4, 2, 1, 1)
         self.switch_grid.attach(self.lbl_openbox, 5, 2, 3, 1)
         self.switch_grid.attach(self.openbox_switch, 9, 2, 1, 1)
+        self.switch_grid.attach(self.lbl_light_theme, 1, 3, 3, 1)
+        self.switch_grid.attach(self.light_theme_switch, 4, 3, 1, 1)
 
         # cmd Grid attach
 
@@ -121,6 +127,7 @@ class OptionsGrid(Gtk.Grid):
         self.editor_txt.set_text(config.wpgtk.get('editor', 'urxvt -e vim'))
         self.command_txt.set_text(config.wpgtk.get('command', 'yes hi'))
         self.command_txt.set_editable(config.wpgtk.getboolean('execute_cmd', False))
+        self.light_theme_switch.set_active(config.wpgtk.getboolean('light_theme', False))
 
     def combo_box_change(self,  combo):
         config.wpgtk['active'] = str(combo.get_active())
