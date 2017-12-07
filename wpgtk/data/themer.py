@@ -96,22 +96,10 @@ def shuffle_colors(filename):
         print('ERR:: file not available')
 
 
-def auto_adjust_colors(filename):
+def auto_adjust_theme(filename):
     try:
         color_list = color.get_color_list(filename)
-        color8 = color_list[0:1][0]
-        if not config.wpgtk.getboolean('light_theme'):
-            color8 = [color.add_brightness(color8, 18)]
-            color_list = color_list[:8:]
-            color_list += color8
-            color_list += [color.add_brightness(x, 50)
-                           for x in color_list[1:8:]]
-        else:
-            color8 = [color.reduce_brightness(color8, 18)]
-            color_list = color_list[:8:]
-            color_list += color8
-            color_list += [color.reduce_brightness(x, 50)
-                           for x in color_list[1:8:]]
+        color_list = color.auto_adjust_colors(color_list)
         sample.create_sample(color_list,
                              f=path.join(config.SAMPLE_DIR,
                                          (filename + '.sample.png')))
