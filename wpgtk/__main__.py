@@ -121,14 +121,14 @@ def main():
 
     if args.e:
         for arg in args.e:
-            themer.auto_adjust_colors(arg)
+            themer.auto_adjust_theme(arg)
             print('OK:: Auto-adjusted %s' % arg)
         exit(0)
 
     if args.z:
         for arg in args.z:
             themer.shuffle_colors(arg)
-            themer.auto_adjust_colors(arg)
+            themer.auto_adjust_theme(arg)
             print('OK:: shuffled %s' % arg)
         exit(0)
 

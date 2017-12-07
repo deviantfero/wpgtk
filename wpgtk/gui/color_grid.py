@@ -116,7 +116,7 @@ class ColorGrid(Gtk.Grid):
     def render_buttons(self):
         for x in range(0, 16):
             gcolor = Gdk.color_parse(self.color_list[x])
-            if color.get_darkness(self.color_list[x]) < 99:
+            if color.get_brightness(self.color_list[x]) < 99:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
                 fgcolor = Gdk.color_parse('#101010')
@@ -162,16 +162,7 @@ class ColorGrid(Gtk.Grid):
                 self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
 
     def on_auto_click(self, widget):
-        color8 = self.color_list[0:1][0]
-        if not config.wpgtk.getboolean('light_theme'):
-            color8 = [color.add_brightness(color8, 18)]
-            self.color_list = self.color_list[:8:] + color8 + \
-                [color.add_brightness(x, 50) for x in self.color_list[1:8:]]
-        else:
-            color8 = [color.reduce_brightness(color8, 18)]
-            self.color_list = self.color_list[:8:] + \
-                color8 + [color.reduce_brightness(x, 49) for x
-                          in self.color_list[1:8:]]
+        self.color_list = color.auto_adjust_colors(self.color_list)
         self.render_buttons()
         sample.create_sample(self.color_list[:])
         self.render_sample()
@@ -198,7 +189,7 @@ class ColorGrid(Gtk.Grid):
             hex_color = pywal.util.rgb_to_hex(rgb)
             widget.set_label(hex_color)
             gcolor = Gdk.color_parse(hex_color)
-            if color.get_darkness(hex_color) < 100:
+            if color.get_brightness(hex_color) < 100:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
                 fgcolor = Gdk.color_parse('#101010')
@@ -228,5 +219,3 @@ class ColorGrid(Gtk.Grid):
         self.pixbuf_sample = GdkPixbuf.Pixbuf\
             .new_from_file_at_size(sample_path, width=500, height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
-        if config.wpgtk.getboolean('light_theme'):
-            self.color_list = self.color_list[::-1]

@@ -14,6 +14,12 @@ def get_color_list(image_name):
     return [color_dict['colors']['color%s' % i] for i in range(16)]
 
 
+def is_dark_theme(color_list):
+    fg_brightness = get_brightness(color_list[7])
+    bg_brightness = get_brightness(color_list[0])
+    return fg_brightness > bg_brightness
+
+
 def get_random_color(image_name):
     image_path = os.path.join(config.WALL_DIR, image_name)
     if not config.RCC:
@@ -71,6 +77,29 @@ def change_colors(colors, which):
               "BASE FILE DOES NOT EXIST" % opt, file=sys.stderr)
 
 
+def auto_adjust_colors(color_list):
+    if not config.wpgtk.getboolean('light_theme'):
+        if not is_dark_theme(color_list):
+            color7 = color_list[7]
+            # switch bg for fg
+            color_list[7] = color_list[0]
+            color_list[0] = color7
+        color8 = [add_brightness(color_list[0], 18)]
+        color_list = color_list[:8] + color8 + \
+            [add_brightness(x, 50) for x in color_list[1:8]]
+    else:
+        if is_dark_theme(color_list):
+            color7 = color_list[7]
+            # switch bg for fg
+            color_list[7] = color_list[0]
+            color_list[0] = color7
+        color8 = [reduce_brightness(color_list[0], 18)]
+        color_list = color_list[:8] + color8 + \
+            [reduce_brightness(x, 60, 0.5) for x in color_list[1:8]]
+
+    return color_list
+
+
 def clean_icon_color(dirty_string):
     dirty_string = dirty_string.strip("\n")
     dirty_string = dirty_string.split("=")
@@ -78,41 +107,45 @@ def clean_icon_color(dirty_string):
     return dirty_string
 
 
-def get_darkness(hexv):
+def get_brightness(hexv):
     rgb = list(int(hexv.strip('#')[i:i+2], 16) for i in (0, 2, 4))
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
     return hls[1]
 
 
-def reduce_brightness(hex_string, amount):
+def reduce_brightness(hex_string, amount, sat=0.1):
     rgb = pywal.util.hex_to_rgb(hex_string)
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
-    if(hls[1] - amount > 0):
-        hls[1] = hls[1] - amount
-        rgb = hls_to_rgb(hls[0], hls[1], hls[2])
-        rgb_int = [5 if elem <= 0 else int(elem) for elem in rgb]
-        rgb_int = tuple(rgb_int)
-        hex_result = '%02x%02x%02x' % rgb_int
-        return "#%s" % hex_result
-    else:
-        return reduce_brightness(hex_string, amount - 5)
+
+    hls[1] = max(hls[1] - amount, 5)
+    hls[2] = max(hls[2] - sat, -0.90)
+
+    rgb = hls_to_rgb(hls[0], hls[1], hls[2])
+    rgb_int = [5 if elem <= 0 else 254 if elem > 255
+               else int(elem) for elem in rgb]
+    rgb_int = tuple(rgb_int)
+    hex_result = '%02x%02x%02x' % rgb_int
+
+    return "#%s" % hex_result
 
 
-def add_brightness(hex_string, amount):
+def add_brightness(hex_string, amount, sat=0.1):
     rgb = pywal.util.hex_to_rgb(hex_string)
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
-    if(hls[1] + amount < 250):
-        hls[1] += amount
-        rgb = hls_to_rgb(hls[0], hls[1], hls[2])
-        rgb_int = [254 if elem > 255 else int(elem) for elem in rgb]
-        rgb_int = tuple(rgb_int)
-        hex_result = '%02x%02x%02x' % rgb_int
-        return "#%s" % hex_result
-    else:
-        return add_brightness(hex_string, amount - 5)
+
+    hls[1] = min(hls[1] + amount, 250)
+    hls[2] = max(hls[2] - sat, -0.90)
+
+    rgb = hls_to_rgb(hls[0], hls[1], hls[2])
+    rgb_int = [254 if elem > 255 else 0 if elem <= 0
+               else int(elem) for elem in rgb]
+    rgb_int = tuple(rgb_int)
+    hex_result = '%02x%02x%02x' % rgb_int
+
+    return "#%s" % hex_result
 
 
 def prepare_icon_colors(colors):
@@ -164,10 +197,13 @@ def change_other_files(colors):
         print('ERR::OPTIONAL FILE -' + original, file=sys.stderr)
 
 
-def split_active(hexc):
-    brightness = get_darkness(hexc)
-    return [reduce_brightness(hexc, brightness * 0.31),
-            reduce_brightness(hexc, brightness * 0.61)]
+def split_active(hexc, is_dark_theme=True):
+    brightness = get_brightness(hexc)
+    if is_dark_theme:
+        return [reduce_brightness(hexc, brightness * 0.31),
+                reduce_brightness(hexc, brightness * 0.61)]
+    else:
+        return [add_brightness(hexc, brightness * 0.31, 0), hexc]
 
 
 def prepare_colors(image_name):
@@ -182,13 +218,16 @@ def prepare_colors(image_name):
     else:
         wpcol['BASECOLOR'] = cl[randint(0, 15)]
 
-    active_colors = split_active(wpcol['BASECOLOR'])
-
-    wpcol['COLORACT'] = active_colors[0]
-    wpcol['COLORIN'] = active_colors[1]
     wpcol['COLORBASE'] = cl[0]
-    wpcol['COLORBG'] = reduce_brightness(cl[0], 5)
-    wpcol['COLORTOOL'] = add_brightness(cl[0], 10)
+    if is_dark_theme(cl):
+        wpcol['COLORBG'] = reduce_brightness(cl[0], 10)
+        wpcol['COLORTOOL'] = add_brightness(cl[0], 4)
+        wpcol['COLORACT'], wpcol['COLORIN'] = split_active(wpcol['BASECOLOR'])
+    else:
+        wpcol['COLORBG'] = add_brightness(cl[0], 10)
+        wpcol['COLORTOOL'] = reduce_brightness(cl[0], 4)
+        wpcol['COLORACT'], wpcol['COLORIN'] = split_active(wpcol['BASECOLOR'],
+                                                           False)
     wpcol['REPLAC'] = add_brightness(wpcol['COLORACT'], 70)
 
     cdic['icons'] = prepare_icon_colors(cdic)
