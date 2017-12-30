@@ -2,6 +2,7 @@
 import sys
 import random
 import wpgtk.data.config as config
+from os import path
 from subprocess import Popen
 from wpgtk.data import files, themer
 from wpgtk.data.config import __version__
@@ -10,7 +11,6 @@ try:
 except:
     pass
 import argparse
-import pywal
 
 
 def main():
