@@ -3,7 +3,7 @@ import shutil
 import os
 import sys
 
-__version__ = '4.6.7'
+__version__ = '4.6.8'
 
 options = None
 wpgtk = None
