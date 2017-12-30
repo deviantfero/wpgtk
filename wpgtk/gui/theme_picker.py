@@ -135,7 +135,7 @@ class mainWindow(Gtk.Window):
         if current_walls:
             filename = current_walls[x]
             colorscheme_file = current_walls[y]
-            themer.set_theme(filename, colorscheme_file, self.args.v)
+            themer.set_theme(filename, colorscheme_file)
 
     def on_rm_clicked(self, widget):
         x = self.option_combo.get_active()
