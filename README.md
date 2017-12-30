@@ -34,7 +34,7 @@ from either a cli application or using a GUI.
 * pywal
 
 **_Attention:_** If you're using another terminal, you can load the colors on terminal startup
-by running `(wpg -t &)` in your terminal or `(wpg -vt &)` if you're using a VTE terminal.  
+by running `(wpg -t &)` in your terminal.  
 You can add this to your terminal's settings, your shell `rc` file or anywhere else 
 that allows you to run commands on startup.
 
@@ -117,15 +117,15 @@ optional arguments:
   -e [E [E ...]]  auto adjusts the given colorscheme(s)
   -z [Z [Z ...]]  shuffles the given colorscheme(s)
   -t              send color sequences to all terminals VTE true
-  -v              use VTE sequences to generate and set themes
+  -v              (deprecated) use VTE sequences to generate and set themes
   -x              add, remove and list templates instead of themes
   -y [Y [Y ...]]  add an existent basefile template [config, basefile]
 
 ```
 
-for those using VTE terminals such as `termite` or `xfce4-terminal` you can suffix -v to all
-previous flags to get rid of incompatible artifacts showing up in your screen, for example
-to pick a random wallpaper you would do `wpg -vm` to avoid those artifacts in your terminal.
+for those using VTE terminals such as `termite` or `xfce4-terminal` it is no longer necessary
+to append -v to all `wpgtk` commands, it will work as expected without it, this option will be
+removed in future releases!
 
 Files exported when creating a theme are all under the same directory `$HOME/.wallpapers`
 this directory contains all exported formats that `pywal` and `wpgtk` have to offer, such
