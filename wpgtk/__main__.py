@@ -2,6 +2,7 @@
 import sys
 import random
 import wpgtk.data.config as config
+from subprocess import Popen
 from wpgtk.data import files, themer
 from wpgtk.data.config import __version__
 try:
@@ -51,7 +52,7 @@ def main():
                         help='send color sequences to all terminals VTE true',
                         action='store_true')
     parser.add_argument('-v',
-                        help='use VTE sequences to generate and set themes',
+                        help='(deprecated) use VTE sequences to generate and set themes',
                         action='store_true')
     parser.add_argument('-x',
                         help='add, remove and list \
@@ -66,19 +67,22 @@ def main():
 
     if args.m:
         filename = random.choice(files.get_file_list())
-        themer.set_theme(filename, filename, args.v)
+        themer.set_theme(filename, filename)
         exit(0)
+
+    if args.v:
+        print("Deprecated: this flag no longer serves any purpose")
 
     if args.s:
         if len(args.s) == 1:
             try:
-                themer.set_theme(args.s[0], args.s[0], args.v, args.r)
+                themer.set_theme(args.s[0], args.s[0], args.r)
             except TypeError as e:
                 print('ERR:: file ' + args.s[0] + ' not found')
                 raise e
         elif len(args.s) == 2:
             try:
-                themer.set_theme(args.s[0], args.s[1], args.v, args.r)
+                themer.set_theme(args.s[0], args.s[1], args.r)
             except TypeError:
                 print('ERR:: file  not found')
         elif len(args.s) > 2:
@@ -93,7 +97,7 @@ def main():
         exit(0)
 
     if args.t:
-        pywal.reload.colors(args.v, config.WALL_DIR)
+        Popen(['cat', path.join(config.WALL_DIR, 'sequences')])
         exit(0)
 
     if args.version:
