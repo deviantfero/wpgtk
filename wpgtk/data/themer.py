@@ -22,7 +22,7 @@ def create_theme(filepath):
                                      (filename + '.sample.png')))
 
 
-def set_theme(filename, cs_file, vte, restore=False):
+def set_theme(filename, cs_file, restore=False):
     if(path.join(config.WALL_DIR, filename)):
         if(not restore):
             color.execute_gcolorchange(cs_file)
@@ -33,7 +33,7 @@ def set_theme(filename, cs_file, vte, restore=False):
         pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
         image = pywal.image.get(path.join(config.WALL_DIR, cs_file))
         colors = pywal.colors.get(image, config.WALL_DIR)
-        pywal.sequences.send(colors, vte, config.WALL_DIR)
+        pywal.sequences.send(colors, config.WALL_DIR)
         pywal.export.color(colors, 'css',
                            path.join(config.WALL_DIR, 'current.css'))
         pywal.export.color(colors, 'shell',
@@ -42,8 +42,7 @@ def set_theme(filename, cs_file, vte, restore=False):
                            path.join(config.WALL_DIR, 'current.Xres'))
 
         init_file = open(path.join(config.WALL_DIR, 'wp_init.sh'), 'w')
-        wpg_string = 'wpg -rvs ' if vte else 'wpg -rs '
-        init_file.writelines(['#!/bin/bash\n', wpg_string +
+        init_file.writelines(['#!/bin/bash\n', 'wpg -rs ' +
                               filename + ' ' + cs_file])
         init_file.close()
         Popen(['chmod', '+x', path.join(config.WALL_DIR, 'wp_init.sh')])
