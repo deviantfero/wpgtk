@@ -40,6 +40,8 @@ def set_theme(filename, cs_file, restore=False):
                            path.join(config.WALL_DIR, 'current.sh'))
         pywal.export.color(colors, 'xresources',
                            path.join(config.WALL_DIR, 'current.Xres'))
+        pywal.export.color(colors, 'rofi',
+                           path.join(config.WALL_DIR, 'colors-rofi.Xresources'))
 
         init_file = open(path.join(config.WALL_DIR, 'wp_init.sh'), 'w')
         init_file.writelines(['#!/bin/bash\n', 'wpg -rs ' +
