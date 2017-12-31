@@ -9,7 +9,7 @@ with default themes for GTK2, GTK+, openbox and Tint2, that uses
 you can choose to interact with it in two ways, manage your themes 
 from either a cli application or using a GUI.
 
-### Features
+## Features
 
 * #### [GUI](https://gfycat.com/RigidAnxiousElk)
 
@@ -123,7 +123,7 @@ optional arguments:
 
 ```
 
-for those using VTE terminals such as `termite` or `xfce4-terminal` it is no longer necessary
+For those using VTE terminals such as `termite` or `xfce4-terminal` it is no longer necessary
 to append -v to all `wpgtk` commands, it will work as expected without it, this option will be
 removed in future releases!
 
@@ -135,8 +135,24 @@ as:
 * json under `$HOME/.wallpapers/schemes/{image_name}.json`
 * xres files under `$HOME/.wallpapers/xres/{image_name}.Xres`
 * environment variables under `$HOME/.wallpapers/current.sh` 
+* sequences under `$HOME/.wallpapers/sequences`
 
-### Configuration
+## Restoring your theme on terminal Startup
+Keep in mind, this is only necessary for those terminals that do not use
+Xresources or Xdefaults to grab their colors.
+
+You can restore your theme on terminal startup by adding either of this lines to your 
+`.bashrc`, `.zshrc` or any shell configuration file:
+
+```sh
+# recommended way, works instantly!
+(cat $HOME/.wallpapers/sequences &)
+
+# deprecated way, still works but will be removed on future releases
+(wpg -t &)
+```
+
+## Configuration
 
 The configuration file should be located at `$HOME/.wallpapers/wpg.conf`
 There you can edit settings without the use of the gui.
