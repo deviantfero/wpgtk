@@ -4,7 +4,7 @@ import shutil
 from random import shuffle
 from os.path import realpath
 from os import symlink, remove, path
-from subprocess import Popen, call
+from subprocess import Popen
 from . import color, sample, config, files
 
 
@@ -40,17 +40,15 @@ def set_theme(filename, cs_file, restore=False):
                            path.join(config.WALL_DIR, 'current.sh'))
         pywal.export.color(colors, 'xresources',
                            path.join(config.WALL_DIR, 'current.Xres'))
-        pywal.export.color(colors, 'rofi',
-                           path.join(config.WALL_DIR, 'colors-rofi.Xresources'))
 
         init_file = open(path.join(config.WALL_DIR, 'wp_init.sh'), 'w')
         init_file.writelines(['#!/bin/bash\n', 'wpg -rs ' +
                               filename + ' ' + cs_file])
         init_file.close()
         Popen(['chmod', '+x', path.join(config.WALL_DIR, 'wp_init.sh')])
-        call(['xrdb', '-merge',
-              path.join(config.XRES_DIR, (cs_file + '.Xres'))])
-        call(['xrdb', '-merge', path.join(config.HOME, '.Xresources')])
+        Popen(['xrdb', '-merge',
+               path.join(config.XRES_DIR, cs_file + '.Xres')])
+        Popen(['xrdb', '-merge', path.join(config.HOME, '.Xresources')])
         try:
             if config.wpgtk.getboolean('execute_cmd'):
                 Popen(config.wpgtk['command'].split(' '))
