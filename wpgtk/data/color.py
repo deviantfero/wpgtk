@@ -85,8 +85,9 @@ def auto_adjust_colors(color_list):
             color_list[7] = color_list[0]
             color_list[0] = color7
         color8 = [add_brightness(color_list[0], 18)]
+        color15 = [add_brightness(color_list[7], 60)]
         color_list = color_list[:8] + color8 + \
-            [add_brightness(x, 50) for x in color_list[1:8]]
+            [add_brightness(x, 50, 0.1) for x in color_list[1:7]] + color15
     else:
         if is_dark_theme(color_list):
             color7 = color_list[7]
@@ -94,8 +95,9 @@ def auto_adjust_colors(color_list):
             color_list[7] = color_list[0]
             color_list[0] = color7
         color8 = [reduce_brightness(color_list[0], 18)]
+        color15 = [reduce_brightness(color_list[7], 60)]
         color_list = color_list[:8] + color8 + \
-            [reduce_brightness(x, 60, 0.5) for x in color_list[1:8]]
+            [reduce_brightness(x, 60, 0.5) for x in color_list[1:7]] + color15
 
     return color_list
 
@@ -114,7 +116,7 @@ def get_brightness(hexv):
     return hls[1]
 
 
-def reduce_brightness(hex_string, amount, sat=0.1):
+def reduce_brightness(hex_string, amount, sat=0):
     rgb = pywal.util.hex_to_rgb(hex_string)
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
@@ -131,7 +133,7 @@ def reduce_brightness(hex_string, amount, sat=0.1):
     return "#%s" % hex_result
 
 
-def add_brightness(hex_string, amount, sat=0.1):
+def add_brightness(hex_string, amount, sat=0):
     rgb = pywal.util.hex_to_rgb(hex_string)
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
     hls = list(hls)
@@ -203,7 +205,7 @@ def split_active(hexc, is_dark_theme=True):
         return [reduce_brightness(hexc, brightness * 0.31),
                 reduce_brightness(hexc, brightness * 0.61)]
     else:
-        return [add_brightness(hexc, brightness * 0.31, 0), hexc]
+        return [add_brightness(hexc, brightness * 0.31), hexc]
 
 
 def prepare_colors(image_name):
