@@ -4,7 +4,7 @@ import shutil
 from random import shuffle
 from os.path import realpath
 from os import symlink, remove, path
-from subprocess import Popen
+from subprocess import Popen, call
 from . import color, sample, config, files
 
 
@@ -46,9 +46,9 @@ def set_theme(filename, cs_file, restore=False):
                               filename + ' ' + cs_file])
         init_file.close()
         Popen(['chmod', '+x', path.join(config.WALL_DIR, 'wp_init.sh')])
-        Popen(['xrdb', '-merge',
-               path.join(config.XRES_DIR, cs_file + '.Xres')])
-        Popen(['xrdb', '-merge', path.join(config.HOME, '.Xresources')])
+        call(['xrdb', '-merge',
+              path.join(config.XRES_DIR, cs_file + '.Xres')])
+        call(['xrdb', '-merge', path.join(config.HOME, '.Xresources')])
         try:
             if config.wpgtk.getboolean('execute_cmd'):
                 Popen(config.wpgtk['command'].split(' '))
