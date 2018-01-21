@@ -2,7 +2,7 @@
 
 __ScriptVersion="0.1.5";
 THEME_DIR="${PWD}/wpgtk-themes";
-COLOR_OTHER="${HOME}/.config/wpg/themes";
+COLOR_OTHER="${HOME}/.config/wpg/templates";
 
 #===  FUNCTION  ================================================================
 #         NAME:  wpg-install.sh
@@ -121,7 +121,16 @@ function install_gtk ()
 {
   echo "Installing gtk themes";
   cp -r ./FlatColor "${HOME}/.themes/" && \
-    echo ":: FlatColor gtk themes install done."
+  cp --remove-destination ./FlatColor/gtk-2.0/gtkrc.base "${COLOR_OTHER}/gtk2.base" && \
+    ln -sf "${HOME}/.themes/FlatColor/gtk-2.0/gtkrc" "${COLOR_OTHER}/gtk2" && \
+    echo ":: gtk2 theme done"
+  cp --remove-destination ./FlatColor/gtk-3.0/gtk.css.base "${COLOR_OTHER}/gtk3.0.base" && \
+    ln -sf "${HOME}/.themes/FlatColor/gtk-3.0/gtk.css" "${COLOR_OTHER}/gtk3.0" && \
+    echo ":: gtk3.0 theme done"
+  cp --remove-destination ./FlatColor/gtk-3.20/gtk.css.base "${COLOR_OTHER}/gtk3.20.base" && \
+    ln -sf "${HOME}/.themes/FlatColor/gtk-3.20/gtk.css" "${COLOR_OTHER}/gtk3.20" && \
+    echo ":: gtk3.20 theme done"
+  echo ":: FlatColor gtk themes install done."
 }
 
 function install_icons()
