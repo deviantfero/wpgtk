@@ -102,13 +102,6 @@ def auto_adjust_colors(color_list):
     return color_list
 
 
-def clean_icon_color(dirty_string):
-    dirty_string = dirty_string.strip("\n")
-    dirty_string = dirty_string.split("=")
-    dirty_string = dirty_string.pop()
-    return dirty_string
-
-
 def get_brightness(hexv):
     rgb = list(int(hexv.strip('#')[i:i+2], 16) for i in (0, 2, 4))
     hls = rgb_to_hls(rgb[0], rgb[1], rgb[2])
@@ -154,46 +147,38 @@ def prepare_icon_colors(colors):
     try:
         glyph = reduce_brightness(colors['wpgtk']['COLORIN'], 15)
         file_current_glyph = open(config.FILE_DIC['icon-step1'], "r")
-        current_back = ""
-        current_front = ""
-        current_glyph = ""
+        icon_dic = {}
+
         for line in file_current_glyph:
-            if("New" in line and "glyph" in line):
-                current_glyph = clean_icon_color(line)
-                break
-        for line in file_current_glyph:
-            if("New" in line and "front" in line):
-                current_front = clean_icon_color(line)
-                break
-        for line in file_current_glyph:
-            if("New" in line and "back" in line):
-                current_back = clean_icon_color(line)
-                break
+            if('glyphColorNew=' in line):
+                icon_dic['oldglyph'] = line.split('=')[1]
+            if('frontColorNew=' in line):
+                icon_dic['oldfront'] = line.split('=')[1]
+            if('backColorNew=' in line):
+                icon_dic['oldback'] = line.split('=')[1]
         file_current_glyph.close()
 
-        icon_dic = {"l=178984": "l=" + current_glyph,
-                    "w=178984": "w=" + glyph,
-                    "l=36d7b7": "l=" + current_front,
-                    "w=36d7b7": "w=" + colors['wpgtk']['COLORACT'],
-                    "l=1ba39c": "l=" + current_back,
-                    "w=1ba39c": "w=" + colors['wpgtk']['COLORIN']}
+        icon_dic['newglyph'] = glyph
+        icon_dic['newfront'] = colors['wpgtk']['COLORACT']
+        icon_dic['newback'] = colors['wpgtk']['COLORIN']
+
         return icon_dic
     except IOError:
         print("ERR::ICONS - BASE FILES DO NOT EXIST", file=sys.stderr)
         return
 
 
-def change_other_files(colors):
-    other_path = os.path.join(config.HOME, ".themes/color_other")
+def change_templates(colors):
     files = []
-    for(dirpath, dirnames, filenames) in os.walk(other_path):
+    template_dir = config.FILE_DIC['templates']
+    for(dirpath, dirnames, filenames) in os.walk(template_dir):
         files.extend(filenames)
 
     try:
         for word in files:
             if '.base' in word:
                 original = word.split('.base', len(word)).pop(0)
-                change_colors(colors, os.path.join(other_path, original))
+                change_colors(colors, os.path.join(template_dir, original))
     except Exception as e:
         print('ERR:: ' + str(e), file=sys.stderr)
         print('ERR::OPTIONAL FILE -' + original, file=sys.stderr)
@@ -240,7 +225,7 @@ def prepare_colors(image_name):
     return cdic
 
 
-def execute_gcolorchange(image_name):
+def apply_colorscheme(image_name):
     colors = prepare_colors(image_name)
 
     if config.wpgtk.getboolean('gtk'):
@@ -253,7 +238,7 @@ def execute_gcolorchange(image_name):
         change_colors(colors, 'icon-step1')
         call(config.FILE_DIC['icon-step2'])
 
-    change_other_files(colors)
+    change_templates(colors)
     if config.wpgtk.getboolean('tint2') or not shutil.which('tint2'):
         call(["pkill", "-SIGUSR1", "tint2"])
     if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
