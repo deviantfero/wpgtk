@@ -13,15 +13,14 @@ class mainWindow(Gtk.Window):
     def __init__(self, args):
         Gtk.Window.__init__(self, title='wpgtk ' + config.__version__)
 
-        image_name = os.path.join(config.WALL_DIR, '.current')
+        image_name = os.path.join(config.WPG_DIR, '.current')
         image_name = os.path.realpath(image_name)
         self.set_default_size(200, 200)
         self.args = args
 
         # these variables are just to get the image
         # and preview of current wallpaper
-        route_list = image_name.split('/', image_name.count('/'))
-        file_name = route_list[4]
+        file_name = themer.get_current()
         print('INF::CURRENT WALL: ' + file_name)
         sample_name = os.path.join(config.SAMPLE_DIR,
                                    (file_name + '.sample.png'))
