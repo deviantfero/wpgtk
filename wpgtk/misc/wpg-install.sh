@@ -2,10 +2,10 @@
 
 __ScriptVersion="0.1.5";
 THEME_DIR="${PWD}/wpgtk-themes";
-COLOR_OTHER="${HOME}/.themes/color_other";
+COLOR_OTHER="${HOME}/.config/wpg/themes";
 
 #===  FUNCTION  ================================================================
-#         NAME:  wpg-install
+#         NAME:  wpg-install.sh
 #  DESCRIPTION:  Installs various wpgtk themes.
 #===============================================================================
 function usage ()
