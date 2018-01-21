@@ -51,9 +51,8 @@ def change_colors(colors, which):
     try:
         tmp_filename = which + '.base'
         with open(tmp_filename, 'r') as tmp_file:
-            top = tmp_file.tell()
             first_line = tmp_file.readline()
-            tmp_file.seek(top)
+            tmp_file.seek(0)
             tmp_data = tmp_file.read()
 
         # ignore the template if it has wpgtk-ignore in it
@@ -229,9 +228,6 @@ def apply_colorscheme(image_name):
     colors = prepare_colors(image_name)
 
     if config.wpgtk.getboolean('gtk'):
-        change_colors(colors, 'gtk2')
-        change_colors(colors, 'gtk3.0')
-        change_colors(colors, 'gtk3.20')
         pywal.reload.gtk()
 
     if os.path.isfile(config.FILE_DIC['icon-step2']):

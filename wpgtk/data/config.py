@@ -24,10 +24,7 @@ OPT_DIR = os.path.join(WPG_DIR, 'templates')
 RCC = []  # random color cache
 
 
-FILE_DIC = {'gtk2':       os.path.join(HOME, '.themes/FlatColor/gtk-2.0/gtkrc'),
-            'gtk3.0':     os.path.join(HOME, '.themes/FlatColor/gtk-3.0/gtk.css'),
-            'gtk3.20':    os.path.join(HOME, '.themes/FlatColor/gtk-3.20/gtk.css'),
-            'templates':  os.path.join(HOME, '.config/wpg/templates'),
+FILE_DIC = {'templates':  os.path.join(HOME, '.config/wpg/templates'),
             'icon-step1': os.path.join(HOME, '.icons/flattrcolor/scripts/replace_folder_file.sh'),
             'icon-step2': os.path.join(HOME, '.icons/flattrcolor/scripts/replace_script.sh')}
 

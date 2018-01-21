@@ -57,7 +57,7 @@ class OptionsGrid(Gtk.Grid):
         self.lbl_tint2 = Gtk.Label('Reload Tint2')
         self.gtk_switch = Gtk.Switch()
         self.gtk_switch.connect('notify::active',  self.on_activate, 'gtk')
-        self.lbl_gtk = Gtk.Label('Colorize GTK')
+        self.lbl_gtk = Gtk.Label('Reload GTK2')
         self.openbox_switch = Gtk.Switch()
         self.openbox_switch.connect('notify::active',
                                     self.on_activate, 'openbox')
