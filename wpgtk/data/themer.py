@@ -33,7 +33,7 @@ def set_theme(filename, cs_file, restore=False):
         pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
         image = pywal.image.get(path.join(config.WALL_DIR, cs_file))
         colors = pywal.colors.get(image, config.WALL_DIR)
-        pywal.sequences.send(colors, config.WALL_DIR)
+        pywal.sequences.send(colors, config.WPG_DIR)
         pywal.export.color(colors, 'css',
                            path.join(config.WPG_DIR, 'current.css'))
         pywal.export.color(colors, 'shell',
