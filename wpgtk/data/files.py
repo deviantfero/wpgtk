@@ -24,6 +24,7 @@ def get_file_list(path=config.WALL_DIR, images=True):
         for f in filenames:
             files.append(f)
         break
+    files.sort()
 
     if images:
         return [elem for elem in files if valid.fullmatch(elem)]
