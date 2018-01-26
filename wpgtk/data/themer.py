@@ -11,15 +11,7 @@ from . import color, sample, config, files
 def create_theme(filepath):
     filename = filepath.split("/").pop().replace(" ", "_")
     shutil.copy2(filepath, path.join(config.WALL_DIR, filename))
-    image = pywal.image.get(path.join(config.WALL_DIR, filename))
-    colors = pywal.colors.get(image, config.WALL_DIR)
-    pywal.export.color(colors,
-                       "xresources",
-                       path.join(config.XRES_DIR, (filename + ".Xres")))
-    color_list = [colors['colors']['color%s' % i] for i in range(16)]
-    sample.create_sample(color_list,
-                         f=path.join(config.SAMPLE_DIR,
-                                     (filename + '.sample.png')))
+    auto_adjust_theme(filename)
 
 
 def set_theme(filename, cs_file, restore=False):
