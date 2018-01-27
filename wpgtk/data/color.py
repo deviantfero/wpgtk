@@ -219,10 +219,6 @@ def prepare_colors(image_name):
     wpcol['REPLAC'] = add_brightness(wpcol['COLORACT'], 70)
 
     cdic['icons'] = prepare_icon_colors(cdic)
-
-    print("INF::FG: " + wpcol['COLORACT'])
-    print("INF::BG: " + wpcol['COLORIN'])
-
     return cdic
 
 
