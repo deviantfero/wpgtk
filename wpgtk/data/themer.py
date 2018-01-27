@@ -11,21 +11,13 @@ from . import color, sample, config, files
 def create_theme(filepath):
     filename = filepath.split("/").pop().replace(" ", "_")
     shutil.copy2(filepath, path.join(config.WALL_DIR, filename))
-    image = pywal.image.get(path.join(config.WALL_DIR, filename))
-    colors = pywal.colors.get(image, config.WALL_DIR)
-    pywal.export.color(colors,
-                       "xresources",
-                       path.join(config.XRES_DIR, (filename + ".Xres")))
-    color_list = [colors['colors']['color%s' % i] for i in range(16)]
-    sample.create_sample(color_list,
-                         f=path.join(config.SAMPLE_DIR,
-                                     (filename + '.sample.png')))
+    auto_adjust_theme(filename)
 
 
 def set_theme(filename, cs_file, restore=False):
     if(path.join(config.WALL_DIR, filename)):
         if(not restore):
-            color.execute_gcolorchange(cs_file)
+            color.apply_colorscheme(cs_file)
             pywal.reload.gtk()
             pywal.reload.i3()
             pywal.reload.polybar()
@@ -33,19 +25,19 @@ def set_theme(filename, cs_file, restore=False):
         pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
         image = pywal.image.get(path.join(config.WALL_DIR, cs_file))
         colors = pywal.colors.get(image, config.WALL_DIR)
-        pywal.sequences.send(colors, config.WALL_DIR)
+        pywal.sequences.send(colors, config.WPG_DIR)
         pywal.export.color(colors, 'css',
-                           path.join(config.WALL_DIR, 'current.css'))
+                           path.join(config.WPG_DIR, 'current.css'))
         pywal.export.color(colors, 'shell',
-                           path.join(config.WALL_DIR, 'current.sh'))
+                           path.join(config.WPG_DIR, 'current.sh'))
         pywal.export.color(colors, 'xresources',
-                           path.join(config.WALL_DIR, 'current.Xres'))
+                           path.join(config.WPG_DIR, 'current.Xres'))
 
-        init_file = open(path.join(config.WALL_DIR, 'wp_init.sh'), 'w')
+        init_file = open(path.join(config.WPG_DIR, 'wp_init.sh'), 'w')
         init_file.writelines(['#!/bin/bash\n', 'wpg -rs ' +
                               filename + ' ' + cs_file])
         init_file.close()
-        Popen(['chmod', '+x', path.join(config.WALL_DIR, 'wp_init.sh')])
+        Popen(['chmod', '+x', path.join(config.WPG_DIR, 'wp_init.sh')])
         call(['xrdb', '-merge',
               path.join(config.XRES_DIR, cs_file + '.Xres')])
         call(['xrdb', '-merge', path.join(config.HOME, '.Xresources')])
@@ -53,12 +45,12 @@ def set_theme(filename, cs_file, restore=False):
             if config.wpgtk.getboolean('execute_cmd'):
                 Popen(config.wpgtk['command'].split(' '))
             symlink(path.join(config.WALL_DIR, filename),
-                    path.join(config.WALL_DIR, ".current"))
+                    path.join(config.WPG_DIR, ".current"))
         except Exception as e:
             if e.errno == errno.EEXIST:
-                remove(path.join(config.WALL_DIR, ".current"))
+                remove(path.join(config.WPG_DIR, ".current"))
                 symlink(path.join(config.WALL_DIR, filename),
-                        path.join(config.WALL_DIR, ".current"))
+                        path.join(config.WPG_DIR, ".current"))
             else:
                 raise e
     else:
@@ -76,7 +68,7 @@ def delete_theme(filename):
 
 
 def get_current(show=False):
-    image = realpath(path.join(config.WALL_DIR, '.current')).split('/').pop()
+    image = realpath(path.join(config.WPG_DIR, '.current')).split('/').pop()
     if show:
         print(image)
     return image

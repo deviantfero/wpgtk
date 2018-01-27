@@ -1,5 +1,6 @@
 from gi import require_version
-from . import color_grid, template_grid, option_grid
+from . import color_grid, template_grid
+from . import option_grid, keyword_grid
 from wpgtk.data import files, themer, config
 from gi.repository import Gtk, GdkPixbuf
 import os
@@ -13,15 +14,14 @@ class mainWindow(Gtk.Window):
     def __init__(self, args):
         Gtk.Window.__init__(self, title='wpgtk ' + config.__version__)
 
-        image_name = os.path.join(config.WALL_DIR, '.current')
+        image_name = os.path.join(config.WPG_DIR, '.current')
         image_name = os.path.realpath(image_name)
         self.set_default_size(200, 200)
         self.args = args
 
         # these variables are just to get the image
         # and preview of current wallpaper
-        route_list = image_name.split('/', image_name.count('/'))
-        file_name = route_list[4]
+        file_name = themer.get_current()
         print('INF::CURRENT WALL: ' + file_name)
         sample_name = os.path.join(config.SAMPLE_DIR,
                                    (file_name + '.sample.png'))
@@ -38,10 +38,12 @@ class mainWindow(Gtk.Window):
         self.cpage = color_grid.ColorGrid(self)
         self.fpage = template_grid.TemplateGrid(self)
         self.optpage = option_grid.OptionsGrid(self)
+        self.keypage = keyword_grid.KeywordGrid(self)
 
         self.notebook.append_page(self.wpage, Gtk.Label('Wallpapers'))
         self.notebook.append_page(self.cpage, Gtk.Label('Colors'))
         self.notebook.append_page(self.fpage, Gtk.Label('Templates'))
+        self.notebook.append_page(self.keypage, Gtk.Label('Keywords'))
         self.notebook.append_page(self.optpage, Gtk.Label('Options'))
 
         option_list = Gtk.ListStore(str)
