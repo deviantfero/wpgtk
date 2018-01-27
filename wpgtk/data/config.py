@@ -7,7 +7,7 @@ __version__ = '4.7.4 - dev'
 
 options = None
 wpgtk = None
-wal = None
+keywords = None
 
 HOME = os.path.expanduser('~')
 WPG_DIR = os.path.join(HOME, '.config/wpg')
@@ -38,11 +38,12 @@ def write_conf(config_path=CONF_FILE):
 def load_sections():
     global options
     global wpgtk
-    global wal
+    global keywords
     options = configparser.ConfigParser()
+    options.optionxform = str
     options.read(CONF_FILE)
     wpgtk = options['wpgtk']
-    wal = options['wal']
+    keywords = options['keywords']
 
 
 def init():
