@@ -55,14 +55,16 @@ def change_colors(colors, which):
             tmp_file.seek(0)
             tmp_data = tmp_file.read()
 
-        # ignore the template if it has wpgtk-ignore in it
         if 'wpgtk-ignore' not in first_line:
+            for k, v in config.keywords.items():
+                tmp_data = tmp_data.replace(k, v)
             for k, v in colors['wpgtk'].items():
                 tmp_data = tmp_data.replace(k, v.strip('#'))
             for i in range(16):
                 replace_word = 'COLOR%d' % i if i < 10 else 'COLORX%d' % i
                 replace_val = colors['colors']['color%s' % i].strip('#')
                 tmp_data = tmp_data.replace(replace_word, replace_val)
+
             if colors['icons'] and opt == 'icon-step1':
                 for k, v in colors['icons'].items():
                     tmp_data = tmp_data.replace(k, v.replace('#', ''))
