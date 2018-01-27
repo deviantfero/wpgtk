@@ -59,6 +59,7 @@ class KeywordGrid(Gtk.Grid):
         self.keyword_tree.append_column(value_text)
 
     def remove_keyword(self, widget):
+        self.status_lbl.set_text('')
         (m, pathlist) = self.keyword_tree.get_selection().get_selected_rows()
         for path in pathlist:
             tree_iter = m.get_iter(path)
@@ -91,5 +92,5 @@ class KeywordGrid(Gtk.Grid):
 
     def append_new_keyword(self, widget):
         self.status_lbl.set_text('')
-        config.keywords['keyword' + str(len(self.liststore))] = 'value'
-        self.liststore.append(['keyword' + str(len(self.liststore)), 'value'])
+        keyword.create_pair('keyword' + str(len(self.liststore)), 'value')
+        self.reload_keyword_list()
