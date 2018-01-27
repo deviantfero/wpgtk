@@ -1,5 +1,6 @@
 from gi import require_version
-from . import color_grid, template_grid, option_grid
+from . import color_grid, template_grid
+from . import option_grid, keyword_grid
 from wpgtk.data import files, themer, config
 from gi.repository import Gtk, GdkPixbuf
 import os
@@ -37,10 +38,12 @@ class mainWindow(Gtk.Window):
         self.cpage = color_grid.ColorGrid(self)
         self.fpage = template_grid.TemplateGrid(self)
         self.optpage = option_grid.OptionsGrid(self)
+        self.keypage = keyword_grid.KeywordGrid(self)
 
         self.notebook.append_page(self.wpage, Gtk.Label('Wallpapers'))
         self.notebook.append_page(self.cpage, Gtk.Label('Colors'))
         self.notebook.append_page(self.fpage, Gtk.Label('Templates'))
+        self.notebook.append_page(self.keypage, Gtk.Label('Keywords'))
         self.notebook.append_page(self.optpage, Gtk.Label('Options'))
 
         option_list = Gtk.ListStore(str)
