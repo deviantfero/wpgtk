@@ -33,4 +33,4 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 
 # License
 
-This project is licensed under the GPUv2 License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the GPLv2 License - see the [LICENSE](LICENSE) file for details
