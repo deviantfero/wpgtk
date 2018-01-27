@@ -1,11 +1,10 @@
 
 # wpgtk
 
-wpgtk uses pywal as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the colorschemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for wpgtk and custom keywords and values to replace in templates.
+`wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the colorschemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for `wpgtk` and custom keywords and values to replace in templates.
 
-In short, wpgtk is a colorscheme/wallpaper manager with a template system attached which let's you create templates from any textfile and will replace keywords on it on the fly, allowing for great styling and theming possibilities.
+In short, `wpgtk` is a colorscheme/wallpaper manager with a template system attached which let's you create templates from any textfile and will replace keywords on it on the fly, allowing for great styling and theming possibilities.
 
-## Gallery
 - **Demos:
 [[GUI]](https://gfycat.com/RigidAnxiousElk)
 [[CLI]](https://gfycat.com/NeighboringSarcasticEquine)
@@ -18,12 +17,18 @@ In short, wpgtk is a colorscheme/wallpaper manager with a template system attach
 [[Custom Keywords]](https://github.com/deviantfero/wpgtk/wiki/Custom-Keywords)
 [[Templates]](https://github.com/deviantfero/wpgtk/wiki/Templates)**
 
+## Galery
+#### Color Showcase
 ![console](https://i.imgur.com/UvVonun.gif)
+
+#### Openbox
 ![openbox setup](http://i.imgur.com/2cquXzm.png)
+
+#### i3
 ![i3_setup](https://i.imgur.com/ybqWBO6.png)
+
+#### Light themes
 ![light_theme](https://i.imgur.com/Pc2zRej.png)
-
-
 
 
 # License
