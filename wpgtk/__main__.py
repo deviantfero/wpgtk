@@ -42,17 +42,11 @@ def main():
     parser.add_argument('-c',
                         help='shows the current wallpaper',
                         action='store_true')
-    parser.add_argument('-e',
-                        help='auto adjusts the given colorscheme(s)',
-                        nargs='*')
     parser.add_argument('-z',
                         help='shuffles the given colorscheme(s)',
                         nargs='*')
     parser.add_argument('-t',
                         help='send color sequences to all terminals VTE true',
-                        action='store_true')
-    parser.add_argument('-v',
-                        help='(deprecated) use VTE sequences to generate and set themes',
                         action='store_true')
     parser.add_argument('-x',
                         help='add, remove and list \
@@ -69,9 +63,6 @@ def main():
         filename = random.choice(files.get_file_list())
         themer.set_theme(filename, filename)
         exit(0)
-
-    if args.v:
-        print("Deprecated: this flag no longer serves any purpose")
 
     if args.s:
         if len(args.s) == 1:
@@ -123,12 +114,6 @@ def main():
                 themer.create_theme(e)
         exit(0)
 
-    if args.e:
-        for arg in args.e:
-            themer.auto_adjust_theme(arg)
-            print('OK:: Auto-adjusted %s' % arg)
-        exit(0)
-
     if args.z:
         for arg in args.z:
             themer.shuffle_colors(arg)
@@ -140,7 +125,7 @@ def main():
         files.add_template(args.y[0], args.y[1])
         exit(0)
 
-    if (len(sys.argv) < 2 or (len(sys.argv) == 2 and args.v)):
+    if (len(sys.argv) < 2):
         try:
             theme_picker.run(args)
         except NameError:
