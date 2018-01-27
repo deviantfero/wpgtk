@@ -15,13 +15,13 @@ function usage ()
   Options:
   -h   Display this message
   -v   Display script version
-  -o   Install openbox themes
-  -t   Install tint2 theme
-  -g   Install gtk theme
+  -o   Install openbox templates
+  -t   Install tint2 template
+  -g   Install gtk template
   -i   Install icon-set
-  -r   Install rofi theme
-  -I   Install i3 theme
-  -p   Install polybar theme
+  -r   Install rofi template
+  -I   Install i3 template
+  -p   Install polybar template
   "
 }
 
