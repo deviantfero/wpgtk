@@ -21,8 +21,6 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 ### Color Showcase
 ![console](https://i.imgur.com/UvVonun.gif)
 
-### Openbox
-![openbox setup](http://i.imgur.com/2cquXzm.png)
 
 ### i3
 ![i3_setup](https://i.imgur.com/ybqWBO6.png)
@@ -30,6 +28,8 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 ### Light theme
 ![light_theme](https://i.imgur.com/Pc2zRej.png)
 
+### Openbox
+![openbox setup](http://i.imgur.com/2cquXzm.png)
 
 # License
 
