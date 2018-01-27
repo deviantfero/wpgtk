@@ -8,7 +8,8 @@ def update_keyword(old_keyword, new_keyword, save=False):
     if(len(new_keyword) < KEY_LENGTH):
         raise Exception('Keyword must be longer than 5 characters')
     config.keywords[new_keyword] = config.keywords[old_keyword]
-    config.keywords.pop(old_keyword, None)
+    if(old_keyword != new_keyword):
+        config.keywords.pop(old_keyword, None)
 
     if save:
         config.write_conf()
