@@ -152,11 +152,11 @@ def prepare_icon_colors(colors):
 
         for line in file_current_glyph:
             if('glyphColorNew=' in line):
-                icon_dic['oldglyph'] = line.split('=')[1]
+                icon_dic['oldglyph'] = line.split('=')[1].strip('\n')
             if('frontColorNew=' in line):
-                icon_dic['oldfront'] = line.split('=')[1]
+                icon_dic['oldfront'] = line.split('=')[1].strip('\n')
             if('backColorNew=' in line):
-                icon_dic['oldback'] = line.split('=')[1]
+                icon_dic['oldback'] = line.split('=')[1].strip('\n')
         file_current_glyph.close()
 
         icon_dic['newglyph'] = glyph
