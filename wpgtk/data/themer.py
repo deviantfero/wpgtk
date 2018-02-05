@@ -25,6 +25,7 @@ def set_theme(filename, cs_file, restore=False):
         pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
         image = pywal.image.get(path.join(config.WALL_DIR, cs_file))
         colors = pywal.colors.get(image, config.WALL_DIR)
+
         pywal.sequences.send(colors, config.WPG_DIR)
         pywal.export.color(colors, 'css',
                            path.join(config.WPG_DIR, 'current.css'))
@@ -37,9 +38,9 @@ def set_theme(filename, cs_file, restore=False):
         init_file.writelines(['#!/bin/bash\n', 'wpg -rs ' +
                               filename + ' ' + cs_file])
         init_file.close()
+
         Popen(['chmod', '+x', path.join(config.WPG_DIR, 'wp_init.sh')])
-        call(['xrdb', '-merge',
-              path.join(config.XRES_DIR, cs_file + '.Xres')])
+        call(['xrdb', '-merge', path.join(config.XRES_DIR, cs_file + '.Xres')])
         call(['xrdb', '-merge', path.join(config.HOME, '.Xresources')])
         try:
             if config.wpgtk.getboolean('execute_cmd'):
@@ -59,12 +60,10 @@ def set_theme(filename, cs_file, restore=False):
 
 
 def delete_theme(filename):
-    cache_file = path.join(config.WALL_DIR, filename)
     remove(path.join(config.WALL_DIR, filename))
     remove(path.join(config.SAMPLE_DIR, (filename + '.sample.png')))
     remove(path.join(config.XRES_DIR, (filename + '.Xres')))
-    remove(path.join(config.SCHEME_DIR,
-           (cache_file.replace('/', '_').replace('.', '_') + ".json")))
+    remove(files.get_cache_filename(filename))
 
 
 def get_current(show=False):

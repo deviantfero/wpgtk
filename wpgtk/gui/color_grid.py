@@ -1,7 +1,7 @@
 import os
 import shutil
 import pywal
-from wpgtk.data import color
+from wpgtk.data import color, util
 from wpgtk.data import config, files, sample
 from .color_picker import ColorDialog
 from random import shuffle
@@ -116,7 +116,7 @@ class ColorGrid(Gtk.Grid):
     def render_buttons(self):
         for x in range(0, 16):
             gcolor = Gdk.color_parse(self.color_list[x])
-            if color.get_brightness(self.color_list[x]) < 99:
+            if util.get_hls_val(self.color_list[x], 'light') < 99:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
                 fgcolor = Gdk.color_parse('#101010')
@@ -178,18 +178,17 @@ class ColorGrid(Gtk.Grid):
         self.done_lbl.set_text("")
         gcolor = Gdk.RGBA()
         gcolor.parse(widget.get_label())
-        dialog = ColorDialog(self.parent, self.selected_file)
-        dialog.colorchooser.set_rgba(gcolor)
+        dialog = ColorDialog(self.parent, self.selected_file, gcolor)
         response = dialog.run()
 
         if response == Gtk.ResponseType.OK:
-            gcolor = dialog.colorchooser.get_rgba()
-            rgb = list(map(lambda x: round(x*100*2.55),
-                           [gcolor.red, gcolor.green, gcolor.blue]))
+            r, g, b, _ = dialog.colorchooser.get_rgba()
+            rgb = list(map(lambda x: round(x*100*2.55), [r, g, b]))
             hex_color = pywal.util.rgb_to_hex(rgb)
             widget.set_label(hex_color)
+
             gcolor = Gdk.color_parse(hex_color)
-            if color.get_brightness(hex_color) < 100:
+            if util.get_hls_val(hex_color, 'light') < 100:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
                 fgcolor = Gdk.color_parse('#101010')

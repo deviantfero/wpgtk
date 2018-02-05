@@ -3,6 +3,8 @@ import shutil
 import sys
 import re
 from . import config
+from pywal.settings import __cache_version__
+from os.path import join
 
 
 def get_file_list(path=config.WALL_DIR, images=True):
@@ -37,6 +39,15 @@ def show_files(path=config.WALL_DIR, images=True):
         print(f)
 
 
+def get_cache_filename(img, light=False):
+    color_type = 'light' if light else 'dark'
+    cache_file = re.sub('[/|\\|.]', '_', join(config.WALL_DIR, img))
+    cache_file = join(config.SCHEME_DIR, '%s_%s_%s.json'
+                      % (cache_file, color_type, __cache_version__))
+
+    return cache_file
+
+
 def add_template(cfile, basefile=None):
 
     # we remove dots from possible dotfiles
@@ -54,18 +65,18 @@ def add_template(cfile, basefile=None):
         shutil.copy2(cfile, cfile + '.bak')
         print('::CREATING BASE')
         if basefile:
-            shutil.copy2(basefile, os.path.join(config.OPT_DIR, templatename))
+            shutil.copy2(basefile, join(config.OPT_DIR, templatename))
         else:
-            shutil.copy2(cfile, os.path.join(config.OPT_DIR, templatename))
+            shutil.copy2(cfile, join(config.OPT_DIR, templatename))
         print('::CREATING SYMLINK')
-        os.symlink(cfile, os.path.join(config.OPT_DIR,
+        os.symlink(cfile, join(config.OPT_DIR,
                    templatename.replace('.base', '')))
     except Exception as e:
         print('ERR::' + str(e.strerror), file=sys.stderr)
 
 
 def remove_template(basefile):
-    basefile_path = os.path.join(config.OPT_DIR, basefile)
+    basefile_path = join(config.OPT_DIR, basefile)
     configfile_path = basefile_path.replace('.base', '')
 
     try:
