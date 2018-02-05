@@ -160,22 +160,13 @@ def prepare_colors(image_name):
     wpcol = cdic['wpgtk'] = {}
     cl = [cdic['colors']['color%s' % i] for i in range(16)]
 
+    # getting base colors
     if(config.wpgtk.getint('active') > 0):
-        wpcol['BASECOLOR'] = cl[config.wpgtk.getint('active') - 1]
+        bc = cl[config.wpgtk.getint('active') - 1]
     else:
-        wpcol['BASECOLOR'] = cl[randint(0, 15)]
+        bc = cl[randint(0, 15)]
 
-    wpcol['COLORBASE'] = cl[0]
-    if is_dark_theme(cl):
-        wpcol['COLORBG'] = util.reduce_brightness(cl[0], 10)
-        wpcol['COLORTOOL'] = util.add_brightness(cl[0], 4)
-        wpcol['COLORACT'], wpcol['COLORIN'] = split_active(wpcol['BASECOLOR'])
-    else:
-        wpcol['COLORBG'] = util.add_brightness(cl[0], 10)
-        wpcol['COLORTOOL'] = util.reduce_brightness(cl[0], 4)
-        wpcol['COLORACT'], wpcol['COLORIN'] = split_active(wpcol['BASECOLOR'],
-                                                           False)
-    wpcol['REPLAC'] = util.add_brightness(wpcol['COLORACT'], 70)
+    wpcol['COLORACT'], wpcol['COLORIN'] = split_active(bc, is_dark_theme(cl))
     cdic['icons'] = prepare_icon_colors(cdic)
 
     return cdic
