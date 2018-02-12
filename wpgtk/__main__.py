@@ -88,7 +88,7 @@ def main():
         exit(0)
 
     if args.t:
-        Popen(['cat', path.join(config.WALL_DIR, 'sequences')])
+        Popen(['cat', path.join(config.WPG_DIR, 'sequences')])
         exit(0)
 
     if args.version:
