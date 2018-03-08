@@ -22,6 +22,7 @@ function usage ()
   -r   Install rofi template
   -I   Install i3 template
   -p   Install polybar template
+  -H   Specify hash of wpgtk-templates repository to use
   "
 }
 
@@ -43,6 +44,7 @@ function getfiles ()
   git clone https://github.com/deviantfero/wpgtk-templates "$THEME_DIR";
   if [[ $? -eq 0 ]]; then
     cd "$THEME_DIR";
+    [[ ! -z "$commit" ]] && git checkout $commit;
     return 0;
   else
     exit 1;
@@ -163,7 +165,7 @@ function clean_up()
 
 function getargs()
 {
-  while getopts ":hvotgiIpr" opt
+  while getopts "H:hvotgiIpr" opt
   do
     case $opt in
       h)
@@ -181,6 +183,7 @@ function getargs()
       r)    rofi="true" ;;
       I)      i3="true" ;;
       p) polybar="true" ;;
+      H) commit="${OPTARG}" ;;
       *)
         echo -e "\n  Option does not exist : $OPTARG\n"
         usage;
