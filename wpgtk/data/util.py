@@ -46,3 +46,7 @@ def add_brightness(hex_string, amount, sat=0):
     s = max(s - sat, -1)
 
     return hls_to_hex([h, l, s])
+
+
+def build_key(keyword):
+    return "<{}>".format(keyword)

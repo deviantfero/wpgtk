@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 __ScriptVersion="0.1.5";
-THEME_DIR="${PWD}/wpgtk-themes";
+THEME_DIR="${PWD}/wpgtk-templates";
 COLOR_OTHER="${HOME}/.config/wpg/templates";
 
 #===  FUNCTION  ================================================================
@@ -22,6 +22,7 @@ function usage ()
   -r   Install rofi template
   -I   Install i3 template
   -p   Install polybar template
+  -H   Specify hash of wpgtk-templates repository to use
   "
 }
 
@@ -40,9 +41,10 @@ function getfiles ()
   checkprogram 'wpg';
   mkdir -p "${HOME}/.themes/color_other";
   mkdir -p "${HOME}/.icons";
-  git clone https://github.com/deviantfero/wpgtk-themes "$THEME_DIR";
+  git clone https://github.com/deviantfero/wpgtk-templates "$THEME_DIR";
   if [[ $? -eq 0 ]]; then
     cd "$THEME_DIR";
+    [[ ! -z "$commit" ]] && git checkout $commit;
     return 0;
   else
     exit 1;
@@ -163,7 +165,7 @@ function clean_up()
 
 function getargs()
 {
-  while getopts ":hvotgiIpr" opt
+  while getopts "H:hvotgiIpr" opt
   do
     case $opt in
       h)
@@ -181,6 +183,7 @@ function getargs()
       r)    rofi="true" ;;
       I)      i3="true" ;;
       p) polybar="true" ;;
+      H) commit="${OPTARG}" ;;
       *)
         echo -e "\n  Option does not exist : $OPTARG\n"
         usage;

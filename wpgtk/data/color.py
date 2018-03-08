@@ -24,8 +24,8 @@ def is_dark_theme(color_list):
 def get_random_color(image_name):
     image_path = join(config.WALL_DIR, image_name)
     if not config.RCC:
-        config.RCC = pywal.colors.gen_colors(image_path, 36)
-    return config.RCC[randint(0, len(config.RCC))]
+        config.RCC = pywal.colors.gen_colors(image_path, 48)
+    return config.RCC[randint(0, len(config.RCC) - 1)]
 
 
 def write_colors(img, color_list):
@@ -58,13 +58,12 @@ def change_colors(colors, which):
 
         if 'wpgtk-ignore' not in first_line:
             for k, v in config.keywords.items():
-                tmp_data = tmp_data.replace(k, v)
-            for k, v in colors['wpgtk'].items():
+                tmp_data = tmp_data.replace(util.build_key(k), v)
+            for k, v in colors["wpgtk"].items():
+                tmp_data = tmp_data.replace(util.build_key(k), v.strip('#'))
+            for k, v in colors["colors"].items():
+                k = util.build_key(k).upper()
                 tmp_data = tmp_data.replace(k, v.strip('#'))
-            for i in range(16):
-                k = 'COLOR%d' % i if i < 10 else 'COLORX%d' % i
-                v = colors['colors']['color%s' % i].strip('#')
-                tmp_data = tmp_data.replace(k, v)
 
             if colors['icons'] and opt == 'icon-step1':
                 for k, v in colors['icons'].items():
