@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 __ScriptVersion="0.1.5";
-THEME_DIR="${PWD}/wpgtk-themes";
+THEME_DIR="${PWD}/wpgtk-templates";
 COLOR_OTHER="${HOME}/.config/wpg/templates";
 
 #===  FUNCTION  ================================================================
@@ -40,7 +40,7 @@ function getfiles ()
   checkprogram 'wpg';
   mkdir -p "${HOME}/.themes/color_other";
   mkdir -p "${HOME}/.icons";
-  git clone https://github.com/deviantfero/wpgtk-themes "$THEME_DIR";
+  git clone https://github.com/deviantfero/wpgtk-templates "$THEME_DIR";
   if [[ $? -eq 0 ]]; then
     cd "$THEME_DIR";
     return 0;
