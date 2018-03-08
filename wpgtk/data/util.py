@@ -1,5 +1,5 @@
 from colorsys import rgb_to_hls, hls_to_rgb
-from pywal.util import rgb_to_hex, hex_to_rgb
+from pywal.util import hex_to_rgb
 
 
 def get_hls_val(hexv, what):
@@ -46,3 +46,7 @@ def add_brightness(hex_string, amount, sat=0):
     s = max(s - sat, -1)
 
     return hls_to_hex([h, l, s])
+
+
+def build_key(keyword):
+    return "<{}>".format(keyword)
