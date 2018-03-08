@@ -1,5 +1,5 @@
 from colorsys import rgb_to_hls, hls_to_rgb
-from pywal.util import hex_to_rgb
+from pywal.util import rgb_to_hex, hex_to_rgb
 
 
 def get_hls_val(hexv, what):
