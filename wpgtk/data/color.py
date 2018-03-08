@@ -24,8 +24,8 @@ def is_dark_theme(color_list):
 def get_random_color(image_name):
     image_path = join(config.WALL_DIR, image_name)
     if not config.RCC:
-        config.RCC = pywal.colors.gen_colors(image_path, 36)
-    return config.RCC[randint(0, len(config.RCC))]
+        config.RCC = pywal.colors.gen_colors(image_path, 48)
+    return config.RCC[randint(0, len(config.RCC) - 1)]
 
 
 def write_colors(img, color_list):
