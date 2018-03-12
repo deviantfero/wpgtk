@@ -17,18 +17,18 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 [[Custom Keywords]](https://github.com/deviantfero/wpgtk/wiki/Custom-Keywords)
 [[Templates]](https://github.com/deviantfero/wpgtk/wiki/Templates)**
 
+- **Tutorials:**
+**[[Installation]](https://www.youtube.com/watch?v=jmY5NEPI4RM)
+[[Advanced Features]](https://www.youtube.com/watch?v=QXpMMP8fT0o)**
+
+
 ## Gallery
-### Color Showcase
 ![console](https://i.imgur.com/UvVonun.gif)
 
-
-### i3
 ![i3_setup](https://i.imgur.com/ybqWBO6.png)
 
-### Light theme
 ![light_theme](https://i.imgur.com/Pc2zRej.png)
 
-### Openbox
 ![openbox setup](http://i.imgur.com/2cquXzm.png)
 
 # License
