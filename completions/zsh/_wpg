@@ -6,9 +6,17 @@ _profiles() {
     _describe 'profiles' profiles   #
 }
 
+_templates() {
+    local -a templates
+    templates=(`wpg -xl`)
+    _describe 'templates' templates
+}
+
 _wpg() {
     local state optforprofiles
     optforprofiles=(-s -e -d -z)    # options for which profiles should be completed
+    optforgeneric=(-y -a -xa)
+    optfortemplates=(-xd -dx)
 
     _arguments \
         '1: :->generic' \
@@ -23,6 +31,16 @@ _wpg() {
                 for opt in $optforprofiles; do
                     if [[ $opt = ${words[2]} ]]; then
                         _profiles
+                    fi
+                done
+                for opt in $optforgeneric; do
+                    if [[ $opt = ${words[2]} ]]; then
+                        _gnu_generic
+                    fi
+                done
+                for opt in $optfortemplates; do
+                    if [[ $opt = ${words[2]} ]]; then
+                        _templates
                     fi
                 done
             fi
