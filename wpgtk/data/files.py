@@ -50,6 +50,7 @@ def get_cache_filename(img, light=False):
 
 def add_template(cfile, basefile=None):
 
+    cfile = os.path.realpath(cfile)
     # we remove dots from possible dotfiles
     if not basefile:
         l = [atom.lstrip('.') for atom in cfile.split('/')
