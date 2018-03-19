@@ -3,16 +3,20 @@ import sys
 from subprocess import call
 from os.path import join, isfile
 from random import randint
-from . import config
-from . import files
-from . import util
+from . import config, files, util, logger
 import pywal
 
 
-def get_color_list(image_name):
-    image = pywal.image.get(join(config.WALL_DIR, image_name))
-    color_dict = pywal.colors.get(image, config.WALL_DIR)
-    return [color_dict['colors']['color%s' % i] for i in range(16)]
+def get_color_list(filename, json=False):
+    if not json:
+        image = pywal.image.get(join(config.WALL_DIR, filename))
+        theme = pywal.colors.get(image, config.WALL_DIR)
+    else:
+        theme = pywal.util.read_file_json(filename)
+        if 'color' in theme:
+            return theme['color']
+
+    return [theme['colors']['color%s' % i] for i in range(16)]
 
 
 def is_dark_theme(color_list):
@@ -71,11 +75,10 @@ def change_colors(colors, which):
 
             with open(which, 'w') as target_file:
                 target_file.write(tmp_data)
-            print("OK:: %s - CHANGED SUCCESSFULLY" %
-                  opt.replace(config.OPT_DIR + '/', 'template :: '))
+            logger.log.info("%s - CHANGED SUCCESSFULLY" %
+                            opt.replace(config.OPT_DIR + '/', 'template :: '))
     except IOError as err:
-        print("ERR::%s - "
-              "BASE FILE DOES NOT EXIST" % opt, file=sys.stderr)
+        logger.log.error("%s - base file does not exist" % opt)
 
 
 def auto_adjust_colors(clist):
@@ -125,7 +128,7 @@ def prepare_icon_colors(colors):
 
         return icon_dic
     except IOError:
-        print("ERR::ICONS - BASE FILES DO NOT EXIST", file=sys.stderr)
+        logger.log.error("icons - base file does not exists")
         return
 
 
@@ -139,8 +142,8 @@ def change_templates(colors):
             original = word.split('.base', len(word)).pop(0)
             change_colors(colors, join(template_dir, original))
     except Exception as e:
-        print('ERR:: ' + str(e), file=sys.stderr)
-        print('ERR::OPTIONAL FILE -' + original, file=sys.stderr)
+        logger.log.error(str(e))
+        logger.log.error('optional file ' + original, file=sys.stderr)
 
 
 def split_active(hexc, is_dark_theme=True):
@@ -187,4 +190,4 @@ def apply_colorscheme(image_name):
         call(["pkill", "-SIGUSR1", "tint2"])
     if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
         call(["openbox", "--reconfigure"])
-    print("OK::FINISHED")
+    logger.log.info("done")
