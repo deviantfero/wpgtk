@@ -147,12 +147,12 @@ def main():
         except NameError:
             logger.log.error("missing pygobject module, use cli")
 
-    if args.T:
-        if len(args.T) != 2:
+    if args.i:
+        if len(args.i) != 2:
             logger.log.error("specify a wallpaper and a colorscheme json")
             exit(1)
-        color.write_colors(args.T[0], color.get_color_list(args.T[1], True))
-        logger.log.info("applied %s to %s" % (args.T[1], args.T[0]))
+        color.write_colors(args.i[0], color.get_color_list(args.i[1], True))
+        logger.log.info("applied %s to %s" % (args.i[1], args.i[0]))
 
 
 if __name__ == "__main__":
