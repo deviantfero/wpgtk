@@ -14,7 +14,8 @@ _templates() {
 
 _wpg() {
     local state optforprofiles
-    optforprofiles=(-s -e -d -z -T -m)    # options for which profiles should be completed
+    optforprofiles=(-s -e -d -z -m)    # options for which profiles should be completed
+    optvariable=(-i)
     optforgeneric=(-y -a -xa)
     optfortemplates=(-xd -dx)
 
@@ -33,6 +34,13 @@ _wpg() {
                         _profiles
                     fi
                 done
+                for opt in $optvariable; do
+                    if [[ $opt = ${words[2]} && $CURRENT < 4 ]]; then
+                        _profiles
+                    else
+                        _gnu_generic
+                    fi
+                done
                 for opt in $optforgeneric; do
                     if [[ $opt = ${words[2]} ]]; then
                         _gnu_generic
@@ -43,7 +51,7 @@ _wpg() {
                         _templates
                     fi
                 done
-            fi
+            fi 
             ;;
     esac
 }
