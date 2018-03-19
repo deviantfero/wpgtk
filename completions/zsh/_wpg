@@ -37,7 +37,7 @@ _wpg() {
                 for opt in $optvariable; do
                     if [[ $opt = ${words[2]} && $CURRENT < 4 ]]; then
                         _profiles
-                    else
+                    elif [[ $opt = ${words[2]} ]]; then
                         _gnu_generic
                     fi
                 done

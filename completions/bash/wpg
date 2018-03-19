@@ -17,7 +17,7 @@ function _wpg() {
         for opt in $optvariable; do
             if [[ $opt = ${COMP_WORDS[1]} && $COMP_CWORD < 3 ]]; then
                 COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
-            else
+            elif [[ $opt = ${COMP_WORDS[1]} ]]; then
                 compopt -o default; COMPREPLY=()
             fi
         done
