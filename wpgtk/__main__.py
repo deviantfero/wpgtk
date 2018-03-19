@@ -68,6 +68,7 @@ def main():
                         help="add an existent basefile template [config, basefile]",
                         nargs='*')
 
+    config.init()
     args = parser.parse_args()
 
     if args.m == "random_both":
@@ -156,5 +157,4 @@ def main():
 
 
 if __name__ == "__main__":
-    config.init()
     main()
