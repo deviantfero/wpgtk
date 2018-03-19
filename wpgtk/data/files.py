@@ -1,13 +1,12 @@
 import os
 import shutil
-import sys
 import re
-from . import config
+from . import config, logger
 from pywal.settings import __cache_version__
 from os.path import join
 
 
-def get_file_list(path=config.WALL_DIR, images=True):
+def get_file_list(path=config.WALL_DIR, images=True, json=False):
     """gets filenames in a given directory, optional
     parameters for image exclusiveness
 
@@ -60,20 +59,20 @@ def add_template(cfile, basefile=None):
         templatename = '.'.join(l) + '.base'
     else:
         templatename = basefile.split('/').pop()
-    print('ADD::' + templatename + '@' + cfile)
+    logger.log.info('added ' + templatename + '@' + cfile)
     try:
-        print('::MAKING BACKUP CONFIG')
+        logger.log.info('MAKING BACKUP CONFIG')
         shutil.copy2(cfile, cfile + '.bak')
-        print('::CREATING BASE')
+        logger.log.info('CREATING BASE')
         if basefile:
             shutil.copy2(basefile, join(config.OPT_DIR, templatename))
         else:
             shutil.copy2(cfile, join(config.OPT_DIR, templatename))
-        print('::CREATING SYMLINK')
+        logger.log.info('CREATING SYMLINK')
         os.symlink(cfile, join(config.OPT_DIR,
                    templatename.replace('.base', '')))
     except Exception as e:
-        print('ERR::' + str(e.strerror), file=sys.stderr)
+        logger.log.error(str(e.strerror))
 
 
 def remove_template(basefile):
@@ -85,4 +84,4 @@ def remove_template(basefile):
         if os.path.islink(configfile_path):
             os.remove(configfile_path)
     except Exception as e:
-        print('ERR::' + str(e.strerror), file=sys.stderr)
+        logger.log.error(str(e.strerror))

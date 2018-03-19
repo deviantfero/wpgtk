@@ -1,7 +1,7 @@
 from gi import require_version
 from . import color_grid, template_grid
 from . import option_grid, keyword_grid
-from wpgtk.data import files, themer, config
+from wpgtk.data import files, themer, config, logger
 from gi.repository import Gtk, GdkPixbuf
 import os
 require_version('Gtk', '3.0')
@@ -22,7 +22,7 @@ class mainWindow(Gtk.Window):
         # these variables are just to get the image
         # and preview of current wallpaper
         file_name = themer.get_current()
-        print('INF::CURRENT WALL: ' + file_name)
+        logger.log.info('current wallpaper: ' + file_name)
         sample_name = os.path.join(config.SAMPLE_DIR,
                                    (file_name + '.sample.png'))
 
@@ -63,8 +63,6 @@ class mainWindow(Gtk.Window):
         self.colorscheme.set_entry_text_column(0)
 
         self.set_border_width(10)
-        # another container will be added so this will probably change
-        # self.add(self.wpage)
         self.preview = Gtk.Image()
         self.sample = Gtk.Image()
 
@@ -100,7 +98,6 @@ class mainWindow(Gtk.Window):
         self.current_walls = Gtk.ComboBox()
 
     def on_add_clicked(self, widget):
-        filepath = ""
         filechooser = Gtk.FileChooserDialog(
                       'Select an Image', self,
                       Gtk.FileChooserAction.OPEN,
@@ -116,19 +113,16 @@ class mainWindow(Gtk.Window):
         response = filechooser.run()
 
         if response == Gtk.ResponseType.OK:
-            filepath = filechooser.get_filename()
+            themer.create_theme(filechooser.get_filename())
+            option_list = Gtk.ListStore(str)
+            for elem in list(files.get_file_list()):
+                option_list.append([elem])
+            self.option_combo.set_model(option_list)
+            self.option_combo.set_entry_text_column(0)
+            self.colorscheme.set_model(option_list)
+            self.colorscheme.set_entry_text_column(0)
+            self.cpage.update_combo(option_list)
         filechooser.destroy()
-
-        themer.create_theme(filepath)
-        option_list = Gtk.ListStore(str)
-
-        for elem in list(files.get_file_list()):
-            option_list.append([elem])
-        self.option_combo.set_model(option_list)
-        self.option_combo.set_entry_text_column(0)
-        self.colorscheme.set_model(option_list)
-        self.colorscheme.set_entry_text_column(0)
-        self.cpage.update_combo(option_list)
 
     def on_set_clicked(self, widget):
         x = self.option_combo.get_active()

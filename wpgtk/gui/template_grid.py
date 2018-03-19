@@ -1,10 +1,9 @@
-import sys
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 import os
 from gi import require_version
 from subprocess import Popen
-from wpgtk.data import config, files
+from wpgtk.data import config, files, logger
 require_version("Gtk", "3.0")
 
 PAD = 10
@@ -102,7 +101,7 @@ class TemplateGrid(Gtk.Grid):
             try:
                 Popen(args_list)
             except Exception as e:
-                print("ERR:: malformed editor command", sys.stderr)
+                logger.log.error("malformed editor command")
             self.current = None
         self.file_view.unselect_all()
 

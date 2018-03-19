@@ -5,7 +5,7 @@ from random import shuffle
 from os.path import realpath
 from os import symlink, remove, path
 from subprocess import Popen, call
-from . import color, sample, config, files
+from . import color, sample, config, files, logger
 
 
 def create_theme(filepath):
@@ -83,7 +83,7 @@ def shuffle_colors(filename):
                              filename + '.sample.png'))
         color.write_colors(filename, colors)
     except IOError as e:
-        print('ERR:: file not available')
+        logger.log.error('file not available')
 
 
 def auto_adjust_theme(filename):
@@ -95,4 +95,4 @@ def auto_adjust_theme(filename):
                                          (filename + '.sample.png')))
         color.write_colors(filename, color_list)
     except IOError:
-        print('ERR:: file not available')
+        logger.log.error('file not available')
