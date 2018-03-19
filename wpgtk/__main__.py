@@ -52,8 +52,8 @@ def main():
                         help="shuffles the given colorscheme(s)",
                         nargs="*")
 
-    parser.add_argument("-T",
-                        help="asign a theme in json format to wallpaper [wallpaper, json]",
+    parser.add_argument("-i",
+                        help="import a theme in json format and asign to wallpaper [wallpaper, json]",
                         nargs="*")
 
     parser.add_argument("-t",
