@@ -14,7 +14,7 @@ _templates() {
 
 _wpg() {
     local state optforprofiles
-    optforprofiles=(-s -e -d -z)    # options for which profiles should be completed
+    optforprofiles=(-s -e -d -z -T -m)    # options for which profiles should be completed
     optforgeneric=(-y -a -xa)
     optfortemplates=(-xd -dx)
 
