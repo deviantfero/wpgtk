@@ -1,7 +1,8 @@
 function _wpg() {
     local optforprofiles
     _get_comp_words_by_ref cur
-    optforprofiles="-s -e -d -z -T -m"
+    optforprofiles="-s -e -d -z -m"
+    optvariable="-i"
     optfordefault="-y -a -xa -ax"
     optfortemplates="-xd -dx"
 
@@ -11,6 +12,13 @@ function _wpg() {
         for opt in $optforprofiles; do
             if [[ $opt = ${COMP_WORDS[1]} ]]; then
                 COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
+            fi
+        done
+        for opt in $optvariable; do
+            if [[ $opt = ${COMP_WORDS[1]} && $COMP_CWORD < 3 ]]; then
+                COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
+            else
+                compopt -o default; COMPREPLY=()
             fi
         done
         for opt in $optfordefault; do
