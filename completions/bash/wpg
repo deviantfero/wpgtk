@@ -2,7 +2,7 @@ function _wpg() {
     local optforprofiles
     _get_comp_words_by_ref cur
     optforprofiles="-s -e -d -z -m"
-    optvariable="-i"
+    optvariable="-i -o"
     optfordefault="-y -a -xa -ax"
     optfortemplates="-xd -dx"
 
