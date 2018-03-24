@@ -3,7 +3,7 @@ import shutil
 import os
 from . import logger
 
-__version__ = '4.9.4'
+__version__ = '4.9.5'
 
 options = None
 wpgtk = None
