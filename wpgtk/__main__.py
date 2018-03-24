@@ -56,6 +56,10 @@ def main():
                         help="import a theme in json format and asign to wallpaper [wallpaper, json]",
                         nargs="*")
 
+    parser.add_argument("-o",
+                        help="export a theme in json format [wallpaper, json path]",
+                        nargs="*")
+
     parser.add_argument("-t",
                         help="send color sequences to all terminals VTE true",
                         action="store_true")
@@ -133,7 +137,7 @@ def main():
 
     if args.z:
         for arg in args.z:
-            themer.shuffle_colors(arg)
+            color.shuffle_colors(arg)
             themer.auto_adjust_theme(arg)
             logger.log.info("shuffled %s" % arg)
         exit(0)
@@ -152,8 +156,16 @@ def main():
         if len(args.i) != 2:
             logger.log.error("specify a wallpaper and a colorscheme json")
             exit(1)
-        color.write_colors(args.i[0], color.get_color_list(args.i[1], True))
-        logger.log.info("applied %s to %s" % (args.i[1], args.i[0]))
+        themer.import_theme(args.i[0], args.i[1])
+
+    if args.o:
+        if len(args.o) == 2:
+            themer.export_theme(args.o[0], args.o[1])
+        elif len(args.o) == 1:
+            themer.export_theme(args.o[0])
+        else:
+            logger.log.error("specify wallpaper and optionally an output path")
+            exit(1)
 
 
 if __name__ == "__main__":
