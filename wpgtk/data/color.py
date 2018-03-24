@@ -1,9 +1,10 @@
 import shutil
 import sys
 from subprocess import call
+from random import shuffle
 from os.path import join, isfile
 from random import randint
-from . import config, files, util, logger
+from . import config, files, util, logger, sample
 import pywal
 
 
@@ -30,6 +31,19 @@ def get_random_color(image_name):
     if not config.RCC:
         config.RCC = pywal.colors.gen_colors(image_path, 48)
     return config.RCC[randint(0, len(config.RCC) - 1)]
+
+
+def shuffle_colors(filename):
+    try:
+        colors = get_color_list(filename)
+        shuffled_colors = colors[1:7]
+        shuffle(shuffled_colors)
+        colors = colors[:1] + shuffled_colors + colors[7:]
+        sample.create_sample(colors, join(config.SAMPLE_DIR,
+                             filename + '.sample.png'))
+        write_colors(filename, colors)
+    except IOError as e:
+        logger.log.error('file not available')
 
 
 def write_colors(img, color_list):
