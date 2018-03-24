@@ -1,7 +1,7 @@
 import configparser
 import shutil
 import os
-import sys
+from . import logger
 
 __version__ = '4.9.4'
 
@@ -49,7 +49,7 @@ def load_sections():
 def init():
     try:
         if not os.path.isdir(SCHEME_DIR):
-            print('INF:: Creating dirs...')
+            logger.log.info('creating dirs...')
             os.makedirs(XRES_DIR, exist_ok=True)
             os.makedirs(SAMPLE_DIR, exist_ok=True)
             os.makedirs(SCHEME_DIR, exist_ok=True)
@@ -57,8 +57,8 @@ def init():
         load_sections()
         return 0
     except:
-        print('ERR:: Not a valid config file', file=sys.stderr)
-        print('INF:: Copying default config file')
+        logger.log.error("not a valid config file")
+        logger.log.info("copying default config file")
         pass
 
     shutil.copy(CONF_BACKUP, CONF_FILE)

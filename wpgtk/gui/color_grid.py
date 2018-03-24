@@ -32,6 +32,7 @@ class ColorGrid(Gtk.Grid):
         self.button_grid = Gtk.Grid()
         self.button_grid.set_column_homogeneous(1)
         self.button_grid.set_column_spacing(PAD)
+        self.button_grid.set_row_spacing(PAD)
 
         self.color_list = []
         self.button_list = []
@@ -78,6 +79,10 @@ class ColorGrid(Gtk.Grid):
         self.shuffle_button.connect("pressed", self.on_shuffle_click)
         self.shuffle_button.set_sensitive(False)
 
+        self.import_button = Gtk.Button("import")
+        self.import_button.set_sensitive(False)
+        self.import_button.connect("pressed", self.on_import_click)
+
         self.ok_button = Gtk.Button("Save")
         self.ok_button.connect("pressed", self.on_ok_click)
         self.ok_button.set_sensitive(False)
@@ -98,9 +103,10 @@ class ColorGrid(Gtk.Grid):
         self.option_combo.set_entry_text_column(0)
         self.option_combo.connect("changed", self.combo_box_change)
 
-        self.button_grid.attach(self.ok_button, 0, 0, 1, 1)
-        self.button_grid.attach(self.auto_button, 1, 0, 1, 1)
-        self.button_grid.attach(self.shuffle_button, 2, 0, 1, 1)
+        self.button_grid.attach(self.import_button, 0, 0, 3, 1)
+        self.button_grid.attach(self.ok_button, 0, 1, 1, 1)
+        self.button_grid.attach(self.auto_button, 1, 1, 1, 1)
+        self.button_grid.attach(self.shuffle_button, 2, 1, 1, 1)
 
         self.attach(self.option_combo, 0, 0, 1, 1)
         self.attach(self.button_grid, 0, 1, 1, 1)
@@ -153,12 +159,10 @@ class ColorGrid(Gtk.Grid):
                             (current_walls[x] + ".sample.png")))
                 self.done_lbl.set_text("Changes saved")
                 x = self.parent.colorscheme.get_active()
-                selected_sample = "sample/" + self.selected_file + ".sample.png"
-                sample_path = os.path.join(config.WALL_DIR, selected_sample)
-                self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                                                   sample_path,
-                                                                   width=500,
-                                                                   height=300)
+                selected_sample = self.selected_file + ".sample.png"
+                sample_path = os.path.join(config.SAMPLE_DIR, selected_sample)
+                self.parent.pixbuf_sample = GdkPixbuf.Pixbuf\
+                    .new_from_file_at_size(sample_path, width=500, height=300)
                 self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
 
     def on_auto_click(self, widget):
@@ -166,6 +170,26 @@ class ColorGrid(Gtk.Grid):
         self.render_buttons()
         sample.create_sample(self.color_list[:])
         self.render_sample()
+
+    def on_import_click(self, widget):
+        fcd = Gtk.FileChooserDialog(
+                      'Select a colorscheme', self.parent,
+                      Gtk.FileChooserAction.OPEN,
+                      (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                       Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+
+        filter = Gtk.FileFilter()
+        filter.set_name("JSON colorscheme")
+        filter.add_mime_type("application/json")
+        fcd.add_filter(filter)
+        response = fcd.run()
+
+        if response == Gtk.ResponseType.OK:
+            self.color_list = color.get_color_list(fcd.get_filename(), True)
+            self.render_buttons()
+            sample.create_sample(self.color_list[:])
+            self.render_sample()
+        fcd.destroy()
 
     def on_shuffle_click(self, widget):
         shuffled_colors = self.color_list[1:7]
@@ -209,6 +233,7 @@ class ColorGrid(Gtk.Grid):
         self.auto_button.set_sensitive(True)
         self.shuffle_button.set_sensitive(True)
         self.ok_button.set_sensitive(True)
+        self.import_button.set_sensitive(True)
         current_walls = files.get_file_list()
         self.selected_file = current_walls[x]
         sample_path = os.path.join(config.SAMPLE_DIR,

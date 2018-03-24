@@ -1,11 +1,10 @@
 import errno
 import pywal
 import shutil
-from random import shuffle
 from os.path import realpath
 from os import symlink, remove, path
 from subprocess import Popen, call
-from . import color, sample, config, files
+from . import color, sample, config, files, logger
 
 
 def create_theme(filepath):
@@ -73,17 +72,24 @@ def get_current(show=False):
     return image
 
 
-def shuffle_colors(filename):
+def import_theme(wallpaper, json_file):
+    color_list = color.get_color_list(json_file, True)
+
+    color.write_colors(wallpaper, color_list)
+    sample.create_sample(color_list,
+                         path.join(config.SAMPLE_DIR,
+                                   (wallpaper + '.sample.png')))
+    logger.log.info("applied %s to %s" % (json_file, wallpaper))
+
+
+def export_theme(wallpaper, json_path="."):
     try:
-        colors = color.get_color_list(filename)
-        shuffled_colors = colors[1:7]
-        shuffle(shuffled_colors)
-        colors = colors[:1] + shuffled_colors + colors[7:]
-        sample.create_sample(colors, f=path.join(config.SAMPLE_DIR,
-                             filename + '.sample.png'))
-        color.write_colors(filename, colors)
+        if(path.isdir(json_path)):
+            json_path = path.join(json_path, wallpaper + ".json")
+        shutil.copy2(path.join(files.get_cache_filename(wallpaper)), json_path)
+        logger.log.info("theme for %s successfully exported", wallpaper)
     except IOError as e:
-        print('ERR:: file not available')
+        logger.log.error('file not available')
 
 
 def auto_adjust_theme(filename):
@@ -95,4 +101,4 @@ def auto_adjust_theme(filename):
                                          (filename + '.sample.png')))
         color.write_colors(filename, color_list)
     except IOError:
-        print('ERR:: file not available')
+        logger.log.error('file not available')
