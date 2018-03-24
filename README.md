@@ -2,7 +2,7 @@
 # wpgtk
 
 ![PyPI](https://img.shields.io/pypi/v/wpgtk.svg?style=flat-square)
-![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)
+![license](https://img.shields.io/badge/license-GPLv2-blue.svg?style=flat-square)
 
 
 `wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the colorschemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for `wpgtk` and custom keywords and values to replace in templates.
