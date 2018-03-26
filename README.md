@@ -33,7 +33,9 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 
 
 ## Gallery
-![console](https://i.imgur.com/UvVonun.gif)
+<p align="center">
+  <img src="https://i.imgur.com/UvVonun.gif"/>
+</p>
 
 ![i3_setup](https://i.imgur.com/ybqWBO6.png)
 
