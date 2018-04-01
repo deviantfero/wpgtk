@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import sys
 import random
+import pywal
+import logging
 import wpgtk.data.config as config
 from os import path
 from subprocess import Popen
-from wpgtk.data import files, themer, logger, color
+from wpgtk.data import files, themer, color, util
 from wpgtk.data.config import __version__
 try:
     from wpgtk.gui import theme_picker
@@ -13,11 +15,12 @@ except:
 import argparse
 
 
-def main():
+def read_args(args):
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-s",
-                        help="set the wallpaper and colorscheme, apply changes system-wide",
+                        help="set the wallpaper and colorscheme, "
+                        "apply changes system-wide",
                         nargs="*")
 
     parser.add_argument("-r",
@@ -25,7 +28,8 @@ def main():
                         action="store_true")
 
     parser.add_argument("-m",
-                        help="pick a random colorscheme and set it, specify wallpaper to avoid changing it",
+                        help="pick a random colorscheme and set it, specify "
+                        "wallpaper to avoid changing it",
                         const="random_both", nargs="?")
 
     parser.add_argument("-a",
@@ -53,11 +57,13 @@ def main():
                         nargs="*")
 
     parser.add_argument("-i",
-                        help="import a theme in json format and asign to wallpaper [wallpaper, json]",
+                        help="import a theme in json format and asign "
+                        "to wallpaper [wallpaper, json]",
                         nargs="*")
 
     parser.add_argument("-o",
-                        help="export a theme in json format [wallpaper, json path]",
+                        help="export a theme in json "
+                        "format [wallpaper, json]",
                         nargs="*")
 
     parser.add_argument("-t",
@@ -65,15 +71,25 @@ def main():
                         action="store_true")
 
     parser.add_argument("-x",
-                        help="add, remove and list templates instead of themes",
+                        help="add, remove and list templates instead "
+                        "of themes",
                         action="store_true")
 
     parser.add_argument("-y",
-                        help="add an existent basefile template [config, basefile]",
+                        help="add an existent basefile template "
+                        "[config, basefile]",
                         nargs='*')
 
-    config.init()
-    args = parser.parse_args()
+    parser.add_argument("--backend",
+                        help="select a temporary backend",
+                        const="list", nargs="?")
+
+    return parser.parse_args()
+
+
+def process_args(args):
+    if args.backend is not None and args.backend != "list":
+        config.wpgtk['backend'] = args.backend
 
     if args.m == "random_both":
         filename = random.choice(files.get_file_list())
@@ -87,18 +103,13 @@ def main():
 
     if args.s:
         if len(args.s) == 1:
-            try:
-                themer.set_theme(args.s[0], args.s[0], args.r)
-            except TypeError as e:
-                logger.log.error("file " + args.s[0] + " not found")
-                raise e
+            themer.set_theme(args.s[0], args.s[0], args.r)
         elif len(args.s) == 2:
-            try:
-                themer.set_theme(args.s[0], args.s[1], args.r)
-            except TypeError:
-                logger.log.error("file  not found")
-        elif len(args.s) > 2:
-            logger.log.error("specify just 2 filenames")
+            themer.set_theme(args.s[0], args.s[1], args.r)
+        else:
+            logging.error("specify just 2 filenames")
+            exit(1)
+        exit(0)
 
     if args.l:
         if args.x:
@@ -119,53 +130,64 @@ def main():
     if args.d:
         for e in args.d:
             if args.x:
-                files.remove_template(e)
+                files.delete_template(e)
             else:
                 themer.delete_theme(e)
         exit(0)
 
     if args.c:
         themer.get_current(show=True)
+        exit(0)
 
     if args.a:
-        if args.x:
-            files.add_template(args.a[0])
-        else:
-            for e in args.a:
-                themer.create_theme(e)
+        add_function = files.add_template if args.x else files.create_theme
+        for file in args.a:
+            add_function(file)
         exit(0)
 
     if args.z:
         for arg in args.z:
             color.shuffle_colors(arg)
             themer.auto_adjust_theme(arg)
-            logger.log.info("shuffled %s" % arg)
+            logging.info("shuffled %s" % arg)
         exit(0)
 
     if args.y:
+        if len(args.i) != 2:
+            logging.error("specify a config and a basefile")
+            exit(1)
         files.add_template(args.y[0], args.y[1])
         exit(0)
 
-    if (len(sys.argv) < 2):
-        try:
-            theme_picker.run(args)
-        except NameError:
-            logger.log.error("missing pygobject module, use cli")
-
     if args.i:
         if len(args.i) != 2:
-            logger.log.error("specify a wallpaper and a colorscheme json")
+            logging.error("specify a wallpaper and a colorscheme json")
             exit(1)
         themer.import_theme(args.i[0], args.i[1])
+        exit(0)
 
     if args.o:
-        if len(args.o) == 2:
-            themer.export_theme(args.o[0], args.o[1])
-        elif len(args.o) == 1:
-            themer.export_theme(args.o[0])
-        else:
-            logger.log.error("specify wallpaper and optionally an output path")
+        if len(args.o) > 2:
+            logging.error("specify wallpaper and optionally an output path")
             exit(1)
+        else:
+            themer.export_theme(*args.o)
+            exit(0)
+
+    if args.backend == "list":
+        print("\n".join(pywal.colors.list_backends()))
+        exit(0)
+
+
+def main():
+    config.init()
+    util.setup_log()
+    args = read_args(sys.argv[1:])
+    process_args(args)
+    try:
+        theme_picker.run(args)
+    except NameError:
+        logging.error("missing pygobject module, use cli")
 
 
 if __name__ == "__main__":
