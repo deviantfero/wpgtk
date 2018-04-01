@@ -1,8 +1,9 @@
 import os
 import shutil
 import re
-from . import config, logger
-from pywal.settings import __cache_version__
+import logging
+from . import config
+from pywal.colors import cache_fname, list_backends
 from os.path import join
 
 
@@ -34,17 +35,15 @@ def get_file_list(path=config.WALL_DIR, images=True, json=False):
 
 
 def show_files(path=config.WALL_DIR, images=True):
-    for f in get_file_list(path, images):
-        print(f)
+    print("\n".join(get_file_list(path, images)))
 
 
-def get_cache_filename(img, light=False):
-    color_type = 'light' if light else 'dark'
-    cache_file = re.sub('[/|\\|.]', '_', join(config.WALL_DIR, img))
-    cache_file = join(config.SCHEME_DIR, '%s_%s_%s.json'
-                      % (cache_file, color_type, __cache_version__))
-
-    return cache_file
+def get_cache_filename(wallpaper):
+    filepath = join(config.WALL_DIR, wallpaper)
+    cache_filename = cache_fname(filepath,
+                                 config.wpgtk.get('backend', 'wal'),
+                                 False, config.WALL_DIR)
+    return join(*cache_filename)
 
 
 def add_template(cfile, basefile=None):
@@ -59,23 +58,23 @@ def add_template(cfile, basefile=None):
         templatename = '.'.join(l) + '.base'
     else:
         templatename = basefile.split('/').pop()
-    logger.log.info('added ' + templatename + '@' + cfile)
+    logging.info('added ' + templatename + '@' + cfile)
     try:
-        logger.log.info('MAKING BACKUP CONFIG')
+        logging.info('MAKING BACKUP CONFIG')
         shutil.copy2(cfile, cfile + '.bak')
-        logger.log.info('CREATING BASE')
+        logging.info('CREATING BASE')
         if basefile:
             shutil.copy2(basefile, join(config.OPT_DIR, templatename))
         else:
             shutil.copy2(cfile, join(config.OPT_DIR, templatename))
-        logger.log.info('CREATING SYMLINK')
+        logging.info('CREATING SYMLINK')
         os.symlink(cfile, join(config.OPT_DIR,
                    templatename.replace('.base', '')))
     except Exception as e:
-        logger.log.error(str(e.strerror))
+        logging.error(str(e.strerror))
 
 
-def remove_template(basefile):
+def delete_template(basefile):
     basefile_path = join(config.OPT_DIR, basefile)
     configfile_path = basefile_path.replace('.base', '')
 
@@ -84,4 +83,22 @@ def remove_template(basefile):
         if os.path.islink(configfile_path):
             os.remove(configfile_path)
     except Exception as e:
-        logger.log.error(str(e.strerror))
+        logging.error(str(e.strerror))
+
+
+def delete_colorschemes(wallpaper):
+    filepath = join(config.WALL_DIR, wallpaper)
+    for backend in list_backends():
+        cache_args = [filepath, backend, False, config.WALL_DIR]
+        json_file = cache_fname(*cache_args)
+        try:
+            os.remove(join(*json_file))
+        except OSError:
+            pass
+
+
+def change_current(filename):
+    os.symlink(join(config.WALL_DIR, filename),
+               join(config.WPG_DIR, ".currentTmp"))
+    os.rename(join(config.WPG_DIR, ".currentTmp"),
+              join(config.WPG_DIR, ".current"))

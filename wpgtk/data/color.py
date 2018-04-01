@@ -1,17 +1,24 @@
 import shutil
 import sys
+import logging
 from subprocess import call
 from random import shuffle
 from os.path import join, isfile
 from random import randint
-from . import config, files, util, logger, sample
+from . import config, files, util, sample
 import pywal
+
+
+def get_pywal_dict(filename):
+    image = pywal.image.get(join(config.WALL_DIR, filename))
+    return pywal.colors.get(image,
+                            backend=config.wpgtk.get('backend', 'wal'),
+                            cache_dir=config.WALL_DIR)
 
 
 def get_color_list(filename, json=False):
     if not json:
-        image = pywal.image.get(join(config.WALL_DIR, filename))
-        theme = pywal.colors.get(image, config.WALL_DIR)
+        theme = get_pywal_dict(filename)
     else:
         theme = pywal.util.read_file_json(filename)
         if 'color' in theme:
@@ -43,12 +50,11 @@ def shuffle_colors(filename):
                              filename + '.sample.png'))
         write_colors(filename, colors)
     except IOError as e:
-        logger.log.error('file not available')
+        logging.error('file not available')
 
 
 def write_colors(img, color_list):
-    image = pywal.image.get(join(config.WALL_DIR, img))
-    color_dict = pywal.colors.get(image, config.WALL_DIR)
+    color_dict = get_pywal_dict(img)
 
     for i in range(16):
         color_dict['colors']['color%s' % i] = color_list[i]
@@ -89,10 +95,10 @@ def change_colors(colors, which):
 
             with open(which, 'w') as target_file:
                 target_file.write(tmp_data)
-            logger.log.info("%s - CHANGED SUCCESSFULLY" %
-                            opt.replace(config.OPT_DIR + '/', 'template :: '))
+            logging.info("%s - CHANGED SUCCESSFULLY" %
+                         opt.replace(config.OPT_DIR + '/', 'template :: '))
     except IOError as err:
-        logger.log.error("%s - base file does not exist" % opt)
+        logging.error("%s - base file does not exist" % opt)
 
 
 def auto_adjust_colors(clist):
@@ -142,7 +148,7 @@ def prepare_icon_colors(colors):
 
         return icon_dic
     except IOError:
-        logger.log.error("icons - base file does not exists")
+        logging.error("icons - base file does not exists")
         return
 
 
@@ -156,8 +162,8 @@ def change_templates(colors):
             original = word.split('.base', len(word)).pop(0)
             change_colors(colors, join(template_dir, original))
     except Exception as e:
-        logger.log.error(str(e))
-        logger.log.error('optional file ' + original, file=sys.stderr)
+        logging.error(str(e))
+        logging.error('optional file ' + original, file=sys.stderr)
 
 
 def split_active(hexc, is_dark_theme=True):
@@ -171,7 +177,7 @@ def split_active(hexc, is_dark_theme=True):
 
 def prepare_colors(image_name):
     image = pywal.image.get(join(config.WALL_DIR, image_name))
-    cdic = pywal.colors.get(image, config.WALL_DIR)
+    cdic = get_pywal_dict(image)
 
     wpcol = cdic['wpgtk'] = {}
     cl = [cdic['colors']['color%s' % i] for i in range(16)]
@@ -204,4 +210,4 @@ def apply_colorscheme(image_name):
         call(["pkill", "-SIGUSR1", "tint2"])
     if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
         call(["openbox", "--reconfigure"])
-    logger.log.info("done")
+    logging.info("done")
