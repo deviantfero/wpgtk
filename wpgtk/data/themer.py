@@ -33,7 +33,7 @@ def set_theme(filename, cs_file, restore=False):
         pywal.export.color(colors, "xresources",
                            path.join(config.WPG_DIR, "current.Xres"))
 
-        with open(path.join(config.WPG_DIR), "wp_init.sh", 'w') as script:
+        with open(path.join(config.WPG_DIR, "wp_init.sh"), "w") as script:
             script.writelines(["#!/bin/bash\n",
                                "wpg -rs %s %s" % (filename, cs_file)])
 
