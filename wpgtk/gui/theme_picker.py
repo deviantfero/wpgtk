@@ -1,7 +1,8 @@
+import logging
 from gi import require_version
 from . import color_grid, template_grid
 from . import option_grid, keyword_grid
-from wpgtk.data import files, themer, config, logger
+from wpgtk.data import files, themer, config
 from gi.repository import Gtk, GdkPixbuf
 import os
 require_version('Gtk', '3.0')
@@ -22,7 +23,7 @@ class mainWindow(Gtk.Window):
         # these variables are just to get the image
         # and preview of current wallpaper
         file_name = themer.get_current()
-        logger.log.info('current wallpaper: ' + file_name)
+        logging.info('current wallpaper: ' + file_name)
         sample_name = os.path.join(config.SAMPLE_DIR,
                                    (file_name + '.sample.png'))
 
