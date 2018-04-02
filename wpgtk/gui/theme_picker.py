@@ -2,7 +2,7 @@ import logging
 from gi import require_version
 from . import color_grid, template_grid
 from . import option_grid, keyword_grid
-from wpgtk.data import files, themer, config
+from wpgtk.data import files, themer, config, color, sample
 from gi.repository import Gtk, GdkPixbuf
 import os
 require_version('Gtk', '3.0')
@@ -24,8 +24,7 @@ class mainWindow(Gtk.Window):
         # and preview of current wallpaper
         file_name = themer.get_current()
         logging.info('current wallpaper: ' + file_name)
-        sample_name = os.path.join(config.SAMPLE_DIR,
-                                   (file_name + '.sample.png'))
+        sample_name = files.get_sample_path(file_name)
 
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
@@ -165,13 +164,11 @@ class mainWindow(Gtk.Window):
 
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
-        selected_file = files.get_file_list()[x]
-        samplepath = os.path.join(config.SAMPLE_DIR,
-                                  (selected_file + '.sample.png'))
-        if(os.path.isfile(samplepath)):
-            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                 samplepath, width=500, height=500)
-        self.sample.set_from_pixbuf(self.pixbuf_sample)
+
+        # handle colorscheme and sample
+        # reloading from color_grid, since
+        # the colors are already loaded there
+
         self.cpage.set_edit_combo(x)
 
 
