@@ -17,14 +17,20 @@ def get_pywal_dict(filename):
 
 
 def get_color_list(filename, json=False):
-    if not json:
-        theme = get_pywal_dict(filename)
-    else:
-        theme = pywal.util.read_file_json(filename)
-        if 'color' in theme:
-            return theme['color']
 
-    return [theme['colors']['color%s' % i] for i in range(16)]
+    is_new = not isfile(files.get_cache_path(filename))
+
+    theme = get_pywal_dict(filename) if not json\
+        else pywal.util.read_file_json(filename)
+    color_list = theme["color"] if "color" in theme \
+        else list(theme["colors"].values())
+
+    if is_new and not json:
+        color_list = auto_adjust_colors(color_list)
+        sample.create_sample(color_list, files.get_sample_path(filename))
+        write_colors(filename, color_list)
+
+    return color_list
 
 
 def is_dark_theme(color_list):
@@ -33,24 +39,11 @@ def is_dark_theme(color_list):
     return fg_brightness > bg_brightness
 
 
-def get_random_color(image_name):
-    image_path = join(config.WALL_DIR, image_name)
-    if not config.RCC:
-        config.RCC = pywal.colors.gen_colors(image_path, 48)
-    return config.RCC[randint(0, len(config.RCC) - 1)]
-
-
-def shuffle_colors(filename):
-    try:
-        colors = get_color_list(filename)
+def shuffle_colors(colors):
         shuffled_colors = colors[1:7]
         shuffle(shuffled_colors)
         colors = colors[:1] + shuffled_colors + colors[7:]
-        sample.create_sample(colors, join(config.SAMPLE_DIR,
-                             filename + '.sample.png'))
-        write_colors(filename, colors)
-    except IOError as e:
-        logging.error('file not available')
+        return auto_adjust_colors(colors)
 
 
 def write_colors(img, color_list):
@@ -61,7 +54,7 @@ def write_colors(img, color_list):
     color_dict['special']['background'] = color_list[0]
     color_dict['special']['foreground'] = color_list[15]
 
-    cache_file = files.get_cache_filename(img)
+    cache_file = files.get_cache_path(img)
 
     pywal.export.color(color_dict, "json", cache_file)
     pywal.export.color(color_dict,
@@ -95,8 +88,7 @@ def change_colors(colors, which):
 
             with open(which, 'w') as target_file:
                 target_file.write(tmp_data)
-            logging.info("%s - CHANGED SUCCESSFULLY" %
-                         opt.replace(config.OPT_DIR + '/', 'template :: '))
+            logging.info("applying: %s" % opt.split('/').pop())
     except IOError as err:
         logging.error("%s - base file does not exist" % opt)
 
@@ -210,4 +202,3 @@ def apply_colorscheme(image_name):
         call(["pkill", "-SIGUSR1", "tint2"])
     if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
         call(["openbox", "--reconfigure"])
-    logging.info("done")
