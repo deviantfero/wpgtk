@@ -9,8 +9,12 @@ from . import color, sample, config, files, util
 
 def create_theme(filepath):
     filename = filepath.split("/").pop().replace(" ", "_")
-    symlink(filepath, path.join(config.WALL_DIR, filename))
-    color.get_color_list(filename)
+    tmplink = path.join(config.WALL_DIR, ".tmp.link")
+
+    symlink(filepath, tmplink)
+
+    shutil.move(tmplink, path.join(config.WALL_DIR, filename))
+    return color.get_color_list(filename)
 
 
 def set_theme(filename, cs_file, restore=False):
