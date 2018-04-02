@@ -6,7 +6,7 @@ import logging
 import wpgtk.data.config as config
 from os import path
 from subprocess import Popen
-from wpgtk.data import files, themer, color, util
+from wpgtk.data import files, themer, color, util, sample
 from wpgtk.data.config import __version__
 try:
     from wpgtk.gui import theme_picker
@@ -89,7 +89,12 @@ def read_args(args):
 
 def process_args(args):
     if args.backend is not None and args.backend != "list":
-        config.wpgtk['backend'] = args.backend
+        if args.backend in pywal.colors.list_backends():
+            config.wpgtk['backend'] = args.backend
+        else:
+            logging.error("no such backend, please "
+                          "choose a valid backend")
+            exit(1)
 
     if args.m == "random_both":
         filename = random.choice(files.get_file_list())
@@ -147,8 +152,11 @@ def process_args(args):
 
     if args.z:
         for arg in args.z:
-            color.shuffle_colors(arg)
-            themer.auto_adjust_theme(arg)
+            colors = color.get_color_list(arg)
+            colors = color.shuffle_colors(colors)
+            color.write_colors(colors)
+
+            sample.create_sample(colors, files.get_sample_path(arg))
             logging.info("shuffled %s" % arg)
         exit(0)
 
