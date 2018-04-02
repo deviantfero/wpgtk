@@ -53,9 +53,12 @@ def add_brightness(hex_string, amount, sat=0):
 
 def setup_log():
     logging.basicConfig(format="[%(levelname)s]"
-                               "[%(module)s] %(message)s",
+                               " %(module)-13s %(message)s",
                         level=logging.INFO,
                         stream=sys.stdout)
+    logging.addLevelName(logging.ERROR, "err")
+    logging.addLevelName(logging.INFO, "inf")
+    logging.addLevelName(logging.WARNING, "wrn")
 
 
 def xrdb_merge(file):
