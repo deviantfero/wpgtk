@@ -140,7 +140,7 @@ def process_args(args):
         exit(0)
 
     if args.a:
-        add_function = files.add_template if args.x else files.create_theme
+        add_function = files.add_template if args.x else themer.create_theme
         for file in args.a:
             add_function(file)
         exit(0)
