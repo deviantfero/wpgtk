@@ -2,15 +2,15 @@ import pywal
 import shutil
 import logging
 from os.path import realpath
-from os import remove, path
+from os import remove, path, symlink
 from subprocess import Popen
 from . import color, sample, config, files, util
 
 
 def create_theme(filepath):
     filename = filepath.split("/").pop().replace(" ", "_")
-    shutil.copy2(filepath, path.join(config.WALL_DIR, filename))
-    auto_adjust_theme(filename)
+    symlink(filepath, path.join(config.WALL_DIR, filename))
+    color.get_color_list(filename)
 
 
 def set_theme(filename, cs_file, restore=False):
@@ -52,7 +52,6 @@ def set_theme(filename, cs_file, restore=False):
 
 def delete_theme(filename):
     remove(path.join(config.WALL_DIR, filename))
-    remove(path.join(config.SAMPLE_DIR, (filename + '.sample.png')))
     remove(path.join(config.XRES_DIR, (filename + '.Xres')))
     files.delete_colorschemes(filename)
 
@@ -68,9 +67,7 @@ def import_theme(wallpaper, json_file):
     color_list = color.get_color_list(json_file, True)
 
     color.write_colors(wallpaper, color_list)
-    sample.create_sample(color_list,
-                         path.join(config.SAMPLE_DIR,
-                                   (wallpaper + '.sample.png')))
+    sample.create_sample(color_list, files.get_sample_path(wallpaper))
     logging.info("applied %s to %s" % (json_file, wallpaper))
 
 
@@ -78,19 +75,8 @@ def export_theme(wallpaper, json_path="."):
     try:
         if(path.isdir(json_path)):
             json_path = path.join(json_path, wallpaper + ".json")
-        shutil.copy2(path.join(files.get_cache_filename(wallpaper)), json_path)
+        shutil.copy2(path.join(files.get_cache_path(wallpaper)), json_path)
         logging.info("theme for %s successfully exported", wallpaper)
     except IOError as e:
         logging.error('file not available')
 
-
-def auto_adjust_theme(filename):
-    try:
-        color_list = color.get_color_list(filename)
-        color_list = color.auto_adjust_colors(color_list)
-        sample.create_sample(color_list,
-                             f=path.join(config.SAMPLE_DIR,
-                                         (filename + '.sample.png')))
-        color.write_colors(filename, color_list)
-    except IOError:
-        logging.error('file not available')
