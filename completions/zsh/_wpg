@@ -12,12 +12,19 @@ _templates() {
     _describe 'templates' templates
 }
 
+_backends() {
+    local -a backends
+    backends=(`wpg --backend`)
+    _describe 'backends' backends
+}
+
 _wpg() {
     local state optforprofiles
     optforprofiles=(-s -e -d -z -m)    # options for which profiles should be completed
     optvariable=(-i -o)
     optforgeneric=(-y -a -xa)
     optfortemplates=(-xd -dx)
+    optforbackends=(--backend)
 
     _arguments \
         '1: :->generic' \
@@ -49,6 +56,11 @@ _wpg() {
                 for opt in $optfortemplates; do
                     if [[ $opt = ${words[2]} ]]; then
                         _templates
+                    fi
+                done
+                for opt in $optforbackends; do
+                    if [[ $opt = ${words[2]} ]]; then
+                        _backends
                     fi
                 done
             fi 

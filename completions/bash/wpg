@@ -5,6 +5,7 @@ function _wpg() {
     optvariable="-i -o"
     optfordefault="-y -a -xa -ax"
     optfortemplates="-xd -dx"
+	optforbackends="--backends"
 
     if [[ $COMP_CWORD = 1 ]]; then
         COMPREPLY=($(compgen -W "$(_parse_usage wpg)" -- "$cur"))
@@ -12,6 +13,11 @@ function _wpg() {
         for opt in $optforprofiles; do
             if [[ $opt = ${COMP_WORDS[1]} ]]; then
                 COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
+            fi
+        done
+        for opt in $optbackends; do
+            if [[ $opt = ${COMP_WORDS[1]} ]]; then
+                COMPREPLY=($(compgen -W "$(wpg --backends)" -- "$cur"))
             fi
         done
         for opt in $optvariable; do
