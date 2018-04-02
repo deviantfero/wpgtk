@@ -1,23 +1,36 @@
 import shutil
 import sys
+import logging
 from subprocess import call
 from random import shuffle
 from os.path import join, isfile
 from random import randint
-from . import config, files, util, logger, sample
+from . import config, files, util, sample
 import pywal
 
 
-def get_color_list(filename, json=False):
-    if not json:
-        image = pywal.image.get(join(config.WALL_DIR, filename))
-        theme = pywal.colors.get(image, config.WALL_DIR)
-    else:
-        theme = pywal.util.read_file_json(filename)
-        if 'color' in theme:
-            return theme['color']
+def get_pywal_dict(filename):
+    image = pywal.image.get(join(config.WALL_DIR, filename))
+    return pywal.colors.get(image,
+                            backend=config.wpgtk.get('backend', 'wal'),
+                            cache_dir=config.WALL_DIR)
 
-    return [theme['colors']['color%s' % i] for i in range(16)]
+
+def get_color_list(filename, json=False):
+
+    is_new = not isfile(files.get_cache_path(filename))
+
+    theme = get_pywal_dict(filename) if not json\
+        else pywal.util.read_file_json(filename)
+    color_list = theme["color"] if "color" in theme \
+        else list(theme["colors"].values())
+
+    if is_new and not json:
+        color_list = auto_adjust_colors(color_list)
+        sample.create_sample(color_list, files.get_sample_path(filename))
+        write_colors(filename, color_list)
+
+    return color_list
 
 
 def is_dark_theme(color_list):
@@ -26,36 +39,22 @@ def is_dark_theme(color_list):
     return fg_brightness > bg_brightness
 
 
-def get_random_color(image_name):
-    image_path = join(config.WALL_DIR, image_name)
-    if not config.RCC:
-        config.RCC = pywal.colors.gen_colors(image_path, 48)
-    return config.RCC[randint(0, len(config.RCC) - 1)]
-
-
-def shuffle_colors(filename):
-    try:
-        colors = get_color_list(filename)
+def shuffle_colors(colors):
         shuffled_colors = colors[1:7]
         shuffle(shuffled_colors)
         colors = colors[:1] + shuffled_colors + colors[7:]
-        sample.create_sample(colors, join(config.SAMPLE_DIR,
-                             filename + '.sample.png'))
-        write_colors(filename, colors)
-    except IOError as e:
-        logger.log.error('file not available')
+        return auto_adjust_colors(colors)
 
 
 def write_colors(img, color_list):
-    image = pywal.image.get(join(config.WALL_DIR, img))
-    color_dict = pywal.colors.get(image, config.WALL_DIR)
+    color_dict = get_pywal_dict(img)
 
     for i in range(16):
         color_dict['colors']['color%s' % i] = color_list[i]
     color_dict['special']['background'] = color_list[0]
     color_dict['special']['foreground'] = color_list[15]
 
-    cache_file = files.get_cache_filename(img)
+    cache_file = files.get_cache_path(img)
 
     pywal.export.color(color_dict, "json", cache_file)
     pywal.export.color(color_dict,
@@ -89,10 +88,9 @@ def change_colors(colors, which):
 
             with open(which, 'w') as target_file:
                 target_file.write(tmp_data)
-            logger.log.info("%s - CHANGED SUCCESSFULLY" %
-                            opt.replace(config.OPT_DIR + '/', 'template :: '))
+            logging.info("applying: %s" % opt.split('/').pop())
     except IOError as err:
-        logger.log.error("%s - base file does not exist" % opt)
+        logging.error("%s - base file does not exist" % opt)
 
 
 def auto_adjust_colors(clist):
@@ -142,7 +140,7 @@ def prepare_icon_colors(colors):
 
         return icon_dic
     except IOError:
-        logger.log.error("icons - base file does not exists")
+        logging.error("icons - base file does not exists")
         return
 
 
@@ -156,8 +154,8 @@ def change_templates(colors):
             original = word.split('.base', len(word)).pop(0)
             change_colors(colors, join(template_dir, original))
     except Exception as e:
-        logger.log.error(str(e))
-        logger.log.error('optional file ' + original, file=sys.stderr)
+        logging.error(str(e))
+        logging.error('optional file ' + original, file=sys.stderr)
 
 
 def split_active(hexc, is_dark_theme=True):
@@ -171,7 +169,7 @@ def split_active(hexc, is_dark_theme=True):
 
 def prepare_colors(image_name):
     image = pywal.image.get(join(config.WALL_DIR, image_name))
-    cdic = pywal.colors.get(image, config.WALL_DIR)
+    cdic = get_pywal_dict(image)
 
     wpcol = cdic['wpgtk'] = {}
     cl = [cdic['colors']['color%s' % i] for i in range(16)]
@@ -204,4 +202,3 @@ def apply_colorscheme(image_name):
         call(["pkill", "-SIGUSR1", "tint2"])
     if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
         call(["openbox", "--reconfigure"])
-    logger.log.info("done")

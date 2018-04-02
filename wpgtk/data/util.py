@@ -1,3 +1,6 @@
+import logging
+import sys
+from subprocess import call
 from colorsys import rgb_to_hls, hls_to_rgb
 from pywal.util import rgb_to_hex, hex_to_rgb
 
@@ -46,6 +49,20 @@ def add_brightness(hex_string, amount, sat=0):
     s = max(s - sat, -1)
 
     return hls_to_hex([h, l, s])
+
+
+def setup_log():
+    logging.basicConfig(format="[%(levelname)s]"
+                               " %(module)-13s %(message)s",
+                        level=logging.INFO,
+                        stream=sys.stdout)
+    logging.addLevelName(logging.ERROR, "err")
+    logging.addLevelName(logging.INFO, "inf")
+    logging.addLevelName(logging.WARNING, "wrn")
+
+
+def xrdb_merge(file):
+    call(['xrdb', '-merge', file])
 
 
 def build_key(keyword):

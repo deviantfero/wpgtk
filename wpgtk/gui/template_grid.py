@@ -1,9 +1,10 @@
+import logging
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 import os
 from gi import require_version
 from subprocess import Popen
-from wpgtk.data import config, files, logger
+from wpgtk.data import config, files
 require_version("Gtk", "3.0")
 
 PAD = 10
@@ -101,14 +102,14 @@ class TemplateGrid(Gtk.Grid):
             try:
                 Popen(args_list)
             except Exception as e:
-                logger.log.error("malformed editor command")
+                logging.error("malformed editor command")
             self.current = None
         self.file_view.unselect_all()
 
     def on_rm_clicked(self, widget):
         if self.current is not None:
             item = self.item_names.pop(self.current)
-            files.remove_template(item)
+            files.delete_template(item)
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
