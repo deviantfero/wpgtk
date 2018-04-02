@@ -4,7 +4,6 @@ import pywal
 from wpgtk.data import color, util
 from wpgtk.data import config, files, sample
 from .color_picker import ColorDialog
-from random import shuffle
 from gi import require_version
 from gi.repository import Gtk, Gdk, GdkPixbuf
 require_version("Gtk", "3.0")
@@ -34,27 +33,19 @@ class ColorGrid(Gtk.Grid):
         self.button_grid.set_column_spacing(PAD)
         self.button_grid.set_row_spacing(PAD)
 
-        self.color_list = []
-        self.button_list = []
+        self.color_list = ['000000']*16
+        self.button_list = [Gtk.Button('000000') for x in range(16)]
         self.selected_file = ""
-        for x in range(0, 16):
-            self.color_list.append('000000')
-        for x in range(0, 16):
-            self.button_list.append(self.make_button(self.color_list[x]))
-            self.button_list[x].connect("pressed", self.on_color_click)
-            self.button_list[x].set_sensitive(False)
+        for button in self.button_list:
+            button.connect("pressed", self.on_color_click)
+            button.set_sensitive(False)
 
         cont = 0
         for y in range(0, 8, 2):
             for x in range(0, 4):
                 label = Gtk.Label(cont)
                 self.colorgrid.attach(label, x, y, 1, 1)
-                cont += 1
-
-        cont = 0
-        for y in range(1, 9, 2):
-            for x in range(0, 4):
-                self.colorgrid.attach(self.button_list[cont], x, y, 1, 1)
+                self.colorgrid.attach(self.button_list[cont], x, y + 1, 1, 1)
                 cont += 1
 
         sample_name = os.path.join(config.WALL_DIR, ".no_sample.sample.png")
@@ -115,21 +106,17 @@ class ColorGrid(Gtk.Grid):
         self.attach(self.sampler, 0, 4, 1, 1)
         self.attach(self.done_lbl, 0, 5, 1, 1)
 
-    def make_button(self, hex_color):
-        button = Gtk.Button(hex_color)
-        return button
-
     def render_buttons(self):
-        for x in range(0, 16):
+        for x, button in enumerate(self.button_list):
             gcolor = Gdk.color_parse(self.color_list[x])
             if util.get_hls_val(self.color_list[x], 'light') < 99:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
-                fgcolor = Gdk.color_parse('#101010')
-            self.button_list[x].set_label(self.color_list[x])
-            self.button_list[x].set_sensitive(True)
-            self.button_list[x].modify_bg(Gtk.StateType.NORMAL, gcolor)
-            self.button_list[x].modify_fg(Gtk.StateType.NORMAL, fgcolor)
+                fgcolor = Gdk.color_parse('#000000')
+            button.set_label(self.color_list[x])
+            button.set_sensitive(True)
+            button.modify_bg(Gtk.StateType.NORMAL, gcolor)
+            button.modify_fg(Gtk.StateType.NORMAL, fgcolor)
 
     def render_sample(self):
         sample_path = os.path.join(config.WALL_DIR, ".tmp.sample.png")
@@ -155,12 +142,10 @@ class ColorGrid(Gtk.Grid):
             tmpfile = os.path.join(config.WALL_DIR, ".tmp.sample.png")
             if(os.path.isfile(tmpfile)):
                 shutil.move(os.path.join(config.WALL_DIR, ".tmp.sample.png"),
-                            os.path.join(config.SAMPLE_DIR,
-                            (current_walls[x] + ".sample.png")))
+                            files.get_sample_path(current_walls[x]))
                 self.done_lbl.set_text("Changes saved")
                 x = self.parent.colorscheme.get_active()
-                selected_sample = self.selected_file + ".sample.png"
-                sample_path = os.path.join(config.SAMPLE_DIR, selected_sample)
+                sample_path = files.get_sample_path(self.selected_file)
                 self.parent.pixbuf_sample = GdkPixbuf.Pixbuf\
                     .new_from_file_at_size(sample_path, width=500, height=300)
                 self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
@@ -168,7 +153,7 @@ class ColorGrid(Gtk.Grid):
     def on_auto_click(self, widget):
         self.color_list = color.auto_adjust_colors(self.color_list)
         self.render_buttons()
-        sample.create_sample(self.color_list[:])
+        sample.create_sample(self.color_list)
         self.render_sample()
 
     def on_import_click(self, widget):
@@ -192,10 +177,7 @@ class ColorGrid(Gtk.Grid):
         fcd.destroy()
 
     def on_shuffle_click(self, widget):
-        shuffled_colors = self.color_list[1:7]
-        shuffle(shuffled_colors)
-        list_tail = shuffled_colors + self.color_list[7:]
-        self.color_list = self.color_list[:1] + list_tail
+        self.color_list = color.shuffle_colors(self.color_list)
         self.on_auto_click(widget)
 
     def on_color_click(self, widget):
@@ -222,24 +204,31 @@ class ColorGrid(Gtk.Grid):
             for i, c in enumerate(self.button_list):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
-            sample.create_sample(self.color_list[:])
+            sample.create_sample(self.color_list)
             self.render_sample()
         dialog.destroy()
 
     def combo_box_change(self, widget):
         self.done_lbl.set_text("")
-        config.RCC = []
         x = self.option_combo.get_active()
+
         self.auto_button.set_sensitive(True)
         self.shuffle_button.set_sensitive(True)
         self.ok_button.set_sensitive(True)
         self.import_button.set_sensitive(True)
+
         current_walls = files.get_file_list()
         self.selected_file = current_walls[x]
-        sample_path = os.path.join(config.SAMPLE_DIR,
-                                   (self.selected_file + '.sample.png'))
+        sample_path = files.get_sample_path(self.selected_file)
         self.color_list = color.get_color_list(self.selected_file)
         self.render_buttons()
-        self.pixbuf_sample = GdkPixbuf.Pixbuf\
-            .new_from_file_at_size(sample_path, width=500, height=300)
-        self.sample.set_from_pixbuf(self.pixbuf_sample)
+
+        try:
+            self.pixbuf_sample = GdkPixbuf.Pixbuf\
+                .new_from_file_at_size(sample_path, width=500, height=300)
+            self.sample.set_from_pixbuf(self.pixbuf_sample)
+        except:
+            sample.create_sample(self.color_list, sample_path)
+
+        # Refresh parent's sample pixbuf
+        self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
