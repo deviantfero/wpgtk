@@ -1,16 +1,20 @@
-import errno
 import pywal
 import shutil
+import logging
 from os.path import realpath
-from os import symlink, remove, path
-from subprocess import Popen, call
-from . import color, sample, config, files, logger
+from os import remove, path, symlink
+from subprocess import Popen
+from . import color, sample, config, files, util
 
 
 def create_theme(filepath):
     filename = filepath.split("/").pop().replace(" ", "_")
-    shutil.copy2(filepath, path.join(config.WALL_DIR, filename))
-    auto_adjust_theme(filename)
+    tmplink = path.join(config.WALL_DIR, ".tmp.link")
+
+    symlink(filepath, tmplink)
+
+    shutil.move(tmplink, path.join(config.WALL_DIR, filename))
+    return color.get_color_list(filename)
 
 
 def set_theme(filename, cs_file, restore=False):
@@ -22,37 +26,29 @@ def set_theme(filename, cs_file, restore=False):
             pywal.reload.polybar()
 
         pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
-        image = pywal.image.get(path.join(config.WALL_DIR, cs_file))
-        colors = pywal.colors.get(image, config.WALL_DIR)
+        colors = color.get_pywal_dict(path.join(config.WALL_DIR, cs_file))
 
         pywal.sequences.send(colors, config.WPG_DIR)
-        pywal.export.color(colors, 'css',
-                           path.join(config.WPG_DIR, 'current.css'))
-        pywal.export.color(colors, 'shell',
-                           path.join(config.WPG_DIR, 'current.sh'))
-        pywal.export.color(colors, 'xresources',
-                           path.join(config.WPG_DIR, 'current.Xres'))
 
-        init_file = open(path.join(config.WPG_DIR, 'wp_init.sh'), 'w')
-        init_file.writelines(['#!/bin/bash\n', 'wpg -rs ' +
-                              filename + ' ' + cs_file])
-        init_file.close()
+        pywal.export.color(colors, "css",
+                           path.join(config.WPG_DIR, "current.css"))
+        pywal.export.color(colors, "shell",
+                           path.join(config.WPG_DIR, "current.sh"))
+        pywal.export.color(colors, "xresources",
+                           path.join(config.WPG_DIR, "current.Xres"))
 
-        Popen(['chmod', '+x', path.join(config.WPG_DIR, 'wp_init.sh')])
-        call(['xrdb', '-merge', path.join(config.XRES_DIR, cs_file + '.Xres')])
-        call(['xrdb', '-merge', path.join(config.HOME, '.Xresources')])
-        try:
-            if config.wpgtk.getboolean('execute_cmd'):
-                Popen(config.wpgtk['command'].split(' '))
-            symlink(path.join(config.WALL_DIR, filename),
-                    path.join(config.WPG_DIR, ".current"))
-        except Exception as e:
-            if e.errno == errno.EEXIST:
-                remove(path.join(config.WPG_DIR, ".current"))
-                symlink(path.join(config.WALL_DIR, filename),
-                        path.join(config.WPG_DIR, ".current"))
-            else:
-                raise e
+        with open(path.join(config.WPG_DIR, "wp_init.sh"), "w") as script:
+            script.writelines(["#!/bin/bash\n",
+                               "wpg -rs %s %s" % (filename, cs_file)])
+
+        Popen(['chmod', '+x', path.join(config.WPG_DIR, "wp_init.sh")])
+        util.xrdb_merge(path.join(config.XRES_DIR, cs_file + ".Xres"))
+        util.xrdb_merge(path.join(config.HOME, ".Xresources"))
+
+        files.change_current(filename)
+
+        if config.wpgtk.getboolean('execute_cmd'):
+            Popen(config.wpgtk['command'].split(' '))
     else:
         print("no such file, available files:")
         files.show_files()
@@ -60,9 +56,8 @@ def set_theme(filename, cs_file, restore=False):
 
 def delete_theme(filename):
     remove(path.join(config.WALL_DIR, filename))
-    remove(path.join(config.SAMPLE_DIR, (filename + '.sample.png')))
     remove(path.join(config.XRES_DIR, (filename + '.Xres')))
-    remove(files.get_cache_filename(filename))
+    files.delete_colorschemes(filename)
 
 
 def get_current(show=False):
@@ -76,29 +71,16 @@ def import_theme(wallpaper, json_file):
     color_list = color.get_color_list(json_file, True)
 
     color.write_colors(wallpaper, color_list)
-    sample.create_sample(color_list,
-                         path.join(config.SAMPLE_DIR,
-                                   (wallpaper + '.sample.png')))
-    logger.log.info("applied %s to %s" % (json_file, wallpaper))
+    sample.create_sample(color_list, files.get_sample_path(wallpaper))
+    logging.info("applied %s to %s" % (json_file, wallpaper))
 
 
 def export_theme(wallpaper, json_path="."):
     try:
         if(path.isdir(json_path)):
             json_path = path.join(json_path, wallpaper + ".json")
-        shutil.copy2(path.join(files.get_cache_filename(wallpaper)), json_path)
-        logger.log.info("theme for %s successfully exported", wallpaper)
+        shutil.copy2(path.join(files.get_cache_path(wallpaper)), json_path)
+        logging.info("theme for %s successfully exported", wallpaper)
     except IOError as e:
-        logger.log.error('file not available')
+        logging.error('file not available')
 
-
-def auto_adjust_theme(filename):
-    try:
-        color_list = color.get_color_list(filename)
-        color_list = color.auto_adjust_colors(color_list)
-        sample.create_sample(color_list,
-                             f=path.join(config.SAMPLE_DIR,
-                                         (filename + '.sample.png')))
-        color.write_colors(filename, color_list)
-    except IOError:
-        logger.log.error('file not available')
