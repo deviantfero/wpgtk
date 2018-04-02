@@ -1,4 +1,3 @@
-from wpgtk.data import color
 from wpgtk.data import util
 from gi import require_version
 require_version("Gtk", "3.0")
@@ -29,11 +28,6 @@ class ColorDialog(Gtk.Dialog):
         r, g, b, _ = list(map(lambda x: round(x*100*2.55), gcolor))
         hue, light, sat = util.rgb_to_hls(r, g, b)
 
-        self.random_color_btn = Gtk.Button('Random from Current Selection')
-        self.random_color_btn.connect('clicked',
-                                      self.get_random_color,
-                                      current_file)
-
         self.sat_lbl = Gtk.Label('Saturation')
         self.light_lbl = Gtk.Label('Light    ')
 
@@ -52,7 +46,6 @@ class ColorDialog(Gtk.Dialog):
                                   self.slider_changed, 'light')
 
         box.add(self.colorchooser)
-        box.add(self.random_color_btn)
 
         sat_box.pack_start(self.sat_lbl, True, True, 0)
         sat_box.pack_start(self.sat_slider, True, True, 0)
@@ -64,18 +57,6 @@ class ColorDialog(Gtk.Dialog):
         box.add(sat_box)
 
         self.show_all()
-
-    def get_random_color(self, button, *gargs):
-        random_color = color.get_random_color(gargs[0])
-        gcolor = Gdk.RGBA()
-        gcolor.parse(random_color)
-        self.colorchooser.set_rgba(gcolor)
-
-        r, g, b, _ = list(map(lambda x: round(x*100*2.55), gcolor))
-        hue, light, sat = util.rgb_to_hls(r, g, b)
-
-        self.sat_slider.set_value(-sat)
-        self.light_slider.set_value(light)
 
     def slider_changed(self, slider, *arg):
         newval = -slider.get_value() if arg[0] == 'sat' else slider.get_value()
