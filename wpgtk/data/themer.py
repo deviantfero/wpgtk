@@ -8,6 +8,7 @@ from . import color, sample, config, files, util
 
 
 def create_theme(filepath):
+    filepath = realpath(filepath)
     filename = filepath.split("/").pop().replace(" ", "_")
     tmplink = path.join(config.WALL_DIR, ".tmp.link")
 
@@ -68,6 +69,7 @@ def get_current(show=False):
 
 
 def import_theme(wallpaper, json_file):
+    json_file = realpath(json_file)
     color_list = color.get_color_list(json_file, True)
 
     color.write_colors(wallpaper, color_list)
@@ -83,4 +85,3 @@ def export_theme(wallpaper, json_path="."):
         logging.info("theme for %s successfully exported", wallpaper)
     except IOError as e:
         logging.error('file not available')
-
