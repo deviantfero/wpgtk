@@ -18,15 +18,16 @@ def create_theme(filepath):
     return color.get_color_list(filename)
 
 
-def set_theme(filename, cs_file, restore=False):
+def set_theme(filename, cs_file, restore=False, set_wall=True):
     if(path.join(config.WALL_DIR, filename)):
-        if(not restore):
+        if not restore:
             color.apply_colorscheme(cs_file)
             pywal.reload.gtk()
             pywal.reload.i3()
             pywal.reload.polybar()
 
-        pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
+        if set_wall:
+            pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
         colors = color.get_pywal_dict(path.join(config.WALL_DIR, cs_file))
 
         pywal.sequences.send(colors, config.WPG_DIR)

@@ -32,6 +32,11 @@ def read_args(args):
                         "wallpaper to avoid changing it",
                         const="random_both", nargs="?")
 
+    parser.add_argument("-n",
+                        help="Don't set the wallpaper at all when applying "
+                        "colorscheme",
+                        action="store_true")
+
     parser.add_argument("-a",
                         help="add a wallpaper and generate a colorscheme",
                         nargs="*")
@@ -108,9 +113,9 @@ def process_args(args):
 
     if args.s:
         if len(args.s) == 1:
-            themer.set_theme(args.s[0], args.s[0], args.r)
+            themer.set_theme(args.s[0], args.s[0], args.r, not args.n)
         elif len(args.s) == 2:
-            themer.set_theme(args.s[0], args.s[1], args.r)
+            themer.set_theme(args.s[0], args.s[1], args.r, not args.n)
         else:
             logging.error("specify just 2 filenames")
             exit(1)
