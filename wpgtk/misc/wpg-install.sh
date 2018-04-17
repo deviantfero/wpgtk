@@ -109,7 +109,7 @@ function install_polybar ()
   if [[ ! "$response" == "n" ]]; then
     echo "Installing polybar config";
     echo ":: backing up current polybar conf in config.bak";
-    cp "${HOME}/.config/polyba/config" "${HOME}/.config/polybar/config.bak" 2>/dev/null;
+    cp "${HOME}/.config/polybar/config" "${HOME}/.config/polybar/config.bak" 2>/dev/null;
     cp --remove-destination ./polybar/config "${HOME}/.config/polybar/config" && \
     cp --remove-destination ./polybar/polybar.base "${COLOR_OTHER}" && \
       ln -sf "${HOME}/.config/polybar/config" "${COLOR_OTHER}/polybar" && \
