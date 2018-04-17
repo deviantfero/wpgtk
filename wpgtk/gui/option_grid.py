@@ -154,13 +154,14 @@ class OptionsGrid(Gtk.Grid):
         self.light_theme_switch\
             .set_active(config.wpgtk.getboolean("light_theme", False))
 
-    def combo_box_change(self,  combo, *gparam):
+    def combo_box_change(self, combo, *gparam):
+        x = combo.get_active()
         if(gparam[0] == "active"):
-            color = Gdk.color_parse(self.parent.cpage
-                                    .color_list[combo.get_active() - 1])
+            config.wpgtk[gparam[0]] = str(x - 1)
+            color = Gdk.color_parse(self.parent.cpage.color_list[x - 1])
             self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
         else:
-            config.wpgtk[gparam[0]] = self.backend_list[combo.get_active()]
+            config.wpgtk[gparam[0]] = self.backend_list[x]
         self.lbl_save.set_text("")
 
     def on_txt_change(self, gtk_entry, *gparam):
