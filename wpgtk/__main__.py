@@ -159,7 +159,7 @@ def process_args(args):
         for arg in args.z:
             colors = color.get_color_list(arg)
             colors = color.shuffle_colors(colors)
-            color.write_colors(colors)
+            color.write_colors(arg, colors)
 
             sample.create_sample(colors, files.get_sample_path(arg))
             logging.info("shuffled %s" % arg)
