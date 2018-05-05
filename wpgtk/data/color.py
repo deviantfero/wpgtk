@@ -1,12 +1,15 @@
 import shutil
 import sys
 import logging
+import pywal
 from subprocess import call
 from random import shuffle
 from os.path import join, isfile
 from random import randint
-from . import config, files, util, sample
-import pywal
+from . import config
+from . import files
+from . import util
+from . import sample
 
 
 def get_pywal_dict(filename):
@@ -49,11 +52,7 @@ def shuffle_colors(colors):
 def write_colors(img, color_list):
     color_dict = get_pywal_dict(img)
 
-    for i in range(16):
-        color_dict['colors']['color%s' % i] = color_list[i]
-    color_dict['special']['background'] = color_list[0]
-    color_dict['special']['foreground'] = color_list[15]
-
+    color_dict = pywal.colors.colors_to_dict(color_list, img)
     cache_file = files.get_cache_path(img)
 
     pywal.export.color(color_dict, "json", cache_file)

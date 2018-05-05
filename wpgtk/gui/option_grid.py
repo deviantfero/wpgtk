@@ -1,6 +1,6 @@
 from gi.repository import Gtk, Gdk
 from gi import require_version
-from wpgtk.data import config
+from ..data import config
 from pywal import colors
 # making sure it uses v3.0
 require_version("Gtk",  "3.0")
