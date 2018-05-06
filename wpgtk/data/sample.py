@@ -10,6 +10,7 @@ import pywal
 
 
 def create_sample(colors, f=os.path.join(config.WALL_DIR, ".tmp.sample.png")):
+    print(colors, len(colors))
     im = Image.new("RGB", (480, 50), "white")
     pix = im.load()
 
@@ -20,7 +21,7 @@ def create_sample(colors, f=os.path.join(config.WALL_DIR, ".tmp.sample.png")):
             for k in range(0, 25):
                 pix[j, k] = pywal.util.hex_to_rgb(c)
 
-    for i, c in enumerate(colors[8:]):
+    for i, c in enumerate(colors[8:16]):
         for j in range(width_sample*i, width_sample*i+width_sample):
             for k in range(25, 50):
                 pix[j, k] = pywal.util.hex_to_rgb(c)
