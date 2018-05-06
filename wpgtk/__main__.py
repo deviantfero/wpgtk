@@ -52,7 +52,7 @@ def read_args(args):
                         help="shows the current wallpaper",
                         action="store_true")
 
-    parser.add_argument("--light",
+    parser.add_argument("-L", "--light",
                         help="temporarily enable light themes",
                         action="store_true")
 
