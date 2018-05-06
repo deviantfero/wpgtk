@@ -22,8 +22,10 @@ def create_theme(filepath):
     return color.get_color_list(filename)
 
 
-def set_theme(filename, cs_file, restore=False, set_wall=True):
+def set_theme(filename, cs_file, restore=False):
+    set_wall = config.wgptk.getboolean("set_wallpaper", True)
     colors = color.get_pywal_dict(path.join(config.WALL_DIR, cs_file))
+
     if not restore:
         color.apply_colorscheme(colors)
         pywal.reload.gtk()
@@ -88,13 +90,13 @@ def import_theme(wallpaper, json_file, theme=False):
     logging.info("applied %s to %s" % (filename, wallpaper))
 
 
-def set_pywal_theme(theme_name, set_wall=True):
+def set_pywal_theme(theme_name):
     current = get_current()
     theme = pywal.theme.file(theme_name)
     color_list = list(theme["colors"].values())
     color.write_colors(current, color_list)
     sample.create_sample(color_list, files.get_sample_path(current))
-    set_theme(current, current, set_wall=set_wall)
+    set_theme(current, current)
 
 
 def export_theme(wallpaper, json_path="."):
