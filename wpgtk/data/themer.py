@@ -23,19 +23,18 @@ def create_theme(filepath):
 
 
 def set_theme(filename, cs_file, restore=False):
-    set_wall = config.wgptk.getboolean("set_wallpaper", True)
+    set_wall = config.wpgtk.getboolean("set_wallpaper", True)
     colors = color.get_pywal_dict(path.join(config.WALL_DIR, cs_file))
+    pywal.sequences.send(colors, config.WPG_DIR)
 
     if not restore:
         color.apply_colorscheme(colors)
-        pywal.reload.gtk()
         pywal.reload.i3()
         pywal.reload.polybar()
 
     if set_wall:
         pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
 
-    pywal.sequences.send(colors, config.WPG_DIR)
     pywal.export.color(colors, "css",
                        path.join(config.WPG_DIR, "current.css"))
     pywal.export.color(colors, "shell",
