@@ -1,4 +1,3 @@
-import shutil
 import sys
 import logging
 import pywal
@@ -186,16 +185,15 @@ def prepare_colors(cdic):
 def apply_colorscheme(colors):
     colors = prepare_colors(colors)
 
-    if config.wpgtk.getboolean('gtk'):
-        pywal.reload.gtk()
-
     if isfile(config.FILE_DIC['icon-step2']):
         change_colors(colors, 'icon-step1')
         call(config.FILE_DIC['icon-step2'])
 
     change_templates(colors)
 
-    if config.wpgtk.getboolean('tint2') or not shutil.which('tint2'):
-        call(["pkill", "-SIGUSR1", "tint2"])
-    if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
-        call(["openbox", "--reconfigure"])
+    if config.wpgtk.getboolean('tint2'):
+        util.reload_tint2()
+    if config.wpgtk.getboolean('openbox'):
+        util.reload_openbox()
+    if config.wpgtk.getboolean('gtk'):
+        pywal.reload.gtk()
