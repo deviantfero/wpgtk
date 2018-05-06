@@ -52,6 +52,25 @@ def read_args(args):
                         help="shows the current wallpaper",
                         action="store_true")
 
+    parser.add_argument("--light",
+                        help="temporarily enable light themes",
+                        action="store_true")
+
+    parser.add_argument("-T",
+                        help="assign a pywal theme to specific wallpaper"
+                        " instead of a json file",
+                        action="store_true")
+
+    parser.add_argument("-t",
+                        help="send color sequences to all "
+                        "terminals (deprecated)",
+                        action="store_true")
+
+    parser.add_argument("-x",
+                        help="add, remove and list templates instead "
+                        "of themes",
+                        action="store_true")
+
     parser.add_argument("-z",
                         help="shuffles the given colorscheme(s)",
                         nargs="+")
@@ -64,31 +83,25 @@ def read_args(args):
                         help="import a theme in json format and asign "
                         "to wallpaper [wallpaper, json]",
                         nargs=2)
-
-    parser.add_argument("-T",
-                        help="assign a pywal theme to specific wallpaper"
-                        " instead of a json file",
-                        action="store_true")
-
     parser.add_argument("-o",
                         help="export a theme in json "
                         "format [wallpaper, json]",
                         nargs="+")
 
-    parser.add_argument("-t",
-                        help="send color sequences to all "
-                        "terminals (deprecated)",
-                        action="store_true")
-
-    parser.add_argument("-x",
-                        help="add, remove and list templates instead "
-                        "of themes",
-                        action="store_true")
-
     parser.add_argument("-y",
                         help="link config file to template backup"
                         "[config, basefile]",
-                        nargs='+')
+                        nargs="+")
+
+    parser.add_argument("--sat",
+                        help="add or substract the saturation of a "
+                        "colorscheme [colorscheme, sat] (0, 1)",
+                        nargs=2)
+
+    parser.add_argument("--brt",
+                        help="add or substract the brightness of a "
+                        "colorscheme [colorscheme, brt] (0, 255)",
+                        nargs=2)
 
     parser.add_argument("--backend",
                         help="select a temporary backend",
@@ -105,7 +118,11 @@ def read_args(args):
 
 def process_arg_errors(args):
     if args.m and args.s:
-        logging.error("invalid convination of flags")
+        logging.error("invalid combination of flags")
+        exit(1)
+
+    if args.sat and args.brt:
+        logging.error("invalid combination of flags")
         exit(1)
 
     if args.s and len(args.s) > 2:
@@ -126,16 +143,22 @@ def process_arg_errors(args):
 
 
 def process_args(args):
+    if args.light:
+        config.wpgtk["light_theme"] = "true"
+
+    if args.n:
+        config.wpgtk["set_wallpaper"] = "false"
+
     if args.m:
         filename = random.choice(files.get_file_list())
-        themer.set_theme(filename, filename, args.r, not args.n)
+        themer.set_theme(filename, filename, args.r)
         exit(0)
 
     if args.s:
         if len(args.s) == 1:
-            themer.set_theme(args.s[0], args.s[0], args.r, not args.n)
+            themer.set_theme(args.s[0], args.s[0], args.r)
         elif len(args.s) == 2:
-            themer.set_theme(args.s[0], args.s[1], args.r, not args.n)
+            themer.set_theme(args.s[0], args.s[1], args.r)
         exit(0)
 
     if args.l:
@@ -202,8 +225,26 @@ def process_args(args):
         print("\n".join(name_list))
         exit(0)
 
+    if args.sat:
+        cl = color.get_color_list(args.sat[0])
+        val = float(args.sat[1])
+        cl = [util.alter_brightness(x, 0, val) for x in cl]
+
+        color.write_colors(args.sat[0], cl)
+        sample.create_sample(cl, files.get_sample_path(args.sat[0]))
+        exit(0)
+
+    if args.brt:
+        cl = color.get_color_list(args.brt[0])
+        val = float(args.brt[1])
+        cl = [util.alter_brightness(x, val, 0) for x in cl]
+
+        color.write_colors(args.brt[0], cl)
+        sample.create_sample(cl, files.get_sample_path(args.brt[0]))
+        exit(0)
+
     if args.pywal and args.pywal != "list":
-        themer.set_pywal_theme(args.pywal, not args.n)
+        themer.set_pywal_theme(args.pywal)
         exit(0)
 
     if args.backend == "list":
