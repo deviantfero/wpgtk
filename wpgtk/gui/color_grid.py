@@ -1,8 +1,11 @@
 import os
 import shutil
 import pywal
-from wpgtk.data import color, util
-from wpgtk.data import config, files, sample
+from ..data import color
+from ..data import util
+from ..data import config
+from ..data import files
+from ..data import sample
 from .color_picker import ColorDialog
 from gi import require_version
 from gi.repository import Gtk, Gdk, GdkPixbuf
@@ -27,6 +30,31 @@ class ColorGrid(Gtk.Grid):
         self.colorgrid.set_column_homogeneous(1)
         self.colorgrid.set_row_spacing(PAD)
         self.colorgrid.set_column_spacing(PAD)
+
+        self.sat_add = Gtk.Button("+")
+        self.sat_add.set_sensitive(False)
+
+        self.sat_red = Gtk.Button("-")
+        self.sat_red.set_sensitive(False)
+
+        self.sat_add.connect("pressed", self.hls_change, "sat", "add")
+        self.sat_red.connect("pressed", self.hls_change, "sat", "red")
+        self.sat_lbl = Gtk.Label("Saturation:")
+
+        self.light_add = Gtk.Button("+")
+        self.light_add.set_sensitive(False)
+
+        self.light_red = Gtk.Button("-")
+        self.light_red.set_sensitive(False)
+
+        self.light_add.connect("pressed", self.hls_change, "light", "add")
+        self.light_red.connect("pressed", self.hls_change, "light", "red")
+        self.light_lbl = Gtk.Label("Brightness:")
+
+        self.sat_light_grid = Gtk.Grid()
+        self.sat_light_grid.set_column_homogeneous(1)
+        self.sat_light_grid.set_column_spacing(PAD)
+        self.sat_light_grid.set_row_spacing(PAD)
 
         self.button_grid = Gtk.Grid()
         self.button_grid.set_column_homogeneous(1)
@@ -56,15 +84,6 @@ class ColorGrid(Gtk.Grid):
                                                             width=500,
                                                             height=300)
             self.sample.set_from_pixbuf(self.pixbuf_sample)
-
-        sampler_name = os.path.join(config.WALL_DIR, ".nsampler.sample.png")
-        self.sampler = Gtk.Image()
-        if(os.path.isfile(sampler_name)):
-            self.pixbuf_sampler = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                                            sampler_name,
-                                                            width=500,
-                                                            height=300)
-            self.sampler.set_from_pixbuf(self.pixbuf_sampler)
 
         self.shuffle_button = Gtk.Button("Shuffle colors")
         self.shuffle_button.connect("pressed", self.on_shuffle_click)
@@ -99,11 +118,19 @@ class ColorGrid(Gtk.Grid):
         self.button_grid.attach(self.auto_button, 1, 1, 1, 1)
         self.button_grid.attach(self.shuffle_button, 2, 1, 1, 1)
 
+        self.sat_light_grid.attach(self.sat_lbl, 0, 0, 1, 1)
+        self.sat_light_grid.attach(self.sat_red, 1, 0, 1, 1)
+        self.sat_light_grid.attach(self.sat_add, 2, 0, 1, 1)
+
+        self.sat_light_grid.attach(self.light_lbl, 3, 0, 1, 1)
+        self.sat_light_grid.attach(self.light_red, 4, 0, 1, 1)
+        self.sat_light_grid.attach(self.light_add, 5, 0, 1, 1)
+
         self.attach(self.option_combo, 0, 0, 1, 1)
         self.attach(self.button_grid, 0, 1, 1, 1)
         self.attach(self.colorgrid, 0, 2, 1, 1)
         self.attach(self.sample, 0, 3, 1, 1)
-        self.attach(self.sampler, 0, 4, 1, 1)
+        self.attach(self.sat_light_grid, 0, 4, 1, 1)
         self.attach(self.done_lbl, 0, 5, 1, 1)
 
     def render_buttons(self):
@@ -118,6 +145,19 @@ class ColorGrid(Gtk.Grid):
             button.modify_bg(Gtk.StateType.NORMAL, gcolor)
             button.modify_fg(Gtk.StateType.NORMAL, fgcolor)
 
+    def hls_change(self, widget, *gparam):
+        if gparam[0] == "sat":
+            val = 0.05 if gparam[1] == "add" else -0.05
+            self.color_list = [util.alter_brightness(x, 0, val)
+                               for x in self.color_list]
+        elif gparam[0] == "light":
+            val = 10 if gparam[1] == "add" else -10
+            self.color_list = [util.alter_brightness(x, val, 0)
+                               for x in self.color_list]
+        self.render_buttons()
+        sample.create_sample(self.color_list)
+        self.render_sample()
+
     def render_sample(self):
         sample_path = os.path.join(config.WALL_DIR, ".tmp.sample.png")
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
@@ -125,7 +165,6 @@ class ColorGrid(Gtk.Grid):
                 width=500,
                 height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
-        self.done_lbl.set_text("Auto-adjust done")
 
     def update_combo(self, option_list):
         self.option_combo.set_model(option_list)
@@ -178,7 +217,9 @@ class ColorGrid(Gtk.Grid):
 
     def on_shuffle_click(self, widget):
         self.color_list = color.shuffle_colors(self.color_list)
-        self.on_auto_click(widget)
+        self.render_buttons()
+        sample.create_sample(self.color_list)
+        self.render_sample()
 
     def on_color_click(self, widget):
         self.done_lbl.set_text("")
@@ -216,6 +257,10 @@ class ColorGrid(Gtk.Grid):
         self.shuffle_button.set_sensitive(True)
         self.ok_button.set_sensitive(True)
         self.import_button.set_sensitive(True)
+        self.light_add.set_sensitive(True)
+        self.light_red.set_sensitive(True)
+        self.sat_add.set_sensitive(True)
+        self.sat_red.set_sensitive(True)
 
         current_walls = files.get_file_list()
         self.selected_file = current_walls[x]
