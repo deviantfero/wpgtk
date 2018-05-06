@@ -1,12 +1,19 @@
 function _wpg() {
     local optforprofiles
     _get_comp_words_by_ref cur
-    optforprofiles="-s -e -d -z -m -A"
+    # themes
+    optforprofiles="-s -e -d -z -m -A --brt --sat"
+    # themes, pywal themes
 	optforvariabletheme="-Ti"
+    # themes, filenames
     optvariable="-i -o"
+	# filenames
     optfordefault="-y -a -xa -ax"
+	# templates
     optfortemplates="-xd -dx"
+	# pywal backends
 	optforbackends="--backends"
+	# pywal themes
 	optforthemes="--pywal"
 
     if [[ $COMP_CWORD = 1 ]]; then

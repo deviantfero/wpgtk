@@ -1,9 +1,9 @@
 #compdef wpg
 
 _profiles() {
-    local -a profiles               #
-    profiles=(`wpg -l`)             # use output of wpg -l for completion
-    _describe 'profiles' profiles   #
+    local -a profiles
+    profiles=(`wpg -l`)
+    _describe 'profiles' profiles
 }
 
 _templates() {
@@ -26,12 +26,19 @@ _themes() {
 
 _wpg() {
     local state optforprofiles
-    optforprofiles=(-s -e -d -z -m -A)    # options for which profiles should be completed
+    # themes
+    optforprofiles=(-s -e -d -z -m -A --brt --sat) 
+    # themes, filenames
     optvariable=(-i -o)
+    # themes, pywal themes
     optvariabletheme=(-Ti)
+    # filenames
     optforgeneric=(-y -a -xa)
+    # templates
     optfortemplates=(-xd -dx)
+    # pywal backends
     optforbackends=(--backend)
+    # pywal themes
     optforthemes=(--pywal)
 
     _arguments \
