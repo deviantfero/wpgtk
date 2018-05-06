@@ -1,57 +1,52 @@
-#!/usr/bin/env python3
 import sys
 import random
 import pywal
 import logging
-import wpgtk.data.config as config
+import argparse
 from os import path
 from subprocess import Popen
-from wpgtk.data import files, themer, color, util, sample
-from wpgtk.data.config import __version__
-try:
-    from wpgtk.gui import theme_picker
-except:
-    pass
-import argparse
+from .data import files
+from .data import themer
+from .data import color
+from .data import util
+from .data import sample
+from .data import config
 
 
 def read_args(args):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-s",
-                        help="set the wallpaper and colorscheme, "
-                        "apply changes system-wide",
-                        nargs="*")
-
-    parser.add_argument("-r",
-                        help="restore the wallpaper and colorscheme",
-                        action="store_true")
-
-    parser.add_argument("-m",
-                        help="pick a random colorscheme and set it, specify "
-                        "wallpaper to avoid changing it",
-                        const="random_both", nargs="?")
-
-    parser.add_argument("-n",
-                        help="Don't set the wallpaper at all when applying "
-                        "colorscheme",
-                        action="store_true")
-
     parser.add_argument("-a",
                         help="add a wallpaper and generate a colorscheme",
-                        nargs="*")
+                        nargs="+")
+
+    parser.add_argument("-d",
+                        help="delete the wallpaper(s) from wallpaper folder",
+                        nargs="+")
+
+    parser.add_argument("-s",
+                        help="set the wallpaper and/or colorscheme",
+                        nargs="+")
+
+    parser.add_argument("-m",
+                        help="pick a random wallpaper/colorscheme",
+                        action="store_true")
 
     parser.add_argument('-l',
                         help="see which wallpapers are available",
                         action="store_true")
 
+    parser.add_argument("-n",
+                        help="don't change wallpaper",
+                        action="store_true")
+
+    parser.add_argument("-r",
+                        help="restore the wallpaper and colorscheme",
+                        action="store_true")
+
     parser.add_argument("--version",
                         help="print the current version",
                         action="store_true")
-
-    parser.add_argument("-d",
-                        help="delete the wallpaper(s) from wallpaper folder",
-                        nargs="*")
 
     parser.add_argument("-c",
                         help="shows the current wallpaper",
@@ -59,20 +54,30 @@ def read_args(args):
 
     parser.add_argument("-z",
                         help="shuffles the given colorscheme(s)",
-                        nargs="*")
+                        nargs="+")
+
+    parser.add_argument("-A",
+                        help="auto-adjusts the given colorscheme(s)",
+                        nargs="+")
 
     parser.add_argument("-i",
                         help="import a theme in json format and asign "
                         "to wallpaper [wallpaper, json]",
-                        nargs="*")
+                        nargs=2)
+
+    parser.add_argument("-T",
+                        help="assign a pywal theme to specific wallpaper"
+                        " instead of a json file",
+                        action="store_true")
 
     parser.add_argument("-o",
                         help="export a theme in json "
                         "format [wallpaper, json]",
-                        nargs="*")
+                        nargs="+")
 
     parser.add_argument("-t",
-                        help="send color sequences to all terminals VTE true",
+                        help="send color sequences to all "
+                        "terminals (deprecated)",
                         action="store_true")
 
     parser.add_argument("-x",
@@ -81,34 +86,49 @@ def read_args(args):
                         action="store_true")
 
     parser.add_argument("-y",
-                        help="add an existent basefile template "
+                        help="link config file to template backup"
                         "[config, basefile]",
-                        nargs='*')
+                        nargs='+')
 
     parser.add_argument("--backend",
                         help="select a temporary backend",
                         const="list", nargs="?")
 
+    parser.add_argument("--pywal",
+                        help="list included pywal themes "
+                        "or replace your current colorscheme with a "
+                        "selection of your own",
+                        const="list", nargs="?")
+
     return parser.parse_args()
 
 
+def process_arg_errors(args):
+    if args.m and args.s:
+        logging.error("invalid convination of flags")
+        exit(1)
+
+    if args.s and len(args.s) > 2:
+        logging.error("specify at most 2 filenames")
+        exit(1)
+
+    if args.y and len(args.y) != 2:
+        logging.error("specify a config and a basefile")
+        exit(1)
+
+    if args.i and len(args.i) != 2:
+        logging.error("specify a wallpaper and a colorscheme json")
+        exit(1)
+
+    if args.o and len(args.o) != 2:
+        logging.error("specify wallpaper and optionally an output path")
+        exit(1)
+
+
 def process_args(args):
-    if args.backend is not None and args.backend != "list":
-        if args.backend in pywal.colors.list_backends():
-            config.wpgtk['backend'] = args.backend
-        else:
-            logging.error("no such backend, please "
-                          "choose a valid backend")
-            exit(1)
-
-    if args.m == "random_both":
-        filename = random.choice(files.get_file_list())
-        themer.set_theme(filename, filename)
-        exit(0)
-
     if args.m:
         filename = random.choice(files.get_file_list())
-        themer.set_theme(args.m, filename)
+        themer.set_theme(filename, filename, args.r, not args.n)
         exit(0)
 
     if args.s:
@@ -116,15 +136,12 @@ def process_args(args):
             themer.set_theme(args.s[0], args.s[0], args.r, not args.n)
         elif len(args.s) == 2:
             themer.set_theme(args.s[0], args.s[1], args.r, not args.n)
-        else:
-            logging.error("specify just 2 filenames")
-            exit(1)
         exit(0)
 
     if args.l:
         if args.x:
             templates = files.get_file_list(config.OPT_DIR, False)
-            [print(t) for t in templates if ".base" in t]
+            any(print(t) for t in templates if ".base" in t)
         else:
             files.show_files()
         exit(0)
@@ -134,31 +151,33 @@ def process_args(args):
         exit(0)
 
     if args.version:
-        print("current version: " + __version__)
+        print("current version: " + config.__version__)
         exit(0)
 
     if args.d:
-        for e in args.d:
-            if args.x:
-                files.delete_template(e)
-            else:
-                themer.delete_theme(e)
-        exit(0)
-
-    if args.c:
-        themer.get_current(show=True)
+        delete_action = files.delete_template if args.x \
+                        else themer.delete_theme
+        any(delete_action(x) for x in args.d)
         exit(0)
 
     if args.a:
-        add_function = files.add_template if args.x else themer.create_theme
-        for file in args.a:
-            add_function(file)
+        add_action = files.add_template if args.x \
+                     else themer.create_theme
+        any(add_action(x) for x in args.a)
         exit(0)
 
-    if args.z:
-        for arg in args.z:
+    if args.c:
+        print(themer.get_current())
+        exit(0)
+
+    if args.z or args.A:
+        alter_action = color.shuffle_colors if args.z \
+                       else color.auto_adjust_colors
+        arg_list = args.z if args.z else args.A
+
+        for arg in arg_list:
             colors = color.get_color_list(arg)
-            colors = color.shuffle_colors(colors)
+            colors = alter_action(colors)
             color.write_colors(arg, colors)
 
             sample.create_sample(colors, files.get_sample_path(arg))
@@ -166,39 +185,49 @@ def process_args(args):
         exit(0)
 
     if args.y:
-        if len(args.i) != 2:
-            logging.error("specify a config and a basefile")
-            exit(1)
         files.add_template(args.y[0], args.y[1])
         exit(0)
 
     if args.i:
-        if len(args.i) != 2:
-            logging.error("specify a wallpaper and a colorscheme json")
-            exit(1)
-        themer.import_theme(args.i[0], args.i[1])
+        themer.import_theme(args.i[0], args.i[1], args.T)
         exit(0)
 
     if args.o:
-        if len(args.o) > 2:
-            logging.error("specify wallpaper and optionally an output path")
-            exit(1)
-        else:
-            themer.export_theme(*args.o)
-            exit(0)
+        themer.export_theme(*args.o)
+        exit(0)
+
+    if args.pywal == "list":
+        name_dic = pywal.theme.list_themes()
+        name_list = [t.name.replace(".json", "") for t in name_dic]
+        print("\n".join(name_list))
+        exit(0)
+
+    if args.pywal and args.pywal != "list":
+        themer.set_pywal_theme(args.pywal, not args.n)
+        exit(0)
 
     if args.backend == "list":
         print("\n".join(pywal.colors.list_backends()))
         exit(0)
+
+    if args.backend and args.backend != "list":
+        if args.backend in pywal.colors.list_backends():
+            config.wpgtk['backend'] = args.backend
+        else:
+            logging.error("no such backend, please "
+                          "choose a valid backend")
+            exit(1)
 
 
 def main():
     config.init()
     util.setup_log()
     args = read_args(sys.argv[1:])
+    process_arg_errors(args)
     process_args(args)
     try:
-        theme_picker.run(args)
+        _gui = __import__("wpgtk.gui.theme_picker", fromlist=['theme_picker'])
+        _gui.run(args)
     except NameError:
         logging.error("missing pygobject module, use cli")
 
