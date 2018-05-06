@@ -27,7 +27,7 @@ _themes() {
 _wpg() {
     local state optforprofiles
     # themes
-    optforprofiles=(-s -e -d -z -m -A --brt --sat) 
+    optforprofiles=(-s -e -d -z -m -A -LA --brt --sat) 
     # themes, filenames
     optvariable=(-i -o)
     # themes, pywal themes
