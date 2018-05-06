@@ -1,11 +1,13 @@
 function _wpg() {
     local optforprofiles
     _get_comp_words_by_ref cur
-    optforprofiles="-s -e -d -z -m"
+    optforprofiles="-s -e -d -z -m -A"
+	optforvariabletheme="-Ti"
     optvariable="-i -o"
     optfordefault="-y -a -xa -ax"
     optfortemplates="-xd -dx"
 	optforbackends="--backends"
+	optforthemes="--pywal"
 
     if [[ $COMP_CWORD = 1 ]]; then
         COMPREPLY=($(compgen -W "$(_parse_usage wpg)" -- "$cur"))
@@ -20,11 +22,23 @@ function _wpg() {
                 COMPREPLY=($(compgen -W "$(wpg --backends)" -- "$cur"))
             fi
         done
+        for opt in $optforthemes; do
+            if [[ $opt = ${COMP_WORDS[1]} ]]; then
+                COMPREPLY=($(compgen -W "$(wpg --pywal)" -- "$cur"))
+            fi
+        done
         for opt in $optvariable; do
             if [[ $opt = ${COMP_WORDS[1]} && $COMP_CWORD < 3 ]]; then
                 COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
             elif [[ $opt = ${COMP_WORDS[1]} ]]; then
                 compopt -o default; COMPREPLY=()
+            fi
+        done
+        for opt in $optforvariabletheme; do
+            if [[ $opt = ${COMP_WORDS[1]} && $COMP_CWORD < 3 ]]; then
+                COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
+            elif [[ $opt = ${COMP_WORDS[1]} ]]; then
+                COMPREPLY=($(compgen -W "$(wpg --pywal)" -- "$cur"))
             fi
         done
         for opt in $optfordefault; do

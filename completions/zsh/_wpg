@@ -18,13 +18,21 @@ _backends() {
     _describe 'backends' backends
 }
 
+_themes() {
+    local -a themes
+    themes=(`wpg --pywal`)
+    _describe 'themes' themes
+}
+
 _wpg() {
     local state optforprofiles
-    optforprofiles=(-s -e -d -z -m)    # options for which profiles should be completed
+    optforprofiles=(-s -e -d -z -m -A)    # options for which profiles should be completed
     optvariable=(-i -o)
+    optvariabletheme=(-Ti)
     optforgeneric=(-y -a -xa)
     optfortemplates=(-xd -dx)
     optforbackends=(--backend)
+    optforthemes=(--pywal)
 
     _arguments \
         '1: :->generic' \
@@ -48,6 +56,13 @@ _wpg() {
                         _gnu_generic
                     fi
                 done
+                for opt in $optvariabletheme; do
+                    if [[ $opt = ${words[2]} && $CURRENT < 4 ]]; then
+                        _profiles
+                    elif [[ $opt = ${words[2]} ]]; then
+                        _themes
+                    fi
+                done
                 for opt in $optforgeneric; do
                     if [[ $opt = ${words[2]} ]]; then
                         _gnu_generic
@@ -61,6 +76,11 @@ _wpg() {
                 for opt in $optforbackends; do
                     if [[ $opt = ${words[2]} ]]; then
                         _backends
+                    fi
+                done
+                for opt in $optforthemes; do
+                    if [[ $opt = ${words[2]} ]]; then
+                        _themes
                     fi
                 done
             fi 
