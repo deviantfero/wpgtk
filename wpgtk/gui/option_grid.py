@@ -78,6 +78,11 @@ class OptionsGrid(Gtk.Grid):
         self.light_theme_switch.connect("notify::active",
                                         self.on_activate, "light_theme")
         self.lbl_light_theme = Gtk.Label("Use Light Theme")
+        self.wallpaper_switch = Gtk.Switch()
+        self.wallpaper_switch.connect("notify::active",
+                                      self.on_activate,
+                                      "set_wallpaper")
+        self.lbl_wallpaper = Gtk.Label("Set wallpaper:")
 
         # edit cmd
         self.editor_lbl = Gtk.Label("Open optional files with:")
@@ -96,16 +101,23 @@ class OptionsGrid(Gtk.Grid):
         self.load_opt_list()
 
         # Switch Grid attach
-        self.switch_grid.attach(self.lbl_tint2, 1, 1, 3, 1)
-        self.switch_grid.attach(self.tint2_switch, 4, 1, 1, 1)
+        self.switch_grid.attach(self.lbl_wallpaper, 1, 1, 3, 1)
+        self.switch_grid.attach(self.wallpaper_switch, 4, 1, 1, 1)
+
         self.switch_grid.attach(self.lbl_gtk, 5, 1, 3, 1)
         self.switch_grid.attach(self.gtk_switch, 9, 1, 1, 1)
+
         self.switch_grid.attach(self.command_lbl, 1, 2, 3, 1)
         self.switch_grid.attach(self.command_switch, 4, 2, 1, 1)
+
         self.switch_grid.attach(self.lbl_openbox, 5, 2, 3, 1)
         self.switch_grid.attach(self.openbox_switch, 9, 2, 1, 1)
+
         self.switch_grid.attach(self.lbl_light_theme, 1, 3, 3, 1)
         self.switch_grid.attach(self.light_theme_switch, 4, 3, 1, 1)
+
+        self.switch_grid.attach(self.lbl_tint2, 5, 3, 3, 1)
+        self.switch_grid.attach(self.tint2_switch, 9, 3, 1, 1)
 
         # cmd Grid attach
 
@@ -153,6 +165,8 @@ class OptionsGrid(Gtk.Grid):
             .set_editable(config.wpgtk.getboolean("execute_cmd", False))
         self.light_theme_switch\
             .set_active(config.wpgtk.getboolean("light_theme", False))
+        self.wallpaper_switch\
+            .set_active(config.wpgtk.getboolean("set_wallpaper", True))
 
     def combo_box_change(self, combo, *gparam):
         x = combo.get_active()
