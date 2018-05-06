@@ -1,4 +1,5 @@
 import logging
+import shutil
 import sys
 from subprocess import call
 from colorsys import rgb_to_hls, hls_to_rgb
@@ -57,3 +58,13 @@ def xrdb_merge(file):
 
 def build_key(keyword):
     return "<{}>".format(keyword)
+
+
+def reload_tint2():
+    if shutil.which('tint2'):
+        call(["pkill", "-SIGUSR1", "tint2"])
+
+
+def reload_openbox():
+    if shutil.which('openbox'):
+        call(["openbox", "--reconfigure"])
