@@ -93,9 +93,11 @@ def import_theme(wallpaper, json_file, theme=False):
 def set_pywal_theme(theme_name):
     current = get_current()
     theme = pywal.theme.file(theme_name)
+
     color_list = list(theme["colors"].values())
     color.write_colors(current, color_list)
     sample.create_sample(color_list, files.get_sample_path(current))
+
     set_theme(current, current)
 
 
