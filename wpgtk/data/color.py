@@ -172,7 +172,8 @@ def prepare_colors(cdic):
 
     # getting base colors
     if(config.wpgtk.getint('active') > 0):
-        bc = cl[config.wpgtk.getint('active') - 1]
+        print(config.wpgtk.getint('active'))
+        bc = cl[config.wpgtk.getint('active')]
     else:
         bc = cl[randint(0, 15)]
 
