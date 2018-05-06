@@ -33,6 +33,11 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 [[Command Line](https://www.youtube.com/watch?v=yjNipQZpOUc)]
 [[Import/export Colorschemes](https://www.youtube.com/watch?v=P3D0jtG6G2s)]
 
+- **Other Repos:**
+[[wpgtk.vim](https://github.com/deviantfero/wpgtk.vim)]
+[[wpgtk-templates](https://github.com/deviantfero/wpgtk-templates)]
+[[wpgtk-colorschemes](https://github.com/deviantfero/wpgtk-colorschemes)]
+
 
 
 ## Gallery
