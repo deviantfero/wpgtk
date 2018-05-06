@@ -29,24 +29,14 @@ def hls_to_hex(hls):
     h, l, s = hls
     r, g, b = hls_to_rgb(h, l, s)
     rgb_int = [max(min(int(elem), 255), 0) for elem in [r, g, b]]
-    rgb_int = tuple(rgb_int)
 
-    hex_result = '%02x%02x%02x' % rgb_int
-    return "#%s" % hex_result
+    return rgb_to_hex(rgb_int)
 
 
-def reduce_brightness(hex_string, amount, sat=0):
+def alter_brightness(hex_string, amount, sat=0):
     h, l, s = hex_to_hls(hex_string)
-    l = max(l - amount, 1)
-    s = max(s - sat, -1)
-
-    return hls_to_hex([h, l, s])
-
-
-def add_brightness(hex_string, amount, sat=0):
-    h, l, s = hex_to_hls(hex_string)
-    l = min(l + amount, 255)
-    s = max(s - sat, -1)
+    l = max(min(l + amount, 255), 1)
+    s = min(max(s - sat, -1), 0)
 
     return hls_to_hex([h, l, s])
 
