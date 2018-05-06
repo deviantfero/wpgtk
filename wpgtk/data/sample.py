@@ -10,7 +10,6 @@ import pywal
 
 
 def create_sample(colors, f=os.path.join(config.WALL_DIR, ".tmp.sample.png")):
-    print(colors, len(colors))
     im = Image.new("RGB", (480, 50), "white")
     pix = im.load()
 
