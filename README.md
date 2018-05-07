@@ -8,9 +8,12 @@
 `wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the colorschemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for `wpgtk` and custom keywords and values to replace in templates.
 
 For those who are not into automatic generated colorschemes, you can now also import colorschemes
-in JSON format, you can upload and download themes from the [wpgtk-colorschemes](https://github.com/deviantfero/wpgtk-colorschemes) repository.
+in JSON format, you can upload and download themes from the [wpgtk-colorschemes](https://github.com/deviantfero/wpgtk-colorschemes) repository, wpgtk is also compatible with all of `pywal`'s included themes, 
+that's more than 250 themes from the get go.
 
 In short, `wpgtk` is a colorscheme/wallpaper manager with a template system attached which let's you create templates from any textfile and will replace keywords on it on the fly, allowing for great styling and theming possibilities.
+
+## Usage
 
 - **Demos:**
 [[GUI](https://gfycat.com/RigidAnxiousElk)]
@@ -30,6 +33,11 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 [[Command Line](https://www.youtube.com/watch?v=yjNipQZpOUc)]
 [[Import/export Colorschemes](https://www.youtube.com/watch?v=P3D0jtG6G2s)]
 
+- **Other Repos:**
+[[wpgtk.vim](https://github.com/deviantfero/wpgtk.vim)]
+[[wpgtk-templates](https://github.com/deviantfero/wpgtk-templates)]
+[[wpgtk-colorschemes](https://github.com/deviantfero/wpgtk-colorschemes)]
+
 
 
 ## Gallery
@@ -37,11 +45,10 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
   <img src="https://i.imgur.com/UvVonun.gif"/>
 </p>
 
-![i3_setup](https://i.imgur.com/ybqWBO6.png)
-
-![light_theme](https://i.imgur.com/Pc2zRej.png)
-
-![openbox setup](http://i.imgur.com/2cquXzm.png)
+<div style="display: flex; width: 100%">
+  <img style="width: 50%;" src="https://i.imgur.com/jt9LlFE.png"/>
+  <img style="width: 50%;" src="https://i.imgur.com/GQ8vESj.png"/>
+</div>
 
 # License
 

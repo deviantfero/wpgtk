@@ -1,9 +1,9 @@
 #compdef wpg
 
 _profiles() {
-    local -a profiles               #
-    profiles=(`wpg -l`)             # use output of wpg -l for completion
-    _describe 'profiles' profiles   #
+    local -a profiles
+    profiles=(`wpg -l`)
+    _describe 'profiles' profiles
 }
 
 _templates() {
@@ -18,13 +18,28 @@ _backends() {
     _describe 'backends' backends
 }
 
+_themes() {
+    local -a themes
+    themes=(`wpg --pywal`)
+    _describe 'themes' themes
+}
+
 _wpg() {
     local state optforprofiles
-    optforprofiles=(-s -e -d -z -m)    # options for which profiles should be completed
+    # themes
+    optforprofiles=(-s -e -d -z -m -A -LA --brt --sat) 
+    # themes, filenames
     optvariable=(-i -o)
+    # themes, pywal themes
+    optvariabletheme=(-Ti)
+    # filenames
     optforgeneric=(-y -a -xa)
+    # templates
     optfortemplates=(-xd -dx)
+    # pywal backends
     optforbackends=(--backend)
+    # pywal themes
+    optforthemes=(--pywal)
 
     _arguments \
         '1: :->generic' \
@@ -48,6 +63,13 @@ _wpg() {
                         _gnu_generic
                     fi
                 done
+                for opt in $optvariabletheme; do
+                    if [[ $opt = ${words[2]} && $CURRENT < 4 ]]; then
+                        _profiles
+                    elif [[ $opt = ${words[2]} ]]; then
+                        _themes
+                    fi
+                done
                 for opt in $optforgeneric; do
                     if [[ $opt = ${words[2]} ]]; then
                         _gnu_generic
@@ -61,6 +83,11 @@ _wpg() {
                 for opt in $optforbackends; do
                     if [[ $opt = ${words[2]} ]]; then
                         _backends
+                    fi
+                done
+                for opt in $optforthemes; do
+                    if [[ $opt = ${words[2]} ]]; then
+                        _themes
                     fi
                 done
             fi 

@@ -4,7 +4,8 @@ from gi.repository.GdkPixbuf import Pixbuf
 import os
 from gi import require_version
 from subprocess import Popen
-from wpgtk.data import config, files
+from ..data import config
+from ..data import files
 require_version("Gtk", "3.0")
 
 PAD = 10

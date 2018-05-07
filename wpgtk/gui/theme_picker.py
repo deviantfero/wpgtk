@@ -1,8 +1,12 @@
 import logging
 from gi import require_version
-from . import color_grid, template_grid
-from . import option_grid, keyword_grid
-from wpgtk.data import files, themer, config, color, sample
+from . import color_grid
+from . import template_grid
+from . import option_grid
+from . import keyword_grid
+from ..data import files
+from ..data import themer
+from ..data import config
 from gi.repository import Gtk, GdkPixbuf
 import os
 require_version('Gtk', '3.0')

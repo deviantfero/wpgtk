@@ -1,4 +1,4 @@
-from wpgtk.data import util
+from ..data import util
 from gi import require_version
 require_version("Gtk", "3.0")
 require_version("Gdk", "3.0")

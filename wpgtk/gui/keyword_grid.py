@@ -1,5 +1,5 @@
-from wpgtk.data import config
-from wpgtk.data import keyword
+from ..data import config
+from ..data import keyword
 from gi import require_version
 from gi.repository import Gtk
 require_version("Gtk", "3.0")

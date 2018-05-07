@@ -1,12 +1,14 @@
-import shutil
 import sys
 import logging
+import pywal
 from subprocess import call
 from random import shuffle
 from os.path import join, isfile
 from random import randint
-from . import config, files, util, sample
-import pywal
+from . import config
+from . import files
+from . import util
+from . import sample
 
 
 def get_pywal_dict(filename):
@@ -26,7 +28,6 @@ def get_color_list(filename, json=False):
         else list(theme["colors"].values())
 
     if is_new and not json:
-        color_list = auto_adjust_colors(color_list)
         sample.create_sample(color_list, files.get_sample_path(filename))
         write_colors(filename, color_list)
 
@@ -40,20 +41,19 @@ def is_dark_theme(color_list):
 
 
 def shuffle_colors(colors):
-        shuffled_colors = colors[1:7]
-        shuffle(shuffled_colors)
-        colors = colors[:1] + shuffled_colors + colors[7:]
-        return auto_adjust_colors(colors)
+    color_group = [[colors[i], colors[i + 8]] for i in range(1, 7)]
+    shuffle(color_group)
+
+    bg = [colors[0]] + [c[0] for c in color_group] + [colors[7]]
+    fg = [colors[8]] + [c[1] for c in color_group] + [colors[15]]
+
+    return bg + fg
 
 
 def write_colors(img, color_list):
     color_dict = get_pywal_dict(img)
 
-    for i in range(16):
-        color_dict['colors']['color%s' % i] = color_list[i]
-    color_dict['special']['background'] = color_list[0]
-    color_dict['special']['foreground'] = color_list[15]
-
+    color_dict = pywal.colors.colors_to_dict(color_list, img)
     cache_file = files.get_cache_path(img)
 
     pywal.export.color(color_dict, "json", cache_file)
@@ -87,41 +87,40 @@ def change_colors(colors, which):
                     tmp_data = tmp_data.replace(k, v.replace('#', ''))
 
             with open(which, 'w') as target_file:
+                logging.info("applying: %s" % opt.split('/').pop())
                 target_file.write(tmp_data)
-            logging.info("applying: %s" % opt.split('/').pop())
+
     except IOError as err:
         logging.error("%s - base file does not exist" % opt)
 
 
 def auto_adjust_colors(clist):
-    light = config.wpgtk.getboolean('light_theme')
+    light = config.wpgtk.getboolean('light_theme', False)
 
+    bm = util.alter_brightness
     added_sat = 0.25 if light else 0.1
-    bm = util.reduce_brightness if light else util.add_brightness
+    sign = -1 if light else 1
 
     if light == is_dark_theme(clist):
         # convert dark to light or the other way around
         sat_diff = -0.1 if light else 0.1
         clist = [clist[0]] \
-            + [bm(x, 0, sat_diff) for x in clist[1:7]] \
+            + [util.alter_brightness(x, 0, sat_diff) for x in clist[1:7]] \
             + clist[7:]
+        clist[7], clist[0] = clist[0], clist[7]
 
-        color7 = clist[7]
-        clist[7] = clist[0]
-        clist[0] = color7
-
-    color8 = [bm(clist[0], 20)]
-    color15 = [bm(clist[7], 60)]
-    clist = clist[:8] + color8 \
-        + [bm(x, util.get_hls_val(x, 'light') * 0.3, added_sat)
-           for x in clist[1:7]] + color15
+    comment = [bm(clist[0], sign * 20)]
+    fg = [bm(clist[7], sign * 60)]
+    clist = clist[:8] + comment \
+        + [bm(x, sign * util.get_hls_val(x, 'light') * 0.3, added_sat)
+           for x in clist[1:7]] + fg
 
     return clist
 
 
 def prepare_icon_colors(colors):
     try:
-        glyph = util.reduce_brightness(colors['wpgtk']['COLORIN'], 15)
+        glyph = util.alter_brightness(colors['wpgtk']['COLORIN'], -15)
         file_current_glyph = open(config.FILE_DIC['icon-step1'], "r")
         icon_dic = {}
 
@@ -161,22 +160,20 @@ def change_templates(colors):
 def split_active(hexc, is_dark_theme=True):
     brightness = util.get_hls_val(hexc, 'light')
     if is_dark_theme:
-        return [util.reduce_brightness(hexc, brightness * 0.20),
-                util.reduce_brightness(hexc, brightness * 0.45)]
+        return [util.alter_brightness(hexc, brightness * -0.20),
+                util.alter_brightness(hexc, brightness * -0.45)]
     else:
-        return [util.add_brightness(hexc, brightness * 0.30), hexc]
+        return [util.alter_brightness(hexc, brightness * 0.30), hexc]
 
 
-def prepare_colors(image_name):
-    image = pywal.image.get(join(config.WALL_DIR, image_name))
-    cdic = get_pywal_dict(image)
-
+def prepare_colors(cdic):
     wpcol = cdic['wpgtk'] = {}
     cl = [cdic['colors']['color%s' % i] for i in range(16)]
 
     # getting base colors
     if(config.wpgtk.getint('active') > 0):
-        bc = cl[config.wpgtk.getint('active') - 1]
+        print(config.wpgtk.getint('active'))
+        bc = cl[config.wpgtk.getint('active')]
     else:
         bc = cl[randint(0, 15)]
 
@@ -186,11 +183,8 @@ def prepare_colors(image_name):
     return cdic
 
 
-def apply_colorscheme(image_name):
-    colors = prepare_colors(image_name)
-
-    if config.wpgtk.getboolean('gtk'):
-        pywal.reload.gtk()
+def apply_colorscheme(colors):
+    colors = prepare_colors(colors)
 
     if isfile(config.FILE_DIC['icon-step2']):
         change_colors(colors, 'icon-step1')
@@ -198,7 +192,9 @@ def apply_colorscheme(image_name):
 
     change_templates(colors)
 
-    if config.wpgtk.getboolean('tint2') or not shutil.which('tint2'):
-        call(["pkill", "-SIGUSR1", "tint2"])
-    if config.wpgtk.getboolean('openbox') and shutil.which('openbox'):
-        call(["openbox", "--reconfigure"])
+    if config.wpgtk.getboolean('tint2'):
+        util.reload_tint2()
+    if config.wpgtk.getboolean('openbox'):
+        util.reload_openbox()
+    if config.wpgtk.getboolean('gtk'):
+        pywal.reload.gtk()
