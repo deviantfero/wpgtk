@@ -171,8 +171,8 @@ class OptionsGrid(Gtk.Grid):
     def combo_box_change(self, combo, *gparam):
         x = combo.get_active()
         if(gparam[0] == "active"):
-            config.wpgtk[gparam[0]] = str(x - 1)
-            color = Gdk.color_parse(self.parent.cpage.color_list[x - 1])
+            config.wpgtk[gparam[0]] = str(x)
+            color = Gdk.color_parse(self.parent.cpage.color_list[x])
             self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
         else:
             config.wpgtk[gparam[0]] = self.backend_list[x]
