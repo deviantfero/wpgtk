@@ -76,17 +76,18 @@ class TemplateGrid(Gtk.Grid):
                                              Gtk.STOCK_OPEN,
                                              Gtk.ResponseType.OK))
         filefilter = Gtk.FileFilter()
+        filechooser.set_select_multiple(True)
         filefilter.set_name("Text")
         filefilter.add_mime_type("text/*")
         filechooser.add_filter(filefilter)
         response = filechooser.run()
 
         if response == Gtk.ResponseType.OK:
-            filepath = filechooser.get_filename()
-            files.add_template(filepath)
-            self.item_names = [filen for filen in
+            for f in filechooser.get_filenames():
+                files.add_template(f)
+            self.item_names = [f for f in
                                files.get_file_list(config.OPT_DIR, False)
-                               if '.base' in filen]
+                               if '.base' in f]
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
