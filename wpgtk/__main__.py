@@ -3,6 +3,7 @@ import random
 import pywal
 import logging
 import argparse
+import glob
 from os import path
 from subprocess import Popen
 from .data import files
@@ -186,7 +187,7 @@ def process_args(args):
     if args.a:
         add_action = files.add_template if args.x \
                      else themer.create_theme
-        any(add_action(x) for x in args.a)
+        any(add_action(glob.glob(x)[0]) for x in args.a)
         exit(0)
 
     if args.c:

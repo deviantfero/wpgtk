@@ -108,6 +108,7 @@ class mainWindow(Gtk.Window):
                       (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                        Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
 
+        filechooser.set_select_multiple(True)
         filefilter = Gtk.FileFilter()
         filefilter.set_name("Images")
         filefilter.add_mime_type("image/png")
@@ -117,7 +118,8 @@ class mainWindow(Gtk.Window):
         response = filechooser.run()
 
         if response == Gtk.ResponseType.OK:
-            themer.create_theme(filechooser.get_filename())
+            for f in filechooser.get_filenames():
+                themer.create_theme(f)
             option_list = Gtk.ListStore(str)
             for elem in list(files.get_file_list()):
                 option_list.append([elem])

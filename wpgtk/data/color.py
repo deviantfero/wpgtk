@@ -175,7 +175,7 @@ def prepare_colors(cdic):
         print(config.wpgtk.getint('active'))
         bc = cl[config.wpgtk.getint('active')]
     else:
-        bc = cl[randint(0, 15)]
+        bc = cl[randint(9, 14)]
 
     wpcol['COLORACT'], wpcol['COLORIN'] = split_active(bc, is_dark_theme(cl))
     cdic['icons'] = prepare_icon_colors(cdic)
