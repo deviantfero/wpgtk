@@ -3,7 +3,7 @@
 
 ![PyPI](https://img.shields.io/pypi/v/wpgtk.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPLv2-green.svg?style=flat-square)
-
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X996W7Z8PW4VW"><img src="https://img.shields.io/badge/donate-paypal-green.svg?style=flat-square"></a>
 
 `wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the colorschemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for `wpgtk` and custom keywords and values to replace in templates.
 
@@ -53,3 +53,9 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 # License
 
 This project is licensed under the GPLv2 License - see the [LICENSE](LICENSE) file for details
+
+# Buy me a Coffee (or a soda)
+
+If you found this project helpful and would like to give back in some way, you can donate here
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X996W7Z8PW4VW"><img src="https://img.shields.io/badge/donate-paypal-green.svg?style=flat-square"></a>
