@@ -12,11 +12,43 @@ from . import sample
 
 
 def get_pywal_dict(filename):
+    if isfile(config.XREC_DIR): #attempt to find Xresources file
+        pywal_alpha(config.XREC_DIR)
+    elif isfile(config.XDEF_DIR): #attempt to find Xdefaults file
+        pywal_alpha(config.XDEF_DIR)
+
     image = pywal.image.get(join(config.WALL_DIR, filename))
     return pywal.colors.get(image,
                             backend=config.wpgtk.get('backend', 'wal'),
                             cache_dir=config.WALL_DIR)
 
+def pywal_alpha(filename):
+    with open(filename) as file:
+        for line in file:  # itterate over the file
+            if line.lower().find('urxvt.background') != -1 or line.lower().find('urxvt*background') != -1:
+                if "[" in line and "]" in line:  # try finding [aa]
+                    alpha = line[line.index("[")+1: line.index("]")]  # get alpha
+                    if alpha.isdigit():  # double check alpha is a number
+                        if int(alpha) > 100 or int(alpha) < 0:
+                            alpha = "100"
+                            logging.info("Alpha was not inside acceptable range, setting to 100")
+                        pywal.util.Color.alpha_num = alpha  # set pywal alpha_num
+                        logging.info("found urxvt transparency, value %s", alpha)
+                    else:  # alpha was not a number
+                        logging.info("urxvt alpha not a number value")
+                elif "rgba" in line:  # try finding /aaaa
+                    try:  # a catch incase /aaaa is broken
+                        alpha = int("0x" + line[line.rfind('/')+1:line.rfind('/') + 5],0)  #hex to dec
+                        alpha = int((alpha * 100)/65535)  #convert x/65535 to %
+                        if alpha > 100 or alpha < 0:
+                            alpha = "100"
+                            logging.info("Alpha was not inside acceptable range, setting to 100")
+                        pywal.util.Color.alpha_num = str(alpha)  # set pywal alpha_num
+                        logging.info("found urxvt transparency, value %s", alpha)
+                    except ValueError as e:
+                        pywal.util.Color.alpha_num = "100"
+                        logging.info("urxvt rgba color malformed")
+                    
 
 def get_color_list(filename, json=False):
 
