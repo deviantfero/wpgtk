@@ -23,6 +23,7 @@ def get_pywal_dict(filename):
                             backend=config.wpgtk.get('backend', 'wal'),
                             cache_dir=config.WALL_DIR)
 
+
 def pywal_alpha(filename):
     with open(filename) as file:
         search = re.compile(r'(?<=urxvt.background:\s)*((?<=rgba:\s)*..../..../..../(....)|\[(.*)\])', re.IGNORECASE)
@@ -41,6 +42,8 @@ def pywal_alpha(filename):
                     alpha) or \
                     "100")
     return "100"
+
+
 def get_color_list(filename, json=False):
 
     is_new = not isfile(files.get_cache_path(filename))
