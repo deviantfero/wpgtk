@@ -31,7 +31,7 @@ def pywal_alpha(filename):
             result = search.search(line)
             if result and result.group(2):
                 try:
-                    return int((int("0x" + result.group(2),0)*100)/65535)
+                    return str(int((int("0x" + result.group(2),0)*100)/65535))
                 except ValueError as e:
                     return "100"
             elif result and result.group(3):
