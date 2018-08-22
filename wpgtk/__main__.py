@@ -167,7 +167,7 @@ def process_args(args):
             templates = files.get_file_list(config.OPT_DIR, False)
             any(print(t) for t in templates if ".base" in t)
         else:
-            files.show_files()
+            print("\n".join(files.get_file_list()))
         exit(0)
 
     if args.t:
