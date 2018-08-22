@@ -37,21 +37,25 @@ def get_file_list(path=config.WALL_DIR, images=True, json=False):
 
 
 def get_cache_path(wallpaper, backend=None):
+    """get a colorscheme cache path using a wallpaper name"""
     if not backend:
         backend = config.wpgtk.get('backend', 'wal')
+
     filepath = join(config.WALL_DIR, wallpaper)
-    cache_filename = cache_fname(filepath, backend, False, config.WALL_DIR)
-    return join(*cache_filename)
+    filename = cache_fname(filepath, backend, False, config.WALL_DIR)
+
+    return join(*filename)
 
 
 def get_sample_path(wallpaper, backend=None):
+    """gets a wallpaper colorscheme sample's path"""
     if not backend:
         backend = config.wpgtk.get('backend', 'wal')
+
     sample_filename = "%s_%s_sample.png" % (wallpaper, backend)
+
     return join(config.SAMPLE_DIR, sample_filename)
 
-
-def add_template(cfile, basefile=None):
 
 def add_template(cfile, bfile=None):
     """adds a new base file from a config file to wpgtk
