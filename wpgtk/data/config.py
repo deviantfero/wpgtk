@@ -6,7 +6,7 @@ import logging
 
 __version__ = '5.5.2'
 
-options = None
+settings = None
 wpgtk = None
 keywords = None
 
@@ -35,20 +35,20 @@ FILE_DIC = {'templates':  os.path.join(HOME, ".config/wpg/templates"),
 
 
 def write_conf(config_path=CONF_FILE):
-    global options
+    global settings
     with open(config_path, 'w') as config_file:
-        options.write(config_file)
+        settings.write(config_file)
 
 
 def load_sections():
-    global options
+    global settings
     global wpgtk
     global keywords
-    options = configparser.ConfigParser()
-    options.optionxform = str
-    options.read(CONF_FILE)
-    wpgtk = options['wpgtk']
-    keywords = options['keywords']
+    settings = configparser.ConfigParser()
+    settings.optionxform = str
+    settings.read(CONF_FILE)
+    wpgtk = settings['wpgtk']
+    keywords = settings['keywords']
 
 
 def init():
