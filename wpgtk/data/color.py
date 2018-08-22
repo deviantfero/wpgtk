@@ -1,5 +1,4 @@
 import sys
-import re
 import logging
 import pywal
 from subprocess import call
@@ -13,35 +12,11 @@ from . import sample
 
 
 def get_pywal_dict(filename):
-    if isfile(config.XREC_DIR): #attempt to find Xresources file
-        pywal.util.Color.alpha_num = pywal_alpha(config.XREC_DIR)
-    elif isfile(config.XDEF_DIR): #attempt to find Xdefaults file
-        pywal.util.Color.alpha_num = pywal_alpha(config.XDEF_DIR)
-
+    pywal.util.Color.alpha_num = config.wpgtk.get('alpha', '100')
     image = pywal.image.get(join(config.WALL_DIR, filename))
     return pywal.colors.get(image,
                             backend=config.wpgtk.get('backend', 'wal'),
                             cache_dir=config.WALL_DIR)
-
-
-def pywal_alpha(filename):
-    with open(filename) as file:
-        search = re.compile(r'(?<=urxvt.background:\s)*((?<=rgba:\s)*..../..../..../(....)|\[(.*)\])', re.IGNORECASE)
-        for line in file:  # itterate over the file
-            result = search.search(line)
-            if result and result.group(2):
-                try:
-                    return str(int((int("0x" + result.group(2),0)*100)/65535))
-                except ValueError as e:
-                    return "100"
-            elif result and result.group(3):
-                alpha = result.group(3)
-                return (alpha.isdigit() and \
-                    (int(alpha) > 0 and \
-                    int(alpha) < 100 and \
-                    alpha) or \
-                    "100")
-    return "100"
 
 
 def get_color_list(filename, json=False):
@@ -50,6 +25,7 @@ def get_color_list(filename, json=False):
 
     theme = get_pywal_dict(filename) if not json\
         else pywal.util.read_file_json(filename)
+
     color_list = theme["color"] if "color" in theme \
         else list(theme["colors"].values())
 
