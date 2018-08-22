@@ -76,17 +76,22 @@ def add_template(cfile, bfile=None):
 
 
 def delete_template(basefile):
-    basefile_path = join(config.OPT_DIR, basefile)
-    configfile_path = basefile_path.replace(".base", "")
+    """delete a template in wpgtk with the given
+    base file name"""
+    base_file = join(config.OPT_DIR, basefile)
+    conf_file = base_file.replace(".base", "")
+
     try:
-        os.remove(basefile_path)
-        if os.path.islink(configfile_path):
-            os.remove(configfile_path)
+        os.remove(base_file)
+        if os.path.islink(conf_file):
+            os.remove(conf_file)
     except Exception as e:
         logging.error(str(e.strerror))
 
 
 def delete_colorschemes(wallpaper):
+    """delete all colorschemes related to the given
+    wallpaper"""
     for backend in list_backends():
         try:
             os.remove(get_cache_path(wallpaper, backend))
