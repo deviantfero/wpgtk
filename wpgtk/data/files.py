@@ -58,13 +58,15 @@ def add_template(cfile, bfile=None):
     cfile = os.path.realpath(cfile)
 
     if bfile:
-        template_name = bfile.split('/').pop()
+        template_name = bfile.split("/").pop()
     else:
-        template_name = "_".join(cfile.split('/')[-3::]) + ".base"
+        clean_atoms = [atom.lstrip(".") for atom in cfile.split("/")[-3::]]
+        template_name = "_".join(clean_atoms) + ".base"
 
     try:
         shutil.copy2(cfile, cfile + ".bak")
         src_file = bfile if bfile else cfile
+
         shutil.copy2(src_file, join(config.OPT_DIR, template_name))
         os.symlink(cfile, join(config.OPT_DIR,
                    template_name.replace(".base", "")))
