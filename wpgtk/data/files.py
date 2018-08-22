@@ -55,28 +55,25 @@ def get_sample_path(wallpaper, backend=None):
 
 def add_template(cfile, basefile=None):
 
+def add_template(cfile, bfile=None):
+    """adds a new template to wpgtk or re-establishes
+    link for a previously generated template"""
     cfile = os.path.realpath(cfile)
-    # we remove dots from possible dotfiles
-    if not basefile:
-        l = [atom.lstrip(".") for atom in cfile.split("/")
-             if atom is not 'home']
-        if len(l) > 3:
-            l = l[-3::]
-        templatename = ".".join(l) + ".base"
+
+    if bfile:
+        template_name = bfile.split('/').pop()
     else:
-        templatename = basefile.split('/').pop()
-    logging.info('added ' + templatename + '@' + cfile)
+        template_name = "_".join(cfile.split('/')[-3::]) + ".base"
+
     try:
-        logging.info("creating backup %s.bak" % cfile)
         shutil.copy2(cfile, cfile + ".bak")
-        logging.info("creating base file")
-        if basefile:
-            shutil.copy2(basefile, join(config.OPT_DIR, templatename))
-        else:
-            shutil.copy2(cfile, join(config.OPT_DIR, templatename))
-        logging.info("linking template to original file")
+        src_file = bfile if bfile else cfile
+        shutil.copy2(src_file, join(config.OPT_DIR, template_name))
         os.symlink(cfile, join(config.OPT_DIR,
-                   templatename.replace(".base", "")))
+                   template_name.replace(".base", "")))
+
+        logging.info("created backup %s.bak" % cfile)
+        logging.info("added %s @ %s" % (template_name, cfile))
     except Exception as e:
         logging.error(str(e.strerror))
 
