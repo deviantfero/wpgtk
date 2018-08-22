@@ -34,10 +34,6 @@ def get_file_list(path=config.WALL_DIR, images=True, json=False):
         return files
 
 
-def show_files(path=config.WALL_DIR, images=True):
-    print("\n".join(get_file_list(path, images)))
-
-
 def get_cache_path(wallpaper, backend=None):
     if not backend:
         backend = config.wpgtk.get('backend', 'wal')
