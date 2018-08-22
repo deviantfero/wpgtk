@@ -56,8 +56,9 @@ def get_sample_path(wallpaper, backend=None):
 def add_template(cfile, basefile=None):
 
 def add_template(cfile, bfile=None):
-    """adds a new template to wpgtk or re-establishes
-    link for a previously generated template"""
+    """adds a new base file from a config file to wpgtk
+    or re-establishes link with config file for a
+    previously generated base file"""
     cfile = os.path.realpath(cfile)
 
     if bfile:
