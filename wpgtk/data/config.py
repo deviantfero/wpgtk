@@ -22,8 +22,7 @@ CSS_DIR = os.path.join(WALL_DIR, "css")
 SHELL_DIR = os.path.join(WALL_DIR, "shell")
 SCHEME_DIR = os.path.join(WALL_DIR, "schemes")
 OPT_DIR = os.path.join(WPG_DIR, "templates")
-XREC_DIR = os.path.join(HOME, ".Xresources") # path for xresources (for alpha)
-XDEF_DIR = os.path.join(HOME, ".Xdefaults") # path for xdefaults (for alpha)
+
 RCC = []  # random color cache
 
 
