@@ -20,12 +20,14 @@ def get_file_list(path=config.WALL_DIR, images=True, json=False):
     @return:  A list with the directories file names
     @rtype :  List
     """
-    valid = re.compile('^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$)')
+    valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$)")
     files = []
-    for(dirpath, dirnames, filenames) in os.walk(path):
+
+    for (dirpath, dirnames, filenames) in os.walk(path):
         for f in filenames:
             files.append(f)
         break
+
     files.sort()
 
     if images:
