@@ -190,7 +190,7 @@ def apply_colorscheme(colors):
 
     if isfile(config.FILE_DIC['icon-step2']):
         change_colors(colors, 'icon-step1')
-        call(config.FILE_DIC['icon-step2'])
+        Popen(config.FILE_DIC['icon-step2'])
 
     change_templates(colors)
 
