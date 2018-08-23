@@ -1,7 +1,7 @@
 import sys
 import logging
 import pywal
-from subprocess import call
+from subprocess import Popen
 from random import shuffle
 from os.path import join, isfile
 from random import randint
