@@ -1,12 +1,22 @@
 import logging
 import shutil
 import sys
+from math import sqrt
 from subprocess import call
 from colorsys import rgb_to_hls, hls_to_rgb
 from pywal.util import rgb_to_hex, hex_to_rgb
 
 
+def get_distance(hex_src, hex_tgt):
+    "gets color distance between to hex values"
+    r1, g1, b1 = hex_to_rgb(hex_src)
+    r2, g2, b2 = hex_to_rgb(hex_tgt)
+
+    return sqrt((r2 - r1)**2 + (g2 - g1)**2 + (b2 - b1)**2)
+
+
 def get_hls_val(hexv, what):
+    "gets a color in hue light and saturation format"
     whatdict = {'hue': 0, 'light': 1, 'sat': 2}
     hls = hex_to_hls(hexv)
 
