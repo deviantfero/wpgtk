@@ -12,6 +12,7 @@ from . import sample
 
 
 def create_theme(filepath):
+    """create a colors-scheme from a filepath"""
     filepath = realpath(filepath)
     filename = filepath.split("/").pop().replace(" ", "_")
     tmplink = path.join(config.WALL_DIR, ".tmp.link")
@@ -22,9 +23,10 @@ def create_theme(filepath):
     return color.get_color_list(filename)
 
 
-def set_theme(filename, cs_file, restore=False):
+def set_theme(wallpaper, colorscheme, restore=False):
+    """apply a given wallpaper and a given colorscheme"""
     set_wall = config.wpgtk.getboolean("set_wallpaper", True)
-    colors = color.get_pywal_dict(path.join(config.WALL_DIR, cs_file))
+    colors = color.get_pywal_dict(path.join(config.WALL_DIR, colorscheme))
     pywal.sequences.send(colors, config.WPG_DIR)
 
     if not restore:
@@ -33,7 +35,7 @@ def set_theme(filename, cs_file, restore=False):
         pywal.reload.polybar()
 
     if set_wall:
-        pywal.wallpaper.change(path.join(config.WALL_DIR, filename))
+        pywal.wallpaper.change(path.join(config.WALL_DIR, wallpaper))
 
     pywal.export.color(colors, "css",
                        path.join(config.WPG_DIR, "current.css"))
@@ -45,13 +47,13 @@ def set_theme(filename, cs_file, restore=False):
     flags = "-rs" if set_wall else "-nrs"
     with open(path.join(config.WPG_DIR, "wp_init.sh"), "w") as script:
         script.writelines(["#!/bin/bash\n",
-                           "wpg %s %s %s" % (flags, filename, cs_file)])
+                           "wpg %s %s %s" % (flags, wallpaper, colorscheme)])
 
     Popen(['chmod', '+x', path.join(config.WPG_DIR, "wp_init.sh")])
-    util.xrdb_merge(path.join(config.XRES_DIR, cs_file + ".Xres"))
+    util.xrdb_merge(path.join(config.XRES_DIR, colorscheme + ".Xres"))
     util.xrdb_merge(path.join(config.HOME, ".Xresources"))
 
-    files.change_current(filename)
+    files.change_current(wallpaper)
 
     if config.wpgtk.getboolean('execute_cmd'):
         Popen(config.wpgtk['command'].split(' '))
