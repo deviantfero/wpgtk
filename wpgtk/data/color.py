@@ -157,8 +157,8 @@ def add_icon_colors(colors):
 
 
 def change_templates(colors):
-    "call change_colors on each custom template
-    installed or defined by the user"
+    """call change_colors on each custom template
+    installed or defined by the user"""
     template_dir = config.FILE_DIC['templates']
     templates = files.get_file_list(template_dir, images=False)
     templates = list(filter(lambda x: '.base' in x, templates))
@@ -174,8 +174,8 @@ def change_templates(colors):
 
 
 def split_active(hexc, is_dark_theme=True):
-    "extract active and inactive colors from a given
-    hex color value"
+    """extract active and inactive colors from a given
+    hex color value"""
     brightness = util.get_hls_val(hexc, 'light')
 
     if is_dark_theme:
@@ -187,7 +187,7 @@ def split_active(hexc, is_dark_theme=True):
 
 
 def add_wpgtk_colors(cdic):
-    "ensamble wpgtk color dictionary"
+    """ensamble wpgtk color dictionary"""
     index = config.wpgtk.getint("active")
     index = index if index > 0 else randint(9, 14)
 
