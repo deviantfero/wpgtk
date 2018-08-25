@@ -11,20 +11,22 @@ from . import util
 from . import sample
 
 
-def get_pywal_dict(filename):
+def get_pywal_dict(wallpaper):
+    """get the color dictionary of a given wallpaper"""
     pywal.util.Color.alpha_num = config.wpgtk.get('alpha', '100')
-    image = pywal.image.get(join(config.WALL_DIR, filename))
+    image = pywal.image.get(join(config.WALL_DIR, wallpaper))
+
     return pywal.colors.get(image,
                             backend=config.wpgtk.get('backend', 'wal'),
                             cache_dir=config.WALL_DIR)
 
 
 def get_color_list(filename, json=False):
-
+    """extract a list with 16 colors from a json or a pywal dict"""
     is_new = not isfile(files.get_cache_path(filename))
 
-    theme = get_pywal_dict(filename) if not json\
-        else pywal.util.read_file_json(filename)
+    theme = pywal.util.read_file_json(filename) if json\
+        else get_pywal_dict(filename)
 
     color_list = theme["color"] if "color" in theme \
         else list(theme["colors"].values())
