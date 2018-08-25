@@ -1,5 +1,5 @@
 from ..data import config
-from ..data import keyword
+from ..data import keywords
 from gi import require_version
 from gi.repository import Gtk
 require_version("Gtk", "3.0")
@@ -71,12 +71,12 @@ class KeywordGrid(Gtk.Grid):
         self.status_lbl.set_text('')
         if(col == 0):
             try:
-                keyword.update_keyword(self.liststore[path][col], text)
+                keywords.update_keyword(self.liststore[path][col], text)
             except Exception as e:
                 self.status_lbl.set_text(str(e))
         else:
             try:
-                keyword.update_value(self.liststore[path][0], text)
+                keywords.update_value(self.liststore[path][0], text)
             except Exception as e:
                 self.status_lbl.set_text(str(e))
         self.reload_keyword_list()
@@ -92,5 +92,5 @@ class KeywordGrid(Gtk.Grid):
 
     def append_new_keyword(self, widget):
         self.status_lbl.set_text('')
-        keyword.create_pair('keyword' + str(len(self.liststore)), 'value')
+        keywords.create_pair('keyword' + str(len(self.liststore)), 'value')
         self.reload_keyword_list()

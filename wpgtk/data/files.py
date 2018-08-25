@@ -20,12 +20,14 @@ def get_file_list(path=config.WALL_DIR, images=True, json=False):
     @return:  A list with the directories file names
     @rtype :  List
     """
-    valid = re.compile('^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$)')
+    valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$)")
     files = []
-    for(dirpath, dirnames, filenames) in os.walk(path):
+
+    for (dirpath, dirnames, filenames) in os.walk(path):
         for f in filenames:
             files.append(f)
         break
+
     files.sort()
 
     if images:
@@ -34,65 +36,70 @@ def get_file_list(path=config.WALL_DIR, images=True, json=False):
         return files
 
 
-def show_files(path=config.WALL_DIR, images=True):
-    print("\n".join(get_file_list(path, images)))
-
-
 def get_cache_path(wallpaper, backend=None):
+    """get a colorscheme cache path using a wallpaper name"""
     if not backend:
         backend = config.wpgtk.get('backend', 'wal')
+
     filepath = join(config.WALL_DIR, wallpaper)
-    cache_filename = cache_fname(filepath, backend, False, config.WALL_DIR)
-    return join(*cache_filename)
+    filename = cache_fname(filepath, backend, False, config.WALL_DIR)
+
+    return join(*filename)
 
 
 def get_sample_path(wallpaper, backend=None):
+    """gets a wallpaper colorscheme sample's path"""
     if not backend:
         backend = config.wpgtk.get('backend', 'wal')
+
     sample_filename = "%s_%s_sample.png" % (wallpaper, backend)
+
     return join(config.SAMPLE_DIR, sample_filename)
 
 
-def add_template(cfile, basefile=None):
-
+def add_template(cfile, bfile=None):
+    """adds a new base file from a config file to wpgtk
+    or re-establishes link with config file for a
+    previously generated base file"""
     cfile = os.path.realpath(cfile)
-    # we remove dots from possible dotfiles
-    if not basefile:
-        l = [atom.lstrip(".") for atom in cfile.split("/")
-             if atom is not 'home']
-        if len(l) > 3:
-            l = l[-3::]
-        templatename = ".".join(l) + ".base"
+
+    if bfile:
+        template_name = bfile.split("/").pop()
     else:
-        templatename = basefile.split('/').pop()
-    logging.info('added ' + templatename + '@' + cfile)
+        clean_atoms = [atom.lstrip(".") for atom in cfile.split("/")[-3::]]
+        template_name = "_".join(clean_atoms) + ".base"
+
     try:
-        logging.info("creating backup %s.bak" % cfile)
         shutil.copy2(cfile, cfile + ".bak")
-        logging.info("creating base file")
-        if basefile:
-            shutil.copy2(basefile, join(config.OPT_DIR, templatename))
-        else:
-            shutil.copy2(cfile, join(config.OPT_DIR, templatename))
-        logging.info("linking template to original file")
+        src_file = bfile if bfile else cfile
+
+        shutil.copy2(src_file, join(config.OPT_DIR, template_name))
         os.symlink(cfile, join(config.OPT_DIR,
-                   templatename.replace(".base", "")))
+                   template_name.replace(".base", "")))
+
+        logging.info("created backup %s.bak" % cfile)
+        logging.info("added %s @ %s" % (template_name, cfile))
     except Exception as e:
         logging.error(str(e.strerror))
 
 
 def delete_template(basefile):
-    basefile_path = join(config.OPT_DIR, basefile)
-    configfile_path = basefile_path.replace(".base", "")
+    """delete a template in wpgtk with the given
+    base file name"""
+    base_file = join(config.OPT_DIR, basefile)
+    conf_file = base_file.replace(".base", "")
+
     try:
-        os.remove(basefile_path)
-        if os.path.islink(configfile_path):
-            os.remove(configfile_path)
+        os.remove(base_file)
+        if os.path.islink(conf_file):
+            os.remove(conf_file)
     except Exception as e:
         logging.error(str(e.strerror))
 
 
 def delete_colorschemes(wallpaper):
+    """delete all colorschemes related to the given
+    wallpaper"""
     for backend in list_backends():
         try:
             os.remove(get_cache_path(wallpaper, backend))

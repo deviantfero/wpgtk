@@ -108,6 +108,10 @@ def read_args(args):
                         help="select a temporary backend",
                         const="list", nargs="?")
 
+    parser.add_argument("--alpha",
+                        help="set a one time alpha value",
+                        nargs=1)
+
     parser.add_argument("--pywal",
                         help="list included pywal themes "
                         "or replace your current colorscheme with a "
@@ -150,6 +154,9 @@ def process_args(args):
     if args.n:
         config.wpgtk["set_wallpaper"] = "false"
 
+    if args.alpha:
+        config.wpgtk["alpha"] = args.alpha[0]
+
     if args.m:
         filename = random.choice(files.get_file_list())
         themer.set_theme(filename, filename, args.r)
@@ -167,7 +174,7 @@ def process_args(args):
             templates = files.get_file_list(config.OPT_DIR, False)
             any(print(t) for t in templates if ".base" in t)
         else:
-            files.show_files()
+            print("\n".join(files.get_file_list()))
         exit(0)
 
     if args.t:

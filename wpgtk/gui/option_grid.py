@@ -67,17 +67,21 @@ class OptionsGrid(Gtk.Grid):
         self.tint2_switch = Gtk.Switch()
         self.tint2_switch.connect("notify::active",  self.on_activate, "tint2")
         self.lbl_tint2 = Gtk.Label("Reload Tint2")
+
         self.gtk_switch = Gtk.Switch()
         self.gtk_switch.connect("notify::active",  self.on_activate, "gtk")
         self.lbl_gtk = Gtk.Label("Reload GTK2")
+
         self.openbox_switch = Gtk.Switch()
         self.openbox_switch.connect("notify::active",
                                     self.on_activate, "openbox")
         self.lbl_openbox = Gtk.Label("Reload openbox")
+
         self.light_theme_switch = Gtk.Switch()
         self.light_theme_switch.connect("notify::active",
                                         self.on_activate, "light_theme")
         self.lbl_light_theme = Gtk.Label("Use Light Theme")
+
         self.wallpaper_switch = Gtk.Switch()
         self.wallpaper_switch.connect("notify::active",
                                       self.on_activate,
@@ -90,14 +94,17 @@ class OptionsGrid(Gtk.Grid):
         self.editor_txt.connect("changed", self.on_txt_change, "editor")
 
         # cmd
-        self.command_lbl = Gtk.Label('Run command after Colorize')
-        self.command_exe_lbl = Gtk.Label('Command: ')
+        self.command_lbl = Gtk.Label("Run command after Colorize")
+        self.command_exe_lbl = Gtk.Label("Command: ")
         self.command_txt = Gtk.Entry()
-        self.command_txt.connect("changed", self.on_txt_change, 'command')
+        self.command_txt.connect("changed", self.on_txt_change, "command")
         self.command_switch = Gtk.Switch()
         self.command_switch.connect("notify::active",
                                     self.on_activate, "execute_cmd")
 
+        self.alpha_lbl = Gtk.Label('Alpha:')
+        self.alpha_txt = Gtk.Entry()
+        self.alpha_txt.connect("changed", self.on_txt_change, "alpha")
         self.load_opt_list()
 
         # Switch Grid attach
@@ -126,12 +133,18 @@ class OptionsGrid(Gtk.Grid):
         self.active_grid.attach(self.backend_combo, 2, 1, 1, 1)
         self.active_grid.attach(self.color_button, 1, 2, 1, 1)
         self.active_grid.attach(self.color_combo, 2, 2, 1, 1)
+
         self.active_grid.attach(self.editor_lbl, 1, 3, 1, 1)
         self.active_grid.attach(self.editor_txt, 2, 3, 1, 1)
+
         self.active_grid.attach(self.command_exe_lbl, 1, 4, 1, 1)
         self.active_grid.attach(self.command_txt, 2, 4, 1, 1)
-        self.active_grid.attach(self.save_button, 1, 5, 2, 1)
-        self.active_grid.attach(self.lbl_save, 1, 6, 2, 1)
+
+        self.active_grid.attach(self.alpha_lbl, 1, 5, 1, 1)
+        self.active_grid.attach(self.alpha_txt, 2, 5, 1, 1)
+
+        self.active_grid.attach(self.save_button, 1, 6, 2, 1)
+        self.active_grid.attach(self.lbl_save, 1, 7, 2, 1)
 
         self.attach(self.switch_grid,  1,  1,  1,  1)
         self.attach(self.active_grid,  1,  2,  1,  1)
@@ -149,6 +162,7 @@ class OptionsGrid(Gtk.Grid):
 
         self.color_combo\
             .set_active(config.wpgtk.getint("active", 0))
+
         self.gtk_switch\
             .set_active(config.wpgtk.getboolean("gtk", True))
         self.tint2_switch\
@@ -157,16 +171,19 @@ class OptionsGrid(Gtk.Grid):
             .set_active(config.wpgtk.getboolean("execute_cmd", False))
         self.openbox_switch\
             .set_active(config.wpgtk.getboolean("openbox", True))
+        self.light_theme_switch\
+            .set_active(config.wpgtk.getboolean("light_theme", False))
+        self.wallpaper_switch\
+            .set_active(config.wpgtk.getboolean("set_wallpaper", True))
+
         self.editor_txt\
             .set_text(config.wpgtk.get("editor", "urxvt -e vim"))
         self.command_txt\
             .set_text(config.wpgtk.get("command", "yes hi"))
         self.command_txt\
             .set_editable(config.wpgtk.getboolean("execute_cmd", False))
-        self.light_theme_switch\
-            .set_active(config.wpgtk.getboolean("light_theme", False))
-        self.wallpaper_switch\
-            .set_active(config.wpgtk.getboolean("set_wallpaper", True))
+        self.alpha_txt\
+            .set_text(config.wpgtk.get("alpha", "100"))
 
     def combo_box_change(self, combo, *gparam):
         x = combo.get_active()
