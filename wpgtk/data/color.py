@@ -39,12 +39,16 @@ def get_color_list(filename, json=False):
 
 
 def is_dark_theme(color_list):
+    """compare brightness values to see if a color-scheme
+    is light or dark"""
     fg_brightness = util.get_hls_val(color_list[7], 'light')
     bg_brightness = util.get_hls_val(color_list[0], 'light')
+
     return fg_brightness > bg_brightness
 
 
 def shuffle_colors(colors):
+    """shuffle a color list in gorups of 8"""
     color_group = [[colors[i], colors[i + 8]] for i in range(1, 7)]
     shuffle(color_group)
 
@@ -55,6 +59,7 @@ def shuffle_colors(colors):
 
 
 def write_colors(img, color_list):
+    """write changes to a cache file to persist customizations"""
     color_dict = get_pywal_dict(img)
 
     color_dict = pywal.colors.colors_to_dict(color_list, img)
@@ -68,10 +73,12 @@ def write_colors(img, color_list):
 
 def change_colors(colors, which):
     opt = which
+
     if which in config.FILE_DIC:
         which = config.FILE_DIC[which]
+
+    tmp_filename = which + '.base'
     try:
-        tmp_filename = which + '.base'
         with open(tmp_filename, 'r') as tmp_file:
             first_line = tmp_file.readline()
             tmp_file.seek(0)
