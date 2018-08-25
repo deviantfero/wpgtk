@@ -14,6 +14,8 @@ def get_hls_val(hexv, what):
 
 
 def set_hls_val(hexv, what, val):
+    "assign a value to a hls color and return a
+    converted hex value"
     whatdict = {'hue': 0, 'light': 1, 'sat': 2}
     hls = list(hex_to_hls(hexv))
 
@@ -22,11 +24,13 @@ def set_hls_val(hexv, what, val):
 
 
 def hex_to_hls(hex_string):
+    "convert a hex value to hls coordinates"
     r, g, b = hex_to_rgb(hex_string)
     return rgb_to_hls(r, g, b)
 
 
 def hls_to_hex(hls):
+    "convert a hls coordinate to hex code"
     h, l, s = hls
     r, g, b = hls_to_rgb(h, l, s)
     rgb_int = [max(min(int(elem), 255), 0) for elem in [r, g, b]]
@@ -35,6 +39,7 @@ def hls_to_hex(hls):
 
 
 def alter_brightness(hex_string, amount, sat=0):
+    "alters amount of light and saturation in a color"
     h, l, s = hex_to_hls(hex_string)
     l = max(min(l + amount, 255), 1)
     s = min(max(s - sat, -1), 0)
