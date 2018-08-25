@@ -202,7 +202,9 @@ def apply_colorscheme(colors):
 
     if config.wpgtk.getboolean('tint2'):
         util.reload_tint2()
+
     if config.wpgtk.getboolean('openbox'):
         util.reload_openbox()
+
     if config.wpgtk.getboolean('gtk'):
         pywal.reload.gtk()
