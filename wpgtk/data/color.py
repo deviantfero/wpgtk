@@ -1,6 +1,7 @@
 import sys
 import logging
 import pywal
+from operator import itemgetter
 from subprocess import Popen
 from random import shuffle
 from os.path import join, isfile
@@ -103,8 +104,45 @@ def change_colors(colors, which):
         logging.error("%s - base file does not exist" % opt)
 
 
+def sort_colors(colors):
+    """automatically set the most look-alike colors to their
+    corresponding place in the standar xterm colors"""
+    colors = colors[:8]
+    sorted_by_color = []
+    base_colors = ['#000000', '#ff0000', '#00ff00', '#ffff00',
+                   '#0000ff', '#ff00ff', '#00ffff', '#ffffff']
+
+    for y in base_colors:
+        cd_tuple = [(x, util.get_distance(x, y)) for i, x in enumerate(colors)]
+        cd_tuple.sort(key=itemgetter(1))
+
+        sorted_by_color.append(cd_tuple)
+
+    i = 0
+    while i < 8:
+        current_cd = sorted_by_color[i][0]
+        closest_cds = [sorted_by_color[x][0] for x in range(8)]
+        reps = [x for x in range(8) if closest_cds[x][0] == current_cd[0]]
+
+        if len(reps) > 1:
+            closest = min([closest_cds[x] for x in reps], key=itemgetter(1))
+            reps = [x for x in reps if x != closest_cds.index(closest)]
+            any(sorted_by_color[x].pop(0) for x in reps)
+            i = 0
+        else:
+            i += 1
+
+    sorted_colors = [sorted_by_color[x][0][0] for x in range(8)]
+    return [*sorted_colors, *sorted_colors]
+
+
 def auto_adjust_colors(clist):
+    """create a clear foreground and background set of colors
+    make a lighter shade of the colorscheme for the last 8 colors"""
     light = config.wpgtk.getboolean('light_theme', False)
+
+    if config.wpgtk.getboolean('auto_sort', True):
+        clist = sort_colors(clist)
 
     alter_brightness = util.alter_brightness
     get_hls_val = util.get_hls_val
@@ -112,8 +150,8 @@ def auto_adjust_colors(clist):
     added_sat = 0.25 if light else 0.1
     sign = -1 if light else 1
 
+    # convert dark to light or the other way around
     if light == is_dark_theme(clist):
-        # convert dark to light or the other way around
         sat_diff = -0.1 if light else 0.1
         clist = [clist[0]] \
             + [alter_brightness(x, 0, sat_diff) for x in clist[1:7]] \
