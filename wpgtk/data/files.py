@@ -98,8 +98,7 @@ def delete_template(basefile):
 
 
 def delete_colorschemes(wallpaper):
-    """delete all colorschemes related to the given
-    wallpaper"""
+    """delete all colorschemes related to the given wallpaper"""
     for backend in list_backends():
         try:
             os.remove(get_cache_path(wallpaper, backend))
@@ -109,7 +108,6 @@ def delete_colorschemes(wallpaper):
 
 
 def change_current(filename):
-    os.symlink(join(config.WALL_DIR, filename),
-               join(config.WPG_DIR, ".currentTmp"))
-    os.rename(join(config.WPG_DIR, ".currentTmp"),
-              join(config.WPG_DIR, ".current"))
+    """update symlink to point to the current wallpaper"""
+    os.symlink(join(WALL_DIR, filename), join(WPG_DIR, ".currentTmp"))
+    os.rename(join(WPG_DIR, ".currentTmp"), join(WPG_DIR, ".current"))
