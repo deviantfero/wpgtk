@@ -1,11 +1,13 @@
 import logging
+import os
+
+from subprocess import Popen
+from ..data.config import OPT_DIR, settings
+from ..data import files
+
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
-import os
 from gi import require_version
-from subprocess import Popen
-from ..data import config
-from ..data import files
 require_version("Gtk", "3.0")
 
 PAD = 10
@@ -54,7 +56,7 @@ class TemplateGrid(Gtk.Grid):
         self.scroll.add(self.file_view)
 
         self.item_names = [filen for filen in
-                           files.get_file_list(config.OPT_DIR, False)
+                           files.get_file_list(OPT_DIR, False)
                            if '.base' in filen]
 
         for filen in self.item_names:
@@ -86,7 +88,7 @@ class TemplateGrid(Gtk.Grid):
             for f in filechooser.get_filenames():
                 files.add_template(f)
             self.item_names = [f for f in
-                               files.get_file_list(config.OPT_DIR, False)
+                               files.get_file_list(OPT_DIR, False)
                                if '.base' in f]
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
@@ -99,8 +101,8 @@ class TemplateGrid(Gtk.Grid):
     def on_open_clicked(self, widget):
         if self.current is not None:
             item = self.item_names[self.current]
-            args_list = config.wpgtk['editor'].split(' ')
-            args_list.append(os.path.join(config.OPT_DIR, item))
+            args_list = settings['editor'].split(' ')
+            args_list.append(os.path.join(OPT_DIR, item))
             try:
                 Popen(args_list)
             except Exception as e:

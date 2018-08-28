@@ -1,11 +1,13 @@
 import os
 import shutil
 import pywal
+
+from ..data.config import WALL_DIR
 from ..data import color
 from ..data import util
-from ..data import config
 from ..data import files
 from ..data import sample
+
 from .color_picker import ColorDialog
 from gi import require_version
 from gi.repository import Gtk, Gdk, GdkPixbuf
@@ -76,7 +78,7 @@ class ColorGrid(Gtk.Grid):
                 self.colorgrid.attach(self.button_list[cont], x, y + 1, 1, 1)
                 cont += 1
 
-        sample_name = os.path.join(config.WALL_DIR, ".no_sample.sample.png")
+        sample_name = os.path.join(WALL_DIR, ".no_sample.sample.png")
         self.sample = Gtk.Image()
         if(os.path.isfile(sample_name)):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
@@ -159,7 +161,7 @@ class ColorGrid(Gtk.Grid):
         self.render_sample()
 
     def render_sample(self):
-        sample_path = os.path.join(config.WALL_DIR, ".tmp.sample.png")
+        sample_path = os.path.join(WALL_DIR, ".tmp.sample.png")
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
                 str(sample_path),
                 width=500,
@@ -178,9 +180,9 @@ class ColorGrid(Gtk.Grid):
         if len(current_walls) > 0:
             x = self.option_combo.get_active()
             color.write_colors(current_walls[x], self.color_list)
-            tmpfile = os.path.join(config.WALL_DIR, ".tmp.sample.png")
+            tmpfile = os.path.join(WALL_DIR, ".tmp.sample.png")
             if(os.path.isfile(tmpfile)):
-                shutil.move(os.path.join(config.WALL_DIR, ".tmp.sample.png"),
+                shutil.move(os.path.join(WALL_DIR, ".tmp.sample.png"),
                             files.get_sample_path(current_walls[x]))
                 self.done_lbl.set_text("Changes saved")
                 x = self.parent.colorscheme.get_active()

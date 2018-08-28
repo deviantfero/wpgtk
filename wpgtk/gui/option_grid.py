@@ -1,6 +1,6 @@
 from gi.repository import Gtk, Gdk
 from gi import require_version
-from ..data import config
+from ..data.config import settings, write_conf
 from pywal import colors
 # making sure it uses v3.0
 require_version("Gtk",  "3.0")
@@ -152,53 +152,53 @@ class OptionsGrid(Gtk.Grid):
     def on_activate(self,  switch,  *gparam):
         if(gparam[1] == 'execute_cmd'):
             self.command_txt.set_editable(switch.get_active())
-        config.wpgtk[gparam[1]] = str(switch.get_active()).lower()
+        settings[gparam[1]] = str(switch.get_active()).lower()
         self.lbl_save.set_text('')
 
     def load_opt_list(self):
-        current_backend = config.wpgtk.get("backend", "wal")
+        current_backend = settings.get("backend", "wal")
         i = self.backend_list.index(current_backend)
         self.backend_combo.set_active(i)
 
         self.color_combo\
-            .set_active(config.wpgtk.getint("active", 0))
+            .set_active(settings.getint("active", 0))
 
         self.gtk_switch\
-            .set_active(config.wpgtk.getboolean("gtk", True))
+            .set_active(settings.getboolean("gtk", True))
         self.tint2_switch\
-            .set_active(config.wpgtk.getboolean("tint2", True))
+            .set_active(settings.getboolean("tint2", True))
         self.command_switch\
-            .set_active(config.wpgtk.getboolean("execute_cmd", False))
+            .set_active(settings.getboolean("execute_cmd", False))
         self.openbox_switch\
-            .set_active(config.wpgtk.getboolean("openbox", True))
+            .set_active(settings.getboolean("openbox", True))
         self.light_theme_switch\
-            .set_active(config.wpgtk.getboolean("light_theme", False))
+            .set_active(settings.getboolean("light_theme", False))
         self.wallpaper_switch\
-            .set_active(config.wpgtk.getboolean("set_wallpaper", True))
+            .set_active(settings.getboolean("set_wallpaper", True))
 
         self.editor_txt\
-            .set_text(config.wpgtk.get("editor", "urxvt -e vim"))
+            .set_text(settings.get("editor", "urxvt -e vim"))
         self.command_txt\
-            .set_text(config.wpgtk.get("command", "yes hi"))
+            .set_text(settings.get("command", "yes hi"))
         self.command_txt\
-            .set_editable(config.wpgtk.getboolean("execute_cmd", False))
+            .set_editable(settings.getboolean("execute_cmd", False))
         self.alpha_txt\
-            .set_text(config.wpgtk.get("alpha", "100"))
+            .set_text(settings.get("alpha", "100"))
 
     def combo_box_change(self, combo, *gparam):
         x = combo.get_active()
         if(gparam[0] == "active"):
-            config.wpgtk[gparam[0]] = str(x)
+            settings[gparam[0]] = str(x)
             color = Gdk.color_parse(self.parent.cpage.color_list[x])
             self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
         else:
-            config.wpgtk[gparam[0]] = self.backend_list[x]
+            settings[gparam[0]] = self.backend_list[x]
         self.lbl_save.set_text("")
 
     def on_txt_change(self, gtk_entry, *gparam):
-        config.wpgtk[gparam[0]] = gtk_entry.get_text()
+        settings[gparam[0]] = gtk_entry.get_text()
         self.lbl_save.set_text("")
 
     def on_save_button(self,  button):
-        config.write_conf()
+        write_conf()
         self.lbl_save.set_text("Saved")
