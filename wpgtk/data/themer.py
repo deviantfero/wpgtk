@@ -4,8 +4,9 @@ import logging
 from os.path import realpath
 from os import remove, path, symlink
 from subprocess import Popen
+
+from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, HOME, settings
 from . import color
-from . import config
 from . import files
 from . import util
 from . import sample
