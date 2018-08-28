@@ -1,12 +1,13 @@
 import sys
 import logging
 import pywal
+import os
 from operator import itemgetter
 from subprocess import Popen
-from random import shuffle
-from os.path import join, isfile
-from random import randint
-from . import config
+from random import shuffle, randint
+
+from .config import settings, keywords
+from .config import WALL_DIR, WPG_DIR, FILE_DIC, OPT_DIR
 from . import files
 from . import util
 from . import sample
