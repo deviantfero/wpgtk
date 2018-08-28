@@ -8,7 +8,7 @@ COLOR_OTHER="${HOME}/.config/wpg/templates";
 #         NAME:  wpg-install.sh
 #  DESCRIPTION:  Installs various wpgtk themes.
 #===============================================================================
-function usage ()
+usage()
 {
   echo "Usage :  $0 [options] [--]
 
@@ -22,11 +22,12 @@ function usage ()
   -r   Install rofi template
   -I   Install i3 template
   -p   Install polybar template
+  -b   Install bspwm template
   -H   Specify hash of wpgtk-templates repository to use
   "
 }
 
-function checkprogram ()
+checkprogram()
 {
   command -v $1 >/dev/null 2>&1;
   if [[ $? -eq 1 ]]; then
@@ -35,7 +36,7 @@ function checkprogram ()
   fi
 }
 
-function getfiles ()
+getfiles()
 {
   checkprogram 'git';
   checkprogram 'wpg';
@@ -51,7 +52,7 @@ function getfiles ()
   fi
 }
 
-function install_tint2 ()
+install_tint2()
 {
   echo -n "This might override your tint2 config, Continue?[Y/n]: ";
   read -r response;
@@ -68,7 +69,7 @@ function install_tint2 ()
   echo ":: tint2 template not installed";
 }
 
-function install_rofi ()
+install_rofi()
 {
   echo -n "This might override your rofi config, Continue?[Y/n]: ";
   read -r response;
@@ -85,7 +86,7 @@ function install_rofi ()
   echo ":: rofi template not installed";
 }
 
-function install_i3 () 
+install_i3() 
 {
   echo -n "This might override your i3 config, Continue?[Y/n]: ";
   read -r response;
@@ -102,7 +103,7 @@ function install_i3 ()
   echo ":: i3 template not installed";
 }
 
-function install_polybar () 
+install_polybar() 
 {
   echo -n "This might override your polybar config, Continue?[Y/n]: ";
   read -r response;
@@ -119,7 +120,7 @@ function install_polybar ()
   echo ":: polybar template not installed";
 }
 
-function install_gtk ()
+install_gtk()
 {
   echo "Installing gtk themes";
   cp -r ./FlatColor "${HOME}/.themes/" && \
@@ -135,14 +136,14 @@ function install_gtk ()
   echo ":: FlatColor gtk themes install done."
 }
 
-function install_icons()
+install_icons()
 {
   echo "Installing icon pack";
   cp -r flattrcolor "${HOME}/.icons/" && \
     echo ":: flattr icons install done."
 }
 
-function install_openbox()
+install_openbox()
 {
   echo "Installing openbox themes";
   cp --remove-destination -r ./openbox/colorbamboo/* "${HOME}/.themes/colorbamboo"
@@ -153,7 +154,17 @@ function install_openbox()
   fi
 }
 
-function clean_up()
+install_bspwm()
+{
+  echo "Installing bspwm colors";
+  mv "./bspwm/bspwm_colors.base" "${COLOR_OTHER}/bspwm_colors.base";
+  mv "./bspwm/bspwm_colors" "${COLOR_OTHER}/bspwm_colors";
+  ln -sf "${HOME}/.config/bspwm/bspwm_colors.sh" "${COLOR_OTHER}/bspwm_colors" && \
+	echo 'bash "$HOME/.config/bspwm/bspwm_colors.sh" &' >> "${HOME}/.config/bspwm/bspwmrc";
+  echo ":: bspwm colors install done.";
+}
+
+clean_up()
 {
   rm -rf "$THEME_DIR";
 }
@@ -163,9 +174,9 @@ function clean_up()
 #  Handle command line arguments
 #-----------------------------------------------------------------------
 
-function getargs()
+getargs()
 {
-  while getopts "H:hvotgiIpr" opt
+  while getopts "H:bhvotgiIpr" opt
   do
     case $opt in
       h)
@@ -183,6 +194,7 @@ function getargs()
       r)    rofi="true" ;;
       I)      i3="true" ;;
       p) polybar="true" ;;
+	  b)   bspwm="true" ;;
       H) commit="${OPTARG}" ;;
       *)
         echo -e "\n  Option does not exist : $OPTARG\n"
@@ -195,7 +207,7 @@ function getargs()
     shift "$((OPTIND - 1))"
 }
 
-function main()
+main()
 {
   getargs "$@";
   getfiles;
@@ -206,6 +218,7 @@ function main()
   [[ "$icons" == "true" ]] && install_icons;
   [[ "$polybar" == "true" ]] && install_polybar;
   [[ "$i3" == "true" ]] && install_i3;
+  [[ "$bspwm" == "true" ]] && install_bspwm;
   clean_up;
 }
 
