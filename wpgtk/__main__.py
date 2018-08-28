@@ -11,7 +11,8 @@ from .data import themer
 from .data import color
 from .data import util
 from .data import sample
-from .data import config
+from .data.config import OPT_DIR, WPG_DIR, __version__
+from .data.config import settings
 
 
 def read_args(args):
@@ -149,13 +150,13 @@ def process_arg_errors(args):
 
 def process_args(args):
     if args.light:
-        config.wpgtk["light_theme"] = "true"
+        settings["light_theme"] = "true"
 
     if args.n:
-        config.wpgtk["set_wallpaper"] = "false"
+        settings["set_wallpaper"] = "false"
 
     if args.alpha:
-        config.wpgtk["alpha"] = args.alpha[0]
+        settings["alpha"] = args.alpha[0]
 
     if args.m:
         filename = random.choice(files.get_file_list())
@@ -171,18 +172,18 @@ def process_args(args):
 
     if args.l:
         if args.x:
-            templates = files.get_file_list(config.OPT_DIR, False)
+            templates = files.get_file_list(OPT_DIR, False)
             any(print(t) for t in templates if ".base" in t)
         else:
             print("\n".join(files.get_file_list()))
         exit(0)
 
     if args.t:
-        Popen(["cat", path.join(config.WPG_DIR, "sequences")])
+        Popen(["cat", path.join(WPG_DIR, "sequences")])
         exit(0)
 
     if args.version:
-        print("current version: " + config.__version__)
+        print("current version: " + __version__)
         exit(0)
 
     if args.d:
@@ -261,7 +262,7 @@ def process_args(args):
 
     if args.backend and args.backend != "list":
         if args.backend in pywal.colors.list_backends():
-            config.wpgtk['backend'] = args.backend
+            settings['backend'] = args.backend
         else:
             logging.error("no such backend, please "
                           "choose a valid backend")
@@ -269,7 +270,6 @@ def process_args(args):
 
 
 def main():
-    config.init()
     util.setup_log()
     args = read_args(sys.argv[1:])
     process_arg_errors(args)
