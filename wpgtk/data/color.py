@@ -73,38 +73,35 @@ def write_colors(img, color_list):
     cache_file = files.get_cache_path(img)
 
     pywal.export.color(color_dict, "json", cache_file)
-    pywal.export.color(color_dict,
-                       "xresources",
-                       join(config.XRES_DIR, (img + ".Xres")))
 
 
 def change_colors(colors, which):
     opt = which
 
-    if which in config.FILE_DIC:
-        which = config.FILE_DIC[which]
+    if which in FILE_DIC:
+        which = FILE_DIC[which]
 
-    tmp_filename = which + '.base'
+    tmp_filename = which + ".base"
     try:
-        with open(tmp_filename, 'r') as tmp_file:
+        with open(tmp_filename, "r") as tmp_file:
             first_line = tmp_file.readline()
             tmp_file.seek(0)
             tmp_data = tmp_file.read()
 
-        if 'wpgtk-ignore' not in first_line:
-            for k, v in config.keywords.items():
+        if "wpgtk-ignore" not in first_line:
+            for k, v in keywords.items():
                 tmp_data = tmp_data.replace(util.build_key(k), v)
 
             for k, v in {**colors["wpgtk"], **colors["colors"]}.items():
-                tmp_data = tmp_data.replace(util.build_key(k.upper()), v.strip('#'))
+                tmp_data = tmp_data.replace(util.build_key(k.upper()), v.strip("#"))
 
-            if colors['icons'] and opt == 'icon-step1':
-                for k, v in colors['icons'].items():
-                    tmp_data = tmp_data.replace(k, v.strip('#'))
+            if colors["icons"] and opt == "icon-step1":
+                for k, v in colors["icons"].items():
+                    tmp_data = tmp_data.replace(k, v.strip("#"))
 
-            with open(which, 'w') as target_file:
+            with open(which, "w") as target_file:
                 target_file.write(tmp_data)
-                logging.info("wrote: %s" % opt.split('/').pop())
+                logging.info("wrote: %s" % opt.split("/").pop())
 
     except IOError:
         logging.error("%s - base file does not exist" % opt)
