@@ -42,8 +42,8 @@ def get_color_list(filename, json=False):
 def is_dark_theme(color_list):
     """compare brightness values to see if a color-scheme
     is light or dark"""
-    fg_brightness = util.get_hls_val(color_list[7], 'light')
-    bg_brightness = util.get_hls_val(color_list[0], 'light')
+    fg_brightness = util.get_hls_val(color_list[7], "light")
+    bg_brightness = util.get_hls_val(color_list[0], "light")
 
     return fg_brightness > bg_brightness
 
@@ -109,8 +109,8 @@ def sort_colors(colors):
     corresponding place in the standar xterm colors"""
     colors = colors[:8]
     sorted_by_color = []
-    base_colors = ['#000000', '#ff0000', '#00ff00', '#ffff00',
-                   '#0000ff', '#ff00ff', '#00ffff', '#ffffff']
+    base_colors = ["#000000", "#ff0000", "#00ff00", "#ffff00",
+                   "#0000ff", "#ff00ff", "#00ffff", "#ffffff"]
 
     for y in base_colors:
         cd_tuple = [(x, util.get_distance(x, y)) for i, x in enumerate(colors)]
@@ -139,9 +139,9 @@ def sort_colors(colors):
 def auto_adjust_colors(clist):
     """create a clear foreground and background set of colors
     make a lighter shade of the colorscheme for the last 8 colors"""
-    light = config.wpgtk.getboolean('light_theme', False)
+    light = settings.getboolean("light_theme", False)
 
-    if config.wpgtk.getboolean('auto_sort', True):
+    if settings.getboolean("auto_sort", True):
         clist = sort_colors(clist)
 
     alter_brightness = util.alter_brightness
@@ -161,7 +161,7 @@ def auto_adjust_colors(clist):
     comment = [alter_brightness(clist[0], sign * 20)]
     fg = [alter_brightness(clist[7], sign * 60)]
     clist = clist[:8] + comment \
-        + [alter_brightness(x, sign * get_hls_val(x, 'light') * 0.3, added_sat)
+        + [alter_brightness(x, sign * get_hls_val(x, "light") * 0.3, added_sat)
            for x in clist[1:7]] + fg
 
     return clist
@@ -169,23 +169,23 @@ def auto_adjust_colors(clist):
 
 def add_icon_colors(colors):
     try:
-        glyph = util.alter_brightness(colors['wpgtk']['COLORIN'], -15)
+        glyph = util.alter_brightness(colors["wpgtk"]["COLORIN"], -15)
         icon_dic = {}
 
-        with open(config.FILE_DIC['icon-step1'], "r") as icon_file:
+        with open(FILE_DIC["icon-step1"], "r") as icon_file:
             for line in icon_file:
-                if('glyphColorNew=' in line):
-                    icon_dic['oldglyph'] = line.split('=')[1].strip('\n')
+                if("glyphColorNew=" in line):
+                    icon_dic["oldglyph"] = line.split("=")[1].strip("\n")
 
-                if('frontColorNew=' in line):
-                    icon_dic['oldfront'] = line.split('=')[1].strip('\n')
+                if("frontColorNew=" in line):
+                    icon_dic["oldfront"] = line.split("=")[1].strip("\n")
 
-                if('backColorNew=' in line):
-                    icon_dic['oldback'] = line.split('=')[1].strip('\n')
+                if("backColorNew=" in line):
+                    icon_dic["oldback"] = line.split("=")[1].strip("\n")
 
-        icon_dic['newglyph'] = glyph
-        icon_dic['newfront'] = colors['wpgtk']['COLORACT']
-        icon_dic['newback'] = colors['wpgtk']['COLORIN']
+        icon_dic["newglyph"] = glyph
+        icon_dic["newfront"] = colors["wpgtk"]["COLORACT"]
+        icon_dic["newback"] = colors["wpgtk"]["COLORIN"]
 
         return icon_dic
 
@@ -226,14 +226,14 @@ def split_active(hexc, is_dark_theme=True):
 
 def add_wpgtk_colors(cdic):
     """ensamble wpgtk color dictionary"""
-    index = config.wpgtk.getint("active")
+    index = settings.getint("active")
     index = index if index > 0 else randint(9, 14)
 
-    base_color = cdic['colors']['color%s' % index]
+    base_color = cdic["colors"]["color%s" % index]
 
-    color_list = [cdic['colors']['color%s' % i] for i in range(16)]
-    cdic['wpgtk'] = split_active(base_color, is_dark_theme(color_list))
-    cdic['icons'] = add_icon_colors(cdic)
+    color_list = [cdic["colors"]["color%s" % i] for i in range(16)]
+    cdic["wpgtk"] = split_active(base_color, is_dark_theme(color_list))
+    cdic["icons"] = add_icon_colors(cdic)
 
     return cdic
 
@@ -241,17 +241,17 @@ def add_wpgtk_colors(cdic):
 def apply_colorscheme(colors):
     colors = add_wpgtk_colors(colors)
 
-    if isfile(config.FILE_DIC['icon-step2']):
-        change_colors(colors, 'icon-step1')
-        Popen(config.FILE_DIC['icon-step2'])
+    if os.path.isfile(FILE_DIC["icon-step2"]):
+        change_colors(colors, "icon-step1")
+        Popen(FILE_DIC["icon-step2"])
 
     change_templates(colors)
 
-    if config.wpgtk.getboolean('tint2'):
+    if settings.getboolean("tint2"):
         util.reload_tint2()
 
-    if config.wpgtk.getboolean('openbox'):
+    if settings.getboolean("openbox"):
         util.reload_openbox()
 
-    if config.wpgtk.getboolean('gtk'):
+    if settings.getboolean("gtk"):
         pywal.reload.gtk()
