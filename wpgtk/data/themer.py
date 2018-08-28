@@ -16,67 +16,64 @@ def create_theme(filepath):
     """create a colors-scheme from a filepath"""
     filepath = realpath(filepath)
     filename = filepath.split("/").pop().replace(" ", "_")
-    tmplink = path.join(config.WALL_DIR, ".tmp.link")
+    tmplink = path.join(WALL_DIR, ".tmp.link")
 
     symlink(filepath, tmplink)
 
-    shutil.move(tmplink, path.join(config.WALL_DIR, filename))
+    shutil.move(tmplink, path.join(WALL_DIR, filename))
     return color.get_color_list(filename)
 
 
 def set_theme(wallpaper, colorscheme, restore=False):
     """apply a given wallpaper and a given colorscheme"""
-    set_wall = config.wpgtk.getboolean("set_wallpaper", True)
-    colors = color.get_pywal_dict(path.join(config.WALL_DIR, colorscheme))
-    pywal.sequences.send(colors, config.WPG_DIR)
+    set_wall = settings.getboolean("set_wallpaper", True)
+    colors = color.get_pywal_dict(path.join(WALL_DIR, colorscheme))
+    pywal.sequences.send(colors, WPG_DIR)
 
     if not restore:
+        pywal.export.every(colors, FORMAT_DIR)
         color.apply_colorscheme(colors)
         pywal.reload.i3()
         pywal.reload.polybar()
 
     if set_wall:
-        pywal.wallpaper.change(path.join(config.WALL_DIR, wallpaper))
-
-    pywal.export.color(colors, "css",
-                       path.join(config.WPG_DIR, "current.css"))
-    pywal.export.color(colors, "shell",
-                       path.join(config.WPG_DIR, "current.sh"))
-    pywal.export.color(colors, "xresources",
-                       path.join(config.WPG_DIR, "current.Xres"))
+        pywal.wallpaper.change(path.join(WALL_DIR, wallpaper))
 
     flags = "-rs" if set_wall else "-nrs"
-    with open(path.join(config.WPG_DIR, "wp_init.sh"), "w") as script:
+    with open(path.join(WPG_DIR, "wp_init.sh"), "w") as script:
         script.writelines(["#!/bin/bash\n",
                            "wpg %s %s %s" % (flags, wallpaper, colorscheme)])
 
-    Popen(['chmod', '+x', path.join(config.WPG_DIR, "wp_init.sh")])
-    util.xrdb_merge(path.join(config.XRES_DIR, colorscheme + ".Xres"))
-    util.xrdb_merge(path.join(config.HOME, ".Xresources"))
+    Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
+    util.xrdb_merge(path.join(FORMAT_DIR, "colors.Xresources"))
+    util.xrdb_merge(path.join(HOME, ".Xresources"))
 
     files.change_current(wallpaper)
 
-    if config.wpgtk.getboolean('execute_cmd'):
-        Popen(config.wpgtk['command'].split(' '))
+    if settings.getboolean('execute_cmd'):
+        Popen(settings['command'].split(' '))
 
 
 def delete_theme(filename):
     try:
-        remove(path.join(config.WALL_DIR, filename))
-        remove(path.join(config.XRES_DIR, (filename + '.Xres')))
+        remove(path.join(WALL_DIR, filename))
         files.delete_colorschemes(filename)
     except IOError as e:
         logging.error("file not available")
+        logging.error(e.message)
 
 
 def get_current():
-    image = realpath(path.join(config.WPG_DIR, '.current')).split('/').pop()
+    image = realpath(path.join(WPG_DIR, '.current')).split('/').pop()
     return image
 
 
 def import_theme(wallpaper, json_file, theme=False):
+    """import a colorscheme from a JSON file either in
+    terminal.sexy or pywal format"""
     json_file = realpath(json_file)
     filename = json_file.split("/").pop()
+
     if theme:
         theme = pywal.theme.file(filename)
         color_list = list(theme["colors"].values())
@@ -93,6 +90,7 @@ def import_theme(wallpaper, json_file, theme=False):
 
 
 def set_pywal_theme(theme_name):
+    """set's a pywal theme and applies it to wpgtk"""
     current = get_current()
     theme = pywal.theme.file(theme_name)
 
@@ -104,10 +102,13 @@ def set_pywal_theme(theme_name):
 
 
 def export_theme(wallpaper, json_path="."):
+    """export a colorscheme to json format"""
     try:
         if(path.isdir(json_path)):
             json_path = path.join(json_path, wallpaper + ".json")
+
         shutil.copy2(path.join(files.get_cache_path(wallpaper)), json_path)
         logging.info("theme for %s successfully exported", wallpaper)
     except IOError as e:
         logging.error("file not available")
+        logging.error(e.message)
