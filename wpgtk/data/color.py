@@ -145,7 +145,7 @@ def auto_adjust_colors(clist):
     make a lighter shade of the colorscheme for the last 8 colors"""
     light = settings.getboolean("light_theme", False)
 
-    if settings.getboolean("auto_sort", True):
+    if settings.getboolean("smart_sort", True):
         clist = sort_colors(clist)
 
     alter_brightness = util.alter_brightness

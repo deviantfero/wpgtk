@@ -86,7 +86,13 @@ class OptionsGrid(Gtk.Grid):
         self.wallpaper_switch.connect("notify::active",
                                       self.on_activate,
                                       "set_wallpaper")
-        self.lbl_wallpaper = Gtk.Label("Set wallpaper:")
+        self.lbl_wallpaper = Gtk.Label("Set wallpaper")
+
+        self.smart_sort_switch = Gtk.Switch()
+        self.smart_sort_switch.connect("notify::active",
+                                       self.on_activate,
+                                       "smart_sort")
+        self.lbl_smart_sort = Gtk.Label("Use smart sort")
 
         # edit cmd
         self.editor_lbl = Gtk.Label("Open optional files with:")
@@ -126,6 +132,9 @@ class OptionsGrid(Gtk.Grid):
         self.switch_grid.attach(self.lbl_tint2, 5, 3, 3, 1)
         self.switch_grid.attach(self.tint2_switch, 9, 3, 1, 1)
 
+        self.switch_grid.attach(self.lbl_smart_sort, 1, 4, 3, 1)
+        self.switch_grid.attach(self.smart_sort_switch, 4, 4, 1, 1)
+
         # cmd Grid attach
 
         # Active Grid attach
@@ -162,7 +171,6 @@ class OptionsGrid(Gtk.Grid):
 
         self.color_combo\
             .set_active(settings.getint("active", 0))
-
         self.gtk_switch\
             .set_active(settings.getboolean("gtk", True))
         self.tint2_switch\
@@ -175,6 +183,8 @@ class OptionsGrid(Gtk.Grid):
             .set_active(settings.getboolean("light_theme", False))
         self.wallpaper_switch\
             .set_active(settings.getboolean("set_wallpaper", True))
+        self.smart_sort_switch\
+            .set_active(settings.getboolean("smart_sort", True))
 
         self.editor_txt\
             .set_text(settings.get("editor", "urxvt -e vim"))
