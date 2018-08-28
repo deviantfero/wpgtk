@@ -14,23 +14,29 @@ from . import sample
 
 def get_pywal_dict(wallpaper):
     """get the color dictionary of a given wallpaper"""
-    pywal.util.Color.alpha_num = config.wpgtk.get('alpha', '100')
-    image = pywal.image.get(join(config.WALL_DIR, wallpaper))
+    pywal.util.Color.alpha_num = settings.get("alpha", "100")
+    image = pywal.image.get(os.path.join(WALL_DIR, wallpaper))
 
-    return pywal.colors.get(image,
-                            backend=config.wpgtk.get('backend', 'wal'),
-                            cache_dir=config.WALL_DIR)
+    return pywal.colors.get(
+        image,
+        backend=settings.get("backend", "wal"),
+        cache_dir=WPG_DIR
+    )
 
 
 def get_color_list(filename, json=False):
     """extract a list with 16 colors from a json or a pywal dict"""
-    is_new = not isfile(files.get_cache_path(filename))
+    is_new = not os.path.isfile(files.get_cache_path(filename))
 
-    theme = pywal.util.read_file_json(filename) if json\
-        else get_pywal_dict(filename)
+    if json:
+        theme = pywal.util.read_file_json(filename)
+    else:
+        theme = get_pywal_dict(filename)
 
-    color_list = theme["color"] if "color" in theme \
-        else list(theme["colors"].values())
+    if "color" in theme:
+        color_list = theme["color"]
+    else:
+        color_list = list(theme["colors"].values())
 
     if is_new and not json:
         sample.create_sample(color_list, files.get_sample_path(filename))
@@ -197,24 +203,23 @@ def add_icon_colors(colors):
 def change_templates(colors):
     """call change_colors on each custom template
     installed or defined by the user"""
-    template_dir = config.FILE_DIC['templates']
-    templates = files.get_file_list(template_dir, images=False)
-    templates = list(filter(lambda x: '.base' in x, templates))
+    templates = files.get_file_list(OPT_DIR, images=False)
+    templates = [x for x in templates if ".base" in x]
 
     try:
         for template in templates:
-            original = template.split('.base').pop(0)
-            change_colors(colors, join(template_dir, original))
+            original = template.split(".base").pop(0)
+            change_colors(colors, os.path.join(OPT_DIR, original))
 
     except Exception as e:
         logging.error(str(e))
-        logging.error('optional file ' + original, file=sys.stderr)
+        logging.error("optional file " + original, file=sys.stderr)
 
 
 def split_active(hexc, is_dark_theme=True):
     """extract active and inactive colors from a given
     hex color value"""
-    brightness = util.get_hls_val(hexc, 'light')
+    brightness = util.get_hls_val(hexc, "light")
 
     if is_dark_theme:
         return {"COLORACT": util.alter_brightness(hexc, brightness * -0.20),
