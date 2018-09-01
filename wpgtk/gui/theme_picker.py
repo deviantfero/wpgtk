@@ -1,14 +1,16 @@
 import logging
-from gi import require_version
+import os
+
 from . import color_grid
 from . import template_grid
 from . import option_grid
 from . import keyword_grid
 from ..data import files
 from ..data import themer
-from ..data import config
+from ..data.config import WALL_DIR, WPG_DIR, __version__
+
+from gi import require_version
 from gi.repository import Gtk, GdkPixbuf
-import os
 require_version('Gtk', '3.0')
 
 PAD = 10
@@ -17,9 +19,9 @@ PAD = 10
 class mainWindow(Gtk.Window):
 
     def __init__(self, args):
-        Gtk.Window.__init__(self, title='wpgtk ' + config.__version__)
+        Gtk.Window.__init__(self, title='wpgtk ' + __version__)
 
-        image_name = os.path.join(config.WPG_DIR, '.current')
+        image_name = os.path.join(WPG_DIR, '.current')
         image_name = os.path.realpath(image_name)
         self.set_default_size(200, 200)
         self.args = args
@@ -159,7 +161,7 @@ class mainWindow(Gtk.Window):
         x = self.option_combo.get_active()
         self.colorscheme.set_active(x)
         selected_file = files.get_file_list()[x]
-        filepath = os.path.join(config.WALL_DIR, selected_file)
+        filepath = os.path.join(WALL_DIR, selected_file)
 
         self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
             str(filepath),

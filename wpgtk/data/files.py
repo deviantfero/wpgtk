@@ -2,33 +2,21 @@ import os
 import shutil
 import re
 import logging
-from . import config
 from pywal.colors import cache_fname, list_backends
+
+from .config import settings, WALL_DIR, WPG_DIR, OPT_DIR, SAMPLE_DIR
 from os.path import join
 
 
-def get_file_list(path=config.WALL_DIR, images=True, json=False):
+def get_file_list(path=WALL_DIR, images=True):
     """gets filenames in a given directory, optional
-    parameters for image exclusiveness
-
-    @param path: directory to look for, default wallpaper dir
-    @type  :  Optional string
-
-    @param images: wether to show only images or all files
-    @type  :  Optional boolean
-
-    @return:  A list with the directories file names
-    @rtype :  List
-    """
+    parameters for image filter."""
     valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$)")
     files = []
 
-    for (dirpath, dirnames, filenames) in os.walk(path):
-        for f in filenames:
-            files.append(f)
+    for (_, _, filenames) in os.walk(path):
+        files.extend(filenames)
         break
-
-    files.sort()
 
     if images:
         return [elem for elem in files if valid.fullmatch(elem)]
@@ -39,10 +27,10 @@ def get_file_list(path=config.WALL_DIR, images=True, json=False):
 def get_cache_path(wallpaper, backend=None):
     """get a colorscheme cache path using a wallpaper name"""
     if not backend:
-        backend = config.wpgtk.get('backend', 'wal')
+        backend = settings.get('backend', 'wal')
 
-    filepath = join(config.WALL_DIR, wallpaper)
-    filename = cache_fname(filepath, backend, False, config.WALL_DIR)
+    filepath = join(WALL_DIR, wallpaper)
+    filename = cache_fname(filepath, backend, False, WPG_DIR)
 
     return join(*filename)
 
@@ -50,11 +38,11 @@ def get_cache_path(wallpaper, backend=None):
 def get_sample_path(wallpaper, backend=None):
     """gets a wallpaper colorscheme sample's path"""
     if not backend:
-        backend = config.wpgtk.get('backend', 'wal')
+        backend = settings.get('backend', 'wal')
 
     sample_filename = "%s_%s_sample.png" % (wallpaper, backend)
 
-    return join(config.SAMPLE_DIR, sample_filename)
+    return join(SAMPLE_DIR, sample_filename)
 
 
 def add_template(cfile, bfile=None):
@@ -73,8 +61,8 @@ def add_template(cfile, bfile=None):
         shutil.copy2(cfile, cfile + ".bak")
         src_file = bfile if bfile else cfile
 
-        shutil.copy2(src_file, join(config.OPT_DIR, template_name))
-        os.symlink(cfile, join(config.OPT_DIR,
+        shutil.copy2(src_file, join(OPT_DIR, template_name))
+        os.symlink(cfile, join(OPT_DIR,
                    template_name.replace(".base", "")))
 
         logging.info("created backup %s.bak" % cfile)
@@ -86,7 +74,7 @@ def add_template(cfile, bfile=None):
 def delete_template(basefile):
     """delete a template in wpgtk with the given
     base file name"""
-    base_file = join(config.OPT_DIR, basefile)
+    base_file = join(OPT_DIR, basefile)
     conf_file = base_file.replace(".base", "")
 
     try:
@@ -98,8 +86,7 @@ def delete_template(basefile):
 
 
 def delete_colorschemes(wallpaper):
-    """delete all colorschemes related to the given
-    wallpaper"""
+    """delete all colorschemes related to the given wallpaper"""
     for backend in list_backends():
         try:
             os.remove(get_cache_path(wallpaper, backend))
@@ -109,7 +96,6 @@ def delete_colorschemes(wallpaper):
 
 
 def change_current(filename):
-    os.symlink(join(config.WALL_DIR, filename),
-               join(config.WPG_DIR, ".currentTmp"))
-    os.rename(join(config.WPG_DIR, ".currentTmp"),
-              join(config.WPG_DIR, ".current"))
+    """update symlink to point to the current wallpaper"""
+    os.symlink(join(WALL_DIR, filename), join(WPG_DIR, ".currentTmp"))
+    os.rename(join(WPG_DIR, ".currentTmp"), join(WPG_DIR, ".current"))
