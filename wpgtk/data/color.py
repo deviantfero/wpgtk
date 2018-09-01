@@ -108,7 +108,7 @@ def change_colors(colors, which):
         logging.error("%s - base file does not exist" % opt)
 
 
-def sort_colors(colors):
+def smart_sort(colors):
     """automatically set the most look-alike colors to their
     corresponding place in the standar xterm colors"""
     colors = colors[:8]
@@ -119,7 +119,6 @@ def sort_colors(colors):
     for y in base_colors:
         cd_tuple = [(x, util.get_distance(x, y)) for i, x in enumerate(colors)]
         cd_tuple.sort(key=itemgetter(1))
-
         sorted_by_color.append(cd_tuple)
 
     i = 0
@@ -141,12 +140,11 @@ def sort_colors(colors):
 
 
 def auto_adjust_colors(clist):
-    """create a clear foreground and background set of colors
-    make a lighter shade of the colorscheme for the last 8 colors"""
+    """create a clear foreground and background set of colors"""
     light = settings.getboolean("light_theme", False)
 
     if settings.getboolean("smart_sort", True):
-        clist = sort_colors(clist)
+        clist = smart_sort(clist)
 
     alter_brightness = util.alter_brightness
     get_hls_val = util.get_hls_val
