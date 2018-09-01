@@ -154,12 +154,7 @@ def auto_adjust_colors(clist):
     added_sat = 0.25 if light else 0.1
     sign = -1 if light else 1
 
-    # convert dark to light or the other way around
     if light == is_dark_theme(clist):
-        sat_diff = -0.1 if light else 0.1
-        clist = [clist[0]] \
-            + [alter_brightness(x, 0, sat_diff) for x in clist[1:7]] \
-            + clist[7:]
         clist[7], clist[0] = clist[0], clist[7]
 
     comment = [alter_brightness(clist[0], sign * 20)]
