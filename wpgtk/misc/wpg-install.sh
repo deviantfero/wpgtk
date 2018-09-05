@@ -23,6 +23,7 @@ usage()
   -I   Install i3 template
   -p   Install polybar template
   -b   Install bspwm template
+  -d   Install dunst template
   -H   Specify hash of wpgtk-templates repository to use
   "
 }
@@ -164,6 +165,18 @@ install_bspwm()
   echo ":: bspwm colors install done.";
 }
 
+install_dunst()
+{
+  echo "Installing dunst colors";
+  echo ":: backing up current dunst conf in dunstrc.bak";
+  cp "${HOME}/.config/dunst/dunstrc" "${HOME}/.config/dunst/dunstrc.bak" 2>/dev/null;
+
+  mv "./dunst/dunstrc.base" "${COLOR_OTHER}/dunstrc.base";
+  mv "./dunst/dunstrc" "${COLOR_OTHER}/dunstrc";
+  ln -sf "${HOME}/.config/dunst/dunstrc" "${COLOR_OTHER}/dunstrc" && \
+	echo ":: dunst colors install done.";
+}
+
 clean_up()
 {
   rm -rf "$THEME_DIR";
@@ -176,7 +189,7 @@ clean_up()
 
 getargs()
 {
-  while getopts "H:bhvotgiIpr" opt
+  while getopts "H:bhvotgiIprd" opt
   do
     case $opt in
       h)
@@ -195,6 +208,7 @@ getargs()
       I)      i3="true" ;;
       p) polybar="true" ;;
 	  b)   bspwm="true" ;;
+	  d)   dunst="true" ;;
       H) commit="${OPTARG}" ;;
       *)
         echo -e "\n  Option does not exist : $OPTARG\n"
@@ -219,6 +233,7 @@ main()
   [[ "$polybar" == "true" ]] && install_polybar;
   [[ "$i3" == "true" ]] && install_i3;
   [[ "$bspwm" == "true" ]] && install_bspwm;
+  [[ "$dunst" == "true" ]] && install_dunst;
   clean_up;
 }
 
