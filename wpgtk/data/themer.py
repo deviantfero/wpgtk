@@ -10,6 +10,7 @@ from . import color
 from . import files
 from . import util
 from . import sample
+from . import reload
 
 
 def create_theme(filepath):
@@ -33,8 +34,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
     if not restore:
         pywal.export.every(colors, FORMAT_DIR)
         color.apply_colorscheme(colors)
-        pywal.reload.i3()
-        pywal.reload.polybar()
+        reload.all()
 
     if set_wall:
         pywal.wallpaper.change(path.join(WALL_DIR, wallpaper))
@@ -45,8 +45,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
                            "wpg %s %s %s" % (flags, wallpaper, colorscheme)])
 
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
-    util.xrdb_merge(path.join(FORMAT_DIR, "colors.Xresources"))
-    util.xrdb_merge(path.join(HOME, ".Xresources"))
+    reload.xrdb()
 
     files.change_current(wallpaper)
 
