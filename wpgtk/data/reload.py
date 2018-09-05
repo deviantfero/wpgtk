@@ -10,7 +10,6 @@ from .config import FORMAT_DIR, HOME
 
 def xrdb():
     """Merges both a user's .Xresources and pywal's."""
-    print('hi')
     reload.xrdb([
         os.path.join(FORMAT_DIR, "colors.Xresources"),
         os.path.join(HOME, ".Xresources")
