@@ -227,7 +227,7 @@ def add_wpgtk_colors(cdic):
 
     base_color = cdic["colors"]["color%s" % index]
 
-    color_list = [cdic["colors"]["color%s" % i] for i in range(16)]
+    color_list = list(cdic["colors"].values())
     cdic["wpgtk"] = split_active(base_color, is_dark_theme(color_list))
     cdic["icons"] = add_icon_colors(cdic)
 
@@ -242,12 +242,3 @@ def apply_colorscheme(colors):
         Popen(FILE_DIC["icon-step2"])
 
     change_templates(colors)
-
-    if settings.getboolean("tint2"):
-        util.reload_tint2()
-
-    if settings.getboolean("openbox"):
-        util.reload_openbox()
-
-    if settings.getboolean("gtk"):
-        pywal.reload.gtk()
