@@ -1,9 +1,9 @@
 import logging
-import shutil
 import sys
+import subprocess
 from math import sqrt
-from subprocess import call
 from colorsys import rgb_to_hls, hls_to_rgb
+
 from pywal.util import rgb_to_hex, hex_to_rgb
 
 
@@ -67,19 +67,15 @@ def setup_log():
     logging.addLevelName(logging.WARNING, "wrn")
 
 
-def xrdb_merge(file):
-    call(['xrdb', '-merge', file])
-
-
 def build_key(keyword):
     return "<{}>".format(keyword)
 
 
-def reload_tint2():
-    if shutil.which('tint2'):
-        call(["pkill", "-SIGUSR1", "tint2"])
+def get_pid(name):
+    """Check if a process is running, borrowed from a newer pywal version"""
+    try:
+        subprocess.check_output(["pidof", "-s", name])
+    except subprocess.CalledProcessError:
+        return False
 
-
-def reload_openbox():
-    if shutil.which('openbox'):
-        call(["openbox", "--reconfigure"])
+    return True
