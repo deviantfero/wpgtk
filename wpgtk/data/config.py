@@ -44,12 +44,11 @@ def load_sections():
 
 
 def load_settings():
-    if not os.path.isdir(FORMAT_DIR):
-        logging.info('creating dirs...')
-        os.makedirs(SAMPLE_DIR, exist_ok=True)
-        os.makedirs(SCHEME_DIR, exist_ok=True)
-        os.makedirs(FORMAT_DIR, exist_ok=True)
-        os.makedirs(OPT_DIR, exist_ok=True)
+    os.makedirs(WALL_DIR, exist_ok=True)
+    os.makedirs(SAMPLE_DIR, exist_ok=True)
+    os.makedirs(SCHEME_DIR, exist_ok=True)
+    os.makedirs(FORMAT_DIR, exist_ok=True)
+    os.makedirs(OPT_DIR, exist_ok=True)
 
     try:
         return load_sections()
