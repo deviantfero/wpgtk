@@ -60,4 +60,4 @@ def load_settings():
         return load_sections()
 
 
-settings, keywords = load_settings()
+settings, user_keywords = load_settings()

@@ -1,4 +1,5 @@
-from ..data.config import keywords, write_conf
+from ..data.config import user_keywords, write_conf
+from ..data import keywords
 from gi import require_version
 from gi.repository import Gtk
 require_version("Gtk", "3.0")
@@ -63,7 +64,7 @@ class KeywordGrid(Gtk.Grid):
         for path in pathlist:
             tree_iter = m.get_iter(path)
             value = m.get_value(tree_iter, 0)
-            keywords.pop(value, None)
+            user_keywords.pop(value, None)
             self.reload_keyword_list()
 
     def text_edited(self, widget, path, text, col):
@@ -82,7 +83,7 @@ class KeywordGrid(Gtk.Grid):
 
     def reload_keyword_list(self):
         self.liststore.clear()
-        for k, v in keywords.items():
+        for k, v in user_keywords.items():
             self.liststore.append([k, v])
 
     def save_keywords(self, widget):

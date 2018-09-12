@@ -6,7 +6,7 @@ from operator import itemgetter
 from subprocess import Popen
 from random import shuffle, randint
 
-from .config import settings, keywords
+from .config import settings, user_keywords
 from .config import WALL_DIR, WPG_DIR, FILE_DIC, OPT_DIR
 from . import files
 from . import util
@@ -90,7 +90,7 @@ def change_colors(colors, which):
             tmp_data = tmp_file.read()
 
         if "wpgtk-ignore" not in first_line:
-            for k, v in keywords.items():
+            for k, v in user_keywords.items():
                 tmp_data = tmp_data.replace(util.build_key(k), v)
 
             for k, v in {**colors["wpgtk"], **colors["colors"]}.items():
