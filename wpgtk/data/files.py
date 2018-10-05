@@ -18,6 +18,8 @@ def get_file_list(path=WALL_DIR, images=True):
         files.extend(filenames)
         break
 
+    files.sort()
+
     if images:
         return [elem for elem in files if valid.fullmatch(elem)]
     else:
