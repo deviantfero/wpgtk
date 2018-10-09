@@ -5,7 +5,7 @@ import setuptools
 import sys
 
 if sys.version_info.major < 3 or sys.version_info.minor < 5:
-    print("error: wpgtk requires Python 3.5 or greater.")
+    print("error: wpgtk requires Python 3.5 or greater.", file=sys.stderr)
     quit(1)
 
 import wpgtk
