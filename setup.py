@@ -1,13 +1,14 @@
+# -*- coding: utf8 -*-
 """wpgtk - setup.py"""
 import os
 import setuptools
+import sys
 
-try:
-    import wpgtk
-except (ImportError, SyntaxError):
-    print("error: wpgtk requires Python 3.5 or greater.")
+if sys.version_info.major < 3 or sys.version_info.minor < 5:
+    print("error: wpgtk requires Python 3.5 or greater.", file=sys.stderr)
     quit(1)
 
+import wpgtk
 
 try:
     LONG_DESC = open('README.md').read()
