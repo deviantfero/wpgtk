@@ -41,7 +41,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     flags = "-rs" if set_wall else "-nrs"
     with open(path.join(WPG_DIR, "wp_init.sh"), "w") as script:
-        script.writelines(["#!/bin/bash\n",
+        script.writelines(["#!/usr/bin/env bash\n",
                            "wpg %s %s %s" % (flags, wallpaper, colorscheme)])
 
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
