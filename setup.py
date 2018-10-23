@@ -1,4 +1,3 @@
-# -*- coding: utf8 -*-
 """wpgtk - setup.py"""
 import os
 import setuptools

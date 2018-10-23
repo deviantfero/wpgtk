@@ -5,10 +5,9 @@ from os.path import realpath
 from os import remove, path, symlink
 from subprocess import Popen
 
-from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, HOME, settings
+from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, settings
 from . import color
 from . import files
-from . import util
 from . import sample
 from . import reload
 
