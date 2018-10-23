@@ -42,7 +42,7 @@ In short, `wpgtk` is a colorscheme/wallpaper manager with a template system atta
 
 ## Gallery
 <p align="center">
-  <img src="https://i.imgur.com/SrZQqKF.gifv"/>
+  <img src="https://i.imgur.com/UvVonun.gif"/>
 </p>
 
 <div style="display: flex; width: 100%">
