@@ -1,6 +1,7 @@
 import shutil
 import subprocess
 import os
+import tempfile
 
 from pywal import reload
 
@@ -34,11 +35,28 @@ def openbox():
         subprocess.Popen(["openbox", "--reconfigure"])
 
 
+def gtk3():
+    if shutil.which("xsettingsd"):
+        fd, path = tempfile.mkstemp()
+        try:
+            with os.fdopen(fd, 'w+') as tmp:
+                tmp.write('Net/ThemeName "FlatColor"\n')
+                tmp.close()
+                subprocess.call(
+                    ["timeout", "0.2s", "xsettingsd", "-c", path],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+        finally:
+                os.remove(path)
+
+
 def all():
     """Calls all possible reload methods at once."""
     tint2()
     dunst()
     openbox()
+    gtk3()
     reload.i3()
     reload.gtk()
     reload.polybar()
