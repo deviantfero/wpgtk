@@ -53,11 +53,11 @@ def gtk3():
 
 def all():
     """Calls all possible reload methods at once."""
-    tint2()
-    dunst()
-    openbox()
-    gtk3()
     reload.i3()
     reload.gtk()
     reload.polybar()
     reload.sway()
+    tint2()
+    dunst()
+    openbox()
+    gtk3()
