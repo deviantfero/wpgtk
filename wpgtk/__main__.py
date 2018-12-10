@@ -274,6 +274,7 @@ def main():
     args = read_args(sys.argv[1:])
     process_arg_errors(args)
     process_args(args)
+
     try:
         _gui = __import__("wpgtk.gui.theme_picker", fromlist=['theme_picker'])
         _gui.run(args)
