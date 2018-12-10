@@ -6,7 +6,7 @@ VAL_LENGTH = 2
 
 def update_keyword(old_keyword, new_keyword, save=False):
     """validates and updates a keyword"""
-    if(len(new_keyword) < KEY_LENGTH):
+    if not new_keyword:
         raise Exception('Keyword must be longer than 5 characters')
 
     user_keywords[new_keyword] = user_keywords[old_keyword]
@@ -19,8 +19,8 @@ def update_keyword(old_keyword, new_keyword, save=False):
 
 
 def update_value(keyword, value, save=False):
-    if(len(value) < 2):
-        raise Exception('Value must be longer than 3 characters')
+    if not value:
+        raise Exception('Value must exist')
 
     user_keywords[keyword] = value
 
@@ -29,11 +29,11 @@ def update_value(keyword, value, save=False):
 
 
 def create_pair(keyword, value, save=False):
-    if(len(value) < VAL_LENGTH):
-        raise Exception('Value must be longer than 3 characters')
+    if not value:
+        raise Exception('There must be a value')
 
-    if(len(keyword) < KEY_LENGTH):
-        raise Exception('Value must be longer than 3 characters')
+    if not keyword:
+        raise Exception('There must be a value')
 
     user_keywords[keyword] = value
 
