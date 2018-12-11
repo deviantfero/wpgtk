@@ -195,7 +195,9 @@ def process_args(args):
     if args.a:
         add_action = files.add_template if args.x \
                      else themer.create_theme
-        any(add_action(glob.glob(x)[0]) for x in args.a)
+        for x in args.a:
+            if path.isfile(glob.glob(x)[0]):
+                add_action(glob.glob(x)[0])
         exit(0)
 
     if args.c:
