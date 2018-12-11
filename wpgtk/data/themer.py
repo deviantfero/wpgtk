@@ -36,7 +36,9 @@ def set_theme(wallpaper, colorscheme, restore=False):
         reload.all()
 
     if set_wall:
-        pywal.wallpaper.change(colors["wallpaper"])
+        filepath = path.join(WALL_DIR, wallpaper)
+        set_wall = filepath if path.isfile(filepath) else colors["wallpaper"]
+        pywal.wallpaper.change(set_wall)
 
     flags = "-rs" if set_wall else "-nrs"
     with open(path.join(WPG_DIR, "wp_init.sh"), "w") as script:
