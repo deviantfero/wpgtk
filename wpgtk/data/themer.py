@@ -21,7 +21,7 @@ def create_theme(filepath):
     symlink(filepath, tmplink)
 
     shutil.move(tmplink, path.join(WALL_DIR, filename))
-    return color.get_color_list(filepath)
+    return color.get_color_list(filename)
 
 
 def set_theme(wallpaper, colorscheme, restore=False):
