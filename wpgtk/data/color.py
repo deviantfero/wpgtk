@@ -68,9 +68,10 @@ def shuffle_colors(colors):
 
 def write_colors(img, color_list):
     """write changes to a cache file to persist customizations"""
+    full_path = os.path.join(WALL_DIR, img)
     color_dict = get_pywal_dict(img)
 
-    color_dict = pywal.colors.colors_to_dict(color_list, img)
+    color_dict = pywal.colors.colors_to_dict(color_list, full_path)
     cache_file = files.get_cache_path(img)
 
     pywal.export.color(color_dict, "json", cache_file)
