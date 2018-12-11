@@ -21,7 +21,11 @@ def create_theme(filepath):
     symlink(filepath, tmplink)
 
     shutil.move(tmplink, path.join(WALL_DIR, filename))
-    return color.get_color_list(filename)
+
+    try:
+        return color.get_color_list(filename)
+    except SystemExit:
+        return set_fallback_theme(filename)
 
 
 def set_theme(wallpaper, colorscheme, restore=False):
@@ -87,6 +91,17 @@ def import_theme(wallpaper, json_file, theme=False):
     color.write_colors(wallpaper, color_list)
     sample.create_sample(color_list, files.get_sample_path(wallpaper))
     logging.info("applied %s to %s" % (filename, wallpaper))
+
+
+def set_fallback_theme(wallpaper):
+    """fallback theme for when color generation fails"""
+    theme = pywal.theme.file("random")
+
+    color_list = list(theme["colors"].values())
+    color.write_colors(wallpaper, color_list)
+    sample.create_sample(color_list, files.get_sample_path(wallpaper))
+
+    return color_list
 
 
 def set_pywal_theme(theme_name):
