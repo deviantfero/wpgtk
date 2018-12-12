@@ -4,6 +4,7 @@
 ![PyPI](https://img.shields.io/pypi/v/wpgtk.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPLv2-green.svg?style=flat-square)
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X996W7Z8PW4VW"><img src="https://img.shields.io/badge/donate-paypal-green.svg?style=flat-square"></a>
+<a href="https://www.irccloud.com/invite?channel=%23wpgtk&amp;hostname=irc.freenode.net&amp;port=6697&amp;ssl=1" target="_blank"><img src="https://img.shields.io/badge/IRC-%23wpgtk-1e72ff.svg?style=flat-square"  height="20"></a>
 
 `wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the colorschemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for `wpgtk` and custom keywords and values to replace in templates.
 
