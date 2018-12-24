@@ -57,7 +57,7 @@ def all():
     dunst()
     openbox()
     gtk3()
-    reload.polybar()
     reload.i3()
+    reload.polybar()
     reload.gtk()
     reload.sway()
