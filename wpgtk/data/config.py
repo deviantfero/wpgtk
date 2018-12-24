@@ -3,7 +3,7 @@ import shutil
 import os
 import logging
 
-__version__ = '5.8.5'
+__version__ = '5.8.6'
 
 parser = None
 
