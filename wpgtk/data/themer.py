@@ -56,7 +56,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
     files.change_current(wallpaper)
 
     if settings.getboolean('execute_cmd'):
-        Popen(settings['command'].split(' '))
+        Popen(['bash', '-c', settings['command']])
 
 
 def delete_theme(filename):
