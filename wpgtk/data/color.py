@@ -206,38 +206,86 @@ def change_templates(colors):
         logging.error("optional file " + original, file=sys.stderr)
 
 
-def split_active(hexc, is_dark_theme=True):
+def add_icon_colors(colors):
+    try:
+        icon_dic = dict()
+        entry = re.compile(r"(.*)=(.*)$")
+
+        with open(FILE_DIC["icon-step1"], "r") as icon_file:
+            for line in icon_file:
+                match = entry.search(line)
+                if match:
+                    icon_dic[match.group(1)] = match.group(2)
+
+        icon_dic["oldglyph"] = icon_dic["newglyph"]
+        icon_dic["oldfront"] = icon_dic["newfront"]
+        icon_dic["oldback"] = icon_dic["newback"]
+
+        return icon_dic
+
+    except KeyError:
+        logging.error("icons - badly formatted base file for icons")
+        return dict()
+
+    except IOError:
+        logging.error("icons - base file does not exists")
+        return dict()
+
+
+def wpgtk_colors(hexc, is_dark_theme=True):
     """extract active and inactive colors from a given
     hex color value"""
     brightness = util.get_hls_val(hexc, "light")
 
-    if is_dark_theme:
-        return {"COLORACT": util.alter_brightness(hexc, brightness * -0.20),
-                "COLORIN": util.alter_brightness(hexc, brightness * -0.45)}
-    else:
-        return {"COLORACT": util.alter_brightness(hexc, brightness * 0.30),
-                "COLORIN": hexc}
+    active = util.alter_brightness(hexc, brightness * -0.20) \
+        if is_dark_theme else util.alter_brightness(hexc, brightness * -0.20)
+
+    inactive = util.alter_brightness(hexc, brightness * -0.45) \
+        if is_dark_theme else hexc
+
+    return {
+        "active": active,
+        "inactive": inactive,
+        "newfront": active,
+        "newback": inactive,
+        "newglyph": util.alter_brightness(inactive, -15)
+    }
 
 
-def add_wpgtk_colors(cdic):
+def get_color_dict(cdic):
     """ensamble wpgtk color dictionary"""
     index = settings.getint("active")
     index = index if index > 0 else randint(9, 14)
 
     base_color = cdic["colors"]["color%s" % index]
-
     color_list = list(cdic["colors"].values())
-    cdic["wpgtk"] = split_active(base_color, is_dark_theme(color_list))
-    cdic["icons"] = add_icon_colors(cdic)
 
-    return cdic
+    all_colors = {
+        "wallpaper": cdic["wallpaper"],
+        "alpha": cdic["alpha"],
+        **cdic["special"],
+        **cdic["colors"],
+        **add_icon_colors(cdic),
+        **wpgtk_colors(base_color, is_dark_theme(color_list))
+    }
+
+    try:
+        user_words = {k: v.format(**all_colors)
+                      for k, v in user_keywords.items()}
+        all_colors = {**all_colors, **user_words}
+
+    except KeyError as e:
+        logging.error("%s - invalid, use double {{}} "
+                      "to escape curly braces" % e)
+
+    return {k: pywal.util.Color(v) for k, v in all_colors.items()}
 
 
 def apply_colorscheme(colors):
-    colors = add_wpgtk_colors(colors)
+    color_dict = get_color_dict(colors)
 
     if os.path.isfile(FILE_DIC["icon-step2"]):
-        change_colors(colors, "icon-step1")
+        change_colors(color_dict, "icon-step1")
         Popen(FILE_DIC["icon-step2"])
 
-    change_templates(colors)
+    change_templates(color_dict)
