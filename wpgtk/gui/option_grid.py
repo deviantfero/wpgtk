@@ -54,9 +54,11 @@ class OptionsGrid(Gtk.Grid):
         # Backend Combo
         self.backend_list = colors.list_backends()
         self.backend_lbl = Gtk.Label("Select your backend:")
+
         be_store = Gtk.ListStore(str)
         for elem in self.backend_list:
             be_store.append([elem])
+
         self.backend_combo = Gtk.ComboBox.new_with_model(be_store)
         self.backend_combo.pack_start(self.renderer_text, True)
         self.backend_combo.add_attribute(self.renderer_text, 'text', 0)
@@ -64,18 +66,9 @@ class OptionsGrid(Gtk.Grid):
         self.backend_combo.connect("changed", self.combo_box_change, "backend")
 
         # Switches
-        self.tint2_switch = Gtk.Switch()
-        self.tint2_switch.connect("notify::active",  self.on_activate, "tint2")
-        self.lbl_tint2 = Gtk.Label("Reload Tint2")
-
         self.gtk_switch = Gtk.Switch()
         self.gtk_switch.connect("notify::active",  self.on_activate, "gtk")
-        self.lbl_gtk = Gtk.Label("Reload GTK2")
-
-        self.openbox_switch = Gtk.Switch()
-        self.openbox_switch.connect("notify::active",
-                                    self.on_activate, "openbox")
-        self.lbl_openbox = Gtk.Label("Reload openbox")
+        self.lbl_gtk = Gtk.Label("Reload GTK+")
 
         self.light_theme_switch = Gtk.Switch()
         self.light_theme_switch.connect("notify::active",
@@ -123,14 +116,8 @@ class OptionsGrid(Gtk.Grid):
         self.switch_grid.attach(self.command_lbl, 1, 2, 3, 1)
         self.switch_grid.attach(self.command_switch, 4, 2, 1, 1)
 
-        self.switch_grid.attach(self.lbl_openbox, 5, 2, 3, 1)
-        self.switch_grid.attach(self.openbox_switch, 9, 2, 1, 1)
-
         self.switch_grid.attach(self.lbl_light_theme, 1, 3, 3, 1)
         self.switch_grid.attach(self.light_theme_switch, 4, 3, 1, 1)
-
-        self.switch_grid.attach(self.lbl_tint2, 5, 3, 3, 1)
-        self.switch_grid.attach(self.tint2_switch, 9, 3, 1, 1)
 
         self.switch_grid.attach(self.lbl_smart_sort, 1, 4, 3, 1)
         self.switch_grid.attach(self.smart_sort_switch, 4, 4, 1, 1)
@@ -173,12 +160,8 @@ class OptionsGrid(Gtk.Grid):
             .set_active(settings.getint("active", 0))
         self.gtk_switch\
             .set_active(settings.getboolean("gtk", True))
-        self.tint2_switch\
-            .set_active(settings.getboolean("tint2", True))
         self.command_switch\
             .set_active(settings.getboolean("execute_cmd", False))
-        self.openbox_switch\
-            .set_active(settings.getboolean("openbox", True))
         self.light_theme_switch\
             .set_active(settings.getboolean("light_theme", False))
         self.wallpaper_switch\
