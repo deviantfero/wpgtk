@@ -81,27 +81,21 @@ def change_colors(colors, which):
     if which in FILE_DIC:
         which = FILE_DIC[which]
 
-    tmp_filename = which + ".base"
     try:
-        with open(tmp_filename, "r") as tmp_file:
+        with open("%s.base" % which, "r") as tmp_file:
             first_line = tmp_file.readline()
-            tmp_file.seek(0)
-            tmp_data = tmp_file.read()
 
-        if "wpgtk-ignore" not in first_line:
-            for k, v in user_keywords.items():
-                tmp_data = tmp_data.replace(util.build_key(k), v)
+            if "wpgtk-ignore" not in first_line:
+                tmp_file.seek(0)
+                tmp_data = tmp_file.read()
+                tmp_data = tmp_data.format_map(colors)
 
-            for k, v in {**colors["wpgtk"], **colors["colors"]}.items():
-                tmp_data = tmp_data.replace(util.build_key(k.upper()), v.strip("#"))
+                with open(which, "w") as target_file:
+                    target_file.write(tmp_data)
+                    logging.info("wrote: %s" % opt.split("/").pop())
 
-            if colors["icons"] and opt == "icon-step1":
-                for k, v in colors["icons"].items():
-                    tmp_data = tmp_data.replace(k, v.strip("#"))
-
-            with open(which, "w") as target_file:
-                target_file.write(tmp_data)
-                logging.info("wrote: %s" % opt.split("/").pop())
+    except KeyError as e:
+        logging.error("%s in %s - key does not exist" % (e, opt))
 
     except IOError:
         logging.error("%s - base file does not exist" % opt)
