@@ -163,33 +163,6 @@ def auto_adjust_colors(clist):
     return clist
 
 
-def add_icon_colors(colors):
-    try:
-        glyph = util.alter_brightness(colors["wpgtk"]["COLORIN"], -15)
-        icon_dic = {}
-
-        with open(FILE_DIC["icon-step1"], "r") as icon_file:
-            for line in icon_file:
-                if("glyphColorNew=" in line):
-                    icon_dic["oldglyph"] = line.split("=")[1].strip("\n")
-
-                if("frontColorNew=" in line):
-                    icon_dic["oldfront"] = line.split("=")[1].strip("\n")
-
-                if("backColorNew=" in line):
-                    icon_dic["oldback"] = line.split("=")[1].strip("\n")
-
-        icon_dic["newglyph"] = glyph
-        icon_dic["newfront"] = colors["wpgtk"]["COLORACT"]
-        icon_dic["newback"] = colors["wpgtk"]["COLORIN"]
-
-        return icon_dic
-
-    except IOError:
-        logging.error("icons - base file does not exists")
-        return
-
-
 def change_templates(colors):
     """call change_colors on each custom template
     installed or defined by the user"""
