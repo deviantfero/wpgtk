@@ -111,7 +111,7 @@ def smart_sort(colors):
     """automatically set the most look-alike colors to their
     corresponding place in the standar xterm colors"""
     colors = colors[:8]
-    sorted_by_color = []
+    sorted_by_color = list()
     base_colors = ["#000000", "#ff0000", "#00ff00", "#ffff00",
                    "#0000ff", "#ff00ff", "#00ffff", "#ffffff"]
 
