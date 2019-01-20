@@ -60,4 +60,5 @@ def all():
     reload.i3()
     reload.polybar()
     reload.gtk()
+    reload.kitty()
     reload.sway()
