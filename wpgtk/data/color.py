@@ -2,6 +2,7 @@ import sys
 import logging
 import pywal
 import os
+import re
 from operator import itemgetter
 from subprocess import Popen
 from random import shuffle, randint
