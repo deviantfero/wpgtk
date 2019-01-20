@@ -62,9 +62,9 @@ def setup_log():
                                " %(module)-13s %(message)s",
                         level=logging.INFO,
                         stream=sys.stdout)
-    logging.addLevelName(logging.ERROR, "err")
-    logging.addLevelName(logging.INFO, "inf")
-    logging.addLevelName(logging.WARNING, "wrn")
+    logging.addLevelName(logging.ERROR, "e")
+    logging.addLevelName(logging.INFO, "i")
+    logging.addLevelName(logging.WARNING, "w")
 
 
 def build_key(keyword):
