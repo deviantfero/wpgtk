@@ -67,10 +67,6 @@ def setup_log():
     logging.addLevelName(logging.WARNING, "w")
 
 
-def build_key(keyword):
-    return "<{}>".format(keyword)
-
-
 def get_pid(name):
     """Check if a process is running, borrowed from a newer pywal version"""
     try:
