@@ -8,7 +8,7 @@ _profiles() {
 
 _templates() {
     local -a templates
-    templates=(`wpg -xl`)
+    templates=(`wpg -tl`)
     _describe 'templates' templates
 }
 
@@ -20,7 +20,7 @@ _backends() {
 
 _themes() {
     local -a themes
-    themes=(`wpg --pywal`)
+    themes=(`wpg --theme`)
     _describe 'themes' themes
 }
 
@@ -33,13 +33,13 @@ _wpg() {
     # themes, pywal themes
     optvariabletheme=(-Ti)
     # filenames
-    optforgeneric=(-y -a -xa)
+    optforgeneric=(--link -a -La -aL -ta -at --update_template)
     # templates
-    optfortemplates=(-xd -dx)
+    optfortemplates=(-td -dt)
     # pywal backends
     optforbackends=(--backend)
     # pywal themes
-    optforthemes=(--pywal)
+    optforthemes=(--theme)
 
     _arguments \
         '1: :->generic' \

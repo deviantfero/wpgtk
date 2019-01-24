@@ -8,13 +8,13 @@ function _wpg() {
     # themes, filenames
     optvariable="-i -o"
 	# filenames
-    optfordefault="-y -a -xa -ax"
+    optfordefault="--link -aL -La -a -ta -at"
 	# templates
-    optfortemplates="-xd -dx"
+    optfortemplates="-td -dt"
 	# pywal backends
 	optforbackends="--backends"
 	# pywal themes
-	optforthemes="--pywal"
+	optforthemes="--theme"
 
     if [[ $COMP_CWORD = 1 ]]; then
         COMPREPLY=($(compgen -W "$(_parse_usage wpg)" -- "$cur"))
@@ -31,7 +31,7 @@ function _wpg() {
         done
         for opt in $optforthemes; do
             if [[ $opt = ${COMP_WORDS[1]} ]]; then
-                COMPREPLY=($(compgen -W "$(wpg --pywal)" -- "$cur"))
+                COMPREPLY=($(compgen -W "$(wpg --theme)" -- "$cur"))
             fi
         done
         for opt in $optvariable; do
@@ -45,7 +45,7 @@ function _wpg() {
             if [[ $opt = ${COMP_WORDS[1]} && $COMP_CWORD < 3 ]]; then
                 COMPREPLY=($(compgen -W "$(wpg -l)" -- "$cur"))
             elif [[ $opt = ${COMP_WORDS[1]} ]]; then
-                COMPREPLY=($(compgen -W "$(wpg --pywal)" -- "$cur"))
+                COMPREPLY=($(compgen -W "$(wpg --theme)" -- "$cur"))
             fi
         done
         for opt in $optfordefault; do
@@ -55,7 +55,7 @@ function _wpg() {
         done
         for opt in $optfortemplates; do
             if [[ $opt = ${COMP_WORDS[1]} ]]; then
-                COMPREPLY=($(compgen -W "$(wpg -xl)" -- "$cur"))
+                COMPREPLY=($(compgen -W "$(wpg -tl)" -- "$cur"))
             fi
         done
     fi
