@@ -54,7 +54,7 @@ def get_cache_path(wallpaper, backend=None):
 def get_sample_path(wallpaper, backend=None):
     """gets a wallpaper colorscheme sample's path"""
     if not backend:
-        backend = settings.get('backend', 'wal')
+        backend = settings.get("backend", "wal")
 
     sample_filename = "%s_%s_sample.png" % (wallpaper, backend)
 
@@ -109,6 +109,27 @@ def delete_colorschemes(wallpaper):
             os.remove(get_sample_path(wallpaper, backend))
         except OSError:
             pass
+
+
+def update_color(matchobj):
+    if matchobj.group(1):
+        return "{%s}" % matchobj.group(1).lower()
+
+
+def update_template(template_path):
+    with open(template_path, "r") as f:
+        tmp_data = f.read()
+
+        logging.info("escaping legitimate curly braces {} -> {{}}")
+        tmp_data = tmp_data.replace("{", "{{")
+        tmp_data = tmp_data.replace("}", "}}")
+
+        logging.info("replacing #<COLORXX> with braces {colorxx}")
+        tmp_data = re.sub(r"#<(COLOR[0-9]{1,2})>", update_color, tmp_data)
+        tmp_data = tmp_data.replace("#<COLORACT>", "{active}")
+        tmp_data = tmp_data.replace("#<COLORIN>", "{inactive}")
+
+        logging.info("%s update complete" % template_path)
 
 
 def change_current(filename):
