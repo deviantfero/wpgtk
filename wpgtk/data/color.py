@@ -32,6 +32,7 @@ def get_pywal_dict(wallpaper, is_file=False):
 def get_color_list(filename, json=False):
     """extract a list with 16 colors from a json or a pywal dict"""
     is_new = not os.path.isfile(files.get_cache_path(filename))
+    auto_adjust = settings.getboolean("auto_adjust", True)
 
     if json:
         theme = pywal.util.read_file_json(filename)
@@ -44,6 +45,8 @@ def get_color_list(filename, json=False):
         color_list = list(theme["colors"].values())
 
     if is_new and not json:
+        if auto_adjust:
+            color_list = auto_adjust_colors(color_list)
         sample.create_sample(color_list, files.get_sample_path(filename))
         write_colors(filename, color_list)
 
@@ -152,7 +155,7 @@ def auto_adjust_colors(clist):
     if light == is_dark_theme(clist):
         clist[7], clist[0] = clist[0], clist[7]
 
-    comment = [alter_brightness(clist[0], sign * 20)]
+    comment = [alter_brightness(clist[0], sign * 25)]
     fg = [alter_brightness(clist[7], sign * 60)]
     clist = clist[:8] + comment \
         + [alter_brightness(x, sign * get_hls_val(x, "light") * 0.3, added_sat)
