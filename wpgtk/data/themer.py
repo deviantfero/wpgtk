@@ -44,16 +44,11 @@ def set_theme(wallpaper, colorscheme, restore=False):
         set_wall = filepath if path.isfile(filepath) else colors["wallpaper"]
         pywal.wallpaper.change(set_wall)
 
-    flags = "-rs" if set_wall else "-nrs"
-    with open(path.join(WPG_DIR, "wp_init.sh"), "w") as script:
-        script.writelines(["#!/usr/bin/env bash\n",
-                           "wpg %s '%s' '%s'" %
-                           (flags, wallpaper, colorscheme)])
+    files.write_script(wallpaper, colorscheme)
+    files.change_current(wallpaper)
 
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
     reload.xrdb()
-
-    files.change_current(wallpaper)
 
     if settings.getboolean('execute_cmd'):
         Popen(['bash', '-c', settings['command']])
