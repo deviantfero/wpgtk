@@ -85,15 +85,16 @@ def read_args(args):
                         help="import a theme in json format and asign "
                         "to wallpaper [wallpaper, json]",
                         nargs=2)
+
     parser.add_argument("-o",
                         help="export a theme in json "
                         "format [wallpaper, json]",
                         nargs="+")
 
-    parser.add_argument("-y",
-                        help="link config file to template backup"
-                        "[config, basefile]",
-                        nargs="+")
+    parser.add_argument("--link",
+                        help="link config file to template backup "
+                        "[config, .base]",
+                        nargs=2)
 
     parser.add_argument("--sat",
                         help="add or substract the saturation of a "
@@ -128,14 +129,6 @@ def process_arg_errors(args):
 
     if args.s and len(args.s) > 2:
         logging.error("specify at most 2 filenames")
-        exit(1)
-
-    if args.y and len(args.y) != 2:
-        logging.error("specify a config and a basefile")
-        exit(1)
-
-    if args.i and len(args.i) != 2:
-        logging.error("specify a wallpaper and a colorscheme json")
         exit(1)
 
     if args.o and len(args.o) != 2:
@@ -209,8 +202,8 @@ def process_args(args):
             logging.info("shuffled %s" % arg)
         exit(0)
 
-    if args.y:
-        files.add_template(args.y[0], args.y[1])
+    if args.link:
+        files.add_template(args.link[0], args.link[1])
         exit(0)
 
     if args.i:
