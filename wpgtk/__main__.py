@@ -114,6 +114,14 @@ def read_args(args):
                         help="set a one time alpha value",
                         nargs=1)
 
+    parser.add_argument("--preview",
+                        help="preview your current colorscheme",
+                        action="store_true")
+
+    parser.add_argument("--update_template",
+                        help="update template(s) of your choice "
+                        "to the new format",
+                        nargs="+")
 
     return parser.parse_args()
 
@@ -146,10 +154,19 @@ def process_args(args):
     if args.alpha:
         settings["alpha"] = args.alpha[0]
 
-    if args.m:
-        filename = random.choice(files.get_file_list())
-        themer.set_theme(filename, filename, args.r)
+    if args.preview:
+        pywal.colors.palette()
         exit(0)
+
+    if args.m:
+        file_list = files.get_file_list()
+        if len(file_list) > 0:
+            filename = random.choice(file_list)
+            themer.set_theme(filename, filename, args.r)
+            exit(0)
+        else:
+            logging.error("you have no themes")
+            exit(1)
 
     if args.s:
         if len(args.s) == 1:
@@ -269,8 +286,10 @@ def main():
     try:
         _gui = __import__("wpgtk.gui.theme_picker", fromlist=['theme_picker'])
         _gui.run(args)
+        exit(0)
     except NameError:
         logging.error("missing pygobject module, use cli")
+        exit(1)
 
 
 if __name__ == "__main__":
