@@ -18,6 +18,10 @@ from .data.config import settings
 def read_args(args):
     parser = argparse.ArgumentParser()
 
+    parser.add_argument("--version",
+                        help="print the current version",
+                        action="store_true")
+
     parser.add_argument("-a",
                         help="add a wallpaper and generate a colorscheme",
                         nargs="+")
@@ -38,16 +42,17 @@ def read_args(args):
                         help="see which wallpapers are available",
                         action="store_true")
 
+    parser.add_argument("-t",
+                        help="add, remove and list templates instead "
+                        "of themes",
+                        action="store_true")
+
     parser.add_argument("-n",
-                        help="don't change wallpaper",
+                        help="avoid setting a wallpaper",
                         action="store_true")
 
     parser.add_argument("-r",
                         help="restore the wallpaper and colorscheme",
-                        action="store_true")
-
-    parser.add_argument("--version",
-                        help="print the current version",
                         action="store_true")
 
     parser.add_argument("-c",
@@ -58,19 +63,15 @@ def read_args(args):
                         help="temporarily enable light themes",
                         action="store_true")
 
+    parser.add_argument("--theme",
+                        help="list included pywal themes "
+                        "or replace your current colorscheme with a "
+                        "selection of your own",
+                        const="list", nargs="?")
+
     parser.add_argument("-T",
                         help="assign a pywal theme to specific wallpaper"
                         " instead of a json file",
-                        action="store_true")
-
-    parser.add_argument("-t",
-                        help="send color sequences to all "
-                        "terminals (deprecated)",
-                        action="store_true")
-
-    parser.add_argument("-x",
-                        help="add, remove and list templates instead "
-                        "of themes",
                         action="store_true")
 
     parser.add_argument("-z",
@@ -113,11 +114,6 @@ def read_args(args):
                         help="set a one time alpha value",
                         nargs=1)
 
-    parser.add_argument("--pywal",
-                        help="list included pywal themes "
-                        "or replace your current colorscheme with a "
-                        "selection of your own",
-                        const="list", nargs="?")
 
     return parser.parse_args()
 
@@ -171,15 +167,11 @@ def process_args(args):
         exit(0)
 
     if args.l:
-        if args.x:
+        if args.t:
             templates = files.get_file_list(OPT_DIR, False)
             any(print(t) for t in templates if ".base" in t)
         else:
             print("\n".join(files.get_file_list()))
-        exit(0)
-
-    if args.t:
-        Popen(["cat", path.join(WPG_DIR, "sequences")])
         exit(0)
 
     if args.version:
@@ -187,13 +179,13 @@ def process_args(args):
         exit(0)
 
     if args.d:
-        delete_action = files.delete_template if args.x \
+        delete_action = files.delete_template if args.t \
                         else themer.delete_theme
         any(delete_action(x) for x in args.d)
         exit(0)
 
     if args.a:
-        add_action = files.add_template if args.x \
+        add_action = files.add_template if args.t \
                      else themer.create_theme
         for x in args.a:
             if path.isfile(glob.glob(x)[0]):
@@ -230,7 +222,7 @@ def process_args(args):
         themer.export_theme(*args.o)
         exit(0)
 
-    if args.pywal == "list":
+    if args.theme == "list":
         name_dic = pywal.theme.list_themes()
         name_list = [t.name.replace(".json", "") for t in name_dic]
         print("\n".join(name_list))
@@ -254,12 +246,17 @@ def process_args(args):
         sample.create_sample(cl, files.get_sample_path(args.brt[0]))
         exit(0)
 
-    if args.pywal and args.pywal != "list":
-        themer.set_pywal_theme(args.pywal)
+    if args.theme and args.theme != "list":
+        themer.set_pywal_theme(args.theme)
         exit(0)
 
     if args.backend == "list":
         print("\n".join(pywal.colors.list_backends()))
+        exit(0)
+
+    if args.update_template:
+        for arg in args.update_template:
+            files.update_template(arg)
         exit(0)
 
     if args.backend and args.backend != "list":
