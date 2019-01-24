@@ -14,13 +14,16 @@ from . import util
 from . import sample
 
 
-def get_pywal_dict(wallpaper):
+def get_pywal_dict(wallpaper, is_file=False):
     """get the color dictionary of a given wallpaper"""
+    light_theme = settings.getboolean("light_theme", False)
     pywal.util.Color.alpha_num = settings.get("alpha", "100")
+
     image = pywal.image.get(os.path.join(WALL_DIR, wallpaper))
 
     return pywal.colors.get(
         image,
+        light=(is_file and light_theme),
         backend=settings.get("backend", "wal"),
         cache_dir=WPG_DIR
     )
