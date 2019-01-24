@@ -5,13 +5,12 @@ import logging
 import argparse
 import glob
 from os import path
-from subprocess import Popen
 from .data import files
 from .data import themer
 from .data import color
 from .data import util
 from .data import sample
-from .data.config import OPT_DIR, WPG_DIR, __version__
+from .data.config import OPT_DIR, __version__
 from .data.config import settings
 
 
