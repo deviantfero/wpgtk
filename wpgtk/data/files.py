@@ -117,6 +117,8 @@ def update_color(matchobj):
 
 
 def update_template(template_path):
+    tmp_data = ""
+
     with open(template_path, "r") as f:
         tmp_data = f.read()
 
@@ -129,6 +131,9 @@ def update_template(template_path):
         tmp_data = tmp_data.replace("#<COLORACT>", "{active}")
         tmp_data = tmp_data.replace("#<COLORIN>", "{inactive}")
 
+    with open(template_path, "w") as f:
+        logging.info("writting %s" % template_path)
+        f.write(tmp_data)
         logging.info("%s update complete" % template_path)
 
 
