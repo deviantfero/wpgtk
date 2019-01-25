@@ -33,6 +33,7 @@ def get_color_list(filename, json=False):
     """extract a list with 16 colors from a json or a pywal dict"""
     is_new = not os.path.isfile(files.get_cache_path(filename))
     auto_adjust = settings.getboolean("auto_adjust", True)
+    light_theme = settings.getboolean("light_theme", False)
 
     if json:
         theme = pywal.util.read_file_json(filename)
@@ -45,7 +46,7 @@ def get_color_list(filename, json=False):
         color_list = list(theme["colors"].values())
 
     if is_new and not json:
-        if auto_adjust:
+        if auto_adjust or light_theme:
             color_list = auto_adjust_colors(color_list)
         sample.create_sample(color_list, files.get_sample_path(filename))
         write_colors(filename, color_list)
