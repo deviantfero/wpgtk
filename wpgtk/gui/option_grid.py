@@ -87,6 +87,11 @@ class OptionsGrid(Gtk.Grid):
                                        "smart_sort")
         self.lbl_smart_sort = Gtk.Label("Use smart sort")
 
+        self.auto_adjust_switch = Gtk.Switch()
+        self.auto_adjust_switch.connect("notify::active",
+                                        self.on_activate, "auto_adjust")
+        self.lbl_auto_adjust = Gtk.Label("Always auto adjust")
+
         # edit cmd
         self.editor_lbl = Gtk.Label("Open optional files with:")
         self.editor_txt = Gtk.Entry()
@@ -113,6 +118,9 @@ class OptionsGrid(Gtk.Grid):
         self.switch_grid.attach(self.lbl_gtk, 5, 1, 3, 1)
         self.switch_grid.attach(self.gtk_switch, 9, 1, 1, 1)
 
+        self.switch_grid.attach(self.lbl_auto_adjust, 5, 2, 3, 1)
+        self.switch_grid.attach(self.auto_adjust_switch, 9, 2, 1, 1)
+
         self.switch_grid.attach(self.command_lbl, 1, 2, 3, 1)
         self.switch_grid.attach(self.command_switch, 4, 2, 1, 1)
 
@@ -121,8 +129,6 @@ class OptionsGrid(Gtk.Grid):
 
         self.switch_grid.attach(self.lbl_smart_sort, 1, 4, 3, 1)
         self.switch_grid.attach(self.smart_sort_switch, 4, 4, 1, 1)
-
-        # cmd Grid attach
 
         # Active Grid attach
         self.active_grid.attach(self.backend_lbl, 1, 1, 1, 1)
@@ -168,6 +174,8 @@ class OptionsGrid(Gtk.Grid):
             .set_active(settings.getboolean("set_wallpaper", True))
         self.smart_sort_switch\
             .set_active(settings.getboolean("smart_sort", True))
+        self.auto_adjust_switch\
+            .set_active(settings.getboolean("auto_adjust", False))
 
         self.editor_txt\
             .set_text(settings.get("editor", "urxvt -e vim"))
