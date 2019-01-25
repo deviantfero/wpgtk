@@ -71,25 +71,35 @@ class OptionsGrid(Gtk.Grid):
         self.lbl_gtk = Gtk.Label("Reload GTK+")
 
         self.light_theme_switch = Gtk.Switch()
-        self.light_theme_switch.connect("notify::active",
-                                        self.on_activate, "light_theme")
+        self.light_theme_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "light_theme"
+        )
         self.lbl_light_theme = Gtk.Label("Use Light Theme")
 
         self.wallpaper_switch = Gtk.Switch()
-        self.wallpaper_switch.connect("notify::active",
-                                      self.on_activate,
-                                      "set_wallpaper")
+        self.wallpaper_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "set_wallpaper"
+        )
         self.lbl_wallpaper = Gtk.Label("Set wallpaper")
 
         self.smart_sort_switch = Gtk.Switch()
-        self.smart_sort_switch.connect("notify::active",
-                                       self.on_activate,
-                                       "smart_sort")
+        self.smart_sort_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "smart_sort"
+        )
         self.lbl_smart_sort = Gtk.Label("Use smart sort")
 
         self.auto_adjust_switch = Gtk.Switch()
-        self.auto_adjust_switch.connect("notify::active",
-                                        self.on_activate, "auto_adjust")
+        self.auto_adjust_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "auto_adjust"
+        )
         self.lbl_auto_adjust = Gtk.Label("Always auto adjust")
 
         # edit cmd
@@ -100,11 +110,16 @@ class OptionsGrid(Gtk.Grid):
         # cmd
         self.command_lbl = Gtk.Label("Run command after Colorize")
         self.command_exe_lbl = Gtk.Label("Command: ")
+
         self.command_txt = Gtk.Entry()
         self.command_txt.connect("changed", self.on_txt_change, "command")
+
         self.command_switch = Gtk.Switch()
-        self.command_switch.connect("notify::active",
-                                    self.on_activate, "execute_cmd")
+        self.command_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "execute_cmd"
+        )
 
         self.alpha_lbl = Gtk.Label('Alpha:')
         self.alpha_txt = Gtk.Entry()
