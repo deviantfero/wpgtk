@@ -213,7 +213,7 @@ def wpgtk_colors(hexc, is_dark_theme=True):
     brightness = util.get_hls_val(hexc, "light")
 
     active = util.alter_brightness(hexc, brightness * -0.20) \
-        if is_dark_theme else util.alter_brightness(hexc, brightness * -0.20)
+        if is_dark_theme else util.alter_brightness(hexc, brightness * 0.30)
 
     inactive = util.alter_brightness(hexc, brightness * -0.45) \
         if is_dark_theme else hexc
