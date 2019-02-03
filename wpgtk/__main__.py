@@ -91,6 +91,10 @@ def read_args(args):
                         "format [wallpaper, json]",
                         nargs="+")
 
+    parser.add_argument("-R",
+                        help="reset template(s) to their original colors",
+                        nargs="+")
+
     parser.add_argument("--link",
                         help="link config file to template backup "
                         "[config, .base]",
@@ -127,7 +131,7 @@ def read_args(args):
 
 
 def process_arg_errors(args):
-    if args.m and args.s:
+    if args.m and (args.s or args.R):
         logging.error("invalid combination of flags")
         exit(1)
 
@@ -139,7 +143,7 @@ def process_arg_errors(args):
         logging.error("specify at most 2 filenames")
         exit(1)
 
-    if args.o and len(args.o) != 2:
+    if args.o and (len(args.o) < 1 or len(args.o) > 2):
         logging.error("specify wallpaper and optionally an output path")
         exit(1)
 
@@ -190,7 +194,12 @@ def process_args(args):
     if args.d:
         delete_action = files.delete_template if args.t \
                         else themer.delete_theme
-        any(delete_action(x) for x in args.d)
+        try:
+            any(delete_action(x) for x in args.d)
+        except IOError:
+            logging.error("file not found")
+            exit(1)
+
         exit(0)
 
     if args.a:
@@ -229,6 +238,14 @@ def process_args(args):
 
     if args.o:
         themer.export_theme(*args.o)
+        exit(0)
+
+    if args.R:
+        try:
+            any(themer.reset_theme(arg) for arg in args.R)
+        except IOError:
+            logging.error("file not found")
+            exit(1)
         exit(0)
 
     if args.theme == "list":
