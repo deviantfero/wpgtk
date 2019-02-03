@@ -158,10 +158,10 @@ class ColorGrid(Gtk.Grid):
             self.color_list = [util.alter_brightness(x, val, 0)
                                for x in self.color_list]
         self.render_buttons()
-        sample.create_sample(self.color_list)
         self.render_sample()
 
     def render_sample(self):
+        sample.create_sample(self.color_list)
         sample_path = os.path.join(WALL_DIR, ".tmp.sample.png")
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
                 str(sample_path),
@@ -195,8 +195,11 @@ class ColorGrid(Gtk.Grid):
     def on_auto_click(self, widget):
         self.color_list = color.auto_adjust_colors(self.color_list)
         self.render_buttons()
-        sample.create_sample(self.color_list)
         self.render_sample()
+
+    def on_reset_click(self, widget):
+        themer.reset_theme(self.selected_file)
+        self.render_theme()
 
     def on_import_click(self, widget):
         fcd = Gtk.FileChooserDialog(
@@ -214,14 +217,12 @@ class ColorGrid(Gtk.Grid):
         if response == Gtk.ResponseType.OK:
             self.color_list = color.get_color_list(fcd.get_filename(), True)
             self.render_buttons()
-            sample.create_sample(self.color_list[:])
             self.render_sample()
         fcd.destroy()
 
     def on_shuffle_click(self, widget):
         self.color_list = color.shuffle_colors(self.color_list)
         self.render_buttons()
-        sample.create_sample(self.color_list)
         self.render_sample()
 
     def on_color_click(self, widget):
@@ -241,14 +242,15 @@ class ColorGrid(Gtk.Grid):
             if util.get_hls_val(hex_color, 'light') < 100:
                 fgcolor = Gdk.color_parse('#FFFFFF')
             else:
-                fgcolor = Gdk.color_parse('#101010')
+                fgcolor = Gdk.color_parse('#000000')
+
             widget.set_sensitive(True)
             widget.modify_bg(Gtk.StateType.NORMAL, gcolor)
             widget.modify_fg(Gtk.StateType.NORMAL, fgcolor)
+
             for i, c in enumerate(self.button_list):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
-            sample.create_sample(self.color_list)
             self.render_sample()
         dialog.destroy()
 
