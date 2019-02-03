@@ -58,12 +58,8 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
 
 def delete_theme(filename):
-    try:
-        remove(path.join(WALL_DIR, filename))
-        files.delete_colorschemes(filename)
-    except IOError as e:
-        logging.error("file not available")
-        logging.error(e.message)
+    remove(path.join(WALL_DIR, filename))
+    files.delete_colorschemes(filename)
 
 
 def get_current():
