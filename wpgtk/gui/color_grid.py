@@ -64,6 +64,11 @@ class ColorGrid(Gtk.Grid):
         self.button_grid.set_column_spacing(PAD)
         self.button_grid.set_row_spacing(PAD)
 
+        self.combo_grid = Gtk.Grid()
+        self.combo_grid.set_column_homogeneous(1)
+        self.combo_grid.set_column_spacing(PAD)
+        self.combo_grid.set_row_spacing(PAD)
+
         self.color_list = ['000000']*16
         self.button_list = [Gtk.Button('000000') for x in range(16)]
         self.selected_file = ""
@@ -104,6 +109,10 @@ class ColorGrid(Gtk.Grid):
         self.auto_button.connect("pressed", self.on_auto_click)
         self.auto_button.set_sensitive(False)
 
+        self.reset_button = Gtk.Button("Reset")
+        self.reset_button.set_sensitive(False)
+        self.reset_button.connect("pressed", self.on_reset_click)
+
         self.done_lbl = Gtk.Label("")
 
         option_list = Gtk.ListStore(str)
@@ -116,10 +125,13 @@ class ColorGrid(Gtk.Grid):
         self.option_combo.set_entry_text_column(0)
         self.option_combo.connect("changed", self.combo_box_change)
 
-        self.button_grid.attach(self.import_button, 0, 0, 3, 1)
-        self.button_grid.attach(self.ok_button, 0, 1, 1, 1)
-        self.button_grid.attach(self.auto_button, 1, 1, 1, 1)
-        self.button_grid.attach(self.shuffle_button, 2, 1, 1, 1)
+        self.combo_grid.attach(self.option_combo, 0, 0, 3, 1)
+        self.combo_grid.attach(self.reset_button, 3, 0, 1, 1)
+
+        self.button_grid.attach(self.ok_button, 0, 0, 1, 1)
+        self.button_grid.attach(self.auto_button, 1, 0, 1, 1)
+        self.button_grid.attach(self.shuffle_button, 2, 0, 1, 1)
+        self.button_grid.attach(self.import_button, 3, 0, 1, 1)
 
         self.sat_light_grid.attach(self.sat_lbl, 0, 0, 1, 1)
         self.sat_light_grid.attach(self.sat_red, 1, 0, 1, 1)
@@ -129,7 +141,7 @@ class ColorGrid(Gtk.Grid):
         self.sat_light_grid.attach(self.light_red, 4, 0, 1, 1)
         self.sat_light_grid.attach(self.light_add, 5, 0, 1, 1)
 
-        self.attach(self.option_combo, 0, 0, 1, 1)
+        self.attach(self.combo_grid, 0, 0, 1, 1)
         self.attach(self.button_grid, 0, 1, 1, 1)
         self.attach(self.colorgrid, 0, 2, 1, 1)
         self.attach(self.sample, 0, 3, 1, 1)
