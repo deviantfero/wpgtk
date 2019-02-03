@@ -2,7 +2,7 @@ function _wpg() {
     local optforprofiles
     _get_comp_words_by_ref cur
     # themes
-    optforprofiles="-s -e -d -z -m -LA -A --brt --sat"
+    optforprofiles="-s -e -d -z -m -LA -A --brt --sat -R"
     # themes, pywal themes
 	optforvariabletheme="-Ti"
     # themes, filenames

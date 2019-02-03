@@ -7,9 +7,9 @@ _profiles() {
 }
 
 _templates() {
-    local -a templates
-    templates=(`wpg -tl`)
-    _describe 'templates' templates
+	local -a templates
+	templates=(`wpg -tl`)
+	_describe 'templates' templates
 }
 
 _backends() {
@@ -27,7 +27,7 @@ _themes() {
 _wpg() {
     local state optforprofiles
     # themes
-    optforprofiles=(-s -e -d -z -m -A -LA --brt --sat) 
+    optforprofiles=(-s -e -d -z -m -A -LA --brt --sat -R)
     # themes, filenames
     optvariable=(-i -o)
     # themes, pywal themes
@@ -90,9 +90,9 @@ _wpg() {
                         _themes
                     fi
                 done
-            fi 
-            ;;
-    esac
+			fi 
+			;;
+	esac
 }
 
 _wpg "$@"
