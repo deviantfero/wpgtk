@@ -67,6 +67,14 @@ def get_current():
     return image
 
 
+def reset_theme(theme_name):
+    """restore a colorscheme to it's original state by deleting
+    and re adding the image"""
+    wallpaper = realpath(path.join(WALL_DIR, theme_name))
+    delete_theme(theme_name)
+    create_theme(wallpaper)
+
+
 def import_theme(wallpaper, json_file, theme=False):
     """import a colorscheme from a JSON file either in
     terminal.sexy or pywal format"""
