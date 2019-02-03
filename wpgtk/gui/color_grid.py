@@ -148,6 +148,26 @@ class ColorGrid(Gtk.Grid):
             button.modify_bg(Gtk.StateType.NORMAL, gcolor)
             button.modify_fg(Gtk.StateType.NORMAL, fgcolor)
 
+    def render_theme(self):
+        sample_path = files.get_sample_path(self.selected_file)
+
+        try:
+            self.color_list = color.get_color_list(self.selected_file)
+        except SystemExit:
+            self.color_list = themer.set_fallback_theme(self.selected_file)
+        self.render_buttons()
+
+        try:
+            self.pixbuf_sample = GdkPixbuf.Pixbuf\
+                .new_from_file_at_size(sample_path, width=500, height=300)
+        except:
+            sample.create_sample(self.color_list, sample_path)
+            self.pixbuf_sample = GdkPixbuf.Pixbuf\
+                .new_from_file_at_size(sample_path, width=500, height=300)
+
+        self.sample.set_from_pixbuf(self.pixbuf_sample)
+        self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
+
     def hls_change(self, widget, *gparam):
         if gparam[0] == "sat":
             val = 0.05 if gparam[1] == "add" else -0.05
@@ -264,25 +284,10 @@ class ColorGrid(Gtk.Grid):
         self.import_button.set_sensitive(True)
         self.light_add.set_sensitive(True)
         self.light_red.set_sensitive(True)
+        self.reset_button.set_sensitive(True)
         self.sat_add.set_sensitive(True)
         self.sat_red.set_sensitive(True)
 
         current_walls = files.get_file_list()
         self.selected_file = current_walls[x]
-        sample_path = files.get_sample_path(self.selected_file)
-        try:
-            self.color_list = color.get_color_list(self.selected_file)
-        except SystemExit:
-            self.color_list = themer.set_fallback_theme(self.selected_file)
-        self.render_buttons()
-
-        try:
-            self.pixbuf_sample = GdkPixbuf.Pixbuf\
-                .new_from_file_at_size(sample_path, width=500, height=300)
-        except:
-            sample.create_sample(self.color_list, sample_path)
-            self.pixbuf_sample = GdkPixbuf.Pixbuf\
-                .new_from_file_at_size(sample_path, width=500, height=300)
-
-        self.sample.set_from_pixbuf(self.pixbuf_sample)
-        self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
+        self.render_theme()
