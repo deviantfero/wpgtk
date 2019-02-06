@@ -3,6 +3,7 @@ import logging
 import pywal
 import os
 import re
+import threading
 from operator import itemgetter
 from subprocess import Popen
 from random import shuffle, randint
@@ -174,7 +175,9 @@ def change_templates(colors):
     try:
         for template in templates:
             original = template.split(".base").pop(0)
-            change_colors(colors, os.path.join(OPT_DIR, original))
+            args = (colors, os.path.join(OPT_DIR, original))
+            t = threading.Thread(target=change_colors, args=args)
+            t.start()
 
     except Exception as e:
         logging.error(str(e))
