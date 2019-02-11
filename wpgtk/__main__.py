@@ -97,7 +97,7 @@ def read_args(args):
 
     parser.add_argument("--link",
                         help="link config file to template backup "
-                        "[config, .base]",
+                        "[.base, config]",
                         nargs=2)
 
     parser.add_argument("--sat",
@@ -229,7 +229,7 @@ def process_args(args):
         exit(0)
 
     if args.link:
-        files.add_template(args.link[0], args.link[1])
+        files.add_template(args.link[1], args.link[0])
         exit(0)
 
     if args.i:
