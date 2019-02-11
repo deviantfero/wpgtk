@@ -8,11 +8,15 @@
 
 <img align="left" src="https://i.imgur.com/ApSuntN.gif" width="450px"/>
 
-`wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the color-schemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for `wpgtk` and custom keywords and values to replace in templates.
+`wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as it's colorscheme generator, but builds upon it with a UI and other features, such as the abilty to mix and edit the color-schemes generated and save them with their respective wallpapers, having light and dark themes, hackable and fast GTK+ theme made specifically for `wpgtk` and custom keywords and values to replace in templates and auto color-scheme sorting to achieve more readable palletes.
 
 In short, `wpgtk` is a colorscheme/wallpaper manager with a template system attached which let's you create templates from any textfile and will replace keywords on it on the fly, allowing for great styling and theming possibilities.
 
-## Usage
+And also, for those who are not into auto-generated color-schemes, you will be happy to know that `wpgtk` includes all the preset themes that `pywal` does, so that's around 200+ themes to play around with, that you can also _modify_ to get really readable and cool results!
+
+<br>
+
+## Usage and useful links
 
 - **Wiki:**
   * [Installation](https://github.com/deviantfero/wpgtk/wiki/Installation)	
