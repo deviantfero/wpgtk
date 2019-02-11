@@ -1,5 +1,5 @@
 
-# wpgtk
+# _wpgtk_
 
 ![PyPI](https://img.shields.io/pypi/v/wpgtk.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPLv2-green.svg?style=flat-square)
@@ -16,7 +16,7 @@ And also, for those who are not into auto-generated color-schemes, you will be h
 
 <br>
 
-## Usage and useful links
+## Usage and Useful Links
 
 - **Wiki:**
   * [Installation](https://github.com/deviantfero/wpgtk/wiki/Installation)	
