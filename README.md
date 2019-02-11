@@ -1,5 +1,5 @@
 
-# _wpgtk_
+# :flower_playing_cards: _wpgtk_
 
 ![PyPI](https://img.shields.io/pypi/v/wpgtk.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPLv2-green.svg?style=flat-square)
