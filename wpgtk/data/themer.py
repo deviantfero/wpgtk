@@ -51,7 +51,6 @@ def set_theme(wallpaper, colorscheme, restore=False):
     files.change_current(wallpaper)
 
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
-    reload.xrdb()
 
     if settings.getboolean('execute_cmd'):
         Popen(['bash', '-c', settings['command']])

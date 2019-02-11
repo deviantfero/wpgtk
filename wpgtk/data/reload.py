@@ -48,11 +48,12 @@ def gtk3():
                     stderr=subprocess.DEVNULL
                 )
         finally:
-                os.remove(path)
+            os.remove(path)
 
 
 def all():
     """Calls all possible reload methods at once."""
+    xrdb()
     tint2()
     dunst()
     openbox()
