@@ -30,7 +30,7 @@ And also, for those who are not into auto-generated color-schemes, you will be h
   * [Advanced Features](https://www.youtube.com/watch?v=QXpMMP8fT0o)
   * [Command Line](https://www.youtube.com/watch?v=yjNipQZpOUc)
   * [Import/export Colorschemes](https://www.youtube.com/watch?v=P3D0jtG6G2s)
-  * [Upgrade to 6.0.0](https://youtu.be/5V4Rb7ULEjM)
+  * [Upgrade to 6.0.0 - feature overview](https://youtu.be/5V4Rb7ULEjM)
 
 - **Other Repos:**
   * [wpgtk.vim](https://github.com/deviantfero/wpgtk.vim)
