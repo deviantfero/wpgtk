@@ -15,12 +15,12 @@ In short, `wpgtk` is a color-scheme manager with a template system which let's y
 And also, for those who are not into auto-generated color-schemes, you will be happy to know that `wpgtk` includes all the preset themes that `pywal` does, so that's around 200+ themes to play around with, that you can also _modify_ to get really readable and cool results!
 
 ## Usage and Useful Links
-- **Wiki:**
-  * [Installation](https://github.com/deviantfero/wpgtk/wiki/Installation)	
-  * [Colorschemes](https://github.com/deviantfero/wpgtk/wiki/Colorschemes)
-  * [Configuration](https://github.com/deviantfero/wpgtk/wiki/Configuration)
-  * [Custom Keywords](https://github.com/deviantfero/wpgtk/wiki/Custom-Keywords)
-  * [Templates](https://github.com/deviantfero/wpgtk/wiki/Templates)
+[[Installation](https://github.com/deviantfero/wpgtk/wiki/Installation)]
+[[Colorschemes](https://github.com/deviantfero/wpgtk/wiki/Colorschemes)]
+[[Configuration](https://github.com/deviantfero/wpgtk/wiki/Configuration)]
+[[Custom Keywords](https://github.com/deviantfero/wpgtk/wiki/Custom-Keywords)]
+[[Templates](https://github.com/deviantfero/wpgtk/wiki/Templates)]
+
 
 - **Video tutorials:**
   * [Installation](https://www.youtube.com/watch?v=jmY5NEPI4RM)
