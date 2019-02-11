@@ -29,33 +29,41 @@ def read_args(args):
                         help="delete the wallpaper(s) from wallpaper folder",
                         nargs="+")
 
+    parser.add_argument("-t",
+                        help="add, remove and list templates instead "
+                        "of themes",
+                        action="store_true")
+
     parser.add_argument("-s",
                         help="set the wallpaper and/or colorscheme",
                         nargs="+")
 
-    parser.add_argument("-m",
-                        help="pick a random wallpaper/colorscheme",
-                        action="store_true")
-
     parser.add_argument('-l',
                         help="see which wallpapers are available",
-                        action="store_true")
-
-    parser.add_argument("-t",
-                        help="add, remove and list templates instead "
-                        "of themes",
                         action="store_true")
 
     parser.add_argument("-n",
                         help="avoid setting a wallpaper",
                         action="store_true")
 
-    parser.add_argument("-r",
-                        help="restore the wallpaper and colorscheme",
+    parser.add_argument("-m",
+                        help="pick a random wallpaper/colorscheme",
                         action="store_true")
 
     parser.add_argument("-c",
                         help="shows the current wallpaper",
+                        action="store_true")
+
+    parser.add_argument("-z",
+                        help="shuffles the given colorscheme(s)",
+                        nargs="+")
+
+    parser.add_argument("-A",
+                        help="auto-adjusts the given colorscheme(s)",
+                        nargs="+")
+    
+    parser.add_argument("-r",
+                        help="restore the wallpaper and colorscheme",
                         action="store_true")
 
     parser.add_argument("-L", "--light",
@@ -72,14 +80,6 @@ def read_args(args):
                         help="assign a pywal theme to specific wallpaper"
                         " instead of a json file",
                         action="store_true")
-
-    parser.add_argument("-z",
-                        help="shuffles the given colorscheme(s)",
-                        nargs="+")
-
-    parser.add_argument("-A",
-                        help="auto-adjusts the given colorscheme(s)",
-                        nargs="+")
 
     parser.add_argument("-i",
                         help="import a theme in json format and asign "
