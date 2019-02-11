@@ -54,9 +54,11 @@ class OptionsGrid(Gtk.Grid):
         # Backend Combo
         self.backend_list = colors.list_backends()
         self.backend_lbl = Gtk.Label("Select your backend:")
+
         be_store = Gtk.ListStore(str)
         for elem in self.backend_list:
             be_store.append([elem])
+
         self.backend_combo = Gtk.ComboBox.new_with_model(be_store)
         self.backend_combo.pack_start(self.renderer_text, True)
         self.backend_combo.add_attribute(self.renderer_text, 'text', 0)
@@ -64,35 +66,41 @@ class OptionsGrid(Gtk.Grid):
         self.backend_combo.connect("changed", self.combo_box_change, "backend")
 
         # Switches
-        self.tint2_switch = Gtk.Switch()
-        self.tint2_switch.connect("notify::active",  self.on_activate, "tint2")
-        self.lbl_tint2 = Gtk.Label("Reload Tint2")
-
         self.gtk_switch = Gtk.Switch()
         self.gtk_switch.connect("notify::active",  self.on_activate, "gtk")
-        self.lbl_gtk = Gtk.Label("Reload GTK2")
-
-        self.openbox_switch = Gtk.Switch()
-        self.openbox_switch.connect("notify::active",
-                                    self.on_activate, "openbox")
-        self.lbl_openbox = Gtk.Label("Reload openbox")
+        self.lbl_gtk = Gtk.Label("Reload GTK+")
 
         self.light_theme_switch = Gtk.Switch()
-        self.light_theme_switch.connect("notify::active",
-                                        self.on_activate, "light_theme")
+        self.light_theme_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "light_theme"
+        )
         self.lbl_light_theme = Gtk.Label("Use Light Theme")
 
         self.wallpaper_switch = Gtk.Switch()
-        self.wallpaper_switch.connect("notify::active",
-                                      self.on_activate,
-                                      "set_wallpaper")
+        self.wallpaper_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "set_wallpaper"
+        )
         self.lbl_wallpaper = Gtk.Label("Set wallpaper")
 
         self.smart_sort_switch = Gtk.Switch()
-        self.smart_sort_switch.connect("notify::active",
-                                       self.on_activate,
-                                       "smart_sort")
+        self.smart_sort_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "smart_sort"
+        )
         self.lbl_smart_sort = Gtk.Label("Use smart sort")
+
+        self.auto_adjust_switch = Gtk.Switch()
+        self.auto_adjust_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "auto_adjust"
+        )
+        self.lbl_auto_adjust = Gtk.Label("Always auto adjust")
 
         # edit cmd
         self.editor_lbl = Gtk.Label("Open optional files with:")
@@ -102,11 +110,16 @@ class OptionsGrid(Gtk.Grid):
         # cmd
         self.command_lbl = Gtk.Label("Run command after Colorize")
         self.command_exe_lbl = Gtk.Label("Command: ")
+
         self.command_txt = Gtk.Entry()
         self.command_txt.connect("changed", self.on_txt_change, "command")
+
         self.command_switch = Gtk.Switch()
-        self.command_switch.connect("notify::active",
-                                    self.on_activate, "execute_cmd")
+        self.command_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "execute_cmd"
+        )
 
         self.alpha_lbl = Gtk.Label('Alpha:')
         self.alpha_txt = Gtk.Entry()
@@ -120,22 +133,17 @@ class OptionsGrid(Gtk.Grid):
         self.switch_grid.attach(self.lbl_gtk, 5, 1, 3, 1)
         self.switch_grid.attach(self.gtk_switch, 9, 1, 1, 1)
 
+        self.switch_grid.attach(self.lbl_auto_adjust, 5, 2, 3, 1)
+        self.switch_grid.attach(self.auto_adjust_switch, 9, 2, 1, 1)
+
         self.switch_grid.attach(self.command_lbl, 1, 2, 3, 1)
         self.switch_grid.attach(self.command_switch, 4, 2, 1, 1)
-
-        self.switch_grid.attach(self.lbl_openbox, 5, 2, 3, 1)
-        self.switch_grid.attach(self.openbox_switch, 9, 2, 1, 1)
 
         self.switch_grid.attach(self.lbl_light_theme, 1, 3, 3, 1)
         self.switch_grid.attach(self.light_theme_switch, 4, 3, 1, 1)
 
-        self.switch_grid.attach(self.lbl_tint2, 5, 3, 3, 1)
-        self.switch_grid.attach(self.tint2_switch, 9, 3, 1, 1)
-
         self.switch_grid.attach(self.lbl_smart_sort, 1, 4, 3, 1)
         self.switch_grid.attach(self.smart_sort_switch, 4, 4, 1, 1)
-
-        # cmd Grid attach
 
         # Active Grid attach
         self.active_grid.attach(self.backend_lbl, 1, 1, 1, 1)
@@ -173,18 +181,16 @@ class OptionsGrid(Gtk.Grid):
             .set_active(settings.getint("active", 0))
         self.gtk_switch\
             .set_active(settings.getboolean("gtk", True))
-        self.tint2_switch\
-            .set_active(settings.getboolean("tint2", True))
         self.command_switch\
             .set_active(settings.getboolean("execute_cmd", False))
-        self.openbox_switch\
-            .set_active(settings.getboolean("openbox", True))
         self.light_theme_switch\
             .set_active(settings.getboolean("light_theme", False))
         self.wallpaper_switch\
             .set_active(settings.getboolean("set_wallpaper", True))
         self.smart_sort_switch\
             .set_active(settings.getboolean("smart_sort", True))
+        self.auto_adjust_switch\
+            .set_active(settings.getboolean("auto_adjust", False))
 
         self.editor_txt\
             .set_text(settings.get("editor", "urxvt -e vim"))

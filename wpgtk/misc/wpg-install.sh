@@ -141,6 +141,7 @@ install_icons()
 {
   echo "Installing icon pack";
   cp -r flattrcolor "${HOME}/.icons/" && \
+  cp -r flattrcolor-dark "${HOME}/.icons/" && \
     echo ":: flattr icons install done."
 }
 

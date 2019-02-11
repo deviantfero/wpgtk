@@ -30,8 +30,11 @@ def create_theme(filepath):
 
 def set_theme(wallpaper, colorscheme, restore=False):
     """apply a given wallpaper and a given colorscheme"""
+    is_file = path.isdir(colorscheme) or path.isfile(colorscheme)
+    target = colorscheme if is_file else path.join(WALL_DIR, colorscheme)
+
     set_wall = settings.getboolean("set_wallpaper", True)
-    colors = color.get_pywal_dict(path.join(WALL_DIR, colorscheme))
+    colors = color.get_pywal_dict(target, is_file)
     pywal.sequences.send(colors, WPG_DIR)
 
     if not restore:
@@ -44,33 +47,32 @@ def set_theme(wallpaper, colorscheme, restore=False):
         set_wall = filepath if path.isfile(filepath) else colors["wallpaper"]
         pywal.wallpaper.change(set_wall)
 
-    flags = "-rs" if set_wall else "-nrs"
-    with open(path.join(WPG_DIR, "wp_init.sh"), "w") as script:
-        script.writelines(["#!/usr/bin/env bash\n",
-                           "wpg %s '%s' '%s'" %
-                           (flags, wallpaper, colorscheme)])
+    files.write_script(wallpaper, colorscheme)
+    files.change_current(wallpaper)
 
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
     reload.xrdb()
-
-    files.change_current(wallpaper)
 
     if settings.getboolean('execute_cmd'):
         Popen(['bash', '-c', settings['command']])
 
 
 def delete_theme(filename):
-    try:
-        remove(path.join(WALL_DIR, filename))
-        files.delete_colorschemes(filename)
-    except IOError as e:
-        logging.error("file not available")
-        logging.error(e.message)
+    remove(path.join(WALL_DIR, filename))
+    files.delete_colorschemes(filename)
 
 
 def get_current():
     image = realpath(path.join(WPG_DIR, '.current')).split('/').pop()
     return image
+
+
+def reset_theme(theme_name):
+    """restore a colorscheme to it's original state by deleting
+    and re adding the image"""
+    wallpaper = realpath(path.join(WALL_DIR, theme_name))
+    delete_theme(theme_name)
+    create_theme(wallpaper)
 
 
 def import_theme(wallpaper, json_file, theme=False):

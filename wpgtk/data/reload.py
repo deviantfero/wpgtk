@@ -6,7 +6,7 @@ import tempfile
 from pywal import reload
 
 from . import util
-from .config import FORMAT_DIR, HOME
+from .config import FORMAT_DIR, HOME, settings
 
 
 def xrdb():
@@ -36,7 +36,7 @@ def openbox():
 
 
 def gtk3():
-    if shutil.which("xsettingsd"):
+    if shutil.which("xsettingsd") and settings.getboolean("gtk", True):
         fd, path = tempfile.mkstemp()
         try:
             with os.fdopen(fd, 'w+') as tmp:
@@ -56,8 +56,11 @@ def all():
     tint2()
     dunst()
     openbox()
-    gtk3()
     reload.i3()
     reload.polybar()
     reload.gtk()
+    reload.kitty()
     reload.sway()
+
+    if settings.getboolean("gtk", True):
+        gtk3()

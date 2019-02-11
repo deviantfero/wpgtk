@@ -1,15 +1,15 @@
 #compdef wpg
 
-_profiles() {
-    local -a profiles
-    profiles=(`wpg -l`)
-    _describe 'profiles' profiles
+_colorschemes() {
+    local -a colorschemes
+    colorschemes=(`wpg -l`)
+    _describe 'colorschemes' colorschemes
 }
 
 _templates() {
-    local -a templates
-    templates=(`wpg -xl`)
-    _describe 'templates' templates
+	local -a templates
+	templates=(`wpg -tl`)
+	_describe 'templates' templates
 }
 
 _backends() {
@@ -20,52 +20,52 @@ _backends() {
 
 _themes() {
     local -a themes
-    themes=(`wpg --pywal`)
+    themes=(`wpg --theme`)
     _describe 'themes' themes
 }
 
 _wpg() {
-    local state optforprofiles
+    local state optforcolorschemes
     # themes
-    optforprofiles=(-s -e -d -z -m -A -LA --brt --sat) 
+    optforcolorschemes=(-s -e -d -z -m -A -LA --brt --sat -R)
     # themes, filenames
     optvariable=(-i -o)
     # themes, pywal themes
     optvariabletheme=(-Ti)
     # filenames
-    optforgeneric=(-y -a -xa)
+    optforgeneric=(--link -a -La -aL -ta -at --update)
     # templates
-    optfortemplates=(-xd -dx)
+    optfortemplates=(-td -dt)
     # pywal backends
     optforbackends=(--backend)
     # pywal themes
-    optforthemes=(--pywal)
+    optforthemes=(--theme)
 
     _arguments \
         '1: :->generic' \
-        '*: :->listprofiles'
+        '*: :->listcolorschemes'
 
     case $state in
         (generic)
             _gnu_generic
             ;;
-        (listprofiles)
+        (listcolorschemes)
             if [[ $CURRENT < 5 || ${words[2]} != "-s" ]]; then
-                for opt in $optforprofiles; do
+                for opt in $optforcolorschemes; do
                     if [[ $opt = ${words[2]} ]]; then
-                        _profiles
+                        _colorschemes
                     fi
                 done
                 for opt in $optvariable; do
                     if [[ $opt = ${words[2]} && $CURRENT < 4 ]]; then
-                        _profiles
+                        _colorschemes
                     elif [[ $opt = ${words[2]} ]]; then
                         _gnu_generic
                     fi
                 done
                 for opt in $optvariabletheme; do
                     if [[ $opt = ${words[2]} && $CURRENT < 4 ]]; then
-                        _profiles
+                        _colorschemes
                     elif [[ $opt = ${words[2]} ]]; then
                         _themes
                     fi
@@ -90,9 +90,9 @@ _wpg() {
                         _themes
                     fi
                 done
-            fi 
-            ;;
-    esac
+			fi 
+			;;
+	esac
 }
 
 _wpg "$@"
