@@ -282,7 +282,8 @@ def process_args(args):
 
     if args.update:
         for arg in args.update:
-            files.update(arg)
+            if arg.endswith(".base"):
+                files.update_template(arg)
         exit(0)
 
     if args.backend and args.backend != "list":
