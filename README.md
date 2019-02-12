@@ -19,6 +19,8 @@ If you prefer written documentation and want to know all the neat things you can
 
 ###  [[Home](https://github.com/deviantfero/wpgtk/wiki)] [[Installation](https://github.com/deviantfero/wpgtk/wiki/Installation)] [[Colorschemes](https://github.com/deviantfero/wpgtk/wiki/Colorschemes)] [[Configuration](https://github.com/deviantfero/wpgtk/wiki/Configuration)] [[Custom Keywords](https://github.com/deviantfero/wpgtk/wiki/Custom-Keywords)] [[Templates](https://github.com/deviantfero/wpgtk/wiki/Templates)]
 
+**_Warning_**: Users updating from versions older than `6.0.0` will have to update their templates to the new format, check the Templates section on the wiki for more information.
+
 <br>
 
 ## Usage and Useful Links
