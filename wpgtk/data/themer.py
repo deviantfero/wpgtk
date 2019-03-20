@@ -41,6 +41,8 @@ def set_theme(wallpaper, colorscheme, restore=False):
         pywal.export.every(colors, FORMAT_DIR)
         color.apply_colorscheme(colors)
         reload.all()
+    else:
+        reload.xrdb()
 
     if set_wall:
         filepath = path.join(WALL_DIR, wallpaper)
@@ -50,8 +52,6 @@ def set_theme(wallpaper, colorscheme, restore=False):
     files.write_script(wallpaper, colorscheme)
     files.change_current(wallpaper)
     
-    reload.xrdb()
-
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
 
     if settings.getboolean('execute_cmd'):
