@@ -70,6 +70,14 @@ class OptionsGrid(Gtk.Grid):
         self.gtk_switch.connect("notify::active",  self.on_activate, "gtk")
         self.lbl_gtk = Gtk.Label("Reload GTK+")
 
+        self.vte_switch = Gtk.Switch()
+        self.vte_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "vte"
+        )
+        self.lbl_vte = Gtk.Label("Use VTE Fix")
+
         self.light_theme_switch = Gtk.Switch()
         self.light_theme_switch.connect(
             "notify::active",
@@ -144,6 +152,9 @@ class OptionsGrid(Gtk.Grid):
 
         self.switch_grid.attach(self.lbl_smart_sort, 1, 4, 3, 1)
         self.switch_grid.attach(self.smart_sort_switch, 4, 4, 1, 1)
+
+        self.switch_grid.attach(self.lbl_vte, 5, 3, 3, 1)
+        self.switch_grid.attach(self.vte_switch, 9, 3, 1, 1)
 
         # Active Grid attach
         self.active_grid.attach(self.backend_lbl, 1, 1, 1, 1)
