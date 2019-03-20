@@ -30,12 +30,13 @@ def create_theme(filepath):
 
 def set_theme(wallpaper, colorscheme, restore=False):
     """apply a given wallpaper and a given colorscheme"""
+    use_vte = settings.getboolean("vte", False)
     is_file = path.isdir(colorscheme) or path.isfile(colorscheme)
     target = colorscheme if is_file else path.join(WALL_DIR, colorscheme)
 
     set_wall = settings.getboolean("set_wallpaper", True)
     colors = color.get_pywal_dict(target, is_file)
-    pywal.sequences.send(colors, WPG_DIR)
+    pywal.sequences.send(colors, WPG_DIR, vte_fix=use_vte)
 
     if not restore:
         pywal.export.every(colors, FORMAT_DIR)
