@@ -158,6 +158,15 @@ def process_args(args):
     if args.alpha:
         settings["alpha"] = args.alpha[0]
 
+    if args.backend and args.backend != "list":
+        print(args.backend, pywal.colors.list_backends)
+        if args.backend in pywal.colors.list_backends():
+            settings['backend'] = args.backend
+        else:
+            logging.error("no such backend, please "
+                          "choose a valid backend")
+            exit(1)
+
     if args.preview:
         pywal.colors.palette()
         exit(0)
@@ -285,14 +294,6 @@ def process_args(args):
             if arg.endswith(".base"):
                 files.update_template(arg)
         exit(0)
-
-    if args.backend and args.backend != "list":
-        if args.backend in pywal.colors.list_backends():
-            settings['backend'] = args.backend
-        else:
-            logging.error("no such backend, please "
-                          "choose a valid backend")
-            exit(1)
 
 
 def main():
