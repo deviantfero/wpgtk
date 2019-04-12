@@ -159,7 +159,6 @@ def process_args(args):
         settings["alpha"] = args.alpha[0]
 
     if args.backend and args.backend != "list":
-        print(args.backend, pywal.colors.list_backends)
         if args.backend in pywal.colors.list_backends():
             settings['backend'] = args.backend
         else:
