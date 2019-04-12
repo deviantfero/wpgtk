@@ -19,7 +19,6 @@ def create_theme(filepath):
     tmplink = path.join(WALL_DIR, ".tmp.link")
 
     symlink(filepath, tmplink)
-
     shutil.move(tmplink, path.join(WALL_DIR, filename))
 
     try:

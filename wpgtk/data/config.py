@@ -3,7 +3,7 @@ import shutil
 import os
 import logging
 
-__version__ = '6.0.4'
+__version__ = '6.0.5'
 
 parser = None
 
@@ -15,7 +15,7 @@ CONF_BACKUP = os.path.join(MODULE_DIR, "misc/wpg.conf")
 WALL_DIR = os.path.join(WPG_DIR, "wallpapers")
 SAMPLE_DIR = os.path.join(WPG_DIR, "samples")
 SCHEME_DIR = os.path.join(WPG_DIR, "schemes")
-FORMAT_DIR = os.path.join(WPG_DIR, "formats")
+FORMAT_DIR = os.path.join(HOME, ".cache", "wal")
 OPT_DIR = os.path.join(WPG_DIR, "templates")
 FILE_DIC = {
     'icon-step1': os.path.join(HOME, ".icons/flattrcolor/scripts"
