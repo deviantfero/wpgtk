@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=wpgtk
+Comment=A colorscheme, wallpaper and template manager for *nix
+Exec=/usr/bin/wpg
+Icon=wpgtk
+Terminal=false
+Categories=Utility;DesktopSettings;
