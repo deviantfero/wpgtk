@@ -27,7 +27,7 @@ setuptools.setup(
     version=VERSION,
     author="Fernando Vásquez",
     author_email="fmorataya.04@gmail.com",
-    description="GTK+ theme/wallpaper manager which uses pywal as it's core",
+    description="GTK+ theme/wallpaper manager which uses pywal as its core",
     long_description=LONG_DESC,
     license="GPL2",
     url="https://github.com/deviantfero/wpgtk",
