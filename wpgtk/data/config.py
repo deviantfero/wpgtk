@@ -7,20 +7,24 @@ __version__ = '6.0.6'
 
 parser = None
 
-HOME = os.path.expanduser("~")
-WPG_DIR = os.path.join(HOME, ".config/wpg")
+HOME = os.getenv("HOME", os.path.expanduser("~"))
+CACHE = os.getenv("XDG_CACHE_HOME", os.path.join(HOME, ".cache"))
+CONFIG = os.getenv("XDG_CONFIG_HOME", os.path.join(HOME, ".config"))
+LOCAL = os.getenv("XDG_DATA_HOME", os.path.join(HOME, ".local", "share"))
+
+WPG_DIR = os.path.join(CONFIG, "wpg")
 CONF_FILE = os.path.join(WPG_DIR, "wpg.conf")
 MODULE_DIR = os.path.abspath(os.path.join(__file__, "../../"))
 CONF_BACKUP = os.path.join(MODULE_DIR, "misc/wpg.conf")
 WALL_DIR = os.path.join(WPG_DIR, "wallpapers")
 SAMPLE_DIR = os.path.join(WPG_DIR, "samples")
 SCHEME_DIR = os.path.join(WPG_DIR, "schemes")
-FORMAT_DIR = os.path.join(HOME, ".cache", "wal")
+FORMAT_DIR = os.path.join(CACHE, "wal")
 OPT_DIR = os.path.join(WPG_DIR, "templates")
 FILE_DIC = {
-    'icon-step1': os.path.join(HOME, ".icons/flattrcolor/scripts"
+    'icon-step1': os.path.join(LOCAL, "icons/flattrcolor/scripts"
                                "/replace_folder_file.sh"),
-    'icon-step2': os.path.join(HOME, ".icons/flattrcolor/scripts"
+    'icon-step2': os.path.join(LOCAL, "icons/flattrcolor/scripts"
                                "/replace_script.sh")
 }
 

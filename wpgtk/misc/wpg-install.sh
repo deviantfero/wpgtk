@@ -1,8 +1,21 @@
 #!/usr/bin/env bash
 
 __ScriptVersion="0.1.5";
+
+if [ -n "${XDG_CONFIG_HOME}" ]; then
+  CONFIG="${XDG_CONFIG_HOME}"
+else
+  CONFIG="${HOME}/.config" 
+fi
+
+if [ -n "${XDG_DATA_HOME}" ]; then
+  LOCAL="${XDG_DATA_HOME}"
+else
+  LOCAL="${HOME}/.local/share" 
+fi
+
 THEME_DIR="${PWD}/wpgtk-templates";
-COLOR_OTHER="${HOME}/.config/wpg/templates";
+COLOR_OTHER="${CONFIG}/wpg/templates";
 
 #===  FUNCTION  ================================================================
 #         NAME:  wpg-install.sh
@@ -41,8 +54,8 @@ getfiles()
 {
   checkprogram 'git';
   checkprogram 'wpg';
-  mkdir -p "${HOME}/.themes/color_other";
-  mkdir -p "${HOME}/.icons";
+  mkdir -p "${LOCAL}/themes/color_other";
+  mkdir -p "${LOCAL}/icons";
   git clone https://github.com/deviantfero/wpgtk-templates "$THEME_DIR";
   if [[ $? -eq 0 ]]; then
     cd "$THEME_DIR";
@@ -60,10 +73,10 @@ install_tint2()
   if [[ ! "$response" == "n" ]]; then
     echo "Installing tint2 config";
     echo ":: backing up current tint2 conf in tint2rc.old.bak";
-    cp "${HOME}/.config/tint2/tint2rc" "${HOME}/.config/tint2/tint2rc.old.bak" 2>/dev/null;
-    cp --remove-destination ./tint2/tint2rc "${HOME}/.config/tint2/tint2rc" && \
+    cp "${CONFIG}/tint2/tint2rc" "${CONFIG}/tint2/tint2rc.old.bak" 2>/dev/null;
+    cp --remove-destination ./tint2/tint2rc "${CONFIG}/tint2/tint2rc" && \
     cp --remove-destination ./tint2/tint2rc.base "${COLOR_OTHER}" && \
-      ln -sf "${HOME}/.config/tint2/tint2rc" "${COLOR_OTHER}/tint2rc" && \
+      ln -sf "${CONFIG}/tint2/tint2rc" "${COLOR_OTHER}/tint2rc" && \
       echo ":: tint2 template install done."
     return 0;
   fi
@@ -77,10 +90,10 @@ install_rofi()
   if [[ ! "$response" == "n" ]]; then
     echo "Installing rofi config";
     echo ":: backing up current rofi conf in rofi.bak";
-    cp "${HOME}/.config/rofi/config" "${HOME}/.config/rofi/config.bak" 2>/dev/null;
-    cp --remove-destination ./rofi/config "${HOME}/.config/rofi/config" && \
+    cp "${CONFIG}/rofi/config" "${CONFIG}/rofi/config.bak" 2>/dev/null;
+    cp --remove-destination ./rofi/config "${CONFIG}/rofi/config" && \
     cp --remove-destination ./rofi/rofi.base "${COLOR_OTHER}" && \
-      ln -sf "${HOME}/.config/rofi/config" "${COLOR_OTHER}/rofi" && \
+      ln -sf "${CONFIG}/rofi/config" "${COLOR_OTHER}/rofi" && \
       echo ":: rofi template install done."
     return 0;
   fi
@@ -94,10 +107,10 @@ install_i3()
   if [[ ! "$response" == "n" ]]; then
     echo "Installing i3 config";
     echo ":: backing up current i3 conf in config.bak";
-    cp "${HOME}/.config/i3/config" "${HOME}/.config/i3/config.bak" 2>/dev/null;
-    cp --remove-destination ./i3/config "${HOME}/.config/i3/config" && \
+    cp "${CONFIG}/i3/config" "${CONFIG}/i3/config.bak" 2>/dev/null;
+    cp --remove-destination ./i3/config "${CONFIG}/i3/config" && \
     cp --remove-destination ./i3/i3.base "${COLOR_OTHER}" && \
-      ln -sf "${HOME}/.config/i3/config" "${COLOR_OTHER}/i3" && \
+      ln -sf "${CONFIG}/i3/config" "${COLOR_OTHER}/i3" && \
       echo ":: i3 template install done."
     return 0;
   fi
@@ -111,10 +124,10 @@ install_polybar()
   if [[ ! "$response" == "n" ]]; then
     echo "Installing polybar config";
     echo ":: backing up current polybar conf in config.bak";
-    cp "${HOME}/.config/polybar/config" "${HOME}/.config/polybar/config.bak" 2>/dev/null;
-    cp --remove-destination ./polybar/config "${HOME}/.config/polybar/config" && \
+    cp "${CONFIG}/polybar/config" "${CONFIG}/polybar/config.bak" 2>/dev/null;
+    cp --remove-destination ./polybar/config "${CONFIG}/polybar/config" && \
     cp --remove-destination ./polybar/polybar.base "${COLOR_OTHER}" && \
-      ln -sf "${HOME}/.config/polybar/config" "${COLOR_OTHER}/polybar" && \
+      ln -sf "${CONFIG}/polybar/config" "${COLOR_OTHER}/polybar" && \
       echo ":: polybar template install done."
     return 0;
   fi
@@ -124,15 +137,15 @@ install_polybar()
 install_gtk()
 {
   echo "Installing gtk themes";
-  cp -r ./FlatColor "${HOME}/.themes/" && \
+  cp -r ./FlatColor "${LOCAL}/themes/" && \
   cp --remove-destination ./FlatColor/gtk-2.0/gtkrc.base "${COLOR_OTHER}/gtk2.base" && \
-    ln -sf "${HOME}/.themes/FlatColor/gtk-2.0/gtkrc" "${COLOR_OTHER}/gtk2" && \
+    ln -sf "${LOCAL}/themes/FlatColor/gtk-2.0/gtkrc" "${COLOR_OTHER}/gtk2" && \
     echo ":: gtk2 theme done"
   cp --remove-destination ./FlatColor/gtk-3.0/gtk.css.base "${COLOR_OTHER}/gtk3.0.base" && \
-    ln -sf "${HOME}/.themes/FlatColor/gtk-3.0/gtk.css" "${COLOR_OTHER}/gtk3.0" && \
+    ln -sf "${LOCAL}/themes/FlatColor/gtk-3.0/gtk.css" "${COLOR_OTHER}/gtk3.0" && \
     echo ":: gtk3.0 theme done"
   cp --remove-destination ./FlatColor/gtk-3.20/gtk.css.base "${COLOR_OTHER}/gtk3.20.base" && \
-    ln -sf "${HOME}/.themes/FlatColor/gtk-3.20/gtk.css" "${COLOR_OTHER}/gtk3.20" && \
+    ln -sf "${LOCAL}/themes/FlatColor/gtk-3.20/gtk.css" "${COLOR_OTHER}/gtk3.20" && \
     echo ":: gtk3.20 theme done"
   echo ":: FlatColor gtk themes install done."
 }
@@ -140,18 +153,18 @@ install_gtk()
 install_icons()
 {
   echo "Installing icon pack";
-  cp -r flattrcolor "${HOME}/.icons/" && \
-  cp -r flattrcolor-dark "${HOME}/.icons/" && \
+  cp -r flattrcolor "${LOCAL}/icons/" && \
+  cp -r flattrcolor-dark "${LOCAL}/icons/" && \
     echo ":: flattr icons install done."
 }
 
 install_openbox()
 {
   echo "Installing openbox themes";
-  cp --remove-destination -r ./openbox/colorbamboo/* "${HOME}/.themes/colorbamboo"
+  cp --remove-destination -r ./openbox/colorbamboo/* "${LOCAL}/themes/colorbamboo"
   if [[ $? -eq 0 ]]; then
-    mv "${HOME}/.themes/colorbamboo/openbox-3/themerc.base" "${COLOR_OTHER}/ob_colorbamboo.base";
-    ln -sf "${HOME}/.themes/colorbamboo/openbox-3/themerc" "${COLOR_OTHER}/ob_colorbamboo" && \
+    mv "${LOCAL}/themes/colorbamboo/openbox-3/themerc.base" "${COLOR_OTHER}/ob_colorbamboo.base";
+    ln -sf "${LOCAL}/themes/colorbamboo/openbox-3/themerc" "${COLOR_OTHER}/ob_colorbamboo" && \
       echo ":: colorbamboo openbox themes install done.";
   fi
 }
@@ -161,8 +174,8 @@ install_bspwm()
   echo "Installing bspwm colors";
   mv "./bspwm/bspwm_colors.base" "${COLOR_OTHER}/bspwm_colors.base";
   mv "./bspwm/bspwm_colors" "${COLOR_OTHER}/bspwm_colors";
-  ln -sf "${HOME}/.config/bspwm/bspwm_colors.sh" "${COLOR_OTHER}/bspwm_colors" && \
-	echo 'bash "$HOME/.config/bspwm/bspwm_colors.sh" &' >> "${HOME}/.config/bspwm/bspwmrc";
+  ln -sf "${CONFIG}/bspwm/bspwm_colors.sh" "${COLOR_OTHER}/bspwm_colors" && \
+  printf 'bash %s/bspwm/bspwm_colors.sh &' ${CONFIG} >> "${CONFIG}/bspwm/bspwmrc";
   echo ":: bspwm colors install done.";
 }
 
@@ -170,11 +183,11 @@ install_dunst()
 {
   echo "Installing dunst colors";
   echo ":: backing up current dunst conf in dunstrc.bak";
-  cp "${HOME}/.config/dunst/dunstrc" "${HOME}/.config/dunst/dunstrc.bak" 2>/dev/null;
+  cp "${CONFIG}/dunst/dunstrc" "${CONFIG}/dunst/dunstrc.bak" 2>/dev/null;
 
   mv "./dunst/dunstrc.base" "${COLOR_OTHER}/dunstrc.base";
   mv "./dunst/dunstrc" "${COLOR_OTHER}/dunstrc";
-  ln -sf "${HOME}/.config/dunst/dunstrc" "${COLOR_OTHER}/dunstrc" && \
+  ln -sf "${CONFIG}/dunst/dunstrc" "${COLOR_OTHER}/dunstrc" && \
 	echo ":: dunst colors install done.";
 }
 
