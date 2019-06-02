@@ -17,6 +17,8 @@ except:
 
 VERSION = wpgtk.__version__
 DOWNLOAD = "https://github.com/deviantfero/wpgtk/archive/%s.tar.gz" % VERSION
+
+HOME = os.getenv("HOME", os.path.expanduser("~"))
 LOCAL = os.getenv("XDG_DATA_HOME", os.path.join(HOME, ".local", "share"))
 WALL_DIR = os.path.join(LOCAL, 'wallpapers')
 
