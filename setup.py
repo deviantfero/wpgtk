@@ -17,7 +17,11 @@ except:
 
 VERSION = wpgtk.__version__
 DOWNLOAD = "https://github.com/deviantfero/wpgtk/archive/%s.tar.gz" % VERSION
-WALL_DIR = os.path.expanduser('~') + '/.wallpapers'
+
+HOME = os.getenv("HOME", os.path.expanduser("~"))
+CONFIG = os.getenv("XDG_CONFIG_HOME", os.path.join(HOME, ".config"))
+WPG_DIR = os.path.join(CONFIG, "wpg")
+WALL_DIR = os.path.join(WPG_DIR, "wallpapers")
 
 
 setuptools.setup(
@@ -26,7 +30,7 @@ setuptools.setup(
     version=VERSION,
     author="Fernando Vásquez",
     author_email="fmorataya.04@gmail.com",
-    description="GTK+ theme/wallpaper manager which uses pywal as it's core",
+    description="GTK+ theme/wallpaper manager which uses pywal as its core",
     long_description=LONG_DESC,
     license="GPL2",
     url="https://github.com/deviantfero/wpgtk",
