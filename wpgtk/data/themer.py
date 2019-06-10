@@ -51,7 +51,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     files.write_script(wallpaper, colorscheme)
     files.change_current(wallpaper)
-    
+
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
 
     if settings.getboolean('execute_cmd'):
