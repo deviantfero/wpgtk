@@ -71,9 +71,12 @@ def get_current():
 def reset_theme(theme_name):
     """restore a colorscheme to it's original state by deleting
     and re adding the image"""
-    wallpaper = realpath(path.join(WALL_DIR, theme_name))
-    delete_theme(theme_name)
-    create_theme(wallpaper)
+    files.delete_colorschemes(theme_name)
+
+    try:
+        return color.get_color_list(theme_name)
+    except SystemExit:
+        return set_fallback_theme(theme_name)
 
 
 def import_theme(wallpaper, json_file, theme=False):
