@@ -14,7 +14,8 @@ else
   LOCAL="${HOME}/.local/share" 
 fi
 
-THEME_DIR="${PWD}/wpgtk-templates";
+THEMES_DIR="${HOME}/.themes";
+TEMPLATE_DIR="${PWD}/wpgtk-templates";
 COLOR_OTHER="${CONFIG}/wpg/templates";
 
 #===  FUNCTION  ================================================================
@@ -56,9 +57,9 @@ getfiles()
   checkprogram 'wpg';
   mkdir -p "${LOCAL}/themes/color_other";
   mkdir -p "${LOCAL}/icons";
-  git clone https://github.com/deviantfero/wpgtk-templates "$THEME_DIR";
+  git clone https://github.com/deviantfero/wpgtk-templates "$TEMPLATE_DIR";
   if [[ $? -eq 0 ]]; then
-    cd "$THEME_DIR";
+    cd "$TEMPLATE_DIR";
     [[ ! -z "$commit" ]] && git checkout $commit;
     return 0;
   else
@@ -138,15 +139,20 @@ install_gtk()
 {
   echo "Installing gtk themes";
   cp -r ./FlatColor "${LOCAL}/themes/" && \
+
   cp --remove-destination ./FlatColor/gtk-2.0/gtkrc.base "${COLOR_OTHER}/gtk2.base" && \
     ln -sf "${LOCAL}/themes/FlatColor/gtk-2.0/gtkrc" "${COLOR_OTHER}/gtk2" && \
-    echo ":: gtk2 theme done"
+	ln -sf "${LOCAL}/themes/FlatColor" "${THEMES_DIR}/FlatColor" && \
+	echo ":: gtk2 theme done" "${COLOR_OTHER}/gtk2";
+
   cp --remove-destination ./FlatColor/gtk-3.0/gtk.css.base "${COLOR_OTHER}/gtk3.0.base" && \
     ln -sf "${LOCAL}/themes/FlatColor/gtk-3.0/gtk.css" "${COLOR_OTHER}/gtk3.0" && \
     echo ":: gtk3.0 theme done"
+
   cp --remove-destination ./FlatColor/gtk-3.20/gtk.css.base "${COLOR_OTHER}/gtk3.20.base" && \
     ln -sf "${LOCAL}/themes/FlatColor/gtk-3.20/gtk.css" "${COLOR_OTHER}/gtk3.20" && \
     echo ":: gtk3.20 theme done"
+
   echo ":: FlatColor gtk themes install done."
 }
 
@@ -162,10 +168,12 @@ install_openbox()
 {
   echo "Installing openbox themes";
   cp --remove-destination -r ./openbox/colorbamboo/* "${LOCAL}/themes/colorbamboo"
+
   if [[ $? -eq 0 ]]; then
-    mv "${LOCAL}/themes/colorbamboo/openbox-3/themerc.base" "${COLOR_OTHER}/ob_colorbamboo.base";
-    ln -sf "${LOCAL}/themes/colorbamboo/openbox-3/themerc" "${COLOR_OTHER}/ob_colorbamboo" && \
-      echo ":: colorbamboo openbox themes install done.";
+	mv "${LOCAL}/themes/colorbamboo/openbox-3/themerc.base" "${COLOR_OTHER}/ob_colorbamboo.base" && \
+	  ln -sf "${LOCAL}/themes/colorbamboo/openbox-3/themerc" "${COLOR_OTHER}/ob_colorbamboo" && \
+	  ln -sf "${LOCAL}/themes/colorbamboo" "${THEMES_DIR}/colorbamboo" && \
+	  echo ":: colorbamboo openbox themes install done.";
   fi
 }
 
@@ -193,7 +201,7 @@ install_dunst()
 
 clean_up()
 {
-  rm -rf "$THEME_DIR";
+  rm -rf "$TEMPLATE_DIR";
 }
 
 
