@@ -49,7 +49,7 @@ def get_color_list(filename, json=False):
     if is_new and not json:
         if is_auto_adjust or is_light_theme:
             color_list = auto_adjust(color_list)
-        sample.create(color_list, files.get_sample_path(filename))
+        sample.create_sample(color_list, files.get_sample_path(filename))
         write_colors(filename, color_list)
 
     return color_list
