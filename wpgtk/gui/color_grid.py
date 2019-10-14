@@ -225,7 +225,7 @@ class ColorGrid(Gtk.Grid):
                 self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
 
     def on_auto_click(self, widget):
-        self.color_list = color.auto_adjust_colors(self.color_list)
+        self.color_list = color.auto_adjust(self.color_list)
         self.render_buttons()
         self.render_sample()
 

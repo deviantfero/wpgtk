@@ -4,7 +4,7 @@ KEY_LENGTH = 5
 VAL_LENGTH = 2
 
 
-def update_keyword(old_keyword, new_keyword, save=False):
+def update_key(old_keyword, new_keyword, save=False):
     """validates and updates a keyword"""
     if not new_keyword:
         raise Exception('Keyword must be longer than 5 characters')

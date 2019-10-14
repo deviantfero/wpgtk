@@ -71,7 +71,7 @@ class KeywordGrid(Gtk.Grid):
         self.status_lbl.set_text('')
         if(col == 0):
             try:
-                keywords.update_keyword(self.liststore[path][col], text)
+                keywords.update_key(self.liststore[path][col], text)
             except Exception as e:
                 self.status_lbl.set_text(str(e))
         else:

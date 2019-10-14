@@ -53,13 +53,20 @@ class mainWindow(Gtk.Window):
         self.notebook.append_page(self.optpage, Gtk.Label('Options'))
 
         option_list = Gtk.ListStore(str)
-        for elem in list(files.get_file_list()):
+        current_idx = 0
+
+        for (i, elem) in enumerate(files.get_file_list()):
+            if elem == themer.get_current():
+                current_idx = i
+
             option_list.append([elem])
+
         self.option_combo = Gtk.ComboBox.new_with_model(option_list)
         self.renderer_text = Gtk.CellRendererText()
         self.option_combo.pack_start(self.renderer_text, True)
         self.option_combo.add_attribute(self.renderer_text, 'text', 0)
         self.option_combo.set_entry_text_column(0)
+        self.option_combo.set_active(current_idx)
 
         self.textbox = Gtk.Label()
         self.textbox.set_text('Select colorscheme')
@@ -67,6 +74,7 @@ class mainWindow(Gtk.Window):
         self.colorscheme.pack_start(self.renderer_text, True)
         self.colorscheme.add_attribute(self.renderer_text, 'text', 0)
         self.colorscheme.set_entry_text_column(0)
+        self.colorscheme.set_active(current_idx)
 
         self.set_border_width(10)
         self.preview = Gtk.Image()
@@ -173,10 +181,7 @@ class mainWindow(Gtk.Window):
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
 
-        # handle colorscheme and sample
-        # reloading from color_grid, since
-        # the colors are already loaded there
-
+        # set the ComboBox in color_grid
         self.cpage.set_edit_combo(x)
 
 

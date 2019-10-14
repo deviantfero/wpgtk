@@ -15,8 +15,8 @@ else
 fi
 
 THEMES_DIR="${HOME}/.themes";
-TEMPLATE_DIR="${PWD}/wpgtk-templates";
-COLOR_OTHER="${CONFIG}/wpg/templates";
+SRC_DIR="${PWD}/wpgtk-templates";
+TEMPLATE_DIR="${CONFIG}/wpg/templates";
 
 #===  FUNCTION  ================================================================
 #         NAME:  wpg-install.sh
@@ -57,9 +57,9 @@ getfiles()
   checkprogram 'wpg';
   mkdir -p "${LOCAL}/themes/color_other";
   mkdir -p "${LOCAL}/icons";
-  git clone https://github.com/deviantfero/wpgtk-templates "$TEMPLATE_DIR";
+  git clone https://github.com/deviantfero/wpgtk-templates "$SRC_DIR";
   if [[ $? -eq 0 ]]; then
-    cd "$TEMPLATE_DIR";
+    cd "$SRC_DIR";
     [[ ! -z "$commit" ]] && git checkout $commit;
     return 0;
   else
@@ -76,8 +76,8 @@ install_tint2()
     echo ":: backing up current tint2 conf in tint2rc.old.bak";
     cp "${CONFIG}/tint2/tint2rc" "${CONFIG}/tint2/tint2rc.old.bak" 2>/dev/null;
     cp --remove-destination ./tint2/tint2rc "${CONFIG}/tint2/tint2rc" && \
-    cp --remove-destination ./tint2/tint2rc.base "${COLOR_OTHER}" && \
-      ln -sf "${CONFIG}/tint2/tint2rc" "${COLOR_OTHER}/tint2rc" && \
+    cp --remove-destination ./tint2/tint2rc.base "${TEMPLATE_DIR}" && \
+      ln -sf "${CONFIG}/tint2/tint2rc" "${TEMPLATE_DIR}/tint2rc" && \
       echo ":: tint2 template install done."
     return 0;
   fi
@@ -93,8 +93,8 @@ install_rofi()
     echo ":: backing up current rofi conf in rofi.bak";
     cp "${CONFIG}/rofi/config" "${CONFIG}/rofi/config.bak" 2>/dev/null;
     cp --remove-destination ./rofi/config "${CONFIG}/rofi/config" && \
-    cp --remove-destination ./rofi/rofi.base "${COLOR_OTHER}" && \
-      ln -sf "${CONFIG}/rofi/config" "${COLOR_OTHER}/rofi" && \
+    cp --remove-destination ./rofi/rofi.base "${TEMPLATE_DIR}" && \
+      ln -sf "${CONFIG}/rofi/config" "${TEMPLATE_DIR}/rofi" && \
       echo ":: rofi template install done."
     return 0;
   fi
@@ -110,8 +110,8 @@ install_i3()
     echo ":: backing up current i3 conf in config.bak";
     cp "${CONFIG}/i3/config" "${CONFIG}/i3/config.bak" 2>/dev/null;
     cp --remove-destination ./i3/config "${CONFIG}/i3/config" && \
-    cp --remove-destination ./i3/i3.base "${COLOR_OTHER}" && \
-      ln -sf "${CONFIG}/i3/config" "${COLOR_OTHER}/i3" && \
+    cp --remove-destination ./i3/i3.base "${TEMPLATE_DIR}" && \
+      ln -sf "${CONFIG}/i3/config" "${TEMPLATE_DIR}/i3" && \
       echo ":: i3 template install done."
     return 0;
   fi
@@ -127,8 +127,8 @@ install_polybar()
     echo ":: backing up current polybar conf in config.bak";
     cp "${CONFIG}/polybar/config" "${CONFIG}/polybar/config.bak" 2>/dev/null;
     cp --remove-destination ./polybar/config "${CONFIG}/polybar/config" && \
-    cp --remove-destination ./polybar/polybar.base "${COLOR_OTHER}" && \
-      ln -sf "${CONFIG}/polybar/config" "${COLOR_OTHER}/polybar" && \
+    cp --remove-destination ./polybar/polybar.base "${TEMPLATE_DIR}" && \
+      ln -sf "${CONFIG}/polybar/config" "${TEMPLATE_DIR}/polybar" && \
       echo ":: polybar template install done."
     return 0;
   fi
@@ -140,17 +140,17 @@ install_gtk()
   echo "Installing gtk themes";
   cp -r ./FlatColor "${LOCAL}/themes/" && \
 
-  cp --remove-destination ./FlatColor/gtk-2.0/gtkrc.base "${COLOR_OTHER}/gtk2.base" && \
-    ln -sf "${LOCAL}/themes/FlatColor/gtk-2.0/gtkrc" "${COLOR_OTHER}/gtk2" && \
+  cp --remove-destination ./FlatColor/gtk-2.0/gtkrc.base "${TEMPLATE_DIR}/gtk2.base" && \
+    ln -sf "${LOCAL}/themes/FlatColor/gtk-2.0/gtkrc" "${TEMPLATE_DIR}/gtk2" && \
 	ln -sf "${LOCAL}/themes/FlatColor" "${THEMES_DIR}/FlatColor" && \
-	echo ":: gtk2 theme done" "${COLOR_OTHER}/gtk2";
+	echo ":: gtk2 theme done" "${TEMPLATE_DIR}/gtk2";
 
-  cp --remove-destination ./FlatColor/gtk-3.0/gtk.css.base "${COLOR_OTHER}/gtk3.0.base" && \
-    ln -sf "${LOCAL}/themes/FlatColor/gtk-3.0/gtk.css" "${COLOR_OTHER}/gtk3.0" && \
+  cp --remove-destination ./FlatColor/gtk-3.0/gtk.css.base "${TEMPLATE_DIR}/gtk3.0.base" && \
+    ln -sf "${LOCAL}/themes/FlatColor/gtk-3.0/gtk.css" "${TEMPLATE_DIR}/gtk3.0" && \
     echo ":: gtk3.0 theme done"
 
-  cp --remove-destination ./FlatColor/gtk-3.20/gtk.css.base "${COLOR_OTHER}/gtk3.20.base" && \
-    ln -sf "${LOCAL}/themes/FlatColor/gtk-3.20/gtk.css" "${COLOR_OTHER}/gtk3.20" && \
+  cp --remove-destination ./FlatColor/gtk-3.20/gtk.css.base "${TEMPLATE_DIR}/gtk3.20.base" && \
+    ln -sf "${LOCAL}/themes/FlatColor/gtk-3.20/gtk.css" "${TEMPLATE_DIR}/gtk3.20" && \
     echo ":: gtk3.20 theme done"
 
   echo ":: FlatColor gtk themes install done."
@@ -170,8 +170,8 @@ install_openbox()
   cp --remove-destination -r ./openbox/colorbamboo/* "${LOCAL}/themes/colorbamboo"
 
   if [[ $? -eq 0 ]]; then
-	mv "${LOCAL}/themes/colorbamboo/openbox-3/themerc.base" "${COLOR_OTHER}/ob_colorbamboo.base" && \
-	  ln -sf "${LOCAL}/themes/colorbamboo/openbox-3/themerc" "${COLOR_OTHER}/ob_colorbamboo" && \
+	mv "${LOCAL}/themes/colorbamboo/openbox-3/themerc.base" "${TEMPLATE_DIR}/ob_colorbamboo.base" && \
+	  ln -sf "${LOCAL}/themes/colorbamboo/openbox-3/themerc" "${TEMPLATE_DIR}/ob_colorbamboo" && \
 	  ln -sf "${LOCAL}/themes/colorbamboo" "${THEMES_DIR}/colorbamboo" && \
 	  echo ":: colorbamboo openbox themes install done.";
   fi
@@ -180,9 +180,9 @@ install_openbox()
 install_bspwm()
 {
   echo "Installing bspwm colors";
-  mv "./bspwm/bspwm_colors.base" "${COLOR_OTHER}/bspwm_colors.base";
-  mv "./bspwm/bspwm_colors" "${COLOR_OTHER}/bspwm_colors";
-  ln -sf "${CONFIG}/bspwm/bspwm_colors.sh" "${COLOR_OTHER}/bspwm_colors" && \
+  mv "./bspwm/bspwm_colors.base" "${TEMPLATE_DIR}/bspwm_colors.base";
+  mv "./bspwm/bspwm_colors" "${TEMPLATE_DIR}/bspwm_colors";
+  ln -sf "${CONFIG}/bspwm/bspwm_colors.sh" "${TEMPLATE_DIR}/bspwm_colors" && \
   printf 'bash %s/bspwm/bspwm_colors.sh &' ${CONFIG} >> "${CONFIG}/bspwm/bspwmrc";
   echo ":: bspwm colors install done.";
 }
@@ -193,15 +193,15 @@ install_dunst()
   echo ":: backing up current dunst conf in dunstrc.bak";
   cp "${CONFIG}/dunst/dunstrc" "${CONFIG}/dunst/dunstrc.bak" 2>/dev/null;
 
-  mv "./dunst/dunstrc.base" "${COLOR_OTHER}/dunstrc.base";
-  mv "./dunst/dunstrc" "${COLOR_OTHER}/dunstrc";
-  ln -sf "${CONFIG}/dunst/dunstrc" "${COLOR_OTHER}/dunstrc" && \
+  mv "./dunst/dunstrc.base" "${TEMPLATE_DIR}/dunstrc.base";
+  mv "./dunst/dunstrc" "${TEMPLATE_DIR}/dunstrc";
+  ln -sf "${CONFIG}/dunst/dunstrc" "${TEMPLATE_DIR}/dunstrc" && \
 	echo ":: dunst colors install done.";
 }
 
 clean_up()
 {
-  rm -rf "$TEMPLATE_DIR";
+  rm -rf "$SRC_DIR";
 }
 
 

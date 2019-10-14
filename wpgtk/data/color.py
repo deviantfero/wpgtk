@@ -33,8 +33,8 @@ def get_pywal_dict(wallpaper, is_file=False):
 def get_color_list(filename, json=False):
     """extract a list with 16 colors from a json or a pywal dict"""
     is_new = not os.path.isfile(files.get_cache_path(filename))
-    auto_adjust = settings.getboolean("auto_adjust", True)
-    light_theme = settings.getboolean("light_theme", False)
+    is_auto_adjust = settings.getboolean("auto_adjust", True)
+    is_light_theme = settings.getboolean("light_theme", False)
 
     if json:
         theme = pywal.util.read_file_json(filename)
@@ -47,9 +47,9 @@ def get_color_list(filename, json=False):
         color_list = list(theme["colors"].values())
 
     if is_new and not json:
-        if auto_adjust or light_theme:
-            color_list = auto_adjust_colors(color_list)
-        sample.create_sample(color_list, files.get_sample_path(filename))
+        if is_auto_adjust or is_light_theme:
+            color_list = auto_adjust(color_list)
+        sample.create(color_list, files.get_sample_path(filename))
         write_colors(filename, color_list)
 
     return color_list
@@ -141,12 +141,12 @@ def smart_sort(colors):
     return [*sorted_colors, *sorted_colors]
 
 
-def auto_adjust_colors(clist):
+def auto_adjust(colors):
     """create a clear foreground and background set of colors"""
     light = settings.getboolean("light_theme", False)
 
     if settings.getboolean("smart_sort", True):
-        clist = smart_sort(clist)
+        colors = smart_sort(colors)
 
     alter_brightness = util.alter_brightness
     get_hls_val = util.get_hls_val
@@ -154,16 +154,16 @@ def auto_adjust_colors(clist):
     added_sat = 0.25 if light else 0.1
     sign = -1 if light else 1
 
-    if light == is_dark_theme(clist):
-        clist[7], clist[0] = clist[0], clist[7]
+    if light == is_dark_theme(colors):
+        colors[7], colors[0] = colors[0], colors[7]
 
-    comment = [alter_brightness(clist[0], sign * 25)]
-    fg = [alter_brightness(clist[7], sign * 60)]
-    clist = clist[:8] + comment \
+    comment = [alter_brightness(colors[0], sign * 25)]
+    fg = [alter_brightness(colors[7], sign * 60)]
+    colors = colors[:8] + comment \
         + [alter_brightness(x, sign * get_hls_val(x, "light") * 0.3, added_sat)
-           for x in clist[1:7]] + fg
+           for x in colors[1:7]] + fg
 
-    return clist
+    return colors
 
 
 def change_templates(colors):
@@ -210,7 +210,7 @@ def add_icon_colors(colors):
         return dict()
 
 
-def wpgtk_colors(hexc, is_dark_theme=True):
+def keyword_colors(hexc, is_dark_theme=True):
     """extract active and inactive colors from a given
     hex color value"""
     brightness = util.get_hls_val(hexc, "light")
@@ -244,7 +244,7 @@ def get_color_dict(cdic):
         **cdic["special"],
         **cdic["colors"],
         **add_icon_colors(cdic),
-        **wpgtk_colors(base_color, is_dark_theme(color_list))
+        **keyword_colors(base_color, is_dark_theme(color_list))
     }
 
     try:

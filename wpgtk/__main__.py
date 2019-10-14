@@ -224,7 +224,7 @@ def process_args(args):
 
     if args.z or args.A:
         alter_action = color.shuffle_colors if args.z \
-                       else color.auto_adjust_colors
+                       else color.auto_adjust
         arg_list = args.z if args.z else args.A
 
         for arg in arg_list:
