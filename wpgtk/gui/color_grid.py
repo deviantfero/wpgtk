@@ -118,6 +118,7 @@ class ColorGrid(Gtk.Grid):
         option_list = Gtk.ListStore(str)
         for elem in list(files.get_file_list()):
             option_list.append([elem])
+
         self.option_combo = Gtk.ComboBox.new_with_model(option_list)
         self.renderer_text = Gtk.CellRendererText()
         self.option_combo.pack_start(self.renderer_text, True)
