@@ -41,7 +41,7 @@ If you prefer written documentation and want to know all the neat things you can
   * [User Gallery](https://imgur.com/a/EVIhGLj)
   * [Personal Gallery](https://imgur.com/a/0FFbz9F)
 
-This are just some of the desktops of users I've managed to catch in the wild, they're all pretty cool, I really love seeing these, but if anyone wants their desktop removed (or added) just send me an email or open an issue.
+These are just some of the desktops of users I've managed to catch in the wild.  They're all pretty cool, I really love seeing these, but if anyone wants their desktop removed (or added) just send me an email or open an issue.
 
 
 
