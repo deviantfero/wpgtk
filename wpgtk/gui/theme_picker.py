@@ -66,7 +66,6 @@ class mainWindow(Gtk.Window):
         self.option_combo.pack_start(self.renderer_text, True)
         self.option_combo.add_attribute(self.renderer_text, 'text', 0)
         self.option_combo.set_entry_text_column(0)
-        self.option_combo.set_active(current_idx)
 
         self.textbox = Gtk.Label()
         self.textbox.set_text('Select colorscheme')
@@ -74,7 +73,6 @@ class mainWindow(Gtk.Window):
         self.colorscheme.pack_start(self.renderer_text, True)
         self.colorscheme.add_attribute(self.renderer_text, 'text', 0)
         self.colorscheme.set_entry_text_column(0)
-        self.colorscheme.set_active(current_idx)
 
         self.set_border_width(10)
         self.preview = Gtk.Image()
@@ -93,7 +91,6 @@ class mainWindow(Gtk.Window):
 
         self.add_button = Gtk.Button(label='Add')
         self.set_button = Gtk.Button(label='Set')
-        self.set_button.set_sensitive(False)
         self.rm_button = Gtk.Button(label='Remove')
         # adds to first cell in wpage
         self.wpage.attach(self.option_combo, 1, 1, 2, 1)
@@ -110,6 +107,12 @@ class mainWindow(Gtk.Window):
         self.colorscheme.connect('changed', self.colorscheme_box_change)
         self.entry = Gtk.Entry()
         self.current_walls = Gtk.ComboBox()
+
+        if current_idx != 0:
+            self.option_combo.set_active(current_idx)
+            self.colorscheme.set_active(current_idx)
+            self.cpage.option_combo.set_active(current_idx)
+            self.set_button.set_sensitive(current_idx != 0)
 
     def on_add_clicked(self, widget):
         filechooser = Gtk.FileChooserDialog(
