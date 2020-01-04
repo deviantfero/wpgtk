@@ -53,7 +53,7 @@ class mainWindow(Gtk.Window):
         self.notebook.append_page(self.optpage, Gtk.Label('Options'))
 
         option_list = Gtk.ListStore(str)
-        current_idx = 0
+        current_idx = None
 
         for (i, elem) in enumerate(files.get_file_list()):
             if elem == themer.get_current():
@@ -92,6 +92,7 @@ class mainWindow(Gtk.Window):
         self.add_button = Gtk.Button(label='Add')
         self.set_button = Gtk.Button(label='Set')
         self.rm_button = Gtk.Button(label='Remove')
+
         # adds to first cell in wpage
         self.wpage.attach(self.option_combo, 1, 1, 2, 1)
         self.wpage.attach(self.colorscheme, 1, 2, 2, 1)
@@ -108,11 +109,11 @@ class mainWindow(Gtk.Window):
         self.entry = Gtk.Entry()
         self.current_walls = Gtk.ComboBox()
 
-        if current_idx != 0:
+        if current_idx is not None:
             self.option_combo.set_active(current_idx)
             self.colorscheme.set_active(current_idx)
             self.cpage.option_combo.set_active(current_idx)
-            self.set_button.set_sensitive(current_idx != 0)
+            self.set_button.set_sensitive(True)
 
     def on_add_clicked(self, widget):
         filechooser = Gtk.FileChooserDialog(
