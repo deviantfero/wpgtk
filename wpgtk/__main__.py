@@ -77,13 +77,13 @@ def read_args(args):
                         const="list", nargs="?")
 
     parser.add_argument("-T",
-                        help="assign a pywal theme to specific wallpaper"
+                        help="assign a pywal theme to a specific wallpaper"
                         " instead of a json file",
                         action="store_true")
 
     parser.add_argument("-i",
-                        help="import a theme in json format and asign "
-                        "to wallpaper [wallpaper, json]",
+                        help="import a theme in json format and assign "
+                        "to a wallpaper [wallpaper, json]",
                         nargs=2)
 
     parser.add_argument("-o",

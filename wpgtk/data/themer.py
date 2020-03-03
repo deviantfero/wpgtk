@@ -69,7 +69,7 @@ def get_current():
 
 
 def reset_theme(theme_name):
-    """restore a colorscheme to it's original state by deleting
+    """restore a colorscheme to its original state by deleting
     and re adding the image"""
     files.delete_colorschemes(theme_name)
 
@@ -112,7 +112,7 @@ def set_fallback_theme(wallpaper):
 
 
 def set_pywal_theme(theme_name):
-    """set's a pywal theme and applies it to wpgtk"""
+    """sets a pywal theme and applies it to wpgtk"""
     current = get_current()
     theme = pywal.theme.file(theme_name)
 
