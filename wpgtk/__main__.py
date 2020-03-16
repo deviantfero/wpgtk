@@ -61,7 +61,7 @@ def read_args(args):
     parser.add_argument("-A",
                         help="auto-adjusts the given colorscheme(s)",
                         nargs="+")
-    
+
     parser.add_argument("-r",
                         help="restore the wallpaper and colorscheme",
                         action="store_true")
@@ -126,6 +126,10 @@ def read_args(args):
                         help="update template(s) of your choice "
                         "to the new format",
                         nargs="+")
+
+    parser.add_argument("--noreload",
+                        help="do not reload",
+                        action="store_true")
 
     return parser.parse_args()
 
@@ -293,6 +297,9 @@ def process_args(args):
             if arg.endswith(".base"):
                 files.update_template(arg)
         exit(0)
+
+    if args.noreload:
+        settings["do_reload"] = "false"
 
 
 def main():
