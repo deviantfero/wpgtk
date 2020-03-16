@@ -128,7 +128,8 @@ def read_args(args):
                         nargs="+")
 
     parser.add_argument("--noreload",
-                        help="do not reload",
+                        help="Skip reloading other software after"
+                        "applying colorscheme",
                         action="store_true")
 
     return parser.parse_args()
@@ -299,7 +300,7 @@ def process_args(args):
         exit(0)
 
     if args.noreload:
-        settings["do_reload"] = "false"
+        settings["reload"] = "false"
 
 
 def main():
