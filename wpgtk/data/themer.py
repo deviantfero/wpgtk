@@ -54,7 +54,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
 
-    if settings.getboolean('execute_cmd'):
+    if settings.getboolean('execute_cmd', False) and not restore:
         Popen(['bash', '-c', settings['command']])
 
 
