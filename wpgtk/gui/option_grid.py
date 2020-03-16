@@ -84,7 +84,7 @@ class OptionsGrid(Gtk.Grid):
             self.on_activate,
             "light_theme"
         )
-        self.lbl_light_theme = Gtk.Label("Use Light Theme")
+        self.lbl_light_theme = Gtk.Label("Use light themes")
 
         self.wallpaper_switch = Gtk.Switch()
         self.wallpaper_switch.connect(
@@ -114,9 +114,9 @@ class OptionsGrid(Gtk.Grid):
         self.reload_switch.connect(
             "notify::active",
             self.on_activate,
-            "do_reload"
+            "reload"
         )
-        self.lbl_reload = Gtk.Label("Reload system")
+        self.lbl_reload = Gtk.Label("Reload other software")
 
         # edit cmd
         self.editor_lbl = Gtk.Label("Open optional files with:")
@@ -124,7 +124,7 @@ class OptionsGrid(Gtk.Grid):
         self.editor_txt.connect("changed", self.on_txt_change, "editor")
 
         # cmd
-        self.command_lbl = Gtk.Label("Run command after Colorize")
+        self.command_lbl = Gtk.Label("Run command after")
         self.command_exe_lbl = Gtk.Label("Command: ")
 
         self.command_txt = Gtk.Entry()
@@ -214,7 +214,7 @@ class OptionsGrid(Gtk.Grid):
         self.auto_adjust_switch\
             .set_active(settings.getboolean("auto_adjust", False))
         self.reload_switch\
-            .set_active(settings.getboolean("do_reload", True))
+            .set_active(settings.getboolean("reload", True))
 
         self.editor_txt\
             .set_text(settings.get("editor", "urxvt -e vim"))
