@@ -61,7 +61,7 @@ def read_args(args):
     parser.add_argument("-A",
                         help="auto-adjusts the given colorscheme(s)",
                         nargs="+")
-    
+
     parser.add_argument("-r",
                         help="restore the wallpaper and colorscheme",
                         action="store_true")
@@ -77,13 +77,13 @@ def read_args(args):
                         const="list", nargs="?")
 
     parser.add_argument("-T",
-                        help="assign a pywal theme to specific wallpaper"
+                        help="assign a pywal theme to a specific wallpaper"
                         " instead of a json file",
                         action="store_true")
 
     parser.add_argument("-i",
-                        help="import a theme in json format and asign "
-                        "to wallpaper [wallpaper, json]",
+                        help="import a theme in json format and assign "
+                        "to a wallpaper [wallpaper, json]",
                         nargs=2)
 
     parser.add_argument("-o",
@@ -126,6 +126,11 @@ def read_args(args):
                         help="update template(s) of your choice "
                         "to the new format",
                         nargs="+")
+
+    parser.add_argument("--noreload",
+                        help="Skip reloading other software after"
+                        "applying colorscheme",
+                        action="store_true")
 
     return parser.parse_args()
 
@@ -293,6 +298,9 @@ def process_args(args):
             if arg.endswith(".base"):
                 files.update_template(arg)
         exit(0)
+
+    if args.noreload:
+        settings["reload"] = "false"
 
 
 def main():
