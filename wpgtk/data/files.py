@@ -15,8 +15,8 @@ def get_file_list(path=WALL_DIR, images=True):
     files = []
 
     for root, d_names, f_names in os.walk(path):
-    	for f in f_names:
-    		files.append(os.path.join(root, f))
+        for f in f_names:
+            files.append(os.path.relpath(os.path.join(root, f), start=WALL_DIR))
 
     files.sort()
 
