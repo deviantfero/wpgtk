@@ -5,7 +5,7 @@ import logging
 from pywal.colors import cache_fname, list_backends
 
 from .config import settings, WALL_DIR, WPG_DIR, OPT_DIR, SAMPLE_DIR
-from os.path import join
+from os.path import join, basename
 
 
 def get_file_list(path=WALL_DIR, images=True):
@@ -52,6 +52,7 @@ def get_cache_path(wallpaper, backend=None):
 
 
 def get_sample_path(wallpaper, backend=None):
+    wallpaper = basename(wallpaper)
     """gets a wallpaper colorscheme sample's path"""
     if not backend:
         backend = settings.get("backend", "wal")
