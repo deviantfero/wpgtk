@@ -11,12 +11,12 @@ from os.path import join
 def get_file_list(path=WALL_DIR, images=True):
     """gets filenames in a given directory, optional
     parameters for image filter."""
-    valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
+    valid = re.compile(r"^(.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
     files = []
 
-    for (_, _, filenames) in os.walk(path):
-        files.extend(filenames)
-        break
+    for root, d_names, f_names in os.walk(path):
+    	for f in f_names:
+    		files.append(os.path.join(root, f))
 
     files.sort()
 
