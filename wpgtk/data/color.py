@@ -65,7 +65,7 @@ def is_dark_theme(color_list):
 
 
 def shuffle_colors(colors):
-    """shuffle a color list in gorups of 8"""
+    """shuffle a color list in groups of 8"""
     color_group = [[colors[i], colors[i + 8]] for i in range(1, 7)]
     shuffle(color_group)
 
@@ -112,7 +112,7 @@ def change_colors(colors, which):
 
 def smart_sort(colors):
     """automatically set the most look-alike colors to their
-    corresponding place in the standar xterm colors"""
+    corresponding place in the standard xterm colors"""
     colors = colors[:8]
     sorted_by_color = list()
     base_colors = ["#000000", "#ff0000", "#00ff00", "#ffff00",
@@ -206,7 +206,7 @@ def add_icon_colors(colors):
         return dict()
 
     except IOError:
-        logging.error("icons - base file does not exists")
+        logging.error("icons - base file does not exist")
         return dict()
 
 

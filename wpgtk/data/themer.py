@@ -34,13 +34,15 @@ def set_theme(wallpaper, colorscheme, restore=False):
     target = colorscheme if is_file else path.join(WALL_DIR, colorscheme)
 
     set_wall = settings.getboolean("set_wallpaper", True)
+    reload_all = settings.getboolean("reload", True)
     colors = color.get_pywal_dict(target, is_file)
     pywal.sequences.send(colors, WPG_DIR, vte_fix=use_vte)
 
     if not restore:
         pywal.export.every(colors, FORMAT_DIR)
         color.apply_colorscheme(colors)
-        reload.all()
+        if reload_all:
+            reload.all()
     else:
         reload.xrdb()
 
@@ -54,7 +56,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
 
-    if settings.getboolean('execute_cmd'):
+    if settings.getboolean('execute_cmd', False) and not restore:
         Popen(['bash', '-c', settings['command']])
 
 
@@ -69,7 +71,7 @@ def get_current():
 
 
 def reset_theme(theme_name):
-    """restore a colorscheme to it's original state by deleting
+    """restore a colorscheme to its original state by deleting
     and re adding the image"""
     files.delete_colorschemes(theme_name)
 
@@ -112,7 +114,7 @@ def set_fallback_theme(wallpaper):
 
 
 def set_pywal_theme(theme_name):
-    """set's a pywal theme and applies it to wpgtk"""
+    """sets a pywal theme and applies it to wpgtk"""
     current = get_current()
     theme = pywal.theme.file(theme_name)
 
