@@ -262,7 +262,8 @@ def process_args(args):
         exit(0)
 
     if args.theme == "list":
-        name_dic = pywal.theme.list_themes()
+        dark = settings['light_theme'] != "true"
+        name_dic = pywal.theme.list_themes(dark)
         name_list = [t.name.replace(".json", "") for t in name_dic]
         print("\n".join(name_list))
         exit(0)
@@ -286,7 +287,8 @@ def process_args(args):
         exit(0)
 
     if args.theme and args.theme != "list":
-        themer.set_pywal_theme(args.theme)
+        light = settings['light_theme'] == "true"
+        themer.set_pywal_theme(args.theme, light)
         exit(0)
 
     if args.backend == "list":
