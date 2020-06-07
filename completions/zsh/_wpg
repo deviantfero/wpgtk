@@ -24,6 +24,12 @@ _themes() {
     _describe 'themes' themes
 }
 
+_light_themes() {
+	local -a light_themes
+	light_themes=(`wpg -L --theme`)
+	_describe 'light_themes' light_themes
+}
+
 _wpg() {
     local state optforcolorschemes
     # themes
@@ -40,6 +46,8 @@ _wpg() {
     optforbackends=(--backend)
     # pywal themes
     optforthemes=(--theme)
+	# pywal light themes
+	optforlightthemes=(-L --light)
 
     _arguments \
         '1: :->generic' \
@@ -90,6 +98,11 @@ _wpg() {
                         _themes
                     fi
                 done
+				for opt in $optforlightthemes; do
+					if [[ $opt = ${words[2]} && "--theme" = ${words[3]} ]]; then
+						_light_themes
+					fi
+				done
 			fi 
 			;;
 	esac

@@ -15,6 +15,8 @@ function _wpg() {
 	optforbackends="--backends"
 	# pywal themes
 	optforthemes="--theme"
+	# pywal light themes
+	optforlightthemes="-L --light"
 
     if [[ $COMP_CWORD = 1 ]]; then
         COMPREPLY=($(compgen -W "$(_parse_usage wpg)" -- "$cur"))
@@ -58,7 +60,12 @@ function _wpg() {
                 COMPREPLY=($(compgen -W "$(wpg -tl)" -- "$cur"))
             fi
         done
-    fi
+		for opt in $optforlightthemes; do
+			if [[ $opt = ${COMP_WORDS[1]} && "--theme" = ${COMP_WORDS[2]} ]]; then
+				COMPREPLY=($(compgen -W "$(wpg -L --theme)" -- "$cur"))
+			fi
+		done
+	fi
 }
 
 complete -F _wpg wpg
