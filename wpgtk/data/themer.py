@@ -113,10 +113,10 @@ def set_fallback_theme(wallpaper):
     return color_list
 
 
-def set_pywal_theme(theme_name):
+def set_pywal_theme(theme_name, light):
     """sets a pywal theme and applies it to wpgtk"""
     current = get_current()
-    theme = pywal.theme.file(theme_name)
+    theme = pywal.theme.file(theme_name, light)
 
     color_list = list(theme["colors"].values())
     color.write_colors(current, color_list)
