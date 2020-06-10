@@ -46,7 +46,7 @@ class mainWindow(Gtk.Window):
         self.optpage = option_grid.OptionsGrid(self)
         self.keypage = keyword_grid.KeywordGrid(self)
 
-        self.notebook.append_page(self.wpage, Gtk.Label('Set'))
+        self.notebook.append_page(self.wpage, Gtk.Label('Wallpapers'))
         self.notebook.append_page(self.cpage, Gtk.Label('Colors'))
         self.notebook.append_page(self.fpage, Gtk.Label('Templates'))
         self.notebook.append_page(self.keypage, Gtk.Label('Keywords'))
