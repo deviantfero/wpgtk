@@ -5,22 +5,21 @@ import logging
 from pywal.colors import cache_fname, list_backends
 
 from .config import settings, WALL_DIR, WPG_DIR, OPT_DIR, SAMPLE_DIR
-from os.path import join, basename
+from os.path import join
 
 
 def get_file_list(path=WALL_DIR, images=True):
     """gets filenames in a given directory, optional
     parameters for image filter."""
 
-    valid = re.compile(r"^(.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
+    valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
     files = []
 
-    for root, d_names, f_names in os.walk(path):
-        for f in f_names:
-            files.append(os.path.relpath(os.path.join(root, f), start=WALL_DIR))
+    for _, _, filenames in os.walk(path):
+        files.extend(filenames)
+        break
 
     files.sort()
-
 
     if images:
         return [elem for elem in files if valid.fullmatch(elem)]
@@ -54,7 +53,6 @@ def get_cache_path(wallpaper, backend=None):
 
 
 def get_sample_path(wallpaper, backend=None):
-    wallpaper = basename(wallpaper)
     """gets a wallpaper colorscheme sample's path"""
     if not backend:
         backend = settings.get("backend", "wal")

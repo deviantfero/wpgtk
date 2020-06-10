@@ -1,8 +1,8 @@
 import pywal
 import shutil
 import logging
-from os.path import realpath, relpath
-from os import remove, path, symlink, readlink
+from os.path import realpath
+from os import remove, path, symlink
 from subprocess import Popen
 
 from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, settings
@@ -66,7 +66,7 @@ def delete_theme(filename):
 
 
 def get_current():
-    image = relpath(readlink(path.join(WPG_DIR, '.current')), start=WALL_DIR)
+    image = realpath(path.join(WPG_DIR, '.current'))
     return image
 
 
