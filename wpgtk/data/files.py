@@ -5,7 +5,7 @@ import logging
 from pywal.colors import cache_fname, list_backends
 
 from .config import settings, WALL_DIR, WPG_DIR, OPT_DIR, SAMPLE_DIR
-from os.path import join
+from os.path import join, basename
 
 
 def get_file_list(path=WALL_DIR, images=True):
@@ -69,7 +69,7 @@ def add_template(cfile, bfile=None):
     cfile = os.path.realpath(cfile)
 
     if bfile:
-        template_name = bfile.split("/").pop()
+        template_name = basename(bfile)
     else:
         clean_atoms = [atom.lstrip(".") for atom in cfile.split("/")[-3::]]
         template_name = "_".join(clean_atoms) + ".base"

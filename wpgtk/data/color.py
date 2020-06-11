@@ -101,7 +101,7 @@ def change_colors(colors, which):
 
                 with open(which, "w") as target_file:
                     target_file.write(tmp_data)
-                    logging.info("wrote: %s" % opt.split("/").pop())
+                    logging.info("wrote: %s" % os.path.basename(opt))
 
     except KeyError as e:
         logging.error("%s in %s - key does not exist" % (e, opt))
