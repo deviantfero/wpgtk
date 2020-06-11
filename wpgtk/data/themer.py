@@ -66,7 +66,7 @@ def delete_theme(filename):
 
 
 def get_current():
-    image = realpath(path.join(WPG_DIR, '.current')).split('/').pop()
+    image = realpath(path.join(WPG_DIR, '.current'))
     return image
 
 

@@ -11,10 +11,11 @@ from os.path import join
 def get_file_list(path=WALL_DIR, images=True):
     """gets filenames in a given directory, optional
     parameters for image filter."""
+
     valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
     files = []
 
-    for (_, _, filenames) in os.walk(path):
+    for _, _, filenames in os.walk(path):
         files.extend(filenames)
         break
 
@@ -79,7 +80,7 @@ def add_template(cfile, bfile=None):
 
         shutil.copy2(src_file, join(OPT_DIR, template_name))
         os.symlink(cfile, join(OPT_DIR,
-                   template_name.replace(".base", "")))
+                               template_name.replace(".base", "")))
 
         logging.info("created backup %s.bak" % cfile)
         logging.info("added %s @ %s" % (template_name, cfile))

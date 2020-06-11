@@ -36,19 +36,32 @@ def openbox():
 
 
 def gtk3():
-    if shutil.which("xsettingsd") and settings.getboolean("gtk", True):
-        fd, path = tempfile.mkstemp()
-        try:
-            with os.fdopen(fd, 'w+') as tmp:
-                tmp.write('Net/ThemeName "FlatColor"\n')
-                tmp.close()
-                subprocess.call(
-                    ["timeout", "0.2s", "xsettingsd", "-c", path],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL
-                )
-        finally:
-            os.remove(path)
+    if settings.getboolean("gtk", True):
+
+        if shutil.which("xsettingsd"):
+            fd, path = tempfile.mkstemp()
+            try:
+                with os.fdopen(fd, 'w+') as tmp:
+                    tmp.write('Net/ThemeName "FlatColor"\n')
+                    tmp.close()
+                    subprocess.call(
+                        ["timeout", "0.2s", "xsettingsd", "-c", path],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL
+                    )
+            finally:
+                os.remove(path)
+
+        elif shutil.which("gsettings"):
+            subprocess.Popen([
+                "gsettings", "set",
+                "org.gnome.desktop.interface", "gtk-theme", "''"
+            ])
+            subprocess.Popen([
+                "gsettings", "set",
+                "org.gnome.desktop.interface", "gtk-theme",
+                "'FlatColor'"
+            ])
 
 
 def all():
