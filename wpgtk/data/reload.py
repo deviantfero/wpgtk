@@ -3,10 +3,8 @@ import subprocess
 import os
 import tempfile
 import logging
-from .util import setup_log
-setup_log()
-
 from pywal import reload
+import configparser
 
 from . import util
 from .config import FORMAT_DIR, HOME, settings
@@ -54,7 +52,6 @@ def gtk3():
         # no settings daemon is running. So GTK is getting theme info from gtkrc file
         # So using xsettingd to set the same theme (parsing it from gtkrc)
         elif shutil.which("xsettingsd") and os.path.isfile(os.path.join(os.environ.get('XDG_CONFIG_HOME'), 'gtk-3.0', 'settings.ini')):
-            import configparser
             gtkrc = configparser.ConfigParser()
             gtkrc.read(os.path.join(os.environ.get('XDG_CONFIG_HOME'), 'gtk-3.0', 'settings.ini'))
             if "Settings" in gtkrc and "gtk-theme-name" in gtkrc["Settings"]:
@@ -82,8 +79,8 @@ def gtk3():
 
         elif shutil.which("xsettingsd") and gsettings_theme:
             subprocess.Popen([
-                "gsettings", "reset",
-                "org.gnome.desktop.interface", "gtk-theme"
+                "gsettings", "set",
+                "org.gnome.desktop.interface", "gtk-theme", "''"
             ])
             subprocess.Popen([
                 "gsettings", "set",
