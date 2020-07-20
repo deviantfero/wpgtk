@@ -67,6 +67,20 @@ def setup_log():
     logging.addLevelName(logging.WARNING, "w")
 
 
+def silent_call(cmd):
+    """Call a system command and hide it's output"""
+    subprocess.call(cmd,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL)
+
+
+def silent_Popen(cmd):
+    """Popen a system command and hide it's output"""
+    subprocess.Popen(cmd,
+                     stdout=subprocess.DEVNULL,
+                     stderr=subprocess.DEVNULL)
+
+
 def get_pid(name):
     """Check if a process is running, borrowed from a newer pywal version"""
     try:
