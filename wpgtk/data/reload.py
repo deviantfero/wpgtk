@@ -2,8 +2,9 @@ import shutil
 import subprocess
 import os
 import tempfile
-
+import logging
 from pywal import reload
+import configparser
 
 from . import util
 from .config import FORMAT_DIR, HOME, settings
@@ -37,22 +38,56 @@ def openbox():
 
 def gtk3():
     if settings.getboolean("gtk", True):
+        gsettings_theme = None
+        if shutil.which("gsettings") and subprocess.call(["gsettings", "get", "org.gnome.desktop.interface", "gtk-theme"],stdout=subprocess.DEVNULL) == 0:
+            gsettings_theme = subprocess.Popen(["gsettings", "get", "org.gnome.desktop.interface", "gtk-theme"],stdout=subprocess.PIPE).communicate()[0].decode().strip("' \n")
 
-        if shutil.which("xsettingsd"):
-            fd, path = tempfile.mkstemp()
-            try:
-                with os.fdopen(fd, 'w+') as tmp:
-                    tmp.write('Net/ThemeName "FlatColor"\n')
-                    tmp.close()
-                    subprocess.call(
-                        ["timeout", "0.2s", "xsettingsd", "-c", path],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
-            finally:
-                os.remove(path)
+        refresh_gsettings = "gsettings set org.gnome.desktop.interface gtk-theme '' && sleep 0.1 && gsettings set org.gnome.desktop.interface gtk-theme '%s'" % gsettings_theme
 
-        elif shutil.which("gsettings"):
+        xfsettings_theme = None
+        if shutil.which("xfconf-query") and subprocess.call(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName"],stdout=subprocess.DEVNULL) == 0:
+            xfsettings_theme = subprocess.Popen(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName"],stdout=subprocess.PIPE).communicate()[0].decode().strip("' \n")
+
+        refresh_xfsettings = "xfconf-query -c xsettings -p /Net/ThemeName -s '' && sleep 0.1 && xfconf-query -c xsettings -p /Net/ThemeName -s '%s'" % xfsettings_theme
+
+        # if gnome-settings-daemon is running, no need to use xsettingsd
+        if subprocess.call(["pgrep", "gsd-xsettings"],stdout=subprocess.DEVNULL) == 0 and gsettings_theme:
+            subprocess.Popen(refresh_gsettings, shell=True)
+            logging.info("Reloaded %s theme via gnome-settings-daemon" % gsettings_theme)
+
+        elif subprocess.call(["pgrep", "xfsettingsd"],stdout=subprocess.DEVNULL) == 0 and xfsettings_theme:
+            subprocess.Popen(refresh_xfsettings, shell=True)
+            logging.info("Reloaded %s theme via xfsettingsd" % xfsettings_theme)
+
+        # no settings daemon is running. So GTK is getting theme info from gtkrc file
+        # So using xsettingd to set the same theme (parsing it from gtkrc)
+        elif shutil.which("xsettingsd") and os.path.isfile(os.path.join(os.environ.get('XDG_CONFIG_HOME'), 'gtk-3.0', 'settings.ini')):
+            gtkrc = configparser.ConfigParser()
+            gtkrc.read(os.path.join(os.environ.get('XDG_CONFIG_HOME'), 'gtk-3.0', 'settings.ini'))
+            if "Settings" in gtkrc and "gtk-theme-name" in gtkrc["Settings"]:
+                theme_name = gtkrc["Settings"]["gtk-theme-name"]
+                fd, path = tempfile.mkstemp()
+                try:
+                    with os.fdopen(fd, 'w+') as tmp:
+                        tmp.write('Net/ThemeName "'+theme_name+'"\n')
+                        tmp.close()
+                        subprocess.Popen(
+                            ["timeout", "0.2s", "xsettingsd", "-c", path],
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                        ).communicate() # Don't know why I need to communicate. But without calling this, theme dont update
+                    logging.info("Reloaded theme %s from gtk-3.0/settings.ini using xsettingsd" % theme_name)
+                finally:
+                    os.remove(path)
+        
+        # The system has no known settings daemon installed, but dconf gtk-theme exists, just refreshing its theme
+        # Because user might be using unknown settings daemon
+        elif gsettings_theme:
+            subprocess.Popen(refresh_gsettings, shell=True)
+            logging.warning("No settings daemon found, just refreshing %s theme from gsettings" % gsettings_theme)
+
+
+        elif shutil.which("xsettingsd") and gsettings_theme:
             subprocess.Popen([
                 "gsettings", "set",
                 "org.gnome.desktop.interface", "gtk-theme", "''"
@@ -62,7 +97,7 @@ def gtk3():
                 "org.gnome.desktop.interface", "gtk-theme",
                 "'FlatColor'"
             ])
-
+            logging.warning("No gtk theme is set. So falling back to 'FlatColor' Theme")
 
 def all():
     """Calls all possible reload methods at once."""
