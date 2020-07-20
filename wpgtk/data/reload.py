@@ -44,10 +44,20 @@ def gtk3():
 
         refresh_gsettings = "gsettings set org.gnome.desktop.interface gtk-theme '' && sleep 0.1 && gsettings set org.gnome.desktop.interface gtk-theme '%s'" % gsettings_theme
 
+        xfsettings_theme = None
+        if shutil.which("xfconf-query") and subprocess.call(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName"],stdout=subprocess.DEVNULL) == 0:
+            xfsettings_theme = subprocess.Popen(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName"],stdout=subprocess.PIPE).communicate()[0].decode().strip("' \n")
+
+        refresh_xfsettings = "xfconf-query -c xsettings -p /Net/ThemeName -s '' && sleep 0.1 && xfconf-query -c xsettings -p /Net/ThemeName -s '%s'" % xfsettings_theme
+
         # if gnome-settings-daemon is running, no need to use xsettingsd
         if subprocess.call(["pgrep", "gsd-xsettings"],stdout=subprocess.DEVNULL) == 0 and gsettings_theme:
             subprocess.Popen(refresh_gsettings, shell=True)
             logging.info("Reloaded %s theme via gnome-settings-daemon" % gsettings_theme)
+
+        elif subprocess.call(["pgrep", "xfsettingsd"],stdout=subprocess.DEVNULL) == 0 and xfsettings_theme:
+            subprocess.Popen(refresh_xfsettings, shell=True)
+            logging.info("Reloaded %s theme via xfsettingsd" % xfsettings_theme)
 
         # no settings daemon is running. So GTK is getting theme info from gtkrc file
         # So using xsettingd to set the same theme (parsing it from gtkrc)
