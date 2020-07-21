@@ -63,7 +63,7 @@ def gtk3():
 
     xfsettings_theme = None
     if shutil.which("xfconf-query"):
-        cmd = ["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName"],
+        cmd = ["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName"]
         xfsettings_theme = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
