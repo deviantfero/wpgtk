@@ -93,7 +93,7 @@ def gtk3():
                 with os.fdopen(fd, "w+") as tmp:
                     tmp.write('Net/ThemeName "' + theme + '"\n')
                     tmp.close()
-                    util.silent_Popen([
+                    util.silent_call([
                         "timeout", "0.2s", "xsettingsd", "-c", path
                     ])
                 logging.info(
