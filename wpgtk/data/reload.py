@@ -54,7 +54,7 @@ def gtk3():
     )
 
     if shutil.which("gsettings"):
-        cmd = ["gsettings", "get", "org.gnome.desktop.interface", "gtk-teme"]
+        cmd = ["gsettings", "get", "org.gnome.desktop.interface", "gtk-theme"]
         gsettings_theme = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
