@@ -140,6 +140,8 @@ install_gtk()
   echo "Installing gtk themes";
   cp -r ./FlatColor "${LOCAL}/themes/" && \
 
+  mkdir -p "${THEMES_DIR}" && \
+
   cp --remove-destination ./FlatColor/gtk-2.0/gtkrc.base "${TEMPLATE_DIR}/gtk2.base" && \
     ln -sf "${LOCAL}/themes/FlatColor/gtk-2.0/gtkrc" "${TEMPLATE_DIR}/gtk2" && \
 	ln -sf "${LOCAL}/themes/FlatColor" "${THEMES_DIR}/FlatColor" && \
@@ -168,6 +170,8 @@ install_openbox()
 {
   echo "Installing openbox themes";
   cp --remove-destination -r ./openbox/colorbamboo/* "${LOCAL}/themes/colorbamboo"
+
+  mkdir -p "${THEMES_DIR}"
 
   if [[ $? -eq 0 ]]; then
 	mv "${LOCAL}/themes/colorbamboo/openbox-3/themerc.base" "${TEMPLATE_DIR}/ob_colorbamboo.base" && \
