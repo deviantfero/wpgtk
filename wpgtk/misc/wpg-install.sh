@@ -38,6 +38,7 @@ usage()
   -p   Install polybar template
   -b   Install bspwm template
   -d   Install dunst template
+  -B   Install bpytop template
   -H   Specify hash of wpgtk-templates repository to use
   "
 }
@@ -203,6 +204,19 @@ install_dunst()
 	echo ":: dunst colors install done.";
 }
 
+install_bpytop()
+{
+  echo "Installing bpytop theme";
+  echo ":: backing up current bpytop flatcolor theme in flatcolor.theme.bak";
+  cp "${CONFIG}/bpytop/themes/flatcolor.theme" "${CONFIG}/bpytop/themes/flatcolor.theme.bak" 2>/dev/null;
+  mv "./bpytop/bpytop.base" "${TEMPLATE_DIR}/bpytop.base";
+  mv "./bpytop/bpytop" "${TEMPLATE_DIR}/bpytop";
+  ln -sf "${CONFIG}/bpytop/themes/flatcolor.theme" "${TEMPLATE_DIR}/bpytop" && \
+	echo ":: backing up current bpytop config to bpytop.conf.bak";
+  sed -i.bak "s/^color_theme=.*/color_theme=+flatcolor/" ${CONFIG}/bpytop/bpytop.conf
+	echo ":: bpytop theme install done, 'flatcolor' theme applied";
+}
+
 clean_up()
 {
   rm -rf "$SRC_DIR";
@@ -215,7 +229,7 @@ clean_up()
 
 getargs()
 {
-  while getopts "H:bhvotgiIprd" opt
+  while getopts "H:bhvotgiIprdB" opt
   do
     case $opt in
       h)
@@ -235,6 +249,7 @@ getargs()
       p) polybar="true" ;;
 	  b)   bspwm="true" ;;
 	  d)   dunst="true" ;;
+      B)  bpytop="true" ;;
       H) commit="${OPTARG}" ;;
       *)
         echo -e "\n  Option does not exist : $OPTARG\n"
@@ -260,7 +275,9 @@ main()
   [[ "$i3" == "true" ]] && install_i3;
   [[ "$bspwm" == "true" ]] && install_bspwm;
   [[ "$dunst" == "true" ]] && install_dunst;
+  [[ "$bpytop" == "true" ]] && install_bpytop;
   clean_up;
 }
 
 main "$@"
+
