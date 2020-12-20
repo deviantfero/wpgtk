@@ -58,7 +58,7 @@ getfiles()
   checkprogram 'wpg';
   mkdir -p "${LOCAL}/themes/color_other";
   mkdir -p "${LOCAL}/icons";
-  git clone https://github.com/improvised-explosive-device/wpgtk-templates "$SRC_DIR";
+  git clone https://github.com/deviantfero/wpgtk-templates "$SRC_DIR";
   if [[ $? -eq 0 ]]; then
     cd "$SRC_DIR";
     [[ ! -z "$commit" ]] && git checkout $commit;
