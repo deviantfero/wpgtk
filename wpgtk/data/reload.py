@@ -75,7 +75,7 @@ def gtk3():
         logging.info("Reloaded %s theme via gsd-settings" % gsettings_theme)
 
     elif util.get_pid("xfsettingsd") and xfsettings_theme:
-        subprocess.Popen(refresh_xfsettings, shell=True)
+        subprocess.Popen(refresh_xfsettings.format(xfsettings_theme), shell=True)
         logging.info("reloaded %s theme via xfsettingsd" % xfsettings_theme)
 
     # no settings daemon is running.
