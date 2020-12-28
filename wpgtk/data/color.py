@@ -248,8 +248,10 @@ def get_color_dict(cdic):
     }
 
     try:
-        user_words = {k: v.format(**all_colors)
-                      for k, v in user_keywords.items()}
+        user_words = {
+            k: v.format(**all_colors)
+            for k, v in user_keywords.items()
+        }
         all_colors = {**all_colors, **user_words}
 
     except KeyError as e:
