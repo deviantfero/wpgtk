@@ -2,18 +2,27 @@ import os
 import shutil
 import re
 import logging
+from subprocess import Popen
 from pywal.colors import cache_fname, list_backends
 
-from .config import settings, WALL_DIR, WPG_DIR, OPT_DIR, SAMPLE_DIR
 from os.path import join, basename
+from .config import (
+    settings,
+    WALL_DIR,
+    WPG_DIR,
+    OPT_DIR,
+    SAMPLE_DIR,
+    KEYWORD_DIR
+)
 
 
 def get_file_list(path=WALL_DIR, images=True):
     """gets filenames in a given directory, optional
     parameters for image filter."""
 
-    valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
     files = []
+    valid = re.compile(
+        r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
 
     for _, _, filenames in os.walk(path):
         files.extend(filenames)
@@ -39,6 +48,7 @@ def write_script(wallpaper, colorscheme):
     with open(join(WPG_DIR, "wp_init.sh"), "w") as script:
         command = "wpg %s '%s' '%s'" % (flags, wallpaper, colorscheme)
         script.writelines(["#!/usr/bin/env bash\n", command])
+        Popen(['chmod', '+x', join(WPG_DIR, "wp_init.sh")])
 
 
 def get_cache_path(wallpaper, backend=None):
@@ -79,8 +89,7 @@ def add_template(cfile, bfile=None):
         src_file = bfile if bfile else cfile
 
         shutil.copy2(src_file, join(OPT_DIR, template_name))
-        os.symlink(cfile, join(OPT_DIR,
-                               template_name.replace(".base", "")))
+        os.symlink(cfile, join(OPT_DIR, template_name.replace(".base", "")))
 
         logging.info("created backup %s.bak" % cfile)
         logging.info("added %s @ %s" % (template_name, cfile))
