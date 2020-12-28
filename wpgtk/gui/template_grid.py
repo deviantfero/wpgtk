@@ -39,8 +39,8 @@ class TemplateGrid(Gtk.Grid):
         self.button_add.connect('clicked', self.on_add_clicked)
         self.button_rm = Gtk.Button('Remove')
         self.button_rm.connect('clicked', self.on_rm_clicked)
-        self.button_open = Gtk.Button('Edit')
-        self.button_open.connect('clicked', self.on_open_clicked)
+        self.button_edit = Gtk.Button('Edit')
+        self.button_edit.connect('clicked', self.on_open_clicked)
 
         self.liststore = Gtk.ListStore(Pixbuf, str)
         self.file_view = Gtk.IconView.new()
@@ -64,8 +64,8 @@ class TemplateGrid(Gtk.Grid):
             self.liststore.append([pixbuf, filen])
 
         self.grid_edit.attach(self.button_add, 0, 0, 2, 1)
-        self.grid_edit.attach(self.button_rm, 0, 1, 1, 1)
-        self.grid_edit.attach(self.button_open, 1, 1, 1, 1)
+        self.grid_edit.attach(self.button_edit, 0, 1, 1, 1)
+        self.grid_edit.attach(self.button_rm, 1, 1, 1, 1)
         self.grid_edit.attach(self.scroll, 0, 2, 2, 1)
 
         self.attach(self.grid_edit, 0, 0, 1, 1)
