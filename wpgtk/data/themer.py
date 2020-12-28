@@ -1,7 +1,6 @@
 import pywal
 import shutil
 import logging
-from os.path import realpath, basename
 from os import remove, path, symlink
 from subprocess import Popen
 
@@ -14,8 +13,8 @@ from . import reload
 
 def create_theme(filepath):
     """create a colors-scheme from a filepath"""
-    filepath = realpath(filepath)
-    filename = basename(filepath).replace(" ", "_")
+    filepath = path.realpath(filepath)
+    filename = path.basename(filepath).replace(" ", "_")
     tmplink = path.join(WALL_DIR, ".tmp.link")
 
     symlink(filepath, tmplink)
@@ -48,8 +47,8 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     if set_wall:
         filepath = path.join(WALL_DIR, wallpaper)
-        set_wall = filepath if path.isfile(filepath) else colors["wallpaper"]
-        pywal.wallpaper.change(set_wall)
+        imagepath = filepath if path.isfile(filepath) else colors["wallpaper"]
+        pywal.wallpaper.change(imagepath)
 
     files.write_script(wallpaper, colorscheme)
     files.change_current(wallpaper)
@@ -66,7 +65,7 @@ def delete_theme(filename):
 
 
 def get_current():
-    image = basename(realpath(path.join(WPG_DIR, '.current')))
+    image = path.basename(path.realpath(path.join(WPG_DIR, '.current')))
     return image
 
 
@@ -84,8 +83,8 @@ def reset_theme(theme_name):
 def import_theme(wallpaper, json_file, theme=False):
     """import a colorscheme from a JSON file either in
     terminal.sexy or pywal format"""
-    json_file = realpath(json_file)
-    filename = basename(json_file)
+    json_file = path.realpath(json_file)
+    filename = path.basename(json_file)
 
     if theme:
         theme = pywal.theme.file(filename)
