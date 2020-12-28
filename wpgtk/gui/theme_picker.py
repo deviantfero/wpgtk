@@ -194,7 +194,3 @@ def run(args):
     win.connect('delete-event', Gtk.main_quit)
     win.show_all()
     Gtk.main()
-
-
-if __name__ == '__main__':
-    run()
