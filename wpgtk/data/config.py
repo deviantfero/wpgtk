@@ -19,6 +19,7 @@ CONF_BACKUP = os.path.join(MODULE_DIR, "misc/wpg.conf")
 WALL_DIR = os.path.join(WPG_DIR, "wallpapers")
 SAMPLE_DIR = os.path.join(WPG_DIR, "samples")
 SCHEME_DIR = os.path.join(WPG_DIR, "schemes")
+KEYWORD_DIR = os.path.join(WPG_DIR, "keywords")
 FORMAT_DIR = os.path.join(CACHE, "wal")
 OPT_DIR = os.path.join(WPG_DIR, "templates")
 FILE_DIC = {
@@ -52,6 +53,7 @@ def load_settings():
     os.makedirs(SAMPLE_DIR, exist_ok=True)
     os.makedirs(SCHEME_DIR, exist_ok=True)
     os.makedirs(FORMAT_DIR, exist_ok=True)
+    os.makedirs(KEYWORD_DIR, exist_ok=True)
     os.makedirs(OPT_DIR, exist_ok=True)
 
     try:

@@ -72,6 +72,16 @@ def get_sample_path(wallpaper, backend=None):
     return join(SAMPLE_DIR, sample_filename)
 
 
+def get_keywords_path(wallpaper, backend=None):
+    """gets the path of the keywords file of a theme"""
+    if not backend:
+        backend = settings.get("backend", "wal")
+
+    keywords_filename = "%s_%s_keywords.conf" % (wallpaper, backend)
+
+    return join(KEYWORD_DIR, keywords_filename)
+
+
 def add_template(cfile, bfile=None):
     """adds a new base file from a config file to wpgtk
     or re-establishes link with config file for a
@@ -111,12 +121,13 @@ def delete_template(basefile):
         logging.error(str(e.strerror))
 
 
-def delete_colorschemes(wallpaper):
-    """delete all colorschemes related to the given wallpaper"""
+def delete_colorschemes(colorscheme):
+    """delete all files related to the given colorscheme"""
     for backend in list_backends():
         try:
-            os.remove(get_cache_path(wallpaper, backend))
-            os.remove(get_sample_path(wallpaper, backend))
+            os.remove(get_cache_path(colorscheme, backend))
+            os.remove(get_sample_path(colorscheme, backend))
+            os.remove(get_keywords_path(colorscheme, backend))
         except OSError:
             pass
 

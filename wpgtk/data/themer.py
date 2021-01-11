@@ -39,7 +39,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     if not restore:
         pywal.export.every(colors, FORMAT_DIR)
-        color.apply_colorscheme(colors)
+        color.apply_colorscheme(color.get_color_dict(colors, colorscheme))
         if reload_all:
             reload.all()
     else:
