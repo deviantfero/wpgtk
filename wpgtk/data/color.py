@@ -261,9 +261,10 @@ def get_color_dict(cdic):
     return {k: pywal.util.Color(v) for k, v in all_colors.items()}
 
 
-def apply_colorscheme(colors):
-    color_dict = get_color_dict(colors)
-
+def apply_colorscheme(color_dict):
+    """Receives a colorscheme dict ensambled by
+    color.get_color_dict as argument and applies it
+    system-wide."""
     if os.path.isfile(FILE_DIC["icon-step2"]):
         change_colors(color_dict, "icon-step1")
         Popen(FILE_DIC["icon-step2"])
