@@ -113,6 +113,7 @@ class mainWindow(Gtk.Window):
             self.option_combo.set_active(current_idx)
             self.colorscheme.set_active(current_idx)
             self.cpage.option_combo.set_active(current_idx)
+            self.keypage.wallpaper_combo.set_active(current_idx)
             self.set_button.set_sensitive(True)
 
     def on_add_clicked(self, widget):
@@ -132,16 +133,22 @@ class mainWindow(Gtk.Window):
         response = filechooser.run()
 
         if response == Gtk.ResponseType.OK:
+            option_list = Gtk.ListStore(str)
+
             for f in filechooser.get_filenames():
                 themer.create_theme(f)
-            option_list = Gtk.ListStore(str)
+
             for elem in list(files.get_file_list()):
                 option_list.append([elem])
+
             self.option_combo.set_model(option_list)
             self.option_combo.set_entry_text_column(0)
             self.colorscheme.set_model(option_list)
             self.colorscheme.set_entry_text_column(0)
-            self.cpage.update_combo(option_list)
+
+            self.cpage.option_combo.set_model(option_list)
+            self.keypage.wallpaper_combo.set_model(option_list)
+
         filechooser.destroy()
 
     def on_set_clicked(self, widget):
@@ -165,8 +172,9 @@ class mainWindow(Gtk.Window):
             self.option_combo.set_model(option_list)
             self.option_combo.set_entry_text_column(0)
             self.colorscheme.set_model(option_list)
-            self.colorscheme.set_entry_text_column(0)
-            self.cpage.update_combo(option_list)
+
+            self.cpage.option_combo.set_model(option_list)
+            self.keypage.wallpaper_combo.set_model(option_list)
 
     def combo_box_change(self, widget):
         self.set_button.set_sensitive(True)
@@ -185,8 +193,8 @@ class mainWindow(Gtk.Window):
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
 
-        # set the ComboBox in color_grid
-        self.cpage.set_edit_combo(x)
+        self.cpage.option_combo.set_active(x)
+        self.keypage.wallpaper_combo.set_active(x)
 
 
 def run(args):
