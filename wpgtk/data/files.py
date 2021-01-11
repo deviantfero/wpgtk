@@ -121,32 +121,6 @@ def delete_colorschemes(wallpaper):
             pass
 
 
-def update_color(matchobj):
-    if matchobj.group(1):
-        return "{%s}" % matchobj.group(1).lower()
-
-
-def update_template(template_path):
-    tmp_data = ""
-
-    with open(template_path, "r") as f:
-        tmp_data = f.read()
-
-        logging.info("escaping legitimate curly braces {} -> {{}}")
-        tmp_data = tmp_data.replace("{", "{{")
-        tmp_data = tmp_data.replace("}", "}}")
-
-        logging.info("replacing #<COLORXX> with braces {colorxx}")
-        tmp_data = re.sub(r"#<(COLOR[0-9]{1,2})>", update_color, tmp_data)
-        tmp_data = tmp_data.replace("#<COLORACT>", "{active}")
-        tmp_data = tmp_data.replace("#<COLORIN>", "{inactive}")
-
-    with open(template_path, "w") as f:
-        logging.info("writting %s" % template_path)
-        f.write(tmp_data)
-        logging.info("%s update complete" % template_path)
-
-
 def change_current(filename):
     """update symlink to point to the current wallpaper"""
     os.symlink(join(WALL_DIR, filename), join(WPG_DIR, ".currentTmp"))

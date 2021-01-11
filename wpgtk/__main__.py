@@ -122,11 +122,6 @@ def read_args(args):
                         help="preview your current colorscheme",
                         action="store_true")
 
-    parser.add_argument("--update",
-                        help="update template(s) of your choice "
-                        "to the new format",
-                        nargs="+")
-
     parser.add_argument("--noreload",
                         help="Skip reloading other software after"
                         "applying colorscheme",
@@ -293,12 +288,6 @@ def process_args(args):
 
     if args.backend == "list":
         print("\n".join(pywal.colors.list_backends()))
-        exit(0)
-
-    if args.update:
-        for arg in args.update:
-            if arg.endswith(".base"):
-                files.update_template(arg)
         exit(0)
 
     if args.noreload:
