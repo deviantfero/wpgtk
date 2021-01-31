@@ -47,7 +47,7 @@ def xsettingsd(theme):
             tmp.write('Net/ThemeName "' + theme + '"\n')
             tmp.close()
 
-            silent_call(["timeout", "0.2s", "xsettingsd", "-c", path])
+            util.silent_call(["timeout", "0.2s", "xsettingsd", "-c", path])
             logging.info(
                 "reloaded %s from settings.ini using xsettingsd"
                 % theme
