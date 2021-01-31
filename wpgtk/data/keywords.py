@@ -26,6 +26,10 @@ def get_keywords_parser(colorscheme):
     """get keyword file configparser for current wallpaper
        or create one if it does not exist"""
 
+    if colorscheme == None:
+        parser = user_keywords
+        return parser
+
     if path.isfile(get_keywords_path(colorscheme)):
         parser = configparser.ConfigParser()
         parser.read(get_keywords_path(colorscheme))
@@ -57,7 +61,7 @@ def update_value(colorscheme, keyword, value):
     if not value:
         raise Exception('Value must exist')
 
-    parser = get_keywords_parser(colorscheme)
+    parser = get_keywords_parser(colorscheme) if colorscheme else user_keywords
     keywords = parser['keywords']
     keywords[keyword] = value
 
@@ -73,7 +77,7 @@ def create_pair(colorscheme, keyword, value):
     if not keyword:
         raise Exception('There must be a keyword')
 
-    parser = get_keywords_parser(colorscheme)
+    parser = get_keywords_parser(colorscheme) if colorscheme else user_keywords
     parser['keywords'][keyword] = value
 
     with open(get_keywords_path(colorscheme), "w") as keyword_file:
@@ -83,7 +87,7 @@ def create_pair(colorscheme, keyword, value):
 def remove_pair(colorscheme, keyword):
     """removes a pair of keyword value for a wallpaper"""
 
-    parser = get_keywords_parser(colorscheme)
+    parser = get_keywords_parser(colorscheme) if colorscheme else user_keywords
     parser['keywords'].pop(keyword, None)
 
     with open(get_keywords_path(colorscheme), "w") as keyword_file:
