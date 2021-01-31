@@ -1,7 +1,7 @@
 import shutil
 import subprocess
-import os
 import tempfile
+import os
 import logging
 from pywal import reload
 import configparser
@@ -36,6 +36,24 @@ def openbox():
     """Reloads openbox configuration to reload theme"""
     if shutil.which("openbox") and util.get_pid("openbox"):
         subprocess.Popen(["openbox", "--reconfigure"])
+
+
+def xsettingsd(theme):
+    """Call xsettingsd with a tempfile to trigger a reload of the GTK3 theme"""
+    fd, path = tempfile.mkstemp()
+
+    try:
+        with os.fdopen(fd, "w+") as tmp:
+            tmp.write('Net/ThemeName "' + theme + '"\n')
+            tmp.close()
+
+            silent_call(["timeout", "0.2s", "xsettingsd", "-c", path])
+            logging.info(
+                "reloaded %s from settings.ini using xsettingsd"
+                % theme
+            )
+    finally:
+        os.remove(path)
 
 
 def gtk3():
@@ -81,27 +99,15 @@ def gtk3():
     # no settings daemon is running.
     # So GTK is getting theme info from gtkrc file
     # using xsettingd to set the same theme (parsing it from gtkrc)
-    elif shutil.which("xsettingsd") and os.path.isfile(settings_ini):
-        gtkrc = configparser.ConfigParser()
-        gtkrc.read(settings_ini)
+    elif shutil.which("xsettingsd"):
+        if os.path.isfile(settings_ini):
+            gtkrc = configparser.ConfigParser()
+            gtkrc.read(settings_ini)
+            theme = gtkrc["Settings"].get("gtk-theme-name") if "Settings" in gtkrc else "FlatColor"
+            xsettingsd(theme)
+        else:
+            xsettingsd("FlatColor")
 
-        if gtkrc["Settings"]:
-            theme = gtkrc["Settings"].get("gtk-theme-name", "FlatColor")
-            fd, path = tempfile.mkstemp()
-
-            try:
-                with os.fdopen(fd, "w+") as tmp:
-                    tmp.write('Net/ThemeName "' + theme + '"\n')
-                    tmp.close()
-                    util.silent_call([
-                        "timeout", "0.2s", "xsettingsd", "-c", path
-                    ])
-                logging.info(
-                    "reloaded %s from settings.ini using xsettingsd"
-                    % theme
-                )
-            finally:
-                os.remove(path)
 
     # The system has no known settings daemon installed,
     # but dconf gtk-theme exists, just refreshing its theme
