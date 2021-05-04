@@ -24,17 +24,14 @@ class KeywordGrid(Gtk.Grid):
         self.add_button.connect('clicked', self.append_new_keyword)
 
         self.selected_file = ""
-        wallpaper_list = Gtk.ListStore(str)
+        self.wallpaper_combo = Gtk.ComboBoxText()
+        self.wallpaper_combo.set_entry_text_column(0)
         for elem in list(files.get_file_list()):
-            wallpaper_list.append([elem])
+            self.wallpaper_combo.append_text(elem)
 
         self.liststore = Gtk.ListStore(str, str)
         self.reload_keyword_list()
 
-        self.wallpaper_combo = Gtk.ComboBox.new_with_model(wallpaper_list)
-        self.renderer_text = Gtk.CellRendererText()
-        self.wallpaper_combo.pack_start(self.renderer_text, True)
-        self.wallpaper_combo.add_attribute(self.renderer_text, "text", 0)
         self.wallpaper_combo.set_entry_text_column(0)
         self.wallpaper_combo.connect("changed", self.on_wallpaper_change)
 
@@ -73,7 +70,7 @@ class KeywordGrid(Gtk.Grid):
         for path in pathlist:
             tree_iter = m.get_iter(path)
             value = m.get_value(tree_iter, 0)
-            keywords.remove_pair(self.selected_file, value)
+            keywords.remove_pair(value, self.selected_file)
             self.reload_keyword_list()
 
     def text_edited(self, widget, path, text, col):
@@ -81,41 +78,38 @@ class KeywordGrid(Gtk.Grid):
         if(col == 0):
             try:
                 keywords.update_key(
-                    self.selected_file,
                     self.liststore[path][col],
-                    text
+                    text,
+                    self.selected_file
                 )
             except Exception as e:
                 self.status_lbl.set_text(str(e))
         else:
             try:
                 keywords.update_value(
-                    self.selected_file,
                     self.liststore[path][0],
-                    text
+                    text,
+                    self.selected_file
                 )
             except Exception as e:
                 self.status_lbl.set_text(str(e))
         self.reload_keyword_list()
 
     def reload_keyword_list(self):
+        keyword_section = keywords.get_keywords_section(self.selected_file)
         self.liststore.clear()
-        parser = keywords.get_keywords_parser(self.selected_file)
-        for k, v in parser['keywords'].items():
+        for k, v in keyword_section.items():
             self.liststore.append([k, v])
 
     def on_wallpaper_change(self, widget):
-        x = widget.get_active()
-
-        current_walls = files.get_file_list()
-        self.selected_file = current_walls[x]
+        self.selected_file = widget.get_active_text()
         self.reload_keyword_list()
 
     def append_new_keyword(self, widget):
         self.status_lbl.set_text('')
         keywords.create_pair(
-            self.selected_file,
             'keyword' + str(len(self.liststore)),
-            'value'
+            'value',
+            self.selected_file,
         )
         self.reload_keyword_list()
