@@ -131,6 +131,10 @@ def read_args(args):
 
 
 def process_arg_errors(args):
+    if args.r and not args.s:
+        logging.error("invalid combination of flags, use with -s")
+        exit(1)
+
     if args.m and (args.s or args.R):
         logging.error("invalid combination of flags")
         exit(1)
