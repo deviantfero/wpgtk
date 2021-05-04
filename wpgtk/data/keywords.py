@@ -65,7 +65,6 @@ def update_value(keyword, value, colorscheme=None):
 
 def create_pair(keyword, value, colorscheme=None):
     """create a key value pair for a wallpaper"""
-    print('hi', keyword, value, colorscheme)
     if not value:
         raise Exception('There must be a value')
 

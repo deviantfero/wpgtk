@@ -238,7 +238,7 @@ def get_color_dict(pywal_colors, colorscheme):
 
     base_color = pywal_colors["colors"]["color%s" % index]
     color_list = list(pywal_colors["colors"].values())
-    key_parser = keywords.get_keywords_parser(colorscheme)
+    keyword_dict = keywords.get_keywords_section(colorscheme)
 
     all_colors = {
         "wallpaper": pywal_colors["wallpaper"],
@@ -252,7 +252,7 @@ def get_color_dict(pywal_colors, colorscheme):
     try:
         user_words = {
             k: v.format(**all_colors)
-            for k, v in key_parser['keywords'].items()
+            for k, v in keyword_dict.items()
         }
         all_colors = {**all_colors, **user_words}
 
