@@ -39,6 +39,7 @@ usage()
   -b   Install bspwm template
   -d   Install dunst template
   -B   Install bpytop template
+  -q   Install qtile template
   -H   Specify hash of wpgtk-templates repository to use
   "
 }
@@ -217,6 +218,22 @@ install_bpytop()
 	echo ":: bpytop theme install done, 'flatcolor' theme applied";
 }
 
+install_qtile()
+{
+  echo "Installing qtile colors";
+  echo ":: backing up current qtile config in config.py.bak";
+  cp "${CONFIG}/qtile/config.py" "${CONFIG}/qtile/config.py.bak" 2>/dev/null;
+  mv "./qtile/qtilecolors.py.base" "${TEMPLATE_DIR}/qtilecolors.py.base";
+  mv "./qtile/qtilecolors.py" "${TEMPLATE_DIR}/qtilecolors.py";
+  ln -sf "${CONFIG}/qtile/qtilecolors.py" "${TEMPLATE_DIR}/qtilecolors.py" && \
+	#echo ":: backing up current bpytop config to bpytop.conf.bak";
+  #sed -i.bak "s/^color_theme=.*/color_theme=+flatcolor/" ${CONFIG}/bpytop/bpytop.conf && \
+  echo ":: qtile theme install done" && \ 
+  echo ":: generated colors are available using colors[0-15] list in place of hex values." &&\
+  echo ":: remember to edit your config.py colors to use the wpg color scheme where appropiate";
+}
+
+
 clean_up()
 {
   rm -rf "$SRC_DIR";
@@ -229,7 +246,7 @@ clean_up()
 
 getargs()
 {
-  while getopts "H:bhvotgiIprdB" opt
+  while getopts "H:bhvotgiIprdBq" opt
   do
     case $opt in
       h)
@@ -247,9 +264,10 @@ getargs()
       r)    rofi="true" ;;
       I)      i3="true" ;;
       p) polybar="true" ;;
-	  b)   bspwm="true" ;;
-	  d)   dunst="true" ;;
+	    b)   bspwm="true" ;;
+	    d)   dunst="true" ;;
       B)  bpytop="true" ;;
+      q)   qtile="true" ;;
       H) commit="${OPTARG}" ;;
       *)
         echo -e "\n  Option does not exist : $OPTARG\n"
@@ -276,6 +294,7 @@ main()
   [[ "$bspwm" == "true" ]] && install_bspwm;
   [[ "$dunst" == "true" ]] && install_dunst;
   [[ "$bpytop" == "true" ]] && install_bpytop;
+  [[ "$qtile" == "true" ]] && install_qtile;
   clean_up;
 }
 
