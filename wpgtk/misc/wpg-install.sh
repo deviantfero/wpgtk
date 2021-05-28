@@ -226,9 +226,13 @@ install_qtile()
   mv "./qtile/qtilecolors.py.base" "${TEMPLATE_DIR}/qtilecolors.py.base";
   mv "./qtile/qtilecolors.py" "${TEMPLATE_DIR}/qtilecolors.py";
   ln -sf "${CONFIG}/qtile/qtilecolors.py" "${TEMPLATE_DIR}/qtilecolors.py" && \
-	#echo ":: backing up current bpytop config to bpytop.conf.bak";
-  #sed -i.bak "s/^color_theme=.*/color_theme=+flatcolor/" ${CONFIG}/bpytop/bpytop.conf && \
-  echo ":: qtile theme install done" && \ 
+  if ! grep -q qtilecolors "${CONFIG}/qtile/config.py"; then
+    echo ":: adding imports to qtile config"
+    sed -i -e '2ifrom qtilecolors import colors # noqa\' "${CONFIG}/qtile/config.py"
+  else
+    echo ":: imports are already in place, skipping..."
+  fi
+  echo ":: qtile theme install done" && \
   echo ":: generated colors are available using colors[0-15] list in place of hex values." &&\
   echo ":: remember to edit your config.py colors to use the wpg color scheme where appropiate";
 }
