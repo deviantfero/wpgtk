@@ -268,8 +268,8 @@ getargs()
       r)    rofi="true" ;;
       I)      i3="true" ;;
       p) polybar="true" ;;
-	    b)   bspwm="true" ;;
-	    d)   dunst="true" ;;
+      b)   bspwm="true" ;;
+      d)   dunst="true" ;;
       B)  bpytop="true" ;;
       q)   qtile="true" ;;
       H) commit="${OPTARG}" ;;
