@@ -113,7 +113,6 @@ class mainWindow(Gtk.Window):
             self.option_combo.set_active(current_idx)
             self.colorscheme.set_active(current_idx)
             self.cpage.option_combo.set_active(current_idx)
-            self.keypage.wallpaper_combo.set_active(current_idx)
             self.set_button.set_sensitive(True)
 
     def on_add_clicked(self, widget):
@@ -147,7 +146,6 @@ class mainWindow(Gtk.Window):
             self.colorscheme.set_entry_text_column(0)
 
             self.cpage.option_combo.set_model(option_list)
-            self.keypage.wallpaper_combo.set_model(option_list)
 
         filechooser.destroy()
 
@@ -174,7 +172,6 @@ class mainWindow(Gtk.Window):
             self.colorscheme.set_model(option_list)
 
             self.cpage.option_combo.set_model(option_list)
-            self.keypage.wallpaper_combo.set_model(option_list)
 
     def combo_box_change(self, widget):
         self.set_button.set_sensitive(True)
@@ -192,9 +189,7 @@ class mainWindow(Gtk.Window):
 
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
-
         self.cpage.option_combo.set_active(x)
-        self.keypage.wallpaper_combo.set_active(x)
 
 
 def run(args):

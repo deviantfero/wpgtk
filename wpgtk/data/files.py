@@ -72,14 +72,10 @@ def get_sample_path(wallpaper, backend=None):
     return join(SAMPLE_DIR, sample_filename)
 
 
-def get_keywords_path(wallpaper, backend=None):
+def get_keywords_path(filename):
     """gets the path of the keywords file of a theme"""
-    if not backend:
-        backend = settings.get("backend", "wal")
 
-    keywords_filename = "%s_%s_keywords.conf" % (wallpaper, backend)
-
-    return join(KEYWORD_DIR, keywords_filename)
+    return join(KEYWORD_DIR, filename)
 
 
 def add_template(cfile, bfile=None):
@@ -127,7 +123,6 @@ def delete_colorschemes(colorscheme):
         try:
             os.remove(get_cache_path(colorscheme, backend))
             os.remove(get_sample_path(colorscheme, backend))
-            os.remove(get_keywords_path(colorscheme, backend))
         except OSError:
             pass
 
