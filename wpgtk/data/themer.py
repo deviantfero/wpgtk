@@ -4,7 +4,7 @@ import logging
 from os import remove, path, symlink
 from subprocess import Popen
 
-from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, settings
+from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, settings, user_keywords
 from . import color
 from . import files
 from . import sample
@@ -60,6 +60,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
 def delete_theme(filename):
     remove(path.join(WALL_DIR, filename))
     files.delete_colorschemes(filename)
+    user_keywords.remove_section(filename)
 
 
 def get_current():

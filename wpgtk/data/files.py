@@ -12,7 +12,7 @@ from .config import (
     WPG_DIR,
     OPT_DIR,
     SAMPLE_DIR,
-    KEYWORD_DIR
+    KEYWORD_FILE
 )
 
 
@@ -70,12 +70,6 @@ def get_sample_path(wallpaper, backend=None):
     sample_filename = "%s_%s_sample.png" % (wallpaper, backend)
 
     return join(SAMPLE_DIR, sample_filename)
-
-
-def get_keywords_path(filename):
-    """gets the path of the keywords file of a theme"""
-
-    return join(KEYWORD_DIR, filename)
 
 
 def add_template(cfile, bfile=None):

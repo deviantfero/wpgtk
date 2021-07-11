@@ -1,6 +1,5 @@
 from ..data import keywords
 from ..data import files
-from ..data.config import KEYWORD_DIR
 from gi import require_version
 from gi.repository import Gtk
 require_version("Gtk", "3.0")
@@ -24,25 +23,22 @@ class KeywordGrid(Gtk.Grid):
         self.add_button.connect('clicked', self.append_new_keyword)
 
         self.reset_button = Gtk.Button('Reset')
-        # self.reset_button.connect('clicked', self.reset_keyword_file)
-
-        self.create_button = Gtk.Button('Create')
-        self.create_button.connect('clicked', self.on_create_click)
+        self.reset_button.connect('clicked', self.reset_keywords_section)
 
         self.selected_file = None
-        self.keyword_file_combo = Gtk.ComboBoxText()
-        self.keyword_file_combo.set_entry_text_column(0)
-        self.keyword_file_combo.append_text('Default')
-        for elem in list(files.get_file_list(KEYWORD_DIR, False)):
-            self.keyword_file_combo.append_text(elem)
+        self.theme_combo = Gtk.ComboBoxText()
+        self.theme_combo.set_entry_text_column(0)
+        self.theme_combo.append_text('Default')
+        for elem in list(files.get_file_list()):
+            self.theme_combo.append_text(elem)
 
-        self.keyword_file_combo.set_active(0)
+        self.theme_combo.set_active(0)
 
         self.liststore = Gtk.ListStore(str, str)
         self.reload_keyword_list()
 
-        self.keyword_file_combo.set_entry_text_column(0)
-        self.keyword_file_combo.connect("changed", self.on_keyword_file_change)
+        self.theme_combo.set_entry_text_column(0)
+        self.theme_combo.connect("changed", self.on_theme_change)
 
         self.status_lbl = Gtk.Label('')
         self.keyword_tree = Gtk.TreeView(model=self.liststore)
@@ -52,8 +48,7 @@ class KeywordGrid(Gtk.Grid):
         scroll.set_min_content_height(400)
         scroll.add(self.keyword_tree)
 
-        self.attach(self.keyword_file_combo, 0, 0, 2, 1)
-        self.attach(self.create_button, 2, 0, 1, 1)
+        self.attach(self.theme_combo, 0, 0, 3, 1)
         self.attach(self.add_button, 0, 1, 1, 1)
         self.attach(self.delete_button, 1, 1, 1, 1)
         self.attach(self.reset_button, 2, 1, 1, 1)
@@ -73,23 +68,6 @@ class KeywordGrid(Gtk.Grid):
 
         value_text = Gtk.TreeViewColumn("Value", value_renderer, text=1)
         self.keyword_tree.append_column(value_text)
-
-    def on_create_click(self, widget):
-        filechooser = Gtk.FileChooserDialog(
-                      'Create Config File', self.parent,
-                      Gtk.FileChooserAction.SAVE,
-                      (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                       Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
-        file_filter = Gtk.FileFilter()
-        file_filter.set_name("Conf")
-        file_filter.add_mime_type("text/plain")
-        file_filter.add_pattern("*.conf")
-        filechooser.add_filter(file_filter)
-        filechooser.set_current_folder(KEYWORD_DIR)
-        response = filechooser.run()
-        print(filechooser.get_filename())
-        print(response)
-        filechooser.destroy()
 
     def remove_keyword(self, widget):
         self.status_lbl.set_text('')
@@ -124,9 +102,10 @@ class KeywordGrid(Gtk.Grid):
         for k, v in keyword_section.items():
             self.liststore.append([k, v])
 
-    def on_keyword_file_change(self, widget):
+    def on_theme_change(self, widget):
         selected_entry = widget.get_active_text()
         self.selected_file = None if selected_entry == 'Default' else selected_entry
+        self.reset_button.set_sensitive(self.selected_file is not None)
         self.reload_keyword_list()
 
     def append_new_keyword(self, widget):
@@ -137,3 +116,8 @@ class KeywordGrid(Gtk.Grid):
             self.selected_file,
         )
         self.reload_keyword_list()
+
+    def reset_keywords_section(self, widget):
+        if self.selected_file:
+            keywords.reset_keywords_section(self.selected_file)
+            self.reload_keyword_list()

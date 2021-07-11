@@ -14,12 +14,12 @@ LOCAL = os.getenv("XDG_DATA_HOME", os.path.join(HOME, ".local", "share"))
 
 WPG_DIR = os.path.join(CONFIG, "wpg")
 CONF_FILE = os.path.join(WPG_DIR, "wpg.conf")
+KEYWORD_FILE = os.path.join(WPG_DIR, "keywords.conf")
 MODULE_DIR = os.path.abspath(os.path.join(__file__, "../../"))
 CONF_BACKUP = os.path.join(MODULE_DIR, "misc/wpg.conf")
 WALL_DIR = os.path.join(WPG_DIR, "wallpapers")
 SAMPLE_DIR = os.path.join(WPG_DIR, "samples")
 SCHEME_DIR = os.path.join(WPG_DIR, "schemes")
-KEYWORD_DIR = os.path.join(WPG_DIR, "keywords")
 FORMAT_DIR = os.path.join(CACHE, "wal")
 OPT_DIR = os.path.join(WPG_DIR, "templates")
 FILE_DIC = {
@@ -36,16 +36,45 @@ def write_conf(config_path=CONF_FILE):
     with open(config_path, 'w') as config_file:
         parser.write(config_file)
 
+def write_keywords(keywords_path=KEYWORD_FILE):
+    global keywords_parser
+
+    with open(keywords_path, 'w') as keywords_file:
+        keywords_parser.write(keywords_file)
+
 
 def load_sections():
     """reads the sections of the config file"""
     global parser
+    global keywords_parser
 
+    parser = load_config()
+    keywords_parser = load_keywords()
+
+    return [parser['settings'], keywords_parser]
+
+def load_config():
     parser = configparser.ConfigParser()
     parser.optionxform = str
     parser.read(CONF_FILE)
 
-    return [parser['settings'], parser['keywords']]
+    return parser
+
+def load_keywords():
+    if not os.path.exists(KEYWORD_FILE):
+        open(KEYWORD_FILE, 'a').close()
+
+    keywords_parser = configparser.ConfigParser()
+    keywords_parser.optionxform = str
+    keywords_parser.read(KEYWORD_FILE)
+
+    if not keywords_parser.has_section('default'):
+        keywords_parser.add_section('default')
+
+        with open(KEYWORD_FILE, 'w') as f:
+            keywords_parser.write(f)
+
+    return keywords_parser
 
 
 def load_settings():
@@ -53,7 +82,6 @@ def load_settings():
     os.makedirs(SAMPLE_DIR, exist_ok=True)
     os.makedirs(SCHEME_DIR, exist_ok=True)
     os.makedirs(FORMAT_DIR, exist_ok=True)
-    os.makedirs(KEYWORD_DIR, exist_ok=True)
     os.makedirs(OPT_DIR, exist_ok=True)
 
     try:
