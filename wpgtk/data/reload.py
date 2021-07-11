@@ -82,26 +82,29 @@ def gtk3():
     # So GTK is getting theme info from gtkrc file
     # using xsettingd to set the same theme (parsing it from gtkrc)
     elif shutil.which("xsettingsd") and os.path.isfile(settings_ini):
-        gtkrc = configparser.ConfigParser()
-        gtkrc.read(settings_ini)
+        theme = "FlatColor"
 
-        if gtkrc["Settings"]:
-            theme = gtkrc["Settings"].get("gtk-theme-name", "FlatColor")
+        if os.path.isfile(settings_ini):
+            gtkrc = configparser.ConfigParser()
+            gtkrc.read(settings_ini)
+
+            if gtkrc["Settings"]:
+                theme = gtkrc["Settings"].get("gtk-theme-name", "FlatColor")
+
+        try:
             fd, path = tempfile.mkstemp()
-
-            try:
-                with os.fdopen(fd, "w+") as tmp:
-                    tmp.write('Net/ThemeName "' + theme + '"\n')
-                    tmp.close()
-                    util.silent_call([
-                        "timeout", "0.2s", "xsettingsd", "-c", path
-                    ])
-                logging.info(
-                    "reloaded %s from settings.ini using xsettingsd"
-                    % theme
-                )
-            finally:
-                os.remove(path)
+            with os.fdopen(fd, "w+") as tmp:
+                tmp.write('Net/ThemeName "' + theme + '"\n')
+                tmp.close()
+                util.silent_Popen([
+                    "xsettingsd", "-c", path
+                ])
+            logging.info(
+                "reloaded %s from settings.ini using xsettingsd"
+                % theme
+            )
+        finally:
+            os.remove(path)
 
     # The system has no known settings daemon installed,
     # but dconf gtk-theme exists, just refreshing its theme
