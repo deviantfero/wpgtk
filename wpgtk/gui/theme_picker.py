@@ -113,7 +113,6 @@ class mainWindow(Gtk.Window):
             self.option_combo.set_active(current_idx)
             self.colorscheme.set_active(current_idx)
             self.cpage.option_combo.set_active(current_idx)
-            self.keypage.theme_combo.set_active(current_idx + 1)
             self.set_button.set_sensitive(True)
 
     def on_add_clicked(self, widget):
@@ -191,7 +190,6 @@ class mainWindow(Gtk.Window):
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
         self.cpage.option_combo.set_active(x)
-        self.keypage.theme_combo.set_active(x + 1)
 
 
 def run(args):
