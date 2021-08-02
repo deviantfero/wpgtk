@@ -33,36 +33,23 @@ class OptionsGrid(Gtk.Grid):
 
         # Setting up ComboBox
         color_list = ['Random'] + [str(x) for x in range(1, 16)]
-        option_list = Gtk.ListStore(str)
+        self.color_combo = Gtk.ComboBoxText()
         for elem in list(color_list):
-            option_list.append([elem])
-
-        # ComboBox
-        self.color_combo = Gtk.ComboBox.new_with_model(option_list)
-        self.renderer_text = Gtk.CellRendererText()
-        self.color_combo.pack_start(self.renderer_text,  True)
-        self.color_combo.add_attribute(self.renderer_text,  'text',  0)
-        self.color_combo.set_entry_text_column(0)
+            self.color_combo.append_text(elem)
         self.color_combo.connect("changed",  self.combo_box_change, "active")
 
         # Button
         self.color_button = Gtk.Button("Active/Inactive Color")
         self.save_button = Gtk.Button("Save")
         self.save_button.connect("pressed",  self.on_save_button)
-        self.lbl_save = Gtk.Label("")
 
         # Backend Combo
-        self.backend_list = colors.list_backends()
         self.backend_lbl = Gtk.Label("Select your backend:")
+        self.backend_combo = Gtk.ComboBoxText()
+        self.backend_list = colors.list_backends()
 
-        be_store = Gtk.ListStore(str)
         for elem in self.backend_list:
-            be_store.append([elem])
-
-        self.backend_combo = Gtk.ComboBox.new_with_model(be_store)
-        self.backend_combo.pack_start(self.renderer_text, True)
-        self.backend_combo.add_attribute(self.renderer_text, 'text', 0)
-        self.backend_combo.set_entry_text_column(0)
+            self.backend_combo.append_text(elem)
         self.backend_combo.connect("changed", self.combo_box_change, "backend")
 
         # Switches
@@ -183,21 +170,22 @@ class OptionsGrid(Gtk.Grid):
         self.active_grid.attach(self.alpha_txt, 2, 5, 1, 1)
 
         self.active_grid.attach(self.save_button, 1, 6, 2, 1)
-        self.active_grid.attach(self.lbl_save, 1, 7, 2, 1)
 
         self.attach(self.switch_grid,  1,  1,  1,  1)
         self.attach(self.active_grid,  1,  2,  1,  1)
+
+        self.save_button.set_sensitive(False)
 
     def on_activate(self,  switch,  *gparam):
         if(gparam[1] == 'execute_cmd'):
             self.command_txt.set_editable(switch.get_active())
         settings[gparam[1]] = str(switch.get_active()).lower()
-        self.lbl_save.set_text('')
+        self.save_button.set_sensitive(True)
 
     def load_opt_list(self):
         current_backend = settings.get("backend", "wal")
-        i = self.backend_list.index(current_backend)
-        self.backend_combo.set_active(i)
+        idx = self.backend_list.index(current_backend)
+        self.backend_combo.set_active(idx)
 
         self.color_combo\
             .set_active(settings.getint("active", 0))
@@ -227,18 +215,19 @@ class OptionsGrid(Gtk.Grid):
 
     def combo_box_change(self, combo, *gparam):
         x = combo.get_active()
-        if(gparam[0] == "active"):
+        item = combo.get_active_text()
+
+        if gparam[0] == "active":
             settings[gparam[0]] = str(x)
             color = Gdk.color_parse(self.parent.cpage.color_list[x])
             self.color_button.modify_bg(Gtk.StateType.NORMAL,  color)
-        else:
-            settings[gparam[0]] = self.backend_list[x]
-        self.lbl_save.set_text("")
+        if gparam[0] == "backend":
+            settings[gparam[0]] = item
+        self.save_button.set_sensitive(True)
 
     def on_txt_change(self, gtk_entry, *gparam):
         settings[gparam[0]] = gtk_entry.get_text()
-        self.lbl_save.set_text("")
 
     def on_save_button(self,  button):
         write_conf()
-        self.lbl_save.set_text("Saved")
+        self.save_button.set_sensitive(False)
