@@ -5,12 +5,14 @@
 ![license](https://img.shields.io/badge/license-GPLv2-green.svg?style=flat-square)
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X996W7Z8PW4VW"><img src="https://img.shields.io/badge/donate-paypal-green.svg?style=flat-square"></a>
 <a href="https://www.irccloud.com/invite?channel=%23wpgtk&amp;hostname=irc.freenode.net&amp;port=6697&amp;ssl=1" target="_blank"><img src="https://img.shields.io/badge/IRC-%23wpgtk-1e72ff.svg?style=flat-square"  height="20"></a>
+<a href="https://discord.gg/A9yTWv9rvn" target="_blank"><img src="https://img.shields.io/discord/846433943090757652?color=green&label=%23wpgtk&logo=discord&logoColor=white&style=flat-square"  height="20"></a>
+
 
 <img align="left" src="https://i.imgur.com/ApSuntN.gif" width="450px"/>
 
-`wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as its colorscheme generator, but builds upon it with a graphic user interface and other features such as the abilty to edit the color-schemes generated and save them with their respective wallpapers, having light and dark themes for dynamic icons, hackable and fast GTK+ theme made specifically for `wpgtk`, custom keywords and values to replace in templates and auto color-scheme sorting to achieve more readable palletes.
+`wpgtk` uses [pywal](https://github.com/dylanaraps/pywal) as its colorscheme generator, but builds upon it with a graphic user interface and other features such as the ability to edit the color-schemes generated and save them with their respective wallpapers, having light and dark themes for dynamic icons, hackable and fast GTK+ theme made specifically for `wpgtk`, custom keywords and values to replace in templates and auto color-scheme sorting to achieve more readable palettes.
 
-In short, `wpgtk` is a color-scheme manager with a template system which lets you create templates from any textfile and will replace keywords on it when you change your theme, delivering high customizing power.
+In short, `wpgtk` is a color-scheme manager with a template system which lets you create templates from any text file and will replace keywords on it when you change your theme, delivering high customizing power.
 
 And also, for those who are not into auto-generated color-schemes, you will be happy to know that `wpgtk` includes all the preset themes that `pywal` does, so that's around 200+ themes to play around with, that you can also _modify_ to get really readable and cool results!
 

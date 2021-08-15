@@ -5,6 +5,7 @@ import logging
 
 __version__ = '6.5.0'
 
+
 settings = None
 
 HOME = os.getenv("HOME", os.path.expanduser("~"))
