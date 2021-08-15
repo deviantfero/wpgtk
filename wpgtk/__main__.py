@@ -193,8 +193,8 @@ def process_args(args):
 
     if args.l:
         if args.t:
-            templates = files.get_file_list(OPT_DIR, False)
-            any(print(t) for t in templates if ".base" in t)
+            templates = files.get_file_list(OPT_DIR, r".*\.base$")
+            any(print(t) for t in templates)
         else:
             print("\n".join(files.get_file_list()))
         exit(0)

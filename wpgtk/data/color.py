@@ -170,8 +170,7 @@ def auto_adjust(colors):
 def change_templates(colors):
     """call change_colors on each custom template
     installed or defined by the user"""
-    templates = files.get_file_list(OPT_DIR, images=False)
-    templates = [x for x in templates if ".base" in x]
+    templates = files.get_file_list(OPT_DIR, r".*\.base$")
 
     try:
         for template in templates:

@@ -15,13 +15,11 @@ from .config import (
 )
 
 
-def get_file_list(path=WALL_DIR, images=True):
-    """gets filenames in a given directory, optional
-    parameters for image filter."""
+def get_file_list(path=WALL_DIR, regex=None):
+    """gets file names in a given directory, optional regex
+    parameter to filter the list of files by."""
 
     files = []
-    valid = re.compile(
-        r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
 
     for _, _, filenames in os.walk(path):
         files.extend(filenames)
@@ -29,7 +27,8 @@ def get_file_list(path=WALL_DIR, images=True):
 
     files.sort()
 
-    if images:
+    if regex is not None:
+        valid = re.compile(regex)
         return [elem for elem in files if valid.fullmatch(elem)]
     else:
         return files

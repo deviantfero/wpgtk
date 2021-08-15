@@ -55,9 +55,7 @@ class TemplateGrid(Gtk.Grid):
         self.scroll.set_min_content_height(400)
         self.scroll.add(self.file_view)
 
-        self.item_names = [filen for filen in
-                           files.get_file_list(OPT_DIR, False)
-                           if '.base' in filen]
+        self.item_names = files.get_file_list(OPT_DIR, r".*\.base$")
 
         for filen in self.item_names:
             pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
@@ -87,9 +85,7 @@ class TemplateGrid(Gtk.Grid):
         if response == Gtk.ResponseType.OK:
             for f in filechooser.get_filenames():
                 files.add_template(f)
-            self.item_names = [f for f in
-                               files.get_file_list(OPT_DIR, False)
-                               if '.base' in f]
+            self.item_names = files.get_file_list(OPT_DIR, r".*\.base$")
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
