@@ -1,11 +1,10 @@
 import pywal
 import shutil
 import logging
-from os.path import realpath, basename
 from os import remove, path, symlink
 from subprocess import Popen
 
-from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, settings
+from .config import WPG_DIR, WALL_DIR, FORMAT_DIR, settings, user_keywords
 from . import color
 from . import files
 from . import sample
@@ -14,8 +13,8 @@ from . import reload
 
 def create_theme(filepath):
     """create a colors-scheme from a filepath"""
-    filepath = realpath(filepath)
-    filename = basename(filepath).replace(" ", "_")
+    filepath = path.realpath(filepath)
+    filename = path.basename(filepath).replace(" ", "_")
     tmplink = path.join(WALL_DIR, ".tmp.link")
 
     symlink(filepath, tmplink)
@@ -40,7 +39,7 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     if not restore:
         pywal.export.every(colors, FORMAT_DIR)
-        color.apply_colorscheme(colors)
+        color.apply_colorscheme(color.get_color_dict(colors, colorscheme))
         if reload_all:
             reload.all()
     else:
@@ -48,25 +47,24 @@ def set_theme(wallpaper, colorscheme, restore=False):
 
     if set_wall:
         filepath = path.join(WALL_DIR, wallpaper)
-        set_wall = filepath if path.isfile(filepath) else colors["wallpaper"]
-        pywal.wallpaper.change(set_wall)
+        imagepath = filepath if path.isfile(filepath) else colors["wallpaper"]
+        pywal.wallpaper.change(imagepath)
 
     files.write_script(wallpaper, colorscheme)
     files.change_current(wallpaper)
 
-    Popen(['chmod', '+x', path.join(WPG_DIR, "wp_init.sh")])
-
     if settings.getboolean('execute_cmd', False) and not restore:
-        Popen(['bash', '-c', settings['command']])
+        Popen(settings['command'].split())
 
 
 def delete_theme(filename):
     remove(path.join(WALL_DIR, filename))
     files.delete_colorschemes(filename)
+    user_keywords.remove_section(filename)
 
 
 def get_current():
-    image = basename(realpath(path.join(WPG_DIR, '.current')))
+    image = path.basename(path.realpath(path.join(WPG_DIR, '.current')))
     return image
 
 
@@ -84,8 +82,8 @@ def reset_theme(theme_name):
 def import_theme(wallpaper, json_file, theme=False):
     """import a colorscheme from a JSON file either in
     terminal.sexy or pywal format"""
-    json_file = realpath(json_file)
-    filename = basename(json_file)
+    json_file = path.realpath(json_file)
+    filename = path.basename(json_file)
 
     if theme:
         theme = pywal.theme.file(filename)

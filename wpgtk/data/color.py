@@ -8,8 +8,9 @@ from operator import itemgetter
 from subprocess import Popen
 from random import shuffle, randint
 
-from .config import settings, user_keywords
+from .config import settings
 from .config import WALL_DIR, WPG_DIR, FILE_DIC, OPT_DIR
+from . import keywords
 from . import files
 from . import util
 from . import sample
@@ -169,8 +170,7 @@ def auto_adjust(colors):
 def change_templates(colors):
     """call change_colors on each custom template
     installed or defined by the user"""
-    templates = files.get_file_list(OPT_DIR, images=False)
-    templates = [x for x in templates if ".base" in x]
+    templates = files.get_file_list(OPT_DIR, r".*\.base$")
 
     try:
         for template in templates:
@@ -230,38 +230,45 @@ def keyword_colors(hexc, is_dark_theme=True):
     }
 
 
-def get_color_dict(cdic):
-    """ensamble wpgtk color dictionary"""
+def get_color_dict(pywal_colors, colorscheme):
+    """ensamble wpgtk color dictionary from pywal color dictionary"""
+    keyword_set = settings.get('keywords', 'default')
     index = settings.getint("active")
     index = index if index > 0 else randint(9, 14)
 
-    base_color = cdic["colors"]["color%s" % index]
-    color_list = list(cdic["colors"].values())
+    base_color = pywal_colors["colors"]["color%s" % index]
+    color_list = list(pywal_colors["colors"].values())
+    keyword_dict = keywords.get_keywords_section(keyword_set)
 
     all_colors = {
-        "wallpaper": cdic["wallpaper"],
-        "alpha": cdic["alpha"],
-        **cdic["special"],
-        **cdic["colors"],
-        **add_icon_colors(cdic),
+        "wallpaper": pywal_colors["wallpaper"],
+        "alpha": pywal_colors["alpha"],
+        **pywal_colors["special"],
+        **pywal_colors["colors"],
+        **add_icon_colors(pywal_colors),
         **keyword_colors(base_color, is_dark_theme(color_list))
     }
 
-    try:
-        user_words = {k: v.format(**all_colors)
-                      for k, v in user_keywords.items()}
-        all_colors = {**all_colors, **user_words}
+    all_colors = {
+        k: pywal.util.Color(v) for k, v in all_colors.items()
+    }
 
+    try:
+        user_words = {
+            k: pywal.util.Color(v.format_map(all_colors))
+            for k, v in keyword_dict.items()
+        }
     except KeyError as e:
         logging.error("%s - invalid, use double {{}} "
                       "to escape curly braces" % e)
 
-    return {k: pywal.util.Color(v) for k, v in all_colors.items()}
+    return {**all_colors, **user_words}
 
 
-def apply_colorscheme(colors):
-    color_dict = get_color_dict(colors)
-
+def apply_colorscheme(color_dict):
+    """Receives a colorscheme dict ensambled by
+    color.get_color_dict as argument and applies it
+    system-wide."""
     if os.path.isfile(FILE_DIC["icon-step2"]):
         change_colors(color_dict, "icon-step1")
         Popen(FILE_DIC["icon-step2"])

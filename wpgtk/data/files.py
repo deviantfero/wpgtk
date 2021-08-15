@@ -2,17 +2,23 @@ import os
 import shutil
 import re
 import logging
+from subprocess import Popen
 from pywal.colors import cache_fname, list_backends
 
-from .config import settings, WALL_DIR, WPG_DIR, OPT_DIR, SAMPLE_DIR
 from os.path import join, basename
+from .config import (
+    settings,
+    WALL_DIR,
+    WPG_DIR,
+    OPT_DIR,
+    SAMPLE_DIR,
+)
 
 
-def get_file_list(path=WALL_DIR, images=True):
-    """gets filenames in a given directory, optional
-    parameters for image filter."""
+def get_file_list(path=WALL_DIR, regex=None):
+    """gets file names in a given directory, optional regex
+    parameter to filter the list of files by."""
 
-    valid = re.compile(r"^[^\.](.*\.png$|.*\.jpg$|.*\.jpeg$|.*\.jpe$|.*\.gif$)")
     files = []
 
     for _, _, filenames in os.walk(path):
@@ -21,7 +27,8 @@ def get_file_list(path=WALL_DIR, images=True):
 
     files.sort()
 
-    if images:
+    if regex is not None:
+        valid = re.compile(regex)
         return [elem for elem in files if valid.fullmatch(elem)]
     else:
         return files
@@ -39,6 +46,7 @@ def write_script(wallpaper, colorscheme):
     with open(join(WPG_DIR, "wp_init.sh"), "w") as script:
         command = "wpg %s '%s' '%s'" % (flags, wallpaper, colorscheme)
         script.writelines(["#!/usr/bin/env bash\n", command])
+        Popen(['chmod', '+x', join(WPG_DIR, "wp_init.sh")])
 
 
 def get_cache_path(wallpaper, backend=None):
@@ -79,8 +87,7 @@ def add_template(cfile, bfile=None):
         src_file = bfile if bfile else cfile
 
         shutil.copy2(src_file, join(OPT_DIR, template_name))
-        os.symlink(cfile, join(OPT_DIR,
-                               template_name.replace(".base", "")))
+        os.symlink(cfile, join(OPT_DIR, template_name.replace(".base", "")))
 
         logging.info("created backup %s.bak" % cfile)
         logging.info("added %s @ %s" % (template_name, cfile))
@@ -102,40 +109,14 @@ def delete_template(basefile):
         logging.error(str(e.strerror))
 
 
-def delete_colorschemes(wallpaper):
-    """delete all colorschemes related to the given wallpaper"""
+def delete_colorschemes(colorscheme):
+    """delete all files related to the given colorscheme"""
     for backend in list_backends():
         try:
-            os.remove(get_cache_path(wallpaper, backend))
-            os.remove(get_sample_path(wallpaper, backend))
+            os.remove(get_cache_path(colorscheme, backend))
+            os.remove(get_sample_path(colorscheme, backend))
         except OSError:
             pass
-
-
-def update_color(matchobj):
-    if matchobj.group(1):
-        return "{%s}" % matchobj.group(1).lower()
-
-
-def update_template(template_path):
-    tmp_data = ""
-
-    with open(template_path, "r") as f:
-        tmp_data = f.read()
-
-        logging.info("escaping legitimate curly braces {} -> {{}}")
-        tmp_data = tmp_data.replace("{", "{{")
-        tmp_data = tmp_data.replace("}", "}}")
-
-        logging.info("replacing #<COLORXX> with braces {colorxx}")
-        tmp_data = re.sub(r"#<(COLOR[0-9]{1,2})>", update_color, tmp_data)
-        tmp_data = tmp_data.replace("#<COLORACT>", "{active}")
-        tmp_data = tmp_data.replace("#<COLORIN>", "{inactive}")
-
-    with open(template_path, "w") as f:
-        logging.info("writting %s" % template_path)
-        f.write(tmp_data)
-        logging.info("%s update complete" % template_path)
 
 
 def change_current(filename):

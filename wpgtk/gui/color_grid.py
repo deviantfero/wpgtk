@@ -202,13 +202,6 @@ class ColorGrid(Gtk.Grid):
                 height=300)
         self.sample.set_from_pixbuf(self.pixbuf_sample)
 
-    def update_combo(self, option_list):
-        self.option_combo.set_model(option_list)
-        self.option_combo.set_entry_text_column(0)
-
-    def set_edit_combo(self, x):
-        self.option_combo.set_active(x)
-
     def on_ok_click(self, widget):
         current_walls = files.get_file_list()
         if len(current_walls) > 0:

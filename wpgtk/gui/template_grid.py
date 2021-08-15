@@ -39,8 +39,8 @@ class TemplateGrid(Gtk.Grid):
         self.button_add.connect('clicked', self.on_add_clicked)
         self.button_rm = Gtk.Button('Remove')
         self.button_rm.connect('clicked', self.on_rm_clicked)
-        self.button_open = Gtk.Button('Edit')
-        self.button_open.connect('clicked', self.on_open_clicked)
+        self.button_edit = Gtk.Button('Edit')
+        self.button_edit.connect('clicked', self.on_open_clicked)
 
         self.liststore = Gtk.ListStore(Pixbuf, str)
         self.file_view = Gtk.IconView.new()
@@ -55,17 +55,15 @@ class TemplateGrid(Gtk.Grid):
         self.scroll.set_min_content_height(400)
         self.scroll.add(self.file_view)
 
-        self.item_names = [filen for filen in
-                           files.get_file_list(OPT_DIR, False)
-                           if '.base' in filen]
+        self.item_names = files.get_file_list(OPT_DIR, r".*\.base$")
 
         for filen in self.item_names:
             pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
             self.liststore.append([pixbuf, filen])
 
         self.grid_edit.attach(self.button_add, 0, 0, 2, 1)
-        self.grid_edit.attach(self.button_rm, 0, 1, 1, 1)
-        self.grid_edit.attach(self.button_open, 1, 1, 1, 1)
+        self.grid_edit.attach(self.button_edit, 0, 1, 1, 1)
+        self.grid_edit.attach(self.button_rm, 1, 1, 1, 1)
         self.grid_edit.attach(self.scroll, 0, 2, 2, 1)
 
         self.attach(self.grid_edit, 0, 0, 1, 1)
@@ -87,9 +85,7 @@ class TemplateGrid(Gtk.Grid):
         if response == Gtk.ResponseType.OK:
             for f in filechooser.get_filenames():
                 files.add_template(f)
-            self.item_names = [f for f in
-                               files.get_file_list(OPT_DIR, False)
-                               if '.base' in f]
+            self.item_names = files.get_file_list(OPT_DIR, r".*\.base$")
             self.liststore = Gtk.ListStore(Pixbuf, str)
             for filen in self.item_names:
                 pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)

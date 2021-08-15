@@ -1,41 +1,71 @@
-from .config import user_keywords, write_conf
+from .config import user_keywords, write_keywords
 
 KEY_LENGTH = 5
 VAL_LENGTH = 2
 
 
-def update_key(old_keyword, new_keyword, save=False):
-    """validates and updates a keyword"""
+def delete_keywords_section(name):
+    if name != 'default':
+        user_keywords.remove_section(name)
+        write_keywords()
+
+
+def create_keywords_section(name):
+    user_keywords.add_section(name)
+    write_keywords()
+
+
+def get_keywords_section(theme):
+    """get keyword file configparser for current wallpaper
+       or create one if it does not exist"""
+    if not user_keywords.has_section(theme):
+        create_keywords_section(theme)
+
+    return user_keywords[theme]
+
+
+def update_key(old_keyword, new_keyword, theme=None):
+    """validates and updates a keyword for a wallpaper"""
     if not new_keyword:
         raise Exception('Keyword must be longer than 5 characters')
 
-    user_keywords[new_keyword] = user_keywords[old_keyword]
+    keywords = get_keywords_section(theme)
+    keywords[new_keyword] = keywords[old_keyword]
 
-    if(old_keyword != new_keyword):
-        user_keywords.pop(old_keyword, None)
+    if (old_keyword != new_keyword):
+        keywords.pop(old_keyword, None)
 
-    if save:
-        write_conf()
+    write_keywords()
 
 
-def update_value(keyword, value, save=False):
+def update_value(keyword, value, theme):
+    """update the value to replace the user defined keyword with"""
     if not value:
         raise Exception('Value must exist')
 
-    user_keywords[keyword] = value
+    keywords = get_keywords_section(theme)
+    keywords[keyword] = value
 
-    if save:
-        write_conf()
+    write_keywords()
 
 
-def create_pair(keyword, value, save=False):
+def create_pair(keyword, value, theme):
+    """create a key value pair for a wallpaper"""
     if not value:
         raise Exception('There must be a value')
 
     if not keyword:
-        raise Exception('There must be a value')
+        raise Exception('There must be a keyword')
 
-    user_keywords[keyword] = value
+    keywords = get_keywords_section(theme)
+    keywords[keyword] = value
 
-    if save:
-        write_conf()
+    write_keywords()
+
+
+def remove_pair(keyword, theme):
+    """removes a pair of keyword value for a wallpaper"""
+    keywords = get_keywords_section(theme)
+    keywords.pop(keyword, None)
+
+    write_keywords()

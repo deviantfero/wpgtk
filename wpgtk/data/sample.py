@@ -10,6 +10,7 @@ except ImportError:
 
 
 def create_sample(colors, f=os.path.join(WALL_DIR, ".tmp.sample.png")):
+    """Creates sample image from a pywal color dictionary"""
     im = Image.new("RGB", (480, 50), "white")
     pix = im.load()
     width_sample = im.size[0]//(len(colors)//2)

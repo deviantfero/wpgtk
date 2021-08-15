@@ -122,11 +122,6 @@ def read_args(args):
                         help="preview your current colorscheme",
                         action="store_true")
 
-    parser.add_argument("--update",
-                        help="update template(s) of your choice "
-                        "to the new format",
-                        nargs="+")
-
     parser.add_argument("--noreload",
                         help="Skip reloading other software after"
                         "applying colorscheme",
@@ -136,6 +131,10 @@ def read_args(args):
 
 
 def process_arg_errors(args):
+    if args.r and not args.s:
+        logging.error("invalid combination of flags, use with -s")
+        exit(1)
+
     if args.m and (args.s or args.R):
         logging.error("invalid combination of flags")
         exit(1)
@@ -194,8 +193,8 @@ def process_args(args):
 
     if args.l:
         if args.t:
-            templates = files.get_file_list(OPT_DIR, False)
-            any(print(t) for t in templates if ".base" in t)
+            templates = files.get_file_list(OPT_DIR, r".*\.base$")
+            any(print(t) for t in templates)
         else:
             print("\n".join(files.get_file_list()))
         exit(0)
@@ -293,12 +292,6 @@ def process_args(args):
 
     if args.backend == "list":
         print("\n".join(pywal.colors.list_backends()))
-        exit(0)
-
-    if args.update:
-        for arg in args.update:
-            if arg.endswith(".base"):
-                files.update_template(arg)
         exit(0)
 
     if args.noreload:

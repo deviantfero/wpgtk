@@ -108,7 +108,6 @@ def gtk3():
         else:
             xsettingsd("FlatColor")
 
-
     # The system has no known settings daemon installed,
     # but dconf gtk-theme exists, just refreshing its theme
     # Because user might be using unknown settings daemon
