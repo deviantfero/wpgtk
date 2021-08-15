@@ -1,10 +1,14 @@
+import logging
 from ..data import keywords
-from ..data import files
+from ..data.config import user_keywords, settings, write_conf
 from gi import require_version
 from gi.repository import Gtk
+from .keyword_dialog import KeywordDialog
 require_version("Gtk", "3.0")
 
 PAD = 10
+
+# TODO: if create section, select the new valid section
 
 class KeywordGrid(Gtk.Grid):
     def __init__(self, parent):
@@ -16,44 +20,52 @@ class KeywordGrid(Gtk.Grid):
         self.set_row_spacing(PAD)
         self.set_column_spacing(PAD)
 
-        self.delete_button = Gtk.Button('Remove')
-        self.delete_button.connect('clicked', self.remove_keyword)
+        self.liststore = Gtk.ListStore(str, str)
 
-        self.add_button = Gtk.Button('Add')
+        self.remove_button = Gtk.Button('Remove Keyword')
+        self.remove_button.connect('clicked', self.remove_keyword)
+
+        self.add_button = Gtk.Button('Add Keyword')
         self.add_button.connect('clicked', self.append_new_keyword)
 
-        self.reset_button = Gtk.Button('Reset')
-        self.reset_button.connect('clicked', self.reset_keywords_section)
+        self.choose_button = Gtk.Button('Choose Set')
+        self.choose_button.connect('clicked', self.choose_keywords_section)
 
-        self.selected_file = None
-        self.theme_combo = Gtk.ComboBoxText()
-        self.theme_combo.set_entry_text_column(0)
-        self.theme_combo.append_text('Default')
-        for elem in list(files.get_file_list()):
-            self.theme_combo.append_text(elem)
+        self.create_button = Gtk.Button('Create Set')
+        self.create_button.connect('clicked', self.create_keywords_section)
 
-        self.theme_combo.set_active(0)
+        self.delete_button = Gtk.Button('Delete Set')
+        self.delete_button.connect('clicked', self.delete_keywords_section)
 
-        self.liststore = Gtk.ListStore(str, str)
+        self.sections_combo = Gtk.ComboBoxText()
+        self.sections_combo.connect("changed", self.on_section_change)
+        self.reload_section_list()
+
+        self.selected_file = settings.get("keywords", "default")
+        idx = list(user_keywords.sections()).index(self.selected_file)
+        self.sections_combo.set_active(idx)
+        self.delete_button.set_sensitive(self.selected_file != 'default')
+        self.choose_button.set_sensitive(False)
+
         self.reload_keyword_list()
-
-        self.theme_combo.set_entry_text_column(0)
-        self.theme_combo.connect("changed", self.on_theme_change)
 
         self.status_lbl = Gtk.Label('')
         self.keyword_tree = Gtk.TreeView(model=self.liststore)
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scroll.set_min_content_height(400)
+        scroll.set_min_content_height(320)
+        scroll.set_propagate_natural_height(True)
         scroll.add(self.keyword_tree)
 
-        self.attach(self.theme_combo, 0, 0, 3, 1)
-        self.attach(self.add_button, 0, 1, 1, 1)
-        self.attach(self.delete_button, 1, 1, 1, 1)
-        self.attach(self.reset_button, 2, 1, 1, 1)
-        self.attach(scroll, 0, 2, 3, 1)
-        self.attach(self.status_lbl, 0, 3, 3, 1)
+        self.attach(self.sections_combo, 0, 0, 2, 1)
+        self.attach(self.choose_button, 2, 0, 1, 1)
+        self.attach(self.delete_button, 3, 0, 1, 1)
+        self.attach(self.create_button, 0, 1, 4, 1)
+        self.attach(scroll, 0, 2, 4, 1)
+        self.attach(self.add_button, 0, 3, 2, 1)
+        self.attach(self.remove_button, 2, 3, 2, 1)
+        self.attach(self.status_lbl, 0, 4, 4, 1)
 
         key_renderer = Gtk.CellRendererText()
         key_renderer.set_property('editable', True)
@@ -95,6 +107,15 @@ class KeywordGrid(Gtk.Grid):
                 self.status_lbl.set_text(str(e))
         self.reload_keyword_list()
 
+    def reload_section_list(self, active='default'):
+        sections = list(user_keywords.sections())
+        self.sections_combo.remove_all()
+
+        for item in sections:
+            self.sections_combo.append_text(item)
+
+        self.sections_combo.set_active(sections.index(active))
+
     def reload_keyword_list(self):
         keyword_section = keywords.get_keywords_section(self.selected_file)
 
@@ -102,11 +123,16 @@ class KeywordGrid(Gtk.Grid):
         for k, v in keyword_section.items():
             self.liststore.append([k, v])
 
-    def on_theme_change(self, widget):
-        selected_entry = widget.get_active_text()
-        self.selected_file = None if selected_entry == 'Default' else selected_entry
-        self.reset_button.set_sensitive(self.selected_file is not None)
-        self.reload_keyword_list()
+    def on_section_change(self, widget):
+        self.selected_file = widget.get_active_text()
+
+        if self.selected_file is not None:
+            self.reload_keyword_list()
+            self.choose_button.set_sensitive(
+                settings.get('keywords', 'default') != self.selected_file
+            )
+            settings['keywords'] = self.selected_file
+            self.delete_button.set_sensitive(self.selected_file != 'default')
 
     def append_new_keyword(self, widget):
         self.status_lbl.set_text('')
@@ -117,7 +143,26 @@ class KeywordGrid(Gtk.Grid):
         )
         self.reload_keyword_list()
 
-    def reset_keywords_section(self, widget):
+    def delete_keywords_section(self, widget):
         if self.selected_file:
-            keywords.reset_keywords_section(self.selected_file)
-            self.reload_keyword_list()
+            keywords.delete_keywords_section(self.selected_file)
+            self.reload_section_list()
+
+    def choose_keywords_section(self, widget):
+        write_conf()
+        self.choose_button.set_sensitive(False)
+
+    def create_keywords_section(self, widget):
+        dialog = KeywordDialog(self.parent)
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            try:
+                section = dialog.get_section_name()
+                keywords.create_keywords_section(section)
+                self.reload_section_list(section)
+            except Exception as e:
+                logging.error(str(e))
+            dialog.destroy()
+        if response == Gtk.ResponseType.CANCEL:
+            dialog.destroy()

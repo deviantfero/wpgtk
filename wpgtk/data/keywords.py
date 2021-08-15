@@ -1,30 +1,28 @@
-import configparser
-from os import path
-
 from .config import user_keywords, write_keywords
 
 KEY_LENGTH = 5
 VAL_LENGTH = 2
 
 
-def get_keywords_section(theme = None):
+def delete_keywords_section(name):
+    if name != 'default':
+        user_keywords.remove_section(name)
+        write_keywords()
+
+
+def create_keywords_section(name):
+    user_keywords.add_section(name)
+    write_keywords()
+
+
+def get_keywords_section(theme):
     """get keyword file configparser for current wallpaper
        or create one if it does not exist"""
-    if theme is None:
-        return user_keywords['default']
-
     if not user_keywords.has_section(theme):
-        user_keywords.add_section(theme)
-        user_keywords[theme] = user_keywords['default']
+        create_keywords_section(theme)
 
     return user_keywords[theme]
 
-def reset_keywords_section(theme):
-    """set the theme's keyword to the default key value pairs"""
-
-    if user_keywords.has_section(theme):
-        user_keywords[theme] = user_keywords['default']
-        write_keywords()
 
 def update_key(old_keyword, new_keyword, theme=None):
     """validates and updates a keyword for a wallpaper"""
@@ -40,7 +38,7 @@ def update_key(old_keyword, new_keyword, theme=None):
     write_keywords()
 
 
-def update_value(keyword, value, theme=None):
+def update_value(keyword, value, theme):
     """update the value to replace the user defined keyword with"""
     if not value:
         raise Exception('Value must exist')
@@ -51,7 +49,7 @@ def update_value(keyword, value, theme=None):
     write_keywords()
 
 
-def create_pair(keyword, value, theme=None):
+def create_pair(keyword, value, theme):
     """create a key value pair for a wallpaper"""
     if not value:
         raise Exception('There must be a value')
@@ -65,9 +63,8 @@ def create_pair(keyword, value, theme=None):
     write_keywords()
 
 
-def remove_pair(keyword, theme=None):
+def remove_pair(keyword, theme):
     """removes a pair of keyword value for a wallpaper"""
-
     keywords = get_keywords_section(theme)
     keywords.pop(keyword, None)
 

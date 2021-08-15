@@ -233,12 +233,13 @@ def keyword_colors(hexc, is_dark_theme=True):
 
 def get_color_dict(pywal_colors, colorscheme):
     """ensamble wpgtk color dictionary from pywal color dictionary"""
+    keyword_set = settings.get('keywords', 'default')
     index = settings.getint("active")
     index = index if index > 0 else randint(9, 14)
 
     base_color = pywal_colors["colors"]["color%s" % index]
     color_list = list(pywal_colors["colors"].values())
-    keyword_dict = keywords.get_keywords_section(colorscheme)
+    keyword_dict = keywords.get_keywords_section(keyword_set)
 
     all_colors = {
         "wallpaper": pywal_colors["wallpaper"],
@@ -249,18 +250,20 @@ def get_color_dict(pywal_colors, colorscheme):
         **keyword_colors(base_color, is_dark_theme(color_list))
     }
 
+    all_colors = {
+        k: pywal.util.Color(v) for k, v in all_colors.items()
+    }
+
     try:
         user_words = {
-            k: v.format(**all_colors)
+            k: pywal.util.Color(v.format_map(all_colors))
             for k, v in keyword_dict.items()
         }
-        all_colors = {**all_colors, **user_words}
-
     except KeyError as e:
         logging.error("%s - invalid, use double {{}} "
                       "to escape curly braces" % e)
 
-    return {k: pywal.util.Color(v) for k, v in all_colors.items()}
+    return {**all_colors, **user_words}
 
 
 def apply_colorscheme(color_dict):

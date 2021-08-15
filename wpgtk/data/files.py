@@ -12,7 +12,6 @@ from .config import (
     WPG_DIR,
     OPT_DIR,
     SAMPLE_DIR,
-    KEYWORD_FILE
 )
 
 
