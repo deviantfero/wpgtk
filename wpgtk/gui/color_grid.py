@@ -14,7 +14,9 @@ from gi import require_version
 from gi.repository import Gtk, Gdk, GdkPixbuf
 require_version("Gtk", "3.0")
 
-
+# TODO: remove current_walls call, use simple ist
+# TODO: use simple text combo
+# TODO: only update pixbuf if parent has same color scheme
 current_walls = files.get_file_list()
 PAD = 10
 
@@ -69,7 +71,7 @@ class ColorGrid(Gtk.Grid):
         self.combo_grid.set_column_spacing(PAD)
         self.combo_grid.set_row_spacing(PAD)
 
-        self.color_list = ['000000']*16
+        self.color_list = ['000000'] * 16
         self.button_list = [Gtk.Button('000000') for x in range(16)]
         self.selected_file = ""
         for button in self.button_list:
@@ -203,20 +205,19 @@ class ColorGrid(Gtk.Grid):
         self.sample.set_from_pixbuf(self.pixbuf_sample)
 
     def on_ok_click(self, widget):
-        current_walls = files.get_file_list()
-        if len(current_walls) > 0:
-            x = self.option_combo.get_active()
-            color.write_colors(current_walls[x], self.color_list)
-            tmpfile = os.path.join(WALL_DIR, ".tmp.sample.png")
-            if(os.path.isfile(tmpfile)):
-                shutil.move(os.path.join(WALL_DIR, ".tmp.sample.png"),
-                            files.get_sample_path(current_walls[x]))
-                self.done_lbl.set_text("Changes saved")
-                x = self.parent.colorscheme.get_active()
-                sample_path = files.get_sample_path(self.selected_file)
-                self.parent.pixbuf_sample = GdkPixbuf.Pixbuf\
-                    .new_from_file_at_size(sample_path, width=500, height=300)
-                self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
+        color.write_colors(self.selected_file, self.color_list)
+        tmpfile = os.path.join(WALL_DIR, ".tmp.sample.png")
+
+        if(os.path.isfile(tmpfile)):
+            shutil.move(
+                os.path.join(WALL_DIR, ".tmp.sample.png"),
+                files.get_sample_path(self.selected_file))
+
+            self.done_lbl.set_text("Changes saved")
+            sample_path = files.get_sample_path(self.selected_file)
+            self.parent.pixbuf_sample = GdkPixbuf.Pixbuf\
+                                                 .new_from_file_at_size(sample_path, width=500, height=300)
+            self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
 
     def on_auto_click(self, widget):
         self.color_list = color.auto_adjust(self.color_list)
