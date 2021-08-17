@@ -195,6 +195,8 @@ class OptionsGrid(Gtk.Grid):
             .set_active(settings.getboolean("execute_cmd", False))
         self.light_theme_switch\
             .set_active(settings.getboolean("light_theme", False))
+        self.vte_switch\
+            .set_active(settings.getboolean("vte", False))
         self.wallpaper_switch\
             .set_active(settings.getboolean("set_wallpaper", True))
         self.smart_sort_switch\
