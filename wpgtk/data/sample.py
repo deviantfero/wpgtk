@@ -1,7 +1,7 @@
 import os
 import pywal
 
-from .config import WALL_DIR
+from .config import SAMPLE_DIR
 
 try:
     import Image
@@ -9,7 +9,7 @@ except ImportError:
     from PIL import Image
 
 
-def create_sample(colors, f=os.path.join(WALL_DIR, ".tmp.sample.png")):
+def create_sample(colors, f=os.path.join(SAMPLE_DIR, ".tmp.sample.png")):
     """Creates sample image from a pywal color dictionary"""
     im = Image.new("RGB", (480, 50), "white")
     pix = im.load()
