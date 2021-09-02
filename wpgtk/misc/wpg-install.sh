@@ -88,19 +88,13 @@ install_tint2()
 
 install_rofi()
 {
-  echo -n "This might override your rofi config, Continue?[Y/n]: ";
-  read -r response;
-  if [[ ! "$response" == "n" ]]; then
-    echo "Installing rofi config";
-    echo ":: backing up current rofi conf in rofi.bak";
-    cp "${CONFIG}/rofi/config" "${CONFIG}/rofi/config.bak" 2>/dev/null;
-    cp --remove-destination ./rofi/config "${CONFIG}/rofi/config" && \
-    cp --remove-destination ./rofi/rofi.base "${TEMPLATE_DIR}" && \
-      ln -sf "${CONFIG}/rofi/config" "${TEMPLATE_DIR}/rofi" && \
-      echo ":: rofi template install done."
-    return 0;
-  fi
-  echo ":: rofi template not installed";
+  echo "Installing rofi wpg theme";
+  cp --remove-destination ./rofi/wpg.rasi "${CONFIG}/rofi/wpg.rasi" && \
+	cp --remove-destination ./rofi/wpg.rasi.base "${TEMPLATE_DIR}" && \
+	ln -sf "${CONFIG}/rofi/wpg.rasi" "${TEMPLATE_DIR}/wpg.rasi" && \
+	echo ":: rofi wpg theme install done." && \
+	echo ':: add @theme "wpg" to your rofi config'
+  return 0;
 }
 
 install_i3() 
