@@ -53,7 +53,7 @@ def xsettingsd(theme):
             tmp.write('Net/ThemeName "' + theme + '"\n')
             tmp.close()
 
-            util.silent_Popen(["timeout", "0.2s", "xsettingsd", "-c", path])
+            util.silent_call(["timeout", "0.2s", "xsettingsd", "-c", path])
             logging.info(
                 "reloaded %s from settings.ini using xsettingsd"
                 % theme
@@ -95,11 +95,11 @@ def gtk3():
         ).communicate()[0].decode().strip("' \n")
 
     if util.get_pid("gsd-settings") and gsettings_theme:
-        subprocess.Popen(refresh_gsettings.format(gsettings_theme), shell=True)
+        subprocess.call(refresh_gsettings.format(gsettings_theme), shell=True)
         logging.info("Reloaded %s theme via gsd-settings" % gsettings_theme)
 
     elif util.get_pid("xfsettingsd") and xfsettings_theme:
-        subprocess.Popen(refresh_xfsettings.format(xfsettings_theme), shell=True)
+        subprocess.call(refresh_xfsettings.format(xfsettings_theme), shell=True)
         logging.info("reloaded %s theme via xfsettingsd" % xfsettings_theme)
 
     # no settings daemon is running.
