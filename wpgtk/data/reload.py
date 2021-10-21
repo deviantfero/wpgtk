@@ -26,6 +26,12 @@ def tint2():
         subprocess.Popen(["pkill", "-SIGUSR1", "tint2"])
 
 
+def polybar():
+    """Reloads tint2 configuration on the fly."""
+    if shutil.which("polybar") and util.get_pid("polybar"):
+        util.silent_Popen(["polybar-msg", "cmd", "restart"])
+
+
 def dunst():
     """Kills dunst so that notify-send reloads it when called."""
     if shutil.which("dunst") and util.get_pid("dunst"):
@@ -47,7 +53,7 @@ def xsettingsd(theme):
             tmp.write('Net/ThemeName "' + theme + '"\n')
             tmp.close()
 
-            util.silent_call(["timeout", "0.2s", "xsettingsd", "-c", path])
+            util.silent_Popen(["timeout", "0.2s", "xsettingsd", "-c", path])
             logging.info(
                 "reloaded %s from settings.ini using xsettingsd"
                 % theme
@@ -126,10 +132,10 @@ def all():
     dunst()
     openbox()
     reload.i3()
-    reload.polybar()
     reload.gtk()
     reload.kitty()
     reload.sway()
+    polybar()
 
     if settings.getboolean("gtk", True):
         gtk3()
