@@ -229,6 +229,7 @@ class OptionsGrid(Gtk.Grid):
 
     def on_txt_change(self, gtk_entry, *gparam):
         settings[gparam[0]] = gtk_entry.get_text()
+        self.save_button.set_sensitive(True)
 
     def on_save_button(self,  button):
         write_conf()
