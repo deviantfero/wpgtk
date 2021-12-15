@@ -109,7 +109,7 @@ def gtk3():
         if os.path.isfile(settings_ini):
             gtkrc = configparser.ConfigParser()
             gtkrc.read(settings_ini)
-            theme = gtkrc["Settings"].get("gtk-theme-name") if "Settings" in gtkrc else "FlatColor"
+            theme = gtkrc["Settings"].get("gtk-theme-name", "FlatColor") if "Settings" in gtkrc else "FlatColor"
             xsettingsd(theme)
         else:
             xsettingsd("FlatColor")
