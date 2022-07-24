@@ -35,7 +35,8 @@ def polybar():
 def dunst():
     """Kills dunst so that notify-send reloads it when called."""
     if shutil.which("dunst") and util.get_pid("dunst"):
-        subprocess.Popen(["killall", "dunst"])
+        subprocess.Popen(["killall", "-w", "dunst"])
+        subprocess.Popen(["dunst"])
 
 
 def openbox():
