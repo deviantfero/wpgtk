@@ -39,6 +39,8 @@ usage()
   -b   Install bspwm template
   -d   Install dunst template
   -B   Install bpytop template
+  -T   Install btop template
+  -M   Install mako template
   -q   Install qtile template
   -H   Specify hash of wpgtk-templates repository to use
   "
@@ -212,6 +214,31 @@ install_bpytop()
 	echo ":: bpytop theme install done, 'flatcolor' theme applied";
 }
 
+install_btop()
+{
+  echo "Installing btop theme";
+  echo ":: backing up current btop flatcolor theme in flatcolor.theme.bak";
+  cp "${CONFIG}/btop/themes/flatcolor.theme" "${CONFIG}/btop/themes/flatcolor.theme.bak" 2>/dev/null;
+  mv "./btop/btop.base" "${TEMPLATE_DIR}/btop.base";
+  mv "./btop/btop" "${TEMPLATE_DIR}/btop";
+  ln -sf "${CONFIG}/btop/themes/flatcolor.theme" "${TEMPLATE_DIR}/btop" && \
+	echo ":: backing up current btop config to btop.conf.bak";
+  sed -i.bak "s/^color_theme=.*/color_theme=+flatcolor/" ${CONFIG}/btop/btop.conf && \
+	echo ":: btop theme install done, 'flatcolor' theme applied";
+}
+
+install_mako()
+{
+  echo "Installing mako theme";
+  echo ":: Creating mako config dir";
+  mkdir -P ~/.config/mako/ 2>/dev/null
+  mv "./mako/mako.base" "${TEMPLATE_DIR}/mako.base";
+  mv "./mako/mako" "${TEMPLATE_DIR}/mako";
+  ln -sf "${CONFIG}/mako/config "${TEMPLATE_DIR}/mako" && \
+	echo ":: mako theme install done, 'use makoctl reload to apply theme";
+}
+
+
 install_qtile()
 {
   echo "Installing qtile colors";
@@ -244,7 +271,7 @@ clean_up()
 
 getargs()
 {
-  while getopts "H:bhvotgiIprdBq" opt
+  while getopts "H:bhvotgiIprdBTMq" opt
   do
     case $opt in
       h)
@@ -265,6 +292,8 @@ getargs()
       b)   bspwm="true" ;;
       d)   dunst="true" ;;
       B)  bpytop="true" ;;
+      T)    btop="true" ;;
+      M)    mako="true" ;;
       q)   qtile="true" ;;
       H) commit="${OPTARG}" ;;
       *)
@@ -292,6 +321,8 @@ main()
   [[ "$bspwm" == "true" ]] && install_bspwm;
   [[ "$dunst" == "true" ]] && install_dunst;
   [[ "$bpytop" == "true" ]] && install_bpytop;
+  [[ "$btop" == "true" ]] && install_btop;
+  [[ "$mako" == "true" ]] && install_btop;
   [[ "$qtile" == "true" ]] && install_qtile;
   clean_up;
 }
