@@ -11,7 +11,7 @@ from ..data.config import WALL_DIR, WPG_DIR, __version__
 
 from gi import require_version
 require_version('Gtk', '3.0')
-require_version('GdkPixbuf', '3.0')
+require_version('GdkPixbuf', '2.0')
 from gi.repository import Gtk, GdkPixbuf
 
 PAD = 10
