@@ -105,6 +105,14 @@ class OptionsGrid(Gtk.Grid):
         )
         self.lbl_reload = Gtk.Label("Reload other software")
 
+        self.terminal_switch = Gtk.Switch()
+        self.terminal_switch.connect(
+            "notify::active",
+            self.on_activate,
+            "terminal"
+        )
+        self.lbl_terminal = Gtk.Label("Change terminal colors")
+
         # edit cmd
         self.editor_lbl = Gtk.Label("Open optional files with:")
         self.editor_txt = Gtk.Entry()
@@ -153,6 +161,9 @@ class OptionsGrid(Gtk.Grid):
 
         self.switch_grid.attach(self.lbl_reload, 5, 4, 3, 1)
         self.switch_grid.attach(self.reload_switch, 9, 4, 1, 1)
+
+        self.switch_grid.attach(self.lbl_terminal, 1, 5, 3, 1)
+        self.switch_grid.attach(self.terminal_switch, 4, 5, 1, 1)
 
         # Active Grid attach
         self.active_grid.attach(self.backend_lbl, 1, 1, 1, 1)
@@ -205,6 +216,8 @@ class OptionsGrid(Gtk.Grid):
             .set_active(settings.getboolean("auto_adjust", False))
         self.reload_switch\
             .set_active(settings.getboolean("reload", True))
+        self.terminal_switch\
+            .set_active(settings.getboolean("terminal", True))
 
         self.editor_txt\
             .set_text(settings.get("editor", "urxvt -e vim"))
