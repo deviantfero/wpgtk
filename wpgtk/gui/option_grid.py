@@ -1,9 +1,10 @@
-from gi.repository import Gtk, Gdk
 from gi import require_version
+require_version("Gtk", "3.0")
+require_version("Gdk", "3.0")
+from gi.repository import Gtk, Gdk
 from ..data.config import settings, write_conf
 from pywal import colors
 # making sure it uses v3.0
-require_version("Gtk",  "3.0")
 
 PAD = 10
 

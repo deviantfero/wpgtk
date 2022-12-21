@@ -2,9 +2,9 @@ import logging
 from ..data import keywords
 from ..data.config import user_keywords, settings, write_conf
 from gi import require_version
+require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from .keyword_dialog import KeywordDialog
-require_version("Gtk", "3.0")
 
 PAD = 10
 
