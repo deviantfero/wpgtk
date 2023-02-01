@@ -1,5 +1,6 @@
 import logging
 import os
+import pathlib
 
 from . import color_grid
 from . import template_grid
@@ -79,15 +80,31 @@ class mainWindow(Gtk.Window):
         self.sample = Gtk.Image()
 
         if(os.path.isfile(image_name) and os.path.isfile(sample_name)):
-            self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-                                  image_name,
-                                  width=500,
-                                  height=333, preserve_aspect_ratio=False)
-            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                 sample_name,
-                                 width=500, height=500)
-            self.preview.set_from_pixbuf(self.pixbuf_preview)
-            self.sample.set_from_pixbuf(self.pixbuf_sample)
+            
+            #if we have a gif
+            if (pathlib.Path(image_name).suffix == '.gif'):
+
+                self.pixbuf_preview = GdkPixbuf.PixbufAnimation.new_from_file(image_name)
+                self.pixbuf_preview = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_preview)
+                self.pixbuf_preview = GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_preview,500,333,GdkPixbuf.InterpType.NEAREST)
+
+                self.pixbuf_sample = GdkPixbuf.PixbufAnimation.new_from_file(sample_name)
+                self.pixbuf_sample = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_sample)
+                self.pixbuf_sample= GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_sample,500,333,GdkPixbuf.InterpType.NEAREST)
+
+                self.preview.set_from_pixbuf(self.pixbuf_preview)
+                self.sample.set_from_pixbuf(self.pixbuf_sample)
+            else :
+                self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                                      image_name,
+                                      width=500,
+                                      height=333, preserve_aspect_ratio=False)
+                self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                                     sample_name,
+                                     width=500, height=500)
+                self.preview.set_from_pixbuf(self.pixbuf_preview)
+                self.sample.set_from_pixbuf(self.pixbuf_sample)
+            
 
         self.add_button = Gtk.Button(label='Add')
         self.set_button = Gtk.Button(label='Set')
@@ -180,12 +197,19 @@ class mainWindow(Gtk.Window):
         selected_file = files.get_file_list()[x]
         filepath = os.path.join(WALL_DIR, selected_file)
 
-        self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-            str(filepath),
-            width=500,
-            height=333,
-            preserve_aspect_ratio=False)
-        self.preview.set_from_pixbuf(self.pixbuf_preview)
+        #if re have a gif
+        if (pathlib.Path(filepath).suffix == '.gif'):
+            self.pixbuf_preview = GdkPixbuf.PixbufAnimation.new_from_file(filepath)
+            self.pixbuf_preview = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_preview)
+            self.pixbuf_preview = GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_preview,500,333,GdkPixbuf.InterpType.NEAREST)
+            self.preview.set_from_pixbuf(self.pixbuf_preview)
+        else :
+            self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                str(filepath),
+                width=500,
+                height=333,
+                preserve_aspect_ratio=False)
+            self.preview.set_from_pixbuf(self.pixbuf_preview)
 
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
@@ -197,3 +221,4 @@ def run(args):
     win.connect('delete-event', Gtk.main_quit)
     win.show_all()
     Gtk.main()
+    
