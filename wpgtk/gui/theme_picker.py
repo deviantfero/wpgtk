@@ -197,7 +197,7 @@ class mainWindow(Gtk.Window):
         selected_file = files.get_file_list()[x]
         filepath = os.path.join(WALL_DIR, selected_file)
 
-        #if re have a gif
+        #if we have a gif
         if (pathlib.Path(filepath).suffix == '.gif'):
             self.pixbuf_preview = GdkPixbuf.PixbufAnimation.new_from_file(filepath)
             self.pixbuf_preview = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_preview)
