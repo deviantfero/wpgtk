@@ -32,6 +32,7 @@ usage()
   -o   Install openbox templates
   -t   Install tint2 template
   -g   Install gtk template
+  -G   Install linea nord gtk template
   -i   Install icon-set
   -r   Install rofi template
   -I   Install i3 template
@@ -154,6 +155,20 @@ install_gtk()
   echo ":: FlatColor gtk themes install done."
 }
 
+install_alternative_gtk()
+{
+  echo "Installing linea nord gtk themes";
+  cp -r ./linea-nord-color "${LOCAL}/themes/" && \
+
+
+  mkdir -p "${THEMES_DIR}" && \
+	  cp --remove-destination ./linea-nord-color/dark.css.base "${TEMPLATE_DIR}/linea-nord.css.base" && \
+	  ln -sf "${LOCAL}/themes/linea-nord-color/general/dark.css" "${TEMPLATE_DIR}/linea-nord.css" && \
+	  ln -sf "${LOCAL}/themes/linea-nord-color" "${THEMES_DIR}/linea-nord-color" && \
+
+  echo ":: Linea Nord Color gtk themes install done."
+}
+
 install_icons()
 {
   echo "Installing icon pack";
@@ -244,7 +259,7 @@ clean_up()
 
 getargs()
 {
-  while getopts "H:bhvotgiIprdBq" opt
+  while getopts "H:bhvotgGiIprdBq" opt
   do
     case $opt in
       h)
@@ -258,6 +273,7 @@ getargs()
       o) openbox="true" ;;
       i)   icons="true" ;;
       g)     gtk="true" ;;
+	  G)     gtk_alt="true" ;;
       t)   tint2="true" ;;
       r)    rofi="true" ;;
       I)      i3="true" ;;
@@ -286,6 +302,7 @@ main()
   [[ "$tint2" == "true" ]] && install_tint2;
   [[ "$rofi" == "true" ]] && install_rofi;
   [[ "$gtk" == "true" ]] && install_gtk;
+  [[ "$gtk_alt" == "true" ]] && install_alternative_gtk;
   [[ "$icons" == "true" ]] && install_icons;
   [[ "$polybar" == "true" ]] && install_polybar;
   [[ "$i3" == "true" ]] && install_i3;
