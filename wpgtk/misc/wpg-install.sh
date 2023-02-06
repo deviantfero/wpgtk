@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-__ScriptVersion="0.1.5";
+__ScriptVersion="0.1.6";
 
 if [ -n "${XDG_CONFIG_HOME}" ]; then
   CONFIG="${XDG_CONFIG_HOME}"
