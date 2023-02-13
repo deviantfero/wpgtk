@@ -2,13 +2,14 @@ import logging
 from ..data import keywords
 from ..data.config import user_keywords, settings, write_conf
 from gi import require_version
-from gi.repository import Gtk
-from .keyword_dialog import KeywordDialog
 require_version("Gtk", "3.0")
+from .keyword_dialog import KeywordDialog  # noqa: E402
+from gi.repository import Gtk  # noqa: E402
 
 PAD = 10
 
 # TODO: if create section, select the new valid section
+
 
 class KeywordGrid(Gtk.Grid):
     def __init__(self, parent):

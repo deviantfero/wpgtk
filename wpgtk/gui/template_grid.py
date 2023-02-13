@@ -5,10 +5,10 @@ from subprocess import Popen
 from ..data.config import OPT_DIR, settings
 from ..data import files
 
-from gi.repository import Gtk
-from gi.repository.GdkPixbuf import Pixbuf
 from gi import require_version
 require_version("Gtk", "3.0")
+from gi.repository import Gtk  # noqa: E402
+from gi.repository.GdkPixbuf import Pixbuf  # noqa: E402
 
 PAD = 10
 icon = 'document-open'

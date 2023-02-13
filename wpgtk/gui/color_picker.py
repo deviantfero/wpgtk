@@ -2,8 +2,8 @@ from ..data import util
 from gi import require_version
 require_version("Gtk", "3.0")
 require_version("Gdk", "3.0")
-from gi.repository import Gtk
-from gi.repository import Gdk
+from gi.repository import Gtk  # noqa: E402
+from gi.repository import Gdk  # noqa: E402
 
 
 class ColorDialog(Gtk.Dialog):

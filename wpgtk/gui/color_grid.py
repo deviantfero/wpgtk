@@ -11,8 +11,8 @@ from ..data import themer
 
 from .color_picker import ColorDialog
 from gi import require_version
-from gi.repository import Gtk, Gdk, GdkPixbuf
 require_version("Gtk", "3.0")
+from gi.repository import Gtk, Gdk, GdkPixbuf  # noqa: E402
 
 # TODO: remove current_walls call, use simple ist
 # TODO: use simple text combo

@@ -10,8 +10,8 @@ from ..data import themer
 from ..data.config import WALL_DIR, WPG_DIR, __version__
 
 from gi import require_version
-from gi.repository import Gtk, GdkPixbuf
 require_version('Gtk', '3.0')
+from gi.repository import Gtk, GdkPixbuf  # noqa: E402
 
 PAD = 10
 

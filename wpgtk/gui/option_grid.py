@@ -1,9 +1,8 @@
-from gi.repository import Gtk, Gdk
 from gi import require_version
 from ..data.config import settings, write_conf
 from pywal import colors
-# making sure it uses v3.0
 require_version("Gtk",  "3.0")
+from gi.repository import Gtk, Gdk  # noqa: E402
 
 PAD = 10
 
