@@ -40,8 +40,8 @@ def write_script(wallpaper, colorscheme):
     set_wall = settings.getboolean("set_wallpaper", True)
     light_theme = settings.getboolean("light_theme", True)
 
-    flags = "-rs" if set_wall else "-nrs"
-    flags += "L" if light_theme else ""
+    flags = "-L" if light_theme else "-"
+    flags += "rs" if set_wall else "nrs"
 
     with open(join(WPG_DIR, "wp_init.sh"), "w") as script:
         command = "wpg %s '%s' '%s'" % (flags, wallpaper, colorscheme)
