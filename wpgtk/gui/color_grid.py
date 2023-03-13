@@ -14,7 +14,7 @@ from gi import require_version
 require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf  # noqa: E402
 
-# TODO: remove current_walls call, use simple ist
+# TODO: remove current_walls call, use simple list
 # TODO: use simple text combo
 # TODO: only update pixbuf if parent has same color scheme
 current_walls = files.get_file_list()
