@@ -243,7 +243,7 @@ install_qtile()
   fi
   echo ":: qtile theme install done" && \
   echo ":: generated colors are available using colors[0-15] list in place of hex values." &&\
-  echo ":: remember to edit your config.py colors to use the wpg color scheme where appropiate";
+  echo ":: remember to edit your config.py colors to use the wpg color scheme where appropriate";
 }
 
 

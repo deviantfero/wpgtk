@@ -101,12 +101,12 @@ def read_args(args):
                         nargs=2)
 
     parser.add_argument("--sat",
-                        help="add or substract the saturation of a "
+                        help="add or subtract the saturation of a "
                         "colorscheme [colorscheme, sat] (0, 1)",
                         nargs=2)
 
     parser.add_argument("--brt",
-                        help="add or substract the brightness of a "
+                        help="add or subtract the brightness of a "
                         "colorscheme [colorscheme, brt] (0, 255)",
                         nargs=2)
 
