@@ -10,9 +10,9 @@ if sys.version_info.major < 3 or sys.version_info.minor < 5:
 import wpgtk
 
 try:
-    LONG_DESC = open('README.md').read()
+    LONG_DESC = open("README.md").read()
 except:
-    LONG_DESC = '-'
+    LONG_DESC = "-"
     pass
 
 VERSION = wpgtk.__version__
@@ -44,17 +44,17 @@ setuptools.setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.5",
     ],
-    entry_points={
-        "console_scripts": ["wpg=wpgtk.__main__:main"]
-    },
+    entry_points={"console_scripts": ["wpg=wpgtk.__main__:main"]},
     python_requires=">=3.5",
     install_requires=[
-        'Pillow>=4.2.1',
-        'pywal>=3.0.0',
+        "Pillow>=4.2.1",
+        "pywal>=3.0.0",
     ],
     include_package_data=True,
-    data_files=[('etc/wpgtk', ['wpgtk/misc/wpg.conf']),
-                ('bin/', ['wpgtk/misc/wpg-install.sh']),
-                ('share/bash-completion/completions/', ['completions/bash/wpg']),
-                ('share/zsh/site-functions/', ['completions/zsh/_wpg'])]
+    data_files=[
+        ("etc/wpgtk", ["wpgtk/misc/wpg.conf"]),
+        ("bin/", ["wpgtk/misc/wpg-install.sh"]),
+        ("share/bash-completion/completions/", ["completions/bash/wpg"]),
+        ("share/zsh/site-functions/", ["completions/zsh/_wpg"]),
+    ],
 )
