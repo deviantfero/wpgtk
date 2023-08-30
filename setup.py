@@ -26,7 +26,7 @@ WALL_DIR = os.path.join(WPG_DIR, "wallpapers")
 
 setuptools.setup(
     name="wpgtk",
-    packages=setuptools.find_packages(exclude=["misc", "misc.*"]),
+    packages=setuptools.find_namespace_packages(),
     version=VERSION,
     author="Fernando Vásquez",
     author_email="fmorataya.04@gmail.com",
