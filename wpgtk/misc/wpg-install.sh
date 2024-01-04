@@ -180,7 +180,7 @@ install_icons()
 install_openbox()
 {
   echo "Installing openbox themes";
-  cp --remove-destination -r ./openbox/colorbamboo/* "${LOCAL}/themes/colorbamboo"
+  cp --remove-destination -r ./openbox/colorbamboo/* "${LOCAL}/themes/colorbamboo/openbox-3/"
 
   mkdir -p "${THEMES_DIR}"
 
