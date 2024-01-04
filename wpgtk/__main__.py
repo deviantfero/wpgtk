@@ -217,9 +217,11 @@ def process_args(args):
     if args.a:
         add_action = files.add_template if args.t \
                      else themer.create_theme
-        for x in args.a:
-            if path.isfile(glob.glob(x)[0]):
-                add_action(glob.glob(x)[0])
+        for pattern in args.a:
+            for filename in glob.glob(pattern):
+                if path.isfile(filename):
+                    add_action(filename)
+
         exit(0)
 
     if args.c:
