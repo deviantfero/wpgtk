@@ -27,7 +27,7 @@ def tint2():
 
 
 def polybar():
-    """Reloads tint2 configuration on the fly."""
+    """Reloads polybar configuration on the fly."""
     if shutil.which("polybar") and util.get_pid("polybar"):
         util.silent_Popen(["polybar-msg", "cmd", "restart"])
 
