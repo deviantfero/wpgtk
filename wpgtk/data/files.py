@@ -2,7 +2,7 @@ import os
 import shutil
 import re
 import logging
-from subprocess import Popen
+from subprocess import Popen, check_output
 from pywal.colors import cache_fname, list_backends
 
 from os.path import join, basename
@@ -13,6 +13,14 @@ from .config import (
     OPT_DIR,
     SAMPLE_DIR,
 )
+
+def __check_is_pywal16cols():
+    raw_output = check_output(["wal", "-h"])
+
+    if "--cols16" in raw_output.decode("utf-8"):
+        return True
+
+    return False
 
 
 def get_file_list(path=WALL_DIR, regex=None):
@@ -55,8 +63,17 @@ def get_cache_path(wallpaper, backend=None):
         backend = settings.get("backend", "wal")
 
     filepath = join(WALL_DIR, wallpaper)
-    filename = cache_fname(filepath, backend, False, WPG_DIR)
+    # placeholder for variable
+    filename = None
 
+    try:
+        filename = cache_fname(filepath, backend, False, WPG_DIR)
+    except TypeError as error:
+        # in pywal16cols this function have another api
+        if __check_is_pywal16cols():
+            # pywal16cols add boolean after `backend` that means 16cols mode or standart wal
+            filename = cache_fname(filepath, backend, True, False, WPG_DIR) 
+        else: raise error
     return join(*filename)
 
 
