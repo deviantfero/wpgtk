@@ -32,7 +32,6 @@ class mainWindow(Gtk.Window):
         file_name = themer.get_current()
         logging.info('current wallpaper: ' + file_name)
         sample_name = files.get_sample_path(file_name)
-
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
 
@@ -61,7 +60,6 @@ class mainWindow(Gtk.Window):
                 current_idx = i
 
             option_list.append([elem])
-
         self.option_combo = Gtk.ComboBox.new_with_model(option_list)
         self.renderer_text = Gtk.CellRendererText()
         self.option_combo.pack_start(self.renderer_text, True)
@@ -78,33 +76,8 @@ class mainWindow(Gtk.Window):
         self.set_border_width(10)
         self.preview = Gtk.Image()
         self.sample = Gtk.Image()
-
-        if(os.path.isfile(image_name) and os.path.isfile(sample_name)):
-            
-            #if we have a gif
-            if (pathlib.Path(image_name).suffix == '.gif'):
-
-                self.pixbuf_preview = GdkPixbuf.PixbufAnimation.new_from_file(image_name)
-                self.pixbuf_preview = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_preview)
-                self.pixbuf_preview = GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_preview,500,333,GdkPixbuf.InterpType.NEAREST)
-
-                self.pixbuf_sample = GdkPixbuf.PixbufAnimation.new_from_file(sample_name)
-                self.pixbuf_sample = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_sample)
-                self.pixbuf_sample= GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_sample,500,333,GdkPixbuf.InterpType.NEAREST)
-
-                self.preview.set_from_pixbuf(self.pixbuf_preview)
-                self.sample.set_from_pixbuf(self.pixbuf_sample)
-            else :
-                self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-                                      image_name,
-                                      width=500,
-                                      height=333, preserve_aspect_ratio=False)
-                self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                     sample_name,
-                                     width=500, height=500)
-                self.preview.set_from_pixbuf(self.pixbuf_preview)
-                self.sample.set_from_pixbuf(self.pixbuf_sample)
-            
+        
+        self.get_image_preview( image_name, sample_name)
 
         self.add_button = Gtk.Button(label='Add')
         self.set_button = Gtk.Button(label='Set')
@@ -197,24 +170,48 @@ class mainWindow(Gtk.Window):
         selected_file = files.get_file_list()[x]
         filepath = os.path.join(WALL_DIR, selected_file)
 
-        #if we have a gif
+        self.set_image_preview(filepath)
+        
+    def colorscheme_box_change(self, widget):
+        x = self.colorscheme.get_active()
+        self.cpage.option_combo.set_active(x)
+
+    # called on opening to looad the current image
+    def  get_image_preview(self, image_name, sample_name):
+        if(os.path.isfile(image_name) and os.path.isfile(sample_name)):
+            if (pathlib.Path(image_name).suffix == '.gif'):
+
+                self.pixbuf_preview = GdkPixbuf.PixbufAnimation.new_from_file(image_name)
+                self.pixbuf_preview = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_preview)
+                self.pixbuf_preview = GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_preview,500,333,GdkPixbuf.InterpType.NEAREST)
+
+                self.pixbuf_sample = GdkPixbuf.PixbufAnimation.new_from_file(sample_name)
+                self.pixbuf_sample = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_sample)
+                self.pixbuf_sample= GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_sample,500,333,GdkPixbuf.InterpType.NEAREST)
+            else :
+                self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                                      image_name,
+                                      width=500,
+                                      height=333, preserve_aspect_ratio=False)
+                self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                                     sample_name,
+                                     width=500, height=500)
+            self.preview.set_from_pixbuf(self.pixbuf_preview)
+            self.sample.set_from_pixbuf(self.pixbuf_sample)
+            
+    #called when combo box changes the selected image
+    def set_image_preview(self,filepath):
         if (pathlib.Path(filepath).suffix == '.gif'):
             self.pixbuf_preview = GdkPixbuf.PixbufAnimation.new_from_file(filepath)
             self.pixbuf_preview = GdkPixbuf.PixbufAnimation.get_static_image(self.pixbuf_preview)
             self.pixbuf_preview = GdkPixbuf.Pixbuf.scale_simple(self.pixbuf_preview,500,333,GdkPixbuf.InterpType.NEAREST)
-            self.preview.set_from_pixbuf(self.pixbuf_preview)
         else :
             self.pixbuf_preview = GdkPixbuf.Pixbuf.new_from_file_at_scale(
                 str(filepath),
                 width=500,
                 height=333,
                 preserve_aspect_ratio=False)
-            self.preview.set_from_pixbuf(self.pixbuf_preview)
-
-    def colorscheme_box_change(self, widget):
-        x = self.colorscheme.get_active()
-        self.cpage.option_combo.set_active(x)
-
+        self.preview.set_from_pixbuf(self.pixbuf_preview)
 
 def run(args):
     win = mainWindow(args)
