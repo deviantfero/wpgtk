@@ -88,7 +88,8 @@ class ColorGrid(Gtk.Grid):
 
         sample_name = os.path.join(SAMPLE_DIR, ".no_sample.sample.png")
         self.sample = Gtk.Image()
-        if(os.path.isfile(sample_name)):
+
+        if (os.path.isfile(sample_name)):
             self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
                                                             sample_name,
                                                             width=500,
