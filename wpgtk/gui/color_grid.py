@@ -12,6 +12,7 @@ from . import util as gui_util
 
 from .color_picker import ColorDialog
 from gi import require_version
+
 require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf  # noqa: E402
 
@@ -72,8 +73,8 @@ class ColorGrid(Gtk.Grid):
         self.combo_grid.set_column_spacing(PAD)
         self.combo_grid.set_row_spacing(PAD)
 
-        self.color_list = ['000000'] * 16
-        self.button_list = [Gtk.Button('000000') for x in range(16)]
+        self.color_list = ["000000"] * 16
+        self.button_list = [Gtk.Button("000000") for x in range(16)]
         self.selected_file = ""
         for button in self.button_list:
             button.connect("pressed", self.on_color_click)
@@ -153,10 +154,10 @@ class ColorGrid(Gtk.Grid):
     def render_buttons(self):
         for x, button in enumerate(self.button_list):
             gcolor = Gdk.color_parse(self.color_list[x])
-            if util.get_hls_val(self.color_list[x], 'light') < 99:
-                fgcolor = Gdk.color_parse('#FFFFFF')
+            if util.get_hls_val(self.color_list[x], "light") < 99:
+                fgcolor = Gdk.color_parse("#FFFFFF")
             else:
-                fgcolor = Gdk.color_parse('#000000')
+                fgcolor = Gdk.color_parse("#000000")
             button.set_label(self.color_list[x])
             button.set_sensitive(True)
             button.modify_bg(Gtk.StateType.NORMAL, gcolor)
@@ -182,12 +183,14 @@ class ColorGrid(Gtk.Grid):
     def hls_change(self, widget, *gparam):
         if gparam[0] == "sat":
             val = 0.05 if gparam[1] == "add" else -0.05
-            self.color_list = [util.alter_brightness(x, 0, val)
-                               for x in self.color_list]
+            self.color_list = [
+                util.alter_brightness(x, 0, val) for x in self.color_list
+            ]
         elif gparam[0] == "light":
             val = 10 if gparam[1] == "add" else -10
-            self.color_list = [util.alter_brightness(x, val, 0)
-                               for x in self.color_list]
+            self.color_list = [
+                util.alter_brightness(x, val, 0) for x in self.color_list
+            ]
         self.render_buttons()
         self.render_sample()
 
@@ -195,24 +198,25 @@ class ColorGrid(Gtk.Grid):
         sample.create_sample(self.color_list)
         sample_path = os.path.join(SAMPLE_DIR, ".tmp.sample.png")
         self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                sample_path,
-                width=500,
-                height=300)
+            sample_path, width=500, height=300
+        )
         self.sample.set_from_pixbuf(self.pixbuf_sample)
 
     def on_ok_click(self, widget):
         color.write_colors(self.selected_file, self.color_list)
         tmpfile = os.path.join(SAMPLE_DIR, ".tmp.sample.png")
 
-        if (os.path.isfile(tmpfile)):
+        if os.path.isfile(tmpfile):
             shutil.move(
                 os.path.join(SAMPLE_DIR, ".tmp.sample.png"),
-                files.get_sample_path(self.selected_file))
+                files.get_sample_path(self.selected_file),
+            )
 
             self.done_lbl.set_text("Changes saved")
             sample_path = files.get_sample_path(self.selected_file)
-            self.parent.pixbuf_sample = GdkPixbuf.Pixbuf\
-                                                 .new_from_file_at_size(sample_path, width=500, height=300)
+            self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                sample_path, width=500, height=300
+            )
             self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
 
     def on_auto_click(self, widget):
@@ -226,10 +230,16 @@ class ColorGrid(Gtk.Grid):
 
     def on_import_click(self, widget):
         fcd = Gtk.FileChooserDialog(
-                      'Select a colorscheme', self.parent,
-                      Gtk.FileChooserAction.OPEN,
-                      (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                       Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+            "Select a colorscheme",
+            self.parent,
+            Gtk.FileChooserAction.OPEN,
+            (
+                Gtk.STOCK_CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OPEN,
+                Gtk.ResponseType.OK,
+            ),
+        )
 
         filter = Gtk.FileFilter()
         filter.set_name("JSON colorscheme")
@@ -257,15 +267,15 @@ class ColorGrid(Gtk.Grid):
 
         if response == Gtk.ResponseType.OK:
             r, g, b, _ = dialog.colorchooser.get_rgba()
-            rgb = list(map(lambda x: round(x*100*2.55), [r, g, b]))
+            rgb = list(map(lambda x: round(x * 100 * 2.55), [r, g, b]))
             hex_color = pywal.util.rgb_to_hex(rgb)
             widget.set_label(hex_color)
 
             gcolor = Gdk.color_parse(hex_color)
-            if util.get_hls_val(hex_color, 'light') < 100:
-                fgcolor = Gdk.color_parse('#FFFFFF')
+            if util.get_hls_val(hex_color, "light") < 100:
+                fgcolor = Gdk.color_parse("#FFFFFF")
             else:
-                fgcolor = Gdk.color_parse('#000000')
+                fgcolor = Gdk.color_parse("#000000")
 
             widget.set_sensitive(True)
             widget.modify_bg(Gtk.StateType.NORMAL, gcolor)
