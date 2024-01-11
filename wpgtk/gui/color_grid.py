@@ -8,6 +8,7 @@ from ..data import util
 from ..data import files
 from ..data import sample
 from ..data import themer
+from . import util as gui_util
 
 from .color_picker import ColorDialog
 from gi import require_version
@@ -89,11 +90,8 @@ class ColorGrid(Gtk.Grid):
         sample_name = os.path.join(SAMPLE_DIR, ".no_sample.sample.png")
         self.sample = Gtk.Image()
 
-        if (os.path.isfile(sample_name)):
-            self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                                                            sample_name,
-                                                            width=500,
-                                                            height=300)
+        pixbuf_sample = gui_util.get_sample_pixbuf(sample_name)
+        if pixbuf_sample is not None:
             self.sample.set_from_pixbuf(self.pixbuf_sample)
 
         self.shuffle_button = Gtk.Button("Shuffle colors")
@@ -173,16 +171,13 @@ class ColorGrid(Gtk.Grid):
             self.color_list = themer.set_fallback_theme(self.selected_file)
         self.render_buttons()
 
-        try:
-            self.pixbuf_sample = GdkPixbuf.Pixbuf\
-                .new_from_file_at_size(sample_path, width=500, height=300)
-        except:
+        pixbuf_sample = gui_util.get_sample_pixbuf(sample_path)
+        if pixbuf_sample is None:
             sample.create_sample(self.color_list, sample_path)
-            self.pixbuf_sample = GdkPixbuf.Pixbuf\
-                .new_from_file_at_size(sample_path, width=500, height=300)
+            pixbuf_sample = gui_util.get_sample_pixbuf(sample_path)
 
-        self.sample.set_from_pixbuf(self.pixbuf_sample)
-        self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
+        self.sample.set_from_pixbuf(pixbuf_sample)
+        self.parent.sample.set_from_pixbuf(pixbuf_sample)
 
     def hls_change(self, widget, *gparam):
         if gparam[0] == "sat":
@@ -209,7 +204,7 @@ class ColorGrid(Gtk.Grid):
         color.write_colors(self.selected_file, self.color_list)
         tmpfile = os.path.join(SAMPLE_DIR, ".tmp.sample.png")
 
-        if(os.path.isfile(tmpfile)):
+        if (os.path.isfile(tmpfile)):
             shutil.move(
                 os.path.join(SAMPLE_DIR, ".tmp.sample.png"),
                 files.get_sample_path(self.selected_file))
