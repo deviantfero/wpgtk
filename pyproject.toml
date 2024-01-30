@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "wpgtk.data.config.__version__"}
+
+[tool.setuptools.packages.find]
+exclude = ["completions"]
+
+[project]
+name = "wpgtk"
+dynamic = ["version"]
+requires-python = ">=3.5"
+dependencies = [
+    "Pillow>=4.2.1",
+    "pywal>=3.3.0",
+]
+readme = "README.md"
+description = "GTK+ theme/wallpaper manager which uses pywal as its core"
+authors = [
+    {name = "Fernando Vásquez", email = "fmorataya.04@gmail.com"},
+]
+classifiers = [
+    "Environment :: X11 Applications",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+]
+license = {text = "GPL2"}
+
+[project.urls]
+Homepage = "https://github.com/deviantfero/wpgtk"
+
+[project.scripts]
+wpg = "wpgtk.__main__:main"
