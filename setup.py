@@ -48,7 +48,7 @@ setuptools.setup(
     python_requires=">=3.5",
     install_requires=[
         "Pillow>=4.2.1",
-        "pywal>=3.0.0",
+        "pywal>=3.3.0",
     ],
     include_package_data=True,
     data_files=[
