@@ -1,2 +1,3 @@
 include wpgtk/misc/*
+include completions/*
 include README.md
