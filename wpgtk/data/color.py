@@ -114,32 +114,39 @@ def change_colors(colors, which):
 def smart_sort(colors):
     """automatically set the most look-alike colors to their
     corresponding place in the standard xterm colors"""
-    colors = colors[:8]
-    sorted_by_color = list()
-    base_colors = ["#000000", "#ff0000", "#00ff00", "#ffff00",
-                   "#0000ff", "#ff00ff", "#00ffff", "#ffffff"]
 
-    for y in base_colors:
-        cd_tuple = [(x, util.get_distance(x, y)) for i, x in enumerate(colors)]
-        cd_tuple.sort(key=itemgetter(1))
-        sorted_by_color.append(cd_tuple)
+    sorted_colors = [None] * 8
+    base_colors = [
+        "#000000", "#ff0000", "#00ff00", "#ffff00",
+        "#0000ff", "#ff00ff", "#00ffff", "#ffffff"
+    ]
 
-    i = 0
-    while i < 8:
-        current_cd = sorted_by_color[i][0]
-        closest_cds = [sorted_by_color[x][0] for x in range(8)]
-        reps = [x for x in range(8) if closest_cds[x][0] == current_cd[0]]
+    base_distances = {}
+    for color in colors[:8]:
+        color_to_base_distances = [
+            (i, util.get_distance(color, base))
+            for i, base in enumerate(base_colors)
+        ]
+        color_to_base_distances.sort(key=itemgetter(1))
+        base_distances[color] = color_to_base_distances
 
-        if len(reps) > 1:
-            closest = min([closest_cds[x] for x in reps], key=itemgetter(1))
-            reps = [x for x in reps if x != closest_cds.index(closest)]
-            any(sorted_by_color[x].pop(0) for x in reps)
-            i = 0
-        else:
-            i += 1
+    for color in colors[:8]:
+        while len(base_distances[color]) >= 1:
+            position, candidate_distance = base_distances[color][0]
 
-    sorted_colors = [sorted_by_color[x][0][0] for x in range(8)]
-    return [*sorted_colors, *sorted_colors]
+            if sorted_colors[position] is None:
+                sorted_colors[position] = (color, candidate_distance)
+                break
+            elif sorted_colors[position][1] > candidate_distance:
+                old_color = sorted_colors[position][0]
+                sorted_colors[position] = (color, candidate_distance)
+                color = old_color
+
+            base_distances[color].pop(0)
+
+    result = [item[0] for item in sorted_colors]
+
+    return result * 2
 
 
 def auto_adjust(colors):
