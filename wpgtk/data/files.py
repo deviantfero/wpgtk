@@ -2,7 +2,7 @@ import os
 import shutil
 import re
 import logging
-from subprocess import Popen, check_output
+from subprocess import Popen, run
 from pywal.colors import cache_fname, list_backends
 
 from os.path import join, basename
@@ -14,12 +14,26 @@ from .config import (
     SAMPLE_DIR,
 )
 
+
 def __check_is_pywal16cols():
-    raw_output = check_output(["wal", "-h"])
+    """
+    Check if user install pywal16cols or just pywal.
+    """
+    pywal_archived_version = [3, 3, 0]  # 3.3.0 is released in 2019
+    wal_backend_version = []
 
-    if "--cols16" in raw_output.decode("utf-8"):
-        return True
+    # since pywal is archived we can just check the versions
+    # pywal-16-colors has version >= 3.3.0
+    raw_output = run(["wal", "-v"], capture_output=True).stderr.decode()
 
+    for char in raw_output:
+        if char.isdigit():
+            wal_backend_version.append(int(char))
+
+    # comparing version
+    for i in range(3):
+        if wal_backend_version[i] > pywal_archived_version[i]:
+            return True
     return False
 
 
@@ -54,7 +68,7 @@ def write_script(wallpaper, colorscheme):
     with open(join(WPG_DIR, "wp_init.sh"), "w") as script:
         command = "wpg %s '%s' '%s'" % (flags, wallpaper, colorscheme)
         script.writelines(["#!/usr/bin/env bash\n", command])
-        Popen(['chmod', '+x', join(WPG_DIR, "wp_init.sh")])
+        Popen(["chmod", "+x", join(WPG_DIR, "wp_init.sh")])
 
 
 def get_cache_path(wallpaper, backend=None):
@@ -63,17 +77,13 @@ def get_cache_path(wallpaper, backend=None):
         backend = settings.get("backend", "wal")
 
     filepath = join(WALL_DIR, wallpaper)
-    # placeholder for variable
     filename = None
 
-    try:
+    if __check_is_pywal16cols():
+        filename = cache_fname(filepath, backend, True, False, WPG_DIR)
+    else:
         filename = cache_fname(filepath, backend, False, WPG_DIR)
-    except TypeError as error:
-        # in pywal16cols this function have another api
-        if __check_is_pywal16cols():
-            # pywal16cols add boolean after `backend` that means 16cols mode or standart wal
-            filename = cache_fname(filepath, backend, True, False, WPG_DIR) 
-        else: raise error
+
     return join(*filename)
 
 
