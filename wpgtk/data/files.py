@@ -29,6 +29,8 @@ def __check_is_pywal16cols():
     for i in range(3):
         if wal_backend_version[i] > pywal_archived_version[i]:
             return True
+        if wal_backend_version[i] < pywal_archived_version[i]:
+            return False
     return False
 
 
