@@ -1,9 +1,9 @@
 import logging
 import sys
+import re
 import subprocess
 from math import sqrt
 from colorsys import rgb_to_hls, hls_to_rgb
-
 from pywal.util import rgb_to_hex, hex_to_rgb
 
 
@@ -12,12 +12,12 @@ def get_distance(hex_src, hex_tgt):
     r1, g1, b1 = hex_to_rgb(hex_src)
     r2, g2, b2 = hex_to_rgb(hex_tgt)
 
-    return sqrt((r2 - r1)**2 + (g2 - g1)**2 + (b2 - b1)**2)
+    return sqrt((r2 - r1) ** 2 + (g2 - g1) ** 2 + (b2 - b1) ** 2)
 
 
 def get_hls_val(hexv, what):
     """gets a color in hue light and saturation format"""
-    whatdict = {'hue': 0, 'light': 1, 'sat': 2}
+    whatdict = {"hue": 0, "light": 1, "sat": 2}
     hls = hex_to_hls(hexv)
 
     return hls[whatdict[what]]
@@ -26,7 +26,7 @@ def get_hls_val(hexv, what):
 def set_hls_val(hexv, what, val):
     """assign a value to a hls color and return a
     converted hex value"""
-    whatdict = {'hue': 0, 'light': 1, 'sat': 2}
+    whatdict = {"hue": 0, "light": 1, "sat": 2}
     hls = list(hex_to_hls(hexv))
 
     hls[whatdict[what]] = val
@@ -58,10 +58,11 @@ def alter_brightness(hex_string, amount, sat=0):
 
 
 def setup_log():
-    logging.basicConfig(format="[%(levelname)s]"
-                               " %(module)-13s %(message)s",
-                        level=logging.INFO,
-                        stream=sys.stdout)
+    logging.basicConfig(
+        format="[%(levelname)s]" " %(module)-13s %(message)s",
+        level=logging.INFO,
+        stream=sys.stdout,
+    )
     logging.addLevelName(logging.ERROR, "e")
     logging.addLevelName(logging.INFO, "i")
     logging.addLevelName(logging.WARNING, "w")
@@ -69,16 +70,12 @@ def setup_log():
 
 def silent_call(cmd):
     """Call a system command and hide it's output"""
-    subprocess.call(cmd,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL)
+    subprocess.call(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def silent_Popen(cmd):
     """Popen a system command and hide it's output"""
-    subprocess.Popen(cmd,
-                     stdout=subprocess.DEVNULL,
-                     stderr=subprocess.DEVNULL)
+    subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def get_pid(name):
@@ -89,3 +86,14 @@ def get_pid(name):
         return False
 
     return True
+
+
+def get_pywal_version():
+    raw = subprocess.run(["wal", "-v"], capture_output=True).stderr.decode()
+    result = re.findall(r"(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)$", raw)
+
+    if len(result) == 0:
+        logging.error("Error when trying get pywal version")
+        exit(1)
+
+    return result

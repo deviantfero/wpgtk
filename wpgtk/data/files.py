@@ -13,27 +13,24 @@ from .config import (
     OPT_DIR,
     SAMPLE_DIR,
 )
+from .util import get_pywal_version
 
 
 def __check_is_pywal16cols():
     """
     Check if user install pywal16cols or just pywal.
     """
-    pywal_archived_version = [3, 3, 0]  # 3.3.0 is released in 2019
-    wal_backend_version = []
+    pywal_archived_version = [3, 3, 0]  # 3.3.0 was released in 2019
+    wal_backend_version = get_pywal_version()
 
     # since pywal is archived we can just check the versions
-    # pywal-16-colors has version >= 3.3.0
-    raw_output = run(["wal", "-v"], capture_output=True).stderr.decode()
-
-    for char in raw_output:
-        if char.isdigit():
-            wal_backend_version.append(int(char))
-
+    # pywal-16-colors has version > 3.3.0
     # comparing version
     for i in range(3):
         if wal_backend_version[i] > pywal_archived_version[i]:
             return True
+        if wal_backend_version[i] < pywal_archived_version[i]:
+            return False
     return False
 
 
