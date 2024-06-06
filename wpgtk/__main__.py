@@ -123,8 +123,13 @@ def read_args(args):
                         action="store_true")
 
     parser.add_argument("--noreload",
-                        help="Skip reloading other software after"
+                        help="Skip reloading other software after "
                         "applying colorscheme",
+                        action="store_true")
+
+    parser.add_argument("--noterminal",
+                        help="Skip changing the terminal colorscheme "
+                        "using pywal Skip changing colors in terminals",
                         action="store_true")
 
     return parser.parse_args()
@@ -155,6 +160,9 @@ def process_arg_errors(args):
 def process_args(args):
     if args.light:
         settings["light_theme"] = "true"
+
+    if args.noterminal:
+        settings["terminal"] = "false"
 
     if args.n:
         settings["set_wallpaper"] = "false"
