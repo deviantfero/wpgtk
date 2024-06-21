@@ -20,7 +20,7 @@ def __check_is_pywal16cols():
     """
     Check if user install pywal16cols or just pywal.
     """
-    pywal_archived_version = [3, 3, 0]  # 3.3.0 was released in 2019
+    pywal_archived_version = [('3', '3', '0')]  # 3.3.0 was released in 2019
     wal_backend_version = get_pywal_version()
 
     # since pywal is archived we can just check the versions
