@@ -2,7 +2,7 @@ import os
 import shutil
 import re
 import logging
-from subprocess import Popen, run
+from subprocess import Popen
 from pywal.colors import cache_fname, list_backends
 
 from os.path import join, basename

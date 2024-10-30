@@ -96,4 +96,4 @@ def get_pywal_version():
         logging.error("Error when trying get pywal version")
         exit(1)
 
-    return result
+    return [int(x) for x in result[0]]
