@@ -77,7 +77,7 @@ def get_cache_path(wallpaper, backend=None):
     filename = None
 
     if __check_is_pywal16cols():
-        filename = cache_fname(filepath, backend, True, False, WPG_DIR)
+        filename = cache_fname(filepath, backend, False, False, WPG_DIR)
     else:
         filename = cache_fname(filepath, backend, False, WPG_DIR)
 
