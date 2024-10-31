@@ -3,7 +3,7 @@ import shutil
 import os
 import logging
 
-__version__ = '6.6.1'
+__version__ = "6.6.2"
 
 
 settings = None
@@ -24,24 +24,27 @@ SCHEME_DIR = os.path.join(WPG_DIR, "schemes")
 FORMAT_DIR = os.path.join(CACHE, "wal")
 OPT_DIR = os.path.join(WPG_DIR, "templates")
 FILE_DIC = {
-    'icon-step1': os.path.join(LOCAL, "icons/flattrcolor/scripts"
-                               "/replace_folder_file.sh"),
-    'icon-step2': os.path.join(LOCAL, "icons/flattrcolor/scripts"
-                               "/replace_script.sh")
+    "icon-step1": os.path.join(
+        LOCAL, "icons/flattrcolor/scripts" "/replace_folder_file.sh"
+    ),
+    "icon-step2": os.path.join(
+        LOCAL,
+        "icons/flattrcolor/scripts" "/replace_script.sh",
+    ),
 }
 
 
 def write_conf(config_path=CONF_FILE):
     global config_parser
 
-    with open(config_path, 'w') as config_file:
+    with open(config_path, "w") as config_file:
         config_parser.write(config_file)
 
 
 def write_keywords(keywords_path=KEYWORD_FILE):
     global user_keywords
 
-    with open(keywords_path, 'w') as keywords_file:
+    with open(keywords_path, "w") as keywords_file:
         user_keywords.write(keywords_file)
 
 
@@ -54,21 +57,21 @@ def load_settings():
     config_parser = configparser.ConfigParser()
     config_parser.optionxform = str
     config_parser.read(CONF_FILE)
-    settings = config_parser['settings']
+    settings = config_parser["settings"]
 
 
 def load_keywords():
     global user_keywords
 
     if not os.path.exists(KEYWORD_FILE):
-        open(KEYWORD_FILE, 'a').close()
+        open(KEYWORD_FILE, "a").close()
 
     user_keywords = configparser.ConfigParser()
     user_keywords.optionxform = str
     user_keywords.read(KEYWORD_FILE)
 
-    if not user_keywords.has_section('default'):
-        user_keywords.add_section('default')
+    if not user_keywords.has_section("default"):
+        user_keywords.add_section("default")
         write_keywords()
 
 
