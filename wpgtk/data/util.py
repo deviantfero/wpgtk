@@ -1,6 +1,5 @@
 import logging
 import sys
-import re
 import subprocess
 from math import sqrt
 from colorsys import rgb_to_hls, hls_to_rgb
@@ -86,14 +85,3 @@ def get_pid(name):
         return False
 
     return True
-
-
-def get_pywal_version():
-    raw = subprocess.run(["wal", "-v"], capture_output=True).stderr.decode()
-    result = re.findall(r"(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)$", raw)
-
-    if len(result) == 0:
-        logging.error("Error when trying get pywal version")
-        exit(1)
-
-    return [int(x) for x in result[0]]

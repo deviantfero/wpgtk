@@ -13,25 +13,6 @@ from .config import (
     OPT_DIR,
     SAMPLE_DIR,
 )
-from .util import get_pywal_version
-
-
-def __check_is_pywal16cols():
-    """
-    Check if user install pywal16cols or just pywal.
-    """
-    pywal_archived_version = [3, 3, 0]  # 3.3.0 was released in 2019
-    wal_backend_version = get_pywal_version()
-
-    # since pywal is archived we can just check the versions
-    # pywal-16-colors has version > 3.3.0
-    # comparing version
-    for i in range(3):
-        if wal_backend_version[i] > pywal_archived_version[i]:
-            return True
-        if wal_backend_version[i] < pywal_archived_version[i]:
-            return False
-    return False
 
 
 def get_file_list(path=WALL_DIR, regex=None):
@@ -74,12 +55,7 @@ def get_cache_path(wallpaper, backend=None):
         backend = settings.get("backend", "wal")
 
     filepath = join(WALL_DIR, wallpaper)
-    filename = None
-
-    if __check_is_pywal16cols():
-        filename = cache_fname(filepath, backend, False, False, WPG_DIR)
-    else:
-        filename = cache_fname(filepath, backend, False, WPG_DIR)
+    filename = cache_fname(filepath, backend, False, WPG_DIR)
 
     return join(*filename)
 
