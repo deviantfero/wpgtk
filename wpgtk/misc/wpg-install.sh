@@ -160,6 +160,9 @@ install_alternative_gtk()
   echo "Installing linea nord gtk themes";
   cp -r ./linea-nord-color "${LOCAL}/themes/" && \
 
+  cp --remove-destination ./linea-nord-color/gtk-2.0/gtkrc.base "${TEMPLATE_DIR}/gtk2-nord.base" && \
+    ln -sf "${LOCAL}/themes/linea-nord-color/gtk-2.0/gtkrc" "${TEMPLATE_DIR}/gtk2-nord" && \
+	echo ":: gtk2 theme done" "${TEMPLATE_DIR}/gtk2-nord";
 
   mkdir -p "${THEMES_DIR}" && \
 	  cp --remove-destination ./linea-nord-color/dark.css.base "${TEMPLATE_DIR}/linea-nord.css.base" && \
