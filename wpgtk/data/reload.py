@@ -55,10 +55,7 @@ def xsettingsd(theme):
             tmp.close()
 
             util.silent_call(["timeout", "0.2s", "xsettingsd", "-c", path])
-            logging.info(
-                "reloaded %s from settings.ini using xsettingsd"
-                % theme
-            )
+            logging.info("reloaded %s from settings.ini using xsettingsd" % theme)
     finally:
         os.remove(path)
 
@@ -80,20 +77,22 @@ def gtk3():
 
     if shutil.which("gsettings"):
         cmd = ["gsettings", "get", "org.gnome.desktop.interface", "gtk-theme"]
-        gsettings_theme = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.DEVNULL
-        ).communicate()[0].decode().strip("' \n")
+        gsettings_theme = (
+            subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            .communicate()[0]
+            .decode()
+            .strip("' \n")
+        )
 
     xfsettings_theme = None
     if shutil.which("xfconf-query"):
         cmd = ["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName"]
-        xfsettings_theme = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.DEVNULL
-        ).communicate()[0].decode().strip("' \n")
+        xfsettings_theme = (
+            subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            .communicate()[0]
+            .decode()
+            .strip("' \n")
+        )
 
     if util.get_pid("gsd-settings") and gsettings_theme:
         subprocess.call(refresh_gsettings.format(gsettings_theme), shell=True)
@@ -110,7 +109,11 @@ def gtk3():
         if os.path.isfile(settings_ini):
             gtkrc = configparser.ConfigParser()
             gtkrc.read(settings_ini)
-            theme = gtkrc["Settings"].get("gtk-theme-name", "FlatColor") if "Settings" in gtkrc else "FlatColor"
+            theme = (
+                gtkrc["Settings"].get("gtk-theme-name", "FlatColor")
+                if "Settings" in gtkrc
+                else "FlatColor"
+            )
             xsettingsd(theme)
         else:
             xsettingsd("FlatColor")
@@ -133,7 +136,6 @@ def all():
     dunst()
     openbox()
     reload.i3()
-    reload.gtk()
     reload.kitty()
     reload.sway()
     polybar()
