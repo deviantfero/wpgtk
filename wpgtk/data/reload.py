@@ -32,6 +32,12 @@ def polybar():
         util.silent_Popen(["polybar-msg", "cmd", "restart"])
 
 
+def waybar():
+    """Reloads waybar configuration on the fly."""
+    if shutil.which("waybar") and util.get_pid("waybar"):
+        subprocess.Popen(["pkill", "-SIGUSR2", "waybar"])
+
+
 def dunst():
     """Kills dunst so that notify-send reloads it when called."""
     if shutil.which("dunst") and util.get_pid("dunst"):
@@ -139,6 +145,7 @@ def all():
     reload.kitty()
     reload.sway()
     polybar()
+    waybar()
 
     if settings.getboolean("gtk", True):
         gtk3()
