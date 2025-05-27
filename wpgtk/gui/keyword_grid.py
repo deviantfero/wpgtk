@@ -1,8 +1,10 @@
 import logging
 from ..data import keywords
 from ..data.config import user_keywords, settings, write_conf
+from . import util
 from gi import require_version
-require_version("Gtk", "3.0")
+
+require_version("Gtk", "4.0")
 from .keyword_dialog import KeywordDialog  # noqa: E402
 from gi.repository import Gtk  # noqa: E402
 
@@ -16,27 +18,27 @@ class KeywordGrid(Gtk.Grid):
         Gtk.Grid.__init__(self)
         self.parent = parent
 
-        self.set_border_width(PAD)
         self.set_column_homogeneous(1)
+        util.set_uniform_margins(self, PAD)
         self.set_row_spacing(PAD)
         self.set_column_spacing(PAD)
 
         self.liststore = Gtk.ListStore(str, str)
 
-        self.remove_button = Gtk.Button('Remove Keyword')
-        self.remove_button.connect('clicked', self.remove_keyword)
+        self.remove_button = Gtk.Button(label="Remove Keyword")
+        self.remove_button.connect("clicked", self.remove_keyword)
 
-        self.add_button = Gtk.Button('Add Keyword')
-        self.add_button.connect('clicked', self.append_new_keyword)
+        self.add_button = Gtk.Button(label="Add Keyword")
+        self.add_button.connect("clicked", self.append_new_keyword)
 
-        self.choose_button = Gtk.Button('Choose Set')
-        self.choose_button.connect('clicked', self.choose_keywords_section)
+        self.choose_button = Gtk.Button(label="Choose Set")
+        self.choose_button.connect("clicked", self.choose_keywords_section)
 
-        self.create_button = Gtk.Button('Create Set')
-        self.create_button.connect('clicked', self.create_keywords_section)
+        self.create_button = Gtk.Button(label="Create Set")
+        self.create_button.connect("clicked", self.create_keywords_section)
 
-        self.delete_button = Gtk.Button('Delete Set')
-        self.delete_button.connect('clicked', self.delete_keywords_section)
+        self.delete_button = Gtk.Button(label="Delete Set")
+        self.delete_button.connect("clicked", self.delete_keywords_section)
 
         self.sections_combo = Gtk.ComboBoxText()
         self.sections_combo.connect("changed", self.on_section_change)
@@ -45,19 +47,19 @@ class KeywordGrid(Gtk.Grid):
         self.selected_file = settings.get("keywords", "default")
         idx = list(user_keywords.sections()).index(self.selected_file)
         self.sections_combo.set_active(idx)
-        self.delete_button.set_sensitive(self.selected_file != 'default')
+        self.delete_button.set_sensitive(self.selected_file != "default")
         self.choose_button.set_sensitive(False)
 
         self.reload_keyword_list()
 
-        self.status_lbl = Gtk.Label('')
+        self.status_lbl = Gtk.Label(label="")
         self.keyword_tree = Gtk.TreeView(model=self.liststore)
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         scroll.set_min_content_height(320)
         scroll.set_propagate_natural_height(True)
-        scroll.add(self.keyword_tree)
+        scroll.set_child(self.keyword_tree)
 
         self.attach(self.sections_combo, 0, 0, 2, 1)
         self.attach(self.choose_button, 2, 0, 1, 1)
@@ -69,12 +71,12 @@ class KeywordGrid(Gtk.Grid):
         self.attach(self.status_lbl, 0, 4, 4, 1)
 
         key_renderer = Gtk.CellRendererText()
-        key_renderer.set_property('editable', True)
-        key_renderer.connect('edited', self.text_edited, 0)
+        key_renderer.set_property("editable", True)
+        key_renderer.connect("edited", self.text_edited, 0)
 
         value_renderer = Gtk.CellRendererText()
-        value_renderer.set_property('editable', True)
-        value_renderer.connect('edited', self.text_edited, 1)
+        value_renderer.set_property("editable", True)
+        value_renderer.connect("edited", self.text_edited, 1)
 
         keyword_text = Gtk.TreeViewColumn("Keyword", key_renderer, text=0)
         self.keyword_tree.append_column(keyword_text)
@@ -83,7 +85,7 @@ class KeywordGrid(Gtk.Grid):
         self.keyword_tree.append_column(value_text)
 
     def remove_keyword(self, widget):
-        self.status_lbl.set_text('')
+        self.status_lbl.set_text("")
         (m, pathlist) = self.keyword_tree.get_selection().get_selected_rows()
 
         for path in pathlist:
@@ -93,22 +95,20 @@ class KeywordGrid(Gtk.Grid):
             self.reload_keyword_list()
 
     def text_edited(self, widget, path, text, col):
-        self.status_lbl.set_text('')
-        if (col == 0):
+        self.status_lbl.set_text("")
+        if col == 0:
             try:
-                keywords.update_key(self.liststore[path][col], text,
-                                    self.selected_file)
+                keywords.update_key(self.liststore[path][col], text, self.selected_file)
             except Exception as e:
                 self.status_lbl.set_text(str(e))
         else:
             try:
-                keywords.update_value(self.liststore[path][0], text,
-                                      self.selected_file)
+                keywords.update_value(self.liststore[path][0], text, self.selected_file)
             except Exception as e:
                 self.status_lbl.set_text(str(e))
         self.reload_keyword_list()
 
-    def reload_section_list(self, active='default'):
+    def reload_section_list(self, active="default"):
         sections = list(user_keywords.sections())
         self.sections_combo.remove_all()
 
@@ -130,16 +130,16 @@ class KeywordGrid(Gtk.Grid):
         if self.selected_file is not None:
             self.reload_keyword_list()
             self.choose_button.set_sensitive(
-                settings.get('keywords', 'default') != self.selected_file
+                settings.get("keywords", "default") != self.selected_file
             )
-            settings['keywords'] = self.selected_file
-            self.delete_button.set_sensitive(self.selected_file != 'default')
+            settings["keywords"] = self.selected_file
+            self.delete_button.set_sensitive(self.selected_file != "default")
 
     def append_new_keyword(self, widget):
-        self.status_lbl.set_text('')
+        self.status_lbl.set_text("")
         keywords.create_pair(
-            'keyword' + str(len(self.liststore)),
-            'value',
+            "keyword" + str(len(self.liststore)),
+            "value",
             self.selected_file,
         )
         self.reload_keyword_list()

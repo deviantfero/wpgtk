@@ -1,14 +1,24 @@
 from gi import require_version
-require_version("Gtk", "3.0")
+
+require_version("Gtk", "4.0")
 from gi.repository import Gtk  # noqa: E402
 
 
 class KeywordDialog(Gtk.Dialog):
 
     def __init__(self, parent):
-        Gtk.Dialog.__init__(self, "Name you keyword/value set", parent, 0,
-                            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                             Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        Gtk.Dialog.__init__(
+            self,
+            "Name you keyword/value set",
+            parent,
+            0,
+            (
+                Gtk.STOCK_CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OK,
+                Gtk.ResponseType.OK,
+            ),
+        )
 
         self.set_default_size(150, 100)
         self.name_text_input = Gtk.Entry()
@@ -24,6 +34,6 @@ class KeywordDialog(Gtk.Dialog):
 
     def get_section_name(self):
         if len(self.name_text_input.get_text()) <= 0:
-            raise Exception('Empty name not allowed')
+            raise Exception("Empty name not allowed")
 
         return self.name_text_input.get_text()

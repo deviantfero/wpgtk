@@ -13,7 +13,7 @@ from . import util as gui_util
 from .color_picker import ColorDialog
 from gi import require_version
 
-require_version("Gtk", "3.0")
+require_version("Gtk", "4.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf  # noqa: E402
 
 # TODO: remove current_walls call, use simple list
@@ -27,36 +27,35 @@ class ColorGrid(Gtk.Grid):
     def __init__(self, parent):
         Gtk.Grid.__init__(self)
         self.parent = parent
-        self.set_border_width(PAD)
         self.set_column_homogeneous(1)
+        gui_util.set_uniform_margins(self, PAD)
         self.set_row_spacing(PAD)
         self.set_column_spacing(PAD)
 
         self.colorgrid = Gtk.Grid()
-        self.colorgrid.set_border_width(PAD)
         self.colorgrid.set_column_homogeneous(1)
         self.colorgrid.set_row_spacing(PAD)
         self.colorgrid.set_column_spacing(PAD)
 
-        self.sat_add = Gtk.Button("+")
+        self.sat_add = Gtk.Button.new_with_label("+")
         self.sat_add.set_sensitive(False)
 
-        self.sat_red = Gtk.Button("-")
+        self.sat_red = Gtk.Button.new_with_label("-")
         self.sat_red.set_sensitive(False)
 
-        self.sat_add.connect("pressed", self.hls_change, "sat", "add")
-        self.sat_red.connect("pressed", self.hls_change, "sat", "red")
-        self.sat_lbl = Gtk.Label("Saturation:")
+        self.sat_add.connect("clicked", self.hls_change, "sat", "add")
+        self.sat_red.connect("clicked", self.hls_change, "sat", "red")
+        self.sat_lbl = Gtk.Label(label="Saturation:")
 
-        self.light_add = Gtk.Button("+")
+        self.light_add = Gtk.Button(label="+")
         self.light_add.set_sensitive(False)
 
-        self.light_red = Gtk.Button("-")
+        self.light_red = Gtk.Button(label="-")
         self.light_red.set_sensitive(False)
 
-        self.light_add.connect("pressed", self.hls_change, "light", "add")
-        self.light_red.connect("pressed", self.hls_change, "light", "red")
-        self.light_lbl = Gtk.Label("Brightness:")
+        self.light_add.connect("clicked", self.hls_change, "light", "add")
+        self.light_red.connect("clicked", self.hls_change, "light", "red")
+        self.light_lbl = Gtk.Label(label="Brightness:")
 
         self.sat_light_grid = Gtk.Grid()
         self.sat_light_grid.set_column_homogeneous(1)
@@ -74,16 +73,16 @@ class ColorGrid(Gtk.Grid):
         self.combo_grid.set_row_spacing(PAD)
 
         self.color_list = ["000000"] * 16
-        self.button_list = [Gtk.Button("000000") for x in range(16)]
+        self.button_list = [Gtk.Button(label="000000") for x in range(16)]
         self.selected_file = ""
         for button in self.button_list:
-            button.connect("pressed", self.on_color_click)
+            button.connect("clicked", self.on_color_click)
             button.set_sensitive(False)
 
         cont = 0
         for y in range(0, 8, 2):
             for x in range(0, 4):
-                label = Gtk.Label(str(cont))
+                label = Gtk.Label(label=str(cont))
                 self.colorgrid.attach(label, x, y, 1, 1)
                 self.colorgrid.attach(self.button_list[cont], x, y + 1, 1, 1)
                 cont += 1
@@ -95,27 +94,27 @@ class ColorGrid(Gtk.Grid):
         if pixbuf_sample is not None:
             self.sample.set_from_pixbuf(self.pixbuf_sample)
 
-        self.shuffle_button = Gtk.Button("Shuffle colors")
-        self.shuffle_button.connect("pressed", self.on_shuffle_click)
+        self.shuffle_button = Gtk.Button(label="Shuffle colors")
+        self.shuffle_button.connect("clicked", self.on_shuffle_click)
         self.shuffle_button.set_sensitive(False)
 
-        self.import_button = Gtk.Button("import")
+        self.import_button = Gtk.Button(label="Import")
         self.import_button.set_sensitive(False)
-        self.import_button.connect("pressed", self.on_import_click)
+        self.import_button.connect("clicked", self.on_import_click)
 
-        self.ok_button = Gtk.Button("Save")
-        self.ok_button.connect("pressed", self.on_ok_click)
+        self.ok_button = Gtk.Button(label="Save")
+        self.ok_button.connect("clicked", self.on_ok_click)
         self.ok_button.set_sensitive(False)
 
-        self.auto_button = Gtk.Button("Auto-adjust")
-        self.auto_button.connect("pressed", self.on_auto_click)
+        self.auto_button = Gtk.Button(label="Auto-adjust")
+        self.auto_button.connect("clicked", self.on_auto_click)
         self.auto_button.set_sensitive(False)
 
-        self.reset_button = Gtk.Button("Reset")
+        self.reset_button = Gtk.Button(label="Reset")
         self.reset_button.set_sensitive(False)
-        self.reset_button.connect("pressed", self.on_reset_click)
+        self.reset_button.connect("clicked", self.on_reset_click)
 
-        self.done_lbl = Gtk.Label("")
+        self.done_lbl = Gtk.Label(label="")
 
         option_list = Gtk.ListStore(str)
         for elem in list(files.get_file_list()):
@@ -153,15 +152,15 @@ class ColorGrid(Gtk.Grid):
 
     def render_buttons(self):
         for x, button in enumerate(self.button_list):
-            gcolor = Gdk.color_parse(self.color_list[x])
             if util.get_hls_val(self.color_list[x], "light") < 99:
-                fgcolor = Gdk.color_parse("#FFFFFF")
+                fgcolor = "#FFFFFF"
             else:
-                fgcolor = Gdk.color_parse("#000000")
+                fgcolor = "#000000"
             button.set_label(self.color_list[x])
             button.set_sensitive(True)
-            button.modify_bg(Gtk.StateType.NORMAL, gcolor)
-            button.modify_fg(Gtk.StateType.NORMAL, fgcolor)
+            gui_util.set_widget_colors(
+                button, background=self.color_list[x], foreground=fgcolor
+            )
 
     def render_theme(self):
         sample_path = files.get_sample_path(self.selected_file)
@@ -271,15 +270,13 @@ class ColorGrid(Gtk.Grid):
             hex_color = pywal.util.rgb_to_hex(rgb)
             widget.set_label(hex_color)
 
-            gcolor = Gdk.color_parse(hex_color)
             if util.get_hls_val(hex_color, "light") < 100:
-                fgcolor = Gdk.color_parse("#FFFFFF")
+                fgcolor = "#FFFFFF"
             else:
-                fgcolor = Gdk.color_parse("#000000")
+                fgcolor = "#000000"
 
             widget.set_sensitive(True)
-            widget.modify_bg(Gtk.StateType.NORMAL, gcolor)
-            widget.modify_fg(Gtk.StateType.NORMAL, fgcolor)
+            gui_util.set_widget_colors(widget, background=hex_color, foreground=fgcolor)
 
             for i, c in enumerate(self.button_list):
                 if c.get_label() != self.color_list[i]:
