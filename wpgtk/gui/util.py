@@ -3,7 +3,8 @@ import os
 import pathlib
 
 require_version("GdkPixbuf", "2.0")
-from gi.repository import GdkPixbuf  # noqa: E402
+require_version("Gtk", "4.0")
+from gi.repository import GdkPixbuf, Gtk  # noqa: E402
 
 
 def get_preview_pixbuf(image_name):
@@ -61,3 +62,32 @@ def get_sample_pixbuf(sample_name):
         )
     else:
         return None
+
+
+def set_widget_colors(button, background="#000", foreground="#fff"):
+    """
+    Set a style for background and foreground on a widget
+
+    This function applies a css provider to the widget passed as parameter
+    the css provider includes a basic style string that utilizes the
+    background and foreground paramters to change those properties on
+    the widget
+
+    Parameters:
+    - widget (Gtk.Widget): a GTK widget instance
+    - background (str): background color to apply in style
+    - foreground (str): foreground color to apply in style
+
+    Returns:
+    """
+    css_provider = Gtk.CssProvider()
+    css = f"""
+    button {{
+        background-color: {background};
+        color: {foreground};
+    }}
+    """
+    css_provider.load_from_data(css.encode())
+    button.get_style_context().add_provider(
+        css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+    )
