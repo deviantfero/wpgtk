@@ -91,3 +91,19 @@ def set_widget_colors(button, background="#000", foreground="#fff"):
     button.get_style_context().add_provider(
         css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
     )
+
+
+def set_uniform_margins(widget, margin):
+    """
+    Set uniform margins on all sides of a widget
+
+    Parameters:
+    - widget (Gtk.Widget): a GTK widget instance
+    - margin (integer): the margin amount to apply
+
+    Returns:
+    """
+    widget.set_margin_top(margin)
+    widget.set_margin_bottom(margin)
+    widget.set_margin_start(margin)
+    widget.set_margin_end(margin)
