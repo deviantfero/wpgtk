@@ -203,7 +203,12 @@ class mainWindow(Gtk.Window):
 
 
 def run(args):
-    win = mainWindow(args)
-    win.connect("delete-event", Gtk.main_quit)
-    win.show_all()
-    Gtk.main()
+    app = Gtk.Application(application_id="com.deviantfero.wpgtk")
+
+    def on_activate(app):
+        win = mainWindow(args)
+        win.set_application(app)
+        win.present()
+
+    app.connect("activate", on_activate)
+    return app.run(None)
