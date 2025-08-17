@@ -10,7 +10,6 @@ from ..data import sample
 from ..data import themer
 from . import util as gui_util
 
-from .color_picker import ColorDialog
 from gi import require_version
 
 require_version("Gtk", "4.0")
@@ -259,30 +258,40 @@ class ColorGrid(Gtk.Grid):
 
     def on_color_click(self, widget):
         self.done_lbl.set_text("")
+        self.active_color_button = widget
         gcolor = Gdk.RGBA()
         gcolor.parse(widget.get_label())
-        dialog = ColorDialog(self.parent, self.selected_file, gcolor)
-        response = dialog.run()
+        dialog = Gtk.ColorDialog()
+        dialog.set_with_alpha(False)
+        dialog.set_title("Choose a Color")
+        dialog.choose_rgba(
+            parent=self.parent, initial_color=gcolor, callback=self.on_color_selected
+        )
 
-        if response == Gtk.ResponseType.OK:
-            r, g, b, _ = dialog.colorchooser.get_rgba()
+    def on_color_selected(self, dialog, result):
+        rgba = dialog.choose_rgba_finish(result)
+
+        if rgba:
+            r, g, b, _ = rgba
             rgb = list(map(lambda x: round(x * 100 * 2.55), [r, g, b]))
             hex_color = pywal.util.rgb_to_hex(rgb)
-            widget.set_label(hex_color)
+            # widget.set_label(hex_color)
 
             if util.get_hls_val(hex_color, "light") < 100:
                 fgcolor = "#FFFFFF"
             else:
                 fgcolor = "#000000"
 
-            widget.set_sensitive(True)
-            gui_util.set_widget_colors(widget, background=hex_color, foreground=fgcolor)
+            self.active_color_button.set_sensitive(True)
+            self.active_color_button.set_label(hex_color)
+            gui_util.set_widget_colors(
+                self.active_color_button, background=hex_color, foreground=fgcolor
+            )
 
             for i, c in enumerate(self.button_list):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
             self.render_sample()
-        dialog.destroy()
 
     def combo_box_change(self, widget):
         self.done_lbl.set_text("")
