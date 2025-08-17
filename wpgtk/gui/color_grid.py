@@ -227,29 +227,24 @@ class ColorGrid(Gtk.Grid):
         self.render_theme()
 
     def on_import_click(self, widget):
-        fcd = Gtk.FileChooserDialog(
-            "Select a colorscheme",
-            self.parent,
-            Gtk.FileChooserAction.OPEN,
-            (
-                Gtk.STOCK_CANCEL,
-                Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OPEN,
-                Gtk.ResponseType.OK,
-            ),
-        )
+        fcd = Gtk.FileDialog()
 
         filter = Gtk.FileFilter()
         filter.set_name("JSON colorscheme")
         filter.add_mime_type("application/json")
-        fcd.add_filter(filter)
-        response = fcd.run()
 
-        if response == Gtk.ResponseType.OK:
-            self.color_list = color.get_color_list(fcd.get_filename(), True)
+        fcd.set_default_filter(filter)
+        fcd.set_title("Select a colorscheme")
+
+        fcd.open(parent=self.parent, callback=self.on_import_finish)
+
+    def on_import_finish(self, dialog, result):
+        filename = dialog.open_finish(result)
+
+        if filename:
+            self.color_list = color.get_color_list(filename, True)
             self.render_buttons()
             self.render_sample()
-        fcd.destroy()
 
     def on_shuffle_click(self, widget):
         self.color_list = color.shuffle_colors(self.color_list)
