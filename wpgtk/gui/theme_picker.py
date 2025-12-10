@@ -30,16 +30,22 @@ class MainWindow(Gtk.Window):
         # these variables are just to get the image
         # and preview of current wallpaper
         file_name = themer.get_current()
-        logging.info("current wallpaper: " + file_name)
         sample_name = files.get_sample_path(file_name)
+        logging.info("current wallpaper: " + file_name)
+
+        self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        util.set_uniform_margins(self.box, PAD)
+
         self.notebook = Gtk.Notebook()
-        self.set_child(self.notebook)
+        self.notebook.set_vexpand(True)
+        self.box.append(self.notebook)
+        self.set_child(self.box)
 
         self.wpage = Gtk.Grid()
         self.wpage.set_column_homogeneous(1)
-        util.set_uniform_margins(self.wpage, PAD)
         self.wpage.set_row_spacing(PAD)
         self.wpage.set_column_spacing(PAD)
+        util.set_uniform_margins(self.wpage, PAD)
 
         self.cpage = color_grid.ColorGrid(self)
         self.fpage = template_grid.TemplateGrid(self)
@@ -74,19 +80,10 @@ class MainWindow(Gtk.Window):
         self.colorscheme.set_entry_text_column(0)
 
         self.preview = Gtk.Picture.new_for_filename(image_name)
-        self.preview.set_hexpand(False)
-        self.preview.set_vexpand(False)
-        self.preview.set_halign(Gtk.Align.CENTER)
-        self.preview.set_valign(Gtk.Align.CENTER)
-
         self.sample = Gtk.Picture.new_for_filename(sample_name)
-        self.sample.set_hexpand(False)
-        self.sample.set_vexpand(False)
 
-        self.preview.set_content_fit(
-            Gtk.ContentFit.SCALE_DOWN
-        )  # or CONTAIN, COVER, FILL
-        self.sample.set_content_fit(Gtk.ContentFit.SCALE_DOWN)
+        self.preview.set_content_fit(Gtk.ContentFit.COVER)
+        self.sample.set_content_fit(Gtk.ContentFit.COVER)
 
         self.add_button = Gtk.Button(label="Add")
         self.set_button = Gtk.Button(label="Set")
