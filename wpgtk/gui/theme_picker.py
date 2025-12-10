@@ -18,7 +18,7 @@ from gi.repository import Gtk  # noqa: E402
 PAD = 10
 
 
-class mainWindow(Gtk.Window):
+class MainWindow(Gtk.Window):
     def __init__(self, args):
         Gtk.Window.__init__(self, title="wpgtk " + __version__)
 
@@ -73,15 +73,24 @@ class mainWindow(Gtk.Window):
         self.colorscheme.add_attribute(self.renderer_text, "text", 0)
         self.colorscheme.set_entry_text_column(0)
 
-        self.preview = Gtk.Picture()
-        self.sample = Gtk.Picture()
+        self.preview = Gtk.Picture.new_for_filename(image_name)
+        self.preview.set_hexpand(False)
+        self.preview.set_vexpand(False)
+        self.preview.set_halign(Gtk.Align.CENTER)
+        self.preview.set_valign(Gtk.Align.CENTER)
 
-        self.get_image_preview(image_name, sample_name)
+        self.sample = Gtk.Picture.new_for_filename(sample_name)
+        self.sample.set_hexpand(False)
+        self.sample.set_vexpand(False)
+
+        self.preview.set_content_fit(
+            Gtk.ContentFit.SCALE_DOWN
+        )  # or CONTAIN, COVER, FILL
+        self.sample.set_content_fit(Gtk.ContentFit.SCALE_DOWN)
 
         self.add_button = Gtk.Button(label="Add")
         self.set_button = Gtk.Button(label="Set")
         self.rm_button = Gtk.Button(label="Remove")
-
         # adds to first cell in wpage
         self.wpage.attach(self.option_combo, 1, 1, 2, 1)
         self.wpage.attach(self.colorscheme, 1, 2, 2, 1)
@@ -176,27 +185,18 @@ class mainWindow(Gtk.Window):
         selected_file = files.get_file_list()[x]
         filepath = os.path.join(WALL_DIR, selected_file)
 
-        self.set_image_preview(filepath)
+        self.preview.set_filename(filepath)
 
     def colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
         self.cpage.option_combo.set_active(x)
-
-    # called on opening to looad the current image
-    def get_image_preview(self, image_name, sample_name):
-        self.preview.set_filename(image_name)
-        self.sample.set_filename(sample_name)
-
-    # called when combo box changes the selected image
-    def set_image_preview(self, filepath):
-        self.preview.set_filename(filepath)
 
 
 def run(args):
     app = Gtk.Application(application_id="com.deviantfero.wpgtk")
 
     def on_activate(app):
-        win = mainWindow(args)
+        win = MainWindow(args)
         win.set_application(app)
         win.present()
 
