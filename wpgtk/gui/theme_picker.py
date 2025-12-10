@@ -73,8 +73,8 @@ class mainWindow(Gtk.Window):
         self.colorscheme.add_attribute(self.renderer_text, "text", 0)
         self.colorscheme.set_entry_text_column(0)
 
-        self.preview = Gtk.Image()
-        self.sample = Gtk.Image()
+        self.preview = Gtk.Picture()
+        self.sample = Gtk.Picture()
 
         self.get_image_preview(image_name, sample_name)
 
@@ -184,21 +184,12 @@ class mainWindow(Gtk.Window):
 
     # called on opening to looad the current image
     def get_image_preview(self, image_name, sample_name):
-        pixbuf_preview = util.get_preview_pixbuf(image_name)
-        pixbuf_sample = util.get_sample_pixbuf(sample_name)
-
-        if pixbuf_preview is not None:
-            self.preview.set_from_pixbuf(pixbuf_preview)
-
-        if pixbuf_sample is not None:
-            self.sample.set_from_pixbuf(pixbuf_sample)
+        self.preview.set_filename(image_name)
+        self.sample.set_filename(sample_name)
 
     # called when combo box changes the selected image
     def set_image_preview(self, filepath):
-        pixbuf_preview = util.get_preview_pixbuf(filepath)
-
-        if pixbuf_preview is not None:
-            self.preview.set_from_pixbuf(pixbuf_preview)
+        self.preview.set_filename(filepath)
 
 
 def run(args):

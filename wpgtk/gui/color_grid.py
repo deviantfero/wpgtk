@@ -13,7 +13,7 @@ from . import util as gui_util
 from gi import require_version
 
 require_version("Gtk", "4.0")
-from gi.repository import Gtk, Gdk, GdkPixbuf  # noqa: E402
+from gi.repository import Gtk, Gdk  # noqa: E402
 
 # TODO: remove current_walls call, use simple list
 # TODO: use simple text combo
@@ -87,11 +87,7 @@ class ColorGrid(Gtk.Grid):
                 cont += 1
 
         sample_name = os.path.join(SAMPLE_DIR, ".no_sample.sample.png")
-        self.sample = Gtk.Image()
-
-        pixbuf_sample = gui_util.get_sample_pixbuf(sample_name)
-        if pixbuf_sample is not None:
-            self.sample.set_from_pixbuf(self.pixbuf_sample)
+        self.sample = Gtk.Picture.new_for_filename(sample_name)
 
         self.shuffle_button = Gtk.Button(label="Shuffle colors")
         self.shuffle_button.connect("clicked", self.on_shuffle_click)
@@ -170,13 +166,11 @@ class ColorGrid(Gtk.Grid):
             self.color_list = themer.set_fallback_theme(self.selected_file)
         self.render_buttons()
 
-        pixbuf_sample = gui_util.get_sample_pixbuf(sample_path)
-        if pixbuf_sample is None:
+        if not os.path.isfile(sample_path):
             sample.create_sample(self.color_list, sample_path)
-            pixbuf_sample = gui_util.get_sample_pixbuf(sample_path)
 
-        self.sample.set_from_pixbuf(pixbuf_sample)
-        self.parent.sample.set_from_pixbuf(pixbuf_sample)
+        self.sample.set_filename(sample_path)
+        self.parent.sample.set_filename(sample_path)
 
     def hls_change(self, widget, *gparam):
         if gparam[0] == "sat":
@@ -195,10 +189,7 @@ class ColorGrid(Gtk.Grid):
     def render_sample(self):
         sample.create_sample(self.color_list)
         sample_path = os.path.join(SAMPLE_DIR, ".tmp.sample.png")
-        self.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            sample_path, width=500, height=300
-        )
-        self.sample.set_from_pixbuf(self.pixbuf_sample)
+        self.sample.set_filename(sample_path)
 
     def on_ok_click(self, widget):
         color.write_colors(self.selected_file, self.color_list)
@@ -212,10 +203,7 @@ class ColorGrid(Gtk.Grid):
 
             self.done_lbl.set_text("Changes saved")
             sample_path = files.get_sample_path(self.selected_file)
-            self.parent.pixbuf_sample = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                sample_path, width=500, height=300
-            )
-            self.parent.sample.set_from_pixbuf(self.pixbuf_sample)
+            self.parent.sample.set_filename(sample_path)
 
     def on_auto_click(self, widget):
         self.color_list = color.auto_adjust(self.color_list)
