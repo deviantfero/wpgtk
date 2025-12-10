@@ -5,11 +5,10 @@ from gi.repository import Gtk  # noqa: E402
 
 
 class KeywordDialog(Gtk.Dialog):
-
     def __init__(self, parent):
         Gtk.Dialog.__init__(
             self,
-            "Name you keyword/value set",
+            "Name your keyword/value set",
             parent,
             0,
             (
