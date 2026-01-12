@@ -13,7 +13,7 @@ from . import util as gui_util
 from gi import require_version
 
 require_version("Gtk", "4.0")
-from gi.repository import Gtk, Gdk  # noqa: E402
+from gi.repository import Gtk, Gdk, GLib  # noqa: E402
 
 # TODO: remove current_walls call, use simple list
 # TODO: use simple text combo
@@ -227,12 +227,15 @@ class ColorGrid(Gtk.Grid):
         fcd.open(parent=self.parent, callback=self.on_import_finish)
 
     def on_import_finish(self, dialog, result):
-        filename = dialog.open_finish(result)
+        try:
+            filename = dialog.open_finish(result)
 
-        if filename:
-            self.color_list = color.get_color_list(filename, True)
-            self.render_buttons()
-            self.render_sample()
+            if filename:
+                self.color_list = color.get_color_list(filename, True)
+                self.render_buttons()
+                self.render_sample()
+        except GLib.Error as error:
+            print(f"Error opening file: {error.message}")
 
     def on_shuffle_click(self, widget):
         self.color_list = color.shuffle_colors(self.color_list)

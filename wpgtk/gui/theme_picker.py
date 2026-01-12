@@ -13,7 +13,7 @@ from ..data.config import WALL_DIR, WPG_DIR, __version__
 from gi import require_version
 
 require_version("Gtk", "4.0")
-from gi.repository import Gtk  # noqa: E402
+from gi.repository import Gtk, GLib  # noqa: E402
 
 PAD = 10
 
@@ -111,36 +111,28 @@ class MainWindow(Gtk.Window):
             self.set_button.set_sensitive(True)
 
     def on_add_clicked(self, widget):
-        filechooser = Gtk.FileChooserDialog(
-            "Select an Image",
-            self,
-            Gtk.FileChooserAction.OPEN,
-            (
-                Gtk.STOCK_CANCEL,
-                Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OPEN,
-                Gtk.ResponseType.OK,
-            ),
-        )
+        filechooser = Gtk.FileDialog()
 
-        filechooser.set_select_multiple(True)
         filefilter = Gtk.FileFilter()
         filefilter.set_name("Images")
         filefilter.add_mime_type("image/png")
         filefilter.add_mime_type("image/jpg")
         filefilter.add_mime_type("image/gif")
         filefilter.add_mime_type("image/jpeg")
-        filechooser.add_filter(filefilter)
-        response = filechooser.run()
+        filechooser.set_default_filter(filefilter)
 
-        if response == Gtk.ResponseType.OK:
+        filechooser.open_multiple(parent=self, callback=self.on_add_finish)
+
+    def on_add_finish(self, dialog, result):
+        try:
+            picked_files = dialog.open_multiple_finish(result)
             option_list = Gtk.ListStore(str)
 
-            for f in filechooser.get_filenames():
-                themer.create_theme(f)
+            for gfile in picked_files:
+                themer.create_theme(gfile.get_path())
 
-            for elem in list(files.get_file_list()):
-                option_list.append([elem])
+            for filename in list(files.get_file_list()):
+                option_list.append([filename])
 
             self.option_combo.set_model(option_list)
             self.option_combo.set_entry_text_column(0)
@@ -148,8 +140,8 @@ class MainWindow(Gtk.Window):
             self.colorscheme.set_entry_text_column(0)
 
             self.cpage.option_combo.set_model(option_list)
-
-        filechooser.destroy()
+        except GLib.Error as error:
+            print(f"Error opening file: {error.message}")
 
     def on_set_clicked(self, widget):
         x = self.option_combo.get_active()
