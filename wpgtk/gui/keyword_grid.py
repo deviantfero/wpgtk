@@ -154,16 +154,13 @@ class KeywordGrid(Gtk.Grid):
         self.choose_button.set_sensitive(False)
 
     def create_keywords_section(self, widget):
-        dialog = KeywordDialog(self.parent)
-        response = dialog.run()
+        dialog = KeywordDialog(self.parent, self.handle_new_keyword_section)
+        dialog.present()
 
+    def handle_new_keyword_section(self, response, value):
         if response == Gtk.ResponseType.OK:
             try:
-                section = dialog.get_section_name()
-                keywords.create_keywords_section(section)
-                self.reload_section_list(section)
+                keywords.create_keywords_section(value)
+                self.reload_section_list(value)
             except Exception as e:
                 logging.error(str(e))
-            dialog.destroy()
-        if response == Gtk.ResponseType.CANCEL:
-            dialog.destroy()
