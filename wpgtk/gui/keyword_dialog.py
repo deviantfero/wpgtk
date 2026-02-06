@@ -3,7 +3,7 @@ from gi import require_version
 from . import util
 
 require_version("Gtk", "4.0")
-from gi.repository import Gtk  # noqa: E402
+from gi.repository import Gtk, Gdk  # noqa: E402
 
 
 class KeywordDialog(Gtk.Window):
@@ -17,7 +17,14 @@ class KeywordDialog(Gtk.Window):
         self.set_resizable(False)
 
         self.name_text_input = Gtk.Entry()
+        # Handle Enter key
+        self.name_text_input.connect("activate", lambda e: self.on_ok_clicked(None))
         self.error_lbl = Gtk.Label()
+
+        # Handle exit with Esc
+        key_controller = Gtk.EventControllerKey()
+        key_controller.connect("key-pressed", self.on_key_pressed)
+        self.add_controller(key_controller)
 
         ok_button = Gtk.Button(label="OK")
         cancel_button = Gtk.Button(label="Cancel")
@@ -38,6 +45,12 @@ class KeywordDialog(Gtk.Window):
 
         self.set_child(box)
 
+    def get_section_name(self):
+        if len(self.name_text_input.get_text()) <= 0:
+            raise Exception("Empty name not allowed")
+
+        return self.name_text_input.get_text()
+
     def on_ok_clicked(self, button):
         try:
             name = self.get_section_name()
@@ -50,3 +63,10 @@ class KeywordDialog(Gtk.Window):
     def on_cancel_clicked(self, button):
         self.callback(Gtk.ResponseType.CANCEL, None)
         self.close()
+
+    def on_key_pressed(self, controller, keyval, keycode, state):
+        if keyval == Gdk.KEY_Escape:
+            self.on_cancel_clicked(None)
+            return True
+
+        return False  # Event not handled
