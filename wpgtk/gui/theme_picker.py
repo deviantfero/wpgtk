@@ -20,7 +20,7 @@ PAD = 10
 
 class MainWindow(Gtk.Window):
     def __init__(self, args):
-        Gtk.Window.__init__(self, title="wpgtk " + __version__)
+        super().__init__(title="wpgtk " + __version__)
 
         image_name = os.path.join(WPG_DIR, ".current")
         image_name = os.path.realpath(image_name)
@@ -82,8 +82,8 @@ class MainWindow(Gtk.Window):
         self.preview = Gtk.Picture.new_for_filename(image_name)
         self.sample = Gtk.Picture.new_for_filename(sample_name)
 
-        self.preview.set_content_fit(Gtk.ContentFit.COVER)
-        self.sample.set_content_fit(Gtk.ContentFit.COVER)
+        self.preview.set_content_fit(Gtk.ContentFit.CONTAIN)
+        self.sample.set_content_fit(Gtk.ContentFit.CONTAIN)
 
         self.add_button = Gtk.Button(label="Add")
         self.set_button = Gtk.Button(label="Set")
