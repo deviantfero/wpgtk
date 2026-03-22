@@ -16,7 +16,6 @@ require_version("Gtk", "4.0")
 from gi.repository import Gtk, Gdk, GLib  # noqa: E402
 
 # TODO: remove current_walls call, use simple list
-# TODO: use simple text combo
 # TODO: only update pixbuf if parent has same color scheme
 current_walls = files.get_file_list()
 PAD = 10
@@ -111,15 +110,9 @@ class ColorGrid(Gtk.Grid):
 
         self.done_lbl = Gtk.Label(label="")
 
-        option_list = Gtk.ListStore(str)
-        for elem in list(files.get_file_list()):
-            option_list.append([elem])
-
-        self.option_combo = Gtk.ComboBox.new_with_model(option_list)
-        self.renderer_text = Gtk.CellRendererText()
-        self.option_combo.pack_start(self.renderer_text, True)
-        self.option_combo.add_attribute(self.renderer_text, "text", 0)
-        self.option_combo.set_entry_text_column(0)
+        self.option_combo = Gtk.ComboBoxText()
+        for elem in files.get_file_list():
+            self.option_combo.append_text(elem)
         self.option_combo.connect("changed", self.combo_box_change)
 
         self.combo_grid.attach(self.option_combo, 0, 0, 3, 1)

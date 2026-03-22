@@ -58,26 +58,18 @@ class MainWindow(Gtk.Window):
         self.notebook.append_page(self.keypage, Gtk.Label(label="Keywords"))
         self.notebook.append_page(self.optpage, Gtk.Label(label="Options"))
 
-        option_list = Gtk.ListStore(str)
         current_idx = None
+
+        self.option_combo = Gtk.ComboBoxText()
+        self.colorscheme = Gtk.ComboBoxText()
+        self.textbox = Gtk.Label()
+        self.textbox.set_text("Select colorscheme")
 
         for i, elem in enumerate(files.get_file_list()):
             if elem == themer.get_current():
                 current_idx = i
-
-            option_list.append([elem])
-        self.option_combo = Gtk.ComboBox.new_with_model(option_list)
-        self.renderer_text = Gtk.CellRendererText()
-        self.option_combo.pack_start(self.renderer_text, True)
-        self.option_combo.add_attribute(self.renderer_text, "text", 0)
-        self.option_combo.set_entry_text_column(0)
-
-        self.textbox = Gtk.Label()
-        self.textbox.set_text("Select colorscheme")
-        self.colorscheme = Gtk.ComboBox.new_with_model(option_list)
-        self.colorscheme.pack_start(self.renderer_text, True)
-        self.colorscheme.add_attribute(self.renderer_text, "text", 0)
-        self.colorscheme.set_entry_text_column(0)
+            self.option_combo.append_text(elem)
+            self.colorscheme.append_text(elem)
 
         self.preview = Gtk.Picture.new_for_filename(image_name)
         self.sample = Gtk.Picture.new_for_filename(sample_name)
@@ -126,20 +118,15 @@ class MainWindow(Gtk.Window):
     def on_add_finish(self, dialog, result):
         try:
             picked_files = dialog.open_multiple_finish(result)
-            option_list = Gtk.ListStore(str)
 
             for gfile in picked_files:
                 themer.create_theme(gfile.get_path())
 
-            for filename in list(files.get_file_list()):
-                option_list.append([filename])
-
-            self.option_combo.set_model(option_list)
-            self.option_combo.set_entry_text_column(0)
-            self.colorscheme.set_model(option_list)
-            self.colorscheme.set_entry_text_column(0)
-
-            self.cpage.option_combo.set_model(option_list)
+            file_list = list(files.get_file_list())
+            for combo in (self.option_combo, self.colorscheme, self.cpage.option_combo):
+                combo.remove_all()
+                for filename in file_list:
+                    combo.append_text(filename)
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")
 
@@ -158,14 +145,11 @@ class MainWindow(Gtk.Window):
         if current_walls:
             filename = current_walls[x]
             themer.delete_theme(filename)
-            option_list = Gtk.ListStore(str)
-            for elem in list(files.get_file_list()):
-                option_list.append([elem])
-            self.option_combo.set_model(option_list)
-            self.option_combo.set_entry_text_column(0)
-            self.colorscheme.set_model(option_list)
-
-            self.cpage.option_combo.set_model(option_list)
+            file_list = list(files.get_file_list())
+            for combo in (self.option_combo, self.colorscheme, self.cpage.option_combo):
+                combo.remove_all()
+                for elem in file_list:
+                    combo.append_text(elem)
 
     def combo_box_change(self, widget):
         self.set_button.set_sensitive(True)
