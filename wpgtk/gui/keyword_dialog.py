@@ -18,19 +18,19 @@ class KeywordDialog(Gtk.Window):
 
         self.name_text_input = Gtk.Entry()
         # Handle Enter key
-        self.name_text_input.connect("activate", lambda e: self.on_ok_clicked(None))
+        self.name_text_input.connect("activate", lambda e: self._on_ok_clicked(None))
         self.error_lbl = Gtk.Label()
 
         # Handle exit with Esc
         key_controller = Gtk.EventControllerKey()
-        key_controller.connect("key-pressed", self.on_key_pressed)
+        key_controller.connect("key-pressed", self._on_key_pressed)
         self.add_controller(key_controller)
 
         ok_button = Gtk.Button(label="OK")
         cancel_button = Gtk.Button(label="Cancel")
 
-        ok_button.connect("clicked", self.on_ok_clicked)
-        cancel_button.connect("clicked", self.on_cancel_clicked)
+        ok_button.connect("clicked", self._on_ok_clicked)
+        cancel_button.connect("clicked", self._on_cancel_clicked)
 
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
         button_box.set_halign(Gtk.Align.END)
@@ -51,7 +51,7 @@ class KeywordDialog(Gtk.Window):
 
         return self.name_text_input.get_text()
 
-    def on_ok_clicked(self, button):
+    def _on_ok_clicked(self, button):
         try:
             name = self.get_section_name()
             self.callback(Gtk.ResponseType.OK, name)
@@ -60,13 +60,13 @@ class KeywordDialog(Gtk.Window):
             self.error_lbl.set_text(str(e))
             self.error_lbl.set_visible(True)
 
-    def on_cancel_clicked(self, button):
+    def _on_cancel_clicked(self, button):
         self.callback(Gtk.ResponseType.CANCEL, None)
         self.close()
 
-    def on_key_pressed(self, controller, keyval, keycode, state):
+    def _on_key_pressed(self, controller, keyval, keycode, state):
         if keyval == Gdk.KEY_Escape:
-            self.on_cancel_clicked(None)
+            self._on_cancel_clicked(None)
             return True
 
         return False  # Event not handled

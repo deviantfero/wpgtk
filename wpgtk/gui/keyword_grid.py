@@ -26,22 +26,22 @@ class KeywordGrid(Gtk.Grid):
         self.liststore = Gtk.ListStore(str, str)
 
         self.remove_button = Gtk.Button(label="Remove Keyword")
-        self.remove_button.connect("clicked", self.remove_keyword)
+        self.remove_button.connect("clicked", self._remove_keyword)
 
         self.add_button = Gtk.Button(label="Add Keyword")
-        self.add_button.connect("clicked", self.append_new_keyword)
+        self.add_button.connect("clicked", self._append_new_keyword)
 
         self.choose_button = Gtk.Button(label="Choose Set")
-        self.choose_button.connect("clicked", self.choose_keywords_section)
+        self.choose_button.connect("clicked", self._choose_keywords_section)
 
         self.create_button = Gtk.Button(label="Create Set")
-        self.create_button.connect("clicked", self.create_keywords_section)
+        self.create_button.connect("clicked", self._create_keywords_section)
 
         self.delete_button = Gtk.Button(label="Delete Set")
-        self.delete_button.connect("clicked", self.delete_keywords_section)
+        self.delete_button.connect("clicked", self._delete_keywords_section)
 
         self.sections_combo = Gtk.ComboBoxText()
-        self.sections_combo.connect("changed", self.on_section_change)
+        self.sections_combo.connect("changed", self._on_section_change)
         self.reload_section_list()
 
         self.selected_file = settings.get("keywords", "default")
@@ -72,11 +72,11 @@ class KeywordGrid(Gtk.Grid):
 
         key_renderer = Gtk.CellRendererText()
         key_renderer.set_property("editable", True)
-        key_renderer.connect("edited", self.text_edited, 0)
+        key_renderer.connect("edited", self._text_edited, 0)
 
         value_renderer = Gtk.CellRendererText()
         value_renderer.set_property("editable", True)
-        value_renderer.connect("edited", self.text_edited, 1)
+        value_renderer.connect("edited", self._text_edited, 1)
 
         keyword_text = Gtk.TreeViewColumn("Keyword", key_renderer, text=0)
         self.keyword_tree.append_column(keyword_text)
@@ -84,7 +84,7 @@ class KeywordGrid(Gtk.Grid):
         value_text = Gtk.TreeViewColumn("Value", value_renderer, text=1)
         self.keyword_tree.append_column(value_text)
 
-    def remove_keyword(self, widget):
+    def _remove_keyword(self, widget):
         self.status_lbl.set_text("")
         (m, pathlist) = self.keyword_tree.get_selection().get_selected_rows()
 
@@ -94,7 +94,7 @@ class KeywordGrid(Gtk.Grid):
             keywords.remove_pair(value, self.selected_file)
             self.reload_keyword_list()
 
-    def text_edited(self, widget, path, text, col):
+    def _text_edited(self, widget, path, text, col):
         self.status_lbl.set_text("")
         if col == 0:
             try:
@@ -124,7 +124,7 @@ class KeywordGrid(Gtk.Grid):
         for k, v in keyword_section.items():
             self.liststore.append([k, v])
 
-    def on_section_change(self, widget):
+    def _on_section_change(self, widget):
         self.selected_file = widget.get_active_text()
 
         if self.selected_file is not None:
@@ -135,7 +135,7 @@ class KeywordGrid(Gtk.Grid):
             settings["keywords"] = self.selected_file
             self.delete_button.set_sensitive(self.selected_file != "default")
 
-    def append_new_keyword(self, widget):
+    def _append_new_keyword(self, widget):
         self.status_lbl.set_text("")
         keywords.create_pair(
             "keyword" + str(len(self.liststore)),
@@ -144,23 +144,23 @@ class KeywordGrid(Gtk.Grid):
         )
         self.reload_keyword_list()
 
-    def delete_keywords_section(self, widget):
+    def _delete_keywords_section(self, widget):
         if self.selected_file:
-            keywords.delete_keywords_section(self.selected_file)
+            keywords._delete_keywords_section(self.selected_file)
             self.reload_section_list()
 
-    def choose_keywords_section(self, widget):
+    def _choose_keywords_section(self, widget):
         write_conf()
         self.choose_button.set_sensitive(False)
 
-    def create_keywords_section(self, widget):
-        dialog = KeywordDialog(self.parent, self.handle_new_keyword_section)
+    def _create_keywords_section(self, widget):
+        dialog = KeywordDialog(self.parent, self._handle_new_keyword_section)
         dialog.present()
 
-    def handle_new_keyword_section(self, response, value):
+    def _handle_new_keyword_section(self, response, value):
         if response == Gtk.ResponseType.OK:
             try:
-                keywords.create_keywords_section(value)
+                keywords._create_keywords_section(value)
                 self.reload_section_list(value)
             except Exception as e:
                 logging.error(str(e))

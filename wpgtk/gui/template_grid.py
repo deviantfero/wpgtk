@@ -37,11 +37,11 @@ class TemplateGrid(Gtk.Grid):
         self.grid_edit.set_column_spacing(PAD)
 
         self.button_add = Gtk.Button(label="Add")
-        self.button_add.connect("clicked", self.on_add_clicked)
+        self.button_add.connect("clicked", self._on_add_clicked)
         self.button_rm = Gtk.Button(label="Remove")
-        self.button_rm.connect("clicked", self.on_rm_clicked)
+        self.button_rm.connect("clicked", self._on_rm_clicked)
         self.button_edit = Gtk.Button(label="Edit")
-        self.button_edit.connect("clicked", self.on_open_clicked)
+        self.button_edit.connect("clicked", self._on_open_clicked)
 
         self.liststore = Gtk.ListStore(Pixbuf, str)
         self.file_view = Gtk.IconView.new()
@@ -50,7 +50,7 @@ class TemplateGrid(Gtk.Grid):
         self.file_view.set_pixbuf_column(0)
         self.file_view.set_text_column(1)
         self.file_view.set_item_width(96)
-        self.file_view.connect("item-activated", self.on_file_click)
+        self.file_view.connect("item-activated", self._on_file_click)
 
         self.scroll = Gtk.ScrolledWindow()
         self.scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
@@ -87,7 +87,7 @@ class TemplateGrid(Gtk.Grid):
             self.liststore.append([self._icon_pixbuf, filen])
         self.file_view.unselect_all()
 
-    def on_add_clicked(self, widget):
+    def _on_add_clicked(self, widget):
         filechooser = Gtk.FileDialog()
         filechooser.set_title("Select a file")
 
@@ -96,9 +96,9 @@ class TemplateGrid(Gtk.Grid):
         filefilter.add_mime_type("text/*")
         filechooser.set_default_filter(filefilter)
 
-        filechooser.open_multiple(parent=self.parent, callback=self.on_add_finish)
+        filechooser.open_multiple(parent=self.parent, callback=self._on_add_finish)
 
-    def on_add_finish(self, dialog, result):
+    def _on_add_finish(self, dialog, result):
         try:
             picked_files = dialog.open_multiple_finish(result)
             for gfile in picked_files:
@@ -107,7 +107,7 @@ class TemplateGrid(Gtk.Grid):
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")
 
-    def on_open_clicked(self, widget):
+    def _on_open_clicked(self, widget):
         if self.current is not None:
             item = self.item_names[self.current]
             args_list = settings["editor"].split(" ")
@@ -119,7 +119,7 @@ class TemplateGrid(Gtk.Grid):
             self.current = None
         self.file_view.unselect_all()
 
-    def on_rm_clicked(self, widget):
+    def _on_rm_clicked(self, widget):
         if self.current is not None:
             item = self.item_names.pop(self.current)
             files.delete_template(item)
@@ -127,6 +127,6 @@ class TemplateGrid(Gtk.Grid):
             self.current = None
         self.file_view.unselect_all()
 
-    def on_file_click(self, widget, pos):
+    def _on_file_click(self, widget, pos):
         self.current = int(str(pos))
         self.sel_file = self.liststore[self.current][1]

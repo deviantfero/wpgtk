@@ -41,8 +41,8 @@ class ColorGrid(Gtk.Grid):
         self.sat_red = Gtk.Button.new_with_label("-")
         self.sat_red.set_sensitive(False)
 
-        self.sat_add.connect("clicked", self.hls_change, "sat", "add")
-        self.sat_red.connect("clicked", self.hls_change, "sat", "red")
+        self.sat_add.connect("clicked", self._hls_change, "sat", "add")
+        self.sat_red.connect("clicked", self._hls_change, "sat", "red")
         self.sat_lbl = Gtk.Label(label="Saturation:")
 
         self.light_add = Gtk.Button(label="+")
@@ -51,8 +51,8 @@ class ColorGrid(Gtk.Grid):
         self.light_red = Gtk.Button(label="-")
         self.light_red.set_sensitive(False)
 
-        self.light_add.connect("clicked", self.hls_change, "light", "add")
-        self.light_red.connect("clicked", self.hls_change, "light", "red")
+        self.light_add.connect("clicked", self._hls_change, "light", "add")
+        self.light_red.connect("clicked", self._hls_change, "light", "red")
         self.light_lbl = Gtk.Label(label="Brightness:")
 
         self.sat_light_grid = Gtk.Grid()
@@ -74,7 +74,7 @@ class ColorGrid(Gtk.Grid):
         self.button_list = [Gtk.Button(label="000000") for x in range(16)]
         self.selected_file = ""
         for button in self.button_list:
-            button.connect("clicked", self.on_color_click)
+            button.connect("clicked", self._on_color_click)
             button.set_sensitive(False)
 
         cont = 0
@@ -89,31 +89,31 @@ class ColorGrid(Gtk.Grid):
         self.sample = Gtk.Picture.new_for_filename(sample_name)
 
         self.shuffle_button = Gtk.Button(label="Shuffle colors")
-        self.shuffle_button.connect("clicked", self.on_shuffle_click)
+        self.shuffle_button.connect("clicked", self._on_shuffle_click)
         self.shuffle_button.set_sensitive(False)
 
         self.import_button = Gtk.Button(label="Import")
         self.import_button.set_sensitive(False)
-        self.import_button.connect("clicked", self.on_import_click)
+        self.import_button.connect("clicked", self._on_import_click)
 
         self.ok_button = Gtk.Button(label="Save")
-        self.ok_button.connect("clicked", self.on_ok_click)
+        self.ok_button.connect("clicked", self._on_ok_click)
         self.ok_button.set_sensitive(False)
 
         self.auto_button = Gtk.Button(label="Auto-adjust")
-        self.auto_button.connect("clicked", self.on_auto_click)
+        self.auto_button.connect("clicked", self._on_auto_click)
         self.auto_button.set_sensitive(False)
 
         self.reset_button = Gtk.Button(label="Reset")
         self.reset_button.set_sensitive(False)
-        self.reset_button.connect("clicked", self.on_reset_click)
+        self.reset_button.connect("clicked", self._on_reset_click)
 
         self.done_lbl = Gtk.Label(label="")
 
         self.option_combo = Gtk.ComboBoxText()
         for elem in files.get_file_list():
             self.option_combo.append_text(elem)
-        self.option_combo.connect("changed", self.combo_box_change)
+        self.option_combo.connect("changed", self._combo_box_change)
 
         self.combo_grid.attach(self.option_combo, 0, 0, 3, 1)
         self.combo_grid.attach(self.reset_button, 3, 0, 1, 1)
@@ -165,7 +165,7 @@ class ColorGrid(Gtk.Grid):
         self.sample.set_filename(sample_path)
         self.parent.sample.set_filename(sample_path)
 
-    def hls_change(self, widget, *gparam):
+    def _hls_change(self, widget, *gparam):
         if gparam[0] == "sat":
             val = 0.05 if gparam[1] == "add" else -0.05
             self.color_list = [
@@ -184,7 +184,7 @@ class ColorGrid(Gtk.Grid):
         sample_path = os.path.join(SAMPLE_DIR, ".tmp.sample.png")
         self.sample.set_filename(sample_path)
 
-    def on_ok_click(self, widget):
+    def _on_ok_click(self, widget):
         color.write_colors(self.selected_file, self.color_list)
         tmpfile = os.path.join(SAMPLE_DIR, ".tmp.sample.png")
 
@@ -198,16 +198,16 @@ class ColorGrid(Gtk.Grid):
             sample_path = files.get_sample_path(self.selected_file)
             self.parent.sample.set_filename(sample_path)
 
-    def on_auto_click(self, widget):
+    def _on_auto_click(self, widget):
         self.color_list = color.auto_adjust(self.color_list)
         self.render_buttons()
         self.render_sample()
 
-    def on_reset_click(self, widget):
+    def _on_reset_click(self, widget):
         themer.reset_theme(self.selected_file)
         self.render_theme()
 
-    def on_import_click(self, widget):
+    def _on_import_click(self, widget):
         fcd = Gtk.FileDialog()
 
         filter = Gtk.FileFilter()
@@ -217,9 +217,9 @@ class ColorGrid(Gtk.Grid):
         fcd.set_default_filter(filter)
         fcd.set_title("Select a colorscheme")
 
-        fcd.open(parent=self.parent, callback=self.on_import_finish)
+        fcd.open(parent=self.parent, callback=self._on_import_finish)
 
-    def on_import_finish(self, dialog, result):
+    def _on_import_finish(self, dialog, result):
         try:
             filename = dialog.open_finish(result)
 
@@ -230,12 +230,12 @@ class ColorGrid(Gtk.Grid):
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")
 
-    def on_shuffle_click(self, widget):
+    def _on_shuffle_click(self, widget):
         self.color_list = color.shuffle_colors(self.color_list)
         self.render_buttons()
         self.render_sample()
 
-    def on_color_click(self, widget):
+    def _on_color_click(self, widget):
         self.done_lbl.set_text("")
         self.active_color_button = widget
         gcolor = Gdk.RGBA()
@@ -244,10 +244,10 @@ class ColorGrid(Gtk.Grid):
         dialog.set_with_alpha(False)
         dialog.set_title("Choose a Color")
         dialog.choose_rgba(
-            parent=self.parent, initial_color=gcolor, callback=self.on_color_selected
+            parent=self.parent, initial_color=gcolor, callback=self._on_color_selected
         )
 
-    def on_color_selected(self, dialog, result):
+    def _on_color_selected(self, dialog, result):
         rgba = dialog.choose_rgba_finish(result)
 
         if rgba:
@@ -272,7 +272,7 @@ class ColorGrid(Gtk.Grid):
                     self.color_list[i] = c.get_label()
             self.render_sample()
 
-    def combo_box_change(self, widget):
+    def _combo_box_change(self, widget):
         self.done_lbl.set_text("")
         x = self.option_combo.get_active()
 

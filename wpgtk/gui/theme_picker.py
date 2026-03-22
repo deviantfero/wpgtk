@@ -88,11 +88,11 @@ class MainWindow(Gtk.Window):
         self.wpage.attach(self.rm_button, 4, 1, 1, 1)
         self.wpage.attach(self.preview, 1, 3, 4, 1)
         self.wpage.attach(self.sample, 1, 4, 4, 1)
-        self.add_button.connect("clicked", self.on_add_clicked)
-        self.set_button.connect("clicked", self.on_set_clicked)
-        self.rm_button.connect("clicked", self.on_rm_clicked)
-        self.option_combo.connect("changed", self.combo_box_change)
-        self.colorscheme.connect("changed", self.colorscheme_box_change)
+        self.add_button.connect("clicked", self._on_add_clicked)
+        self.set_button.connect("clicked", self._on_set_clicked)
+        self.rm_button.connect("clicked", self._on_rm_clicked)
+        self.option_combo.connect("changed", self._combo_box_change)
+        self.colorscheme.connect("changed", self._colorscheme_box_change)
         self.entry = Gtk.Entry()
         self.current_walls = Gtk.ComboBox()
 
@@ -102,7 +102,7 @@ class MainWindow(Gtk.Window):
             self.cpage.option_combo.set_active(current_idx)
             self.set_button.set_sensitive(True)
 
-    def on_add_clicked(self, widget):
+    def _on_add_clicked(self, widget):
         filechooser = Gtk.FileDialog()
 
         filefilter = Gtk.FileFilter()
@@ -113,9 +113,9 @@ class MainWindow(Gtk.Window):
         filefilter.add_mime_type("image/jpeg")
         filechooser.set_default_filter(filefilter)
 
-        filechooser.open_multiple(parent=self, callback=self.on_add_finish)
+        filechooser.open_multiple(parent=self, callback=self._on_add_finish)
 
-    def on_add_finish(self, dialog, result):
+    def _on_add_finish(self, dialog, result):
         try:
             picked_files = dialog.open_multiple_finish(result)
 
@@ -130,7 +130,7 @@ class MainWindow(Gtk.Window):
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")
 
-    def on_set_clicked(self, widget):
+    def _on_set_clicked(self, widget):
         x = self.option_combo.get_active()
         y = self.colorscheme.get_active()
         current_walls = files.get_file_list()
@@ -139,7 +139,7 @@ class MainWindow(Gtk.Window):
             colorscheme_file = current_walls[y]
             themer.set_theme(filename, colorscheme_file)
 
-    def on_rm_clicked(self, widget):
+    def _on_rm_clicked(self, widget):
         x = self.option_combo.get_active()
         current_walls = files.get_file_list()
         if current_walls:
@@ -151,7 +151,7 @@ class MainWindow(Gtk.Window):
                 for elem in file_list:
                     combo.append_text(elem)
 
-    def combo_box_change(self, widget):
+    def _combo_box_change(self, widget):
         self.set_button.set_sensitive(True)
         x = self.option_combo.get_active()
         self.colorscheme.set_active(x)
@@ -160,7 +160,7 @@ class MainWindow(Gtk.Window):
 
         self.preview.set_filename(filepath)
 
-    def colorscheme_box_change(self, widget):
+    def _colorscheme_box_change(self, widget):
         x = self.colorscheme.get_active()
         self.cpage.option_combo.set_active(x)
 

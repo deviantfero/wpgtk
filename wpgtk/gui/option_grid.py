@@ -35,12 +35,12 @@ class OptionsGrid(Gtk.Grid):
         self.color_combo = Gtk.ComboBoxText()
         for elem in list(color_list):
             self.color_combo.append_text(elem)
-        self.color_combo.connect("changed", self.combo_box_change, "active")
+        self.color_combo.connect("changed", self._combo_box_change, "active")
 
         # Button
         self.color_button = Gtk.Button(label="Active/Inactive Color")
         self.save_button = Gtk.Button(label="Save")
-        self.save_button.connect("clicked", self.on_save_button)
+        self.save_button.connect("clicked", self._on_save_button)
 
         # Backend Combo
         self.backend_lbl = Gtk.Label(label="Select your backend:")
@@ -49,65 +49,65 @@ class OptionsGrid(Gtk.Grid):
 
         for elem in self.backend_list:
             self.backend_combo.append_text(elem)
-        self.backend_combo.connect("changed", self.combo_box_change, "backend")
+        self.backend_combo.connect("changed", self._combo_box_change, "backend")
 
         # Switches
         self.gtk_switch = Gtk.Switch()
-        self.gtk_switch.connect("notify::active", self.on_activate, "gtk")
+        self.gtk_switch.connect("notify::active", self._on_activate, "gtk")
         self.lbl_gtk = Gtk.Label(label="Reload GTK+")
 
         self.vte_switch = Gtk.Switch()
-        self.vte_switch.connect("notify::active", self.on_activate, "vte")
+        self.vte_switch.connect("notify::active", self._on_activate, "vte")
         self.lbl_vte = Gtk.Label(label="Use VTE Fix")
 
         self.light_theme_switch = Gtk.Switch()
         self.light_theme_switch.connect(
-            "notify::active", self.on_activate, "light_theme"
+            "notify::active", self._on_activate, "light_theme"
         )
         self.lbl_light_theme = Gtk.Label(label="Use light themes")
 
         self.wallpaper_switch = Gtk.Switch()
         self.wallpaper_switch.connect(
-            "notify::active", self.on_activate, "set_wallpaper"
+            "notify::active", self._on_activate, "set_wallpaper"
         )
         self.lbl_wallpaper = Gtk.Label(label="Set wallpaper")
 
         self.smart_sort_switch = Gtk.Switch()
-        self.smart_sort_switch.connect("notify::active", self.on_activate, "smart_sort")
+        self.smart_sort_switch.connect("notify::active", self._on_activate, "smart_sort")
         self.lbl_smart_sort = Gtk.Label(label="Use smart sort")
 
         self.auto_adjust_switch = Gtk.Switch()
         self.auto_adjust_switch.connect(
-            "notify::active", self.on_activate, "auto_adjust"
+            "notify::active", self._on_activate, "auto_adjust"
         )
         self.lbl_auto_adjust = Gtk.Label(label="Always auto adjust")
 
         self.reload_switch = Gtk.Switch()
-        self.reload_switch.connect("notify::active", self.on_activate, "reload")
+        self.reload_switch.connect("notify::active", self._on_activate, "reload")
         self.lbl_reload = Gtk.Label(label="Reload other software")
 
         self.terminal_switch = Gtk.Switch()
-        self.terminal_switch.connect("notify::active", self.on_activate, "terminal")
+        self.terminal_switch.connect("notify::active", self._on_activate, "terminal")
         self.lbl_terminal = Gtk.Label(label="Change terminal colors")
 
         # edit cmd
         self.editor_lbl = Gtk.Label(label="Open optional files with:")
         self.editor_txt = Gtk.Entry()
-        self.editor_txt.connect("changed", self.on_txt_change, "editor")
+        self.editor_txt.connect("changed", self._on_txt_change, "editor")
 
         # cmd
         self.command_lbl = Gtk.Label(label="Run command after")
         self.command_exe_lbl = Gtk.Label(label="Command: ")
 
         self.command_txt = Gtk.Entry()
-        self.command_txt.connect("changed", self.on_txt_change, "command")
+        self.command_txt.connect("changed", self._on_txt_change, "command")
 
         self.command_switch = Gtk.Switch()
-        self.command_switch.connect("notify::active", self.on_activate, "execute_cmd")
+        self.command_switch.connect("notify::active", self._on_activate, "execute_cmd")
 
         self.alpha_lbl = Gtk.Label(label="Alpha:")
         self.alpha_txt = Gtk.Entry()
-        self.alpha_txt.connect("changed", self.on_txt_change, "alpha")
+        self.alpha_txt.connect("changed", self._on_txt_change, "alpha")
         self.load_opt_list()
 
         # Switch Grid attach
@@ -160,7 +160,7 @@ class OptionsGrid(Gtk.Grid):
 
         self.save_button.set_sensitive(False)
 
-    def on_activate(self, switch, *gparam):
+    def _on_activate(self, switch, *gparam):
         if gparam[1] == "execute_cmd":
             self.command_txt.set_editable(switch.get_active())
         settings[gparam[1]] = str(switch.get_active()).lower()
@@ -187,7 +187,7 @@ class OptionsGrid(Gtk.Grid):
         self.command_txt.set_editable(settings.getboolean("execute_cmd", False))
         self.alpha_txt.set_text(settings.get("alpha", "100"))
 
-    def combo_box_change(self, combo, *gparam):
+    def _combo_box_change(self, combo, *gparam):
         x = combo.get_active()
         item = combo.get_active_text()
 
@@ -199,10 +199,10 @@ class OptionsGrid(Gtk.Grid):
             settings[gparam[0]] = item
         self.save_button.set_sensitive(True)
 
-    def on_txt_change(self, gtk_entry, *gparam):
+    def _on_txt_change(self, gtk_entry, *gparam):
         settings[gparam[0]] = gtk_entry.get_text()
         self.save_button.set_sensitive(True)
 
-    def on_save_button(self, button):
+    def _on_save_button(self, button):
         write_conf()
         self.save_button.set_sensitive(False)
