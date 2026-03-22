@@ -9,7 +9,7 @@ from . import util
 from gi import require_version
 
 require_version("Gtk", "4.0")
-from gi.repository import Gtk  # noqa: E402
+from gi.repository import Gtk, Gdk, GLib  # noqa: E402
 from gi.repository.GdkPixbuf import Pixbuf  # noqa: E402
 
 PAD = 10
@@ -43,12 +43,13 @@ class TemplateGrid(Gtk.Grid):
         self.button_edit = Gtk.Button(label="Edit")
         self.button_edit.connect("clicked", self.on_open_clicked)
 
-        self.liststore = Gtk.ListStore(Gtk.IconPaintable, str)
+        self.liststore = Gtk.ListStore(Pixbuf, str)
         self.file_view = Gtk.IconView.new()
         self.file_view.set_model(self.liststore)
         self.file_view.set_activate_on_single_click(True)
         self.file_view.set_pixbuf_column(0)
         self.file_view.set_text_column(1)
+        self.file_view.set_item_width(96)
         self.file_view.connect("item-activated", self.on_file_click)
 
         self.scroll = Gtk.ScrolledWindow()
@@ -57,18 +58,11 @@ class TemplateGrid(Gtk.Grid):
         self.scroll.set_child(self.file_view)
 
         self.item_names = files.get_file_list(OPT_DIR, r".*\.base$")
-        self.icon_theme = Gtk.IconTheme()
+        self.icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+        self._icon_pixbuf = self._load_icon_pixbuf()
 
         for filen in self.item_names:
-            pixbuf = self.icon_theme.lookup_icon(
-                icon,
-                None,
-                64,
-                1,
-                Gtk.TextDirection.LTR,
-                Gtk.IconLookupFlags.FORCE_REGULAR,
-            )
-            self.liststore.append([pixbuf, filen])
+            self.liststore.append([self._icon_pixbuf, filen])
 
         self.grid_edit.attach(self.button_add, 0, 0, 2, 1)
         self.grid_edit.attach(self.button_edit, 0, 1, 1, 1)
@@ -77,36 +71,41 @@ class TemplateGrid(Gtk.Grid):
 
         self.attach(self.grid_edit, 0, 0, 1, 1)
 
-    def on_add_clicked(self, widget):
-        filechooser = Gtk.FileChooserDialog(
-            "Select an Image",
-            self.parent,
-            Gtk.FileChooserAction.OPEN,
-            (
-                Gtk.STOCK_CANCEL,
-                Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OPEN,
-                Gtk.ResponseType.OK,
-            ),
+    def _load_icon_pixbuf(self):
+        paintable = self.icon_theme.lookup_icon(
+            icon, None, 64, 1, Gtk.TextDirection.LTR, Gtk.IconLookupFlags.FORCE_REGULAR
         )
+        icon_file = paintable.get_file()
+        if icon_file:
+            return Pixbuf.new_from_file_at_size(icon_file.get_path(), 64, 64)
+        return None
+
+    def _refresh_liststore(self):
+        self.item_names = files.get_file_list(OPT_DIR, r".*\.base$")
+        self.liststore.clear()
+        for filen in self.item_names:
+            self.liststore.append([self._icon_pixbuf, filen])
+        self.file_view.unselect_all()
+
+    def on_add_clicked(self, widget):
+        filechooser = Gtk.FileDialog()
+        filechooser.set_title("Select a file")
+
         filefilter = Gtk.FileFilter()
-        filechooser.set_select_multiple(True)
         filefilter.set_name("Text")
         filefilter.add_mime_type("text/*")
-        filechooser.add_filter(filefilter)
-        response = filechooser.run()
+        filechooser.set_default_filter(filefilter)
 
-        if response == Gtk.ResponseType.OK:
-            for f in filechooser.get_filenames():
-                files.add_template(f)
-            self.item_names = files.get_file_list(OPT_DIR, r".*\.base$")
-            self.liststore = Gtk.ListStore(Pixbuf, str)
-            for filen in self.item_names:
-                pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
-                self.liststore.append([pixbuf, filen])
-            self.file_view.set_model(self.liststore)
-        filechooser.destroy()
-        self.file_view.unselect_all()
+        filechooser.open_multiple(parent=self.parent, callback=self.on_add_finish)
+
+    def on_add_finish(self, dialog, result):
+        try:
+            picked_files = dialog.open_multiple_finish(result)
+            for gfile in picked_files:
+                files.add_template(gfile.get_path())
+            self._refresh_liststore()
+        except GLib.Error as error:
+            print(f"Error opening file: {error.message}")
 
     def on_open_clicked(self, widget):
         if self.current is not None:
@@ -115,7 +114,7 @@ class TemplateGrid(Gtk.Grid):
             args_list.append(os.path.join(OPT_DIR, item))
             try:
                 Popen(args_list)
-            except Exception as e:
+            except Exception:
                 logging.error("malformed editor command")
             self.current = None
         self.file_view.unselect_all()
@@ -124,11 +123,7 @@ class TemplateGrid(Gtk.Grid):
         if self.current is not None:
             item = self.item_names.pop(self.current)
             files.delete_template(item)
-            self.liststore = Gtk.ListStore(Pixbuf, str)
-            for filen in self.item_names:
-                pixbuf = Gtk.IconTheme.get_default().load_icon(icon, 64, 0)
-                self.liststore.append([pixbuf, filen])
-            self.file_view.set_model(self.liststore)
+            self._refresh_liststore()
             self.current = None
         self.file_view.unselect_all()
 
