@@ -13,7 +13,8 @@ from ..data.config import WALL_DIR, WPG_DIR, __version__
 from gi import require_version
 
 require_version("Gtk", "4.0")
-from gi.repository import Gtk, GLib  # noqa: E402
+from gi.repository import Gtk, Gdk, GLib  # noqa: E402
+from gi.repository.GdkPixbuf import Pixbuf  # noqa: E402
 
 PAD = 10
 
@@ -62,8 +63,6 @@ class MainWindow(Gtk.Window):
 
         self.option_combo = Gtk.ComboBoxText()
         self.colorscheme = Gtk.ComboBoxText()
-        self.textbox = Gtk.Label()
-        self.textbox.set_text("Select colorscheme")
 
         for i, elem in enumerate(files.get_file_list()):
             if elem == themer.get_current():
@@ -72,10 +71,17 @@ class MainWindow(Gtk.Window):
             self.colorscheme.append_text(elem)
 
         self.preview = Gtk.Picture.new_for_filename(image_name)
-        self.sample = Gtk.Picture.new_for_filename(sample_name)
-
         self.preview.set_content_fit(Gtk.ContentFit.CONTAIN)
-        self.sample.set_content_fit(Gtk.ContentFit.CONTAIN)
+        self.preview.set_vexpand(True)
+
+        self._sample_pixbuf = None
+        self.sample = Gtk.DrawingArea()
+        self.sample.set_content_height(50)
+        self.sample.set_hexpand(True)
+        self.sample.set_vexpand(False)
+        self.sample.set_valign(Gtk.Align.START)
+        self.sample.set_draw_func(util.draw_sample, lambda: self._sample_pixbuf)
+        self._set_sample_file(sample_name)
 
         self.add_button = Gtk.Button(label="Add")
         self.set_button = Gtk.Button(label="Set")
@@ -93,14 +99,19 @@ class MainWindow(Gtk.Window):
         self.rm_button.connect("clicked", self._on_rm_clicked)
         self.option_combo.connect("changed", self._combo_box_change)
         self.colorscheme.connect("changed", self._colorscheme_box_change)
-        self.entry = Gtk.Entry()
-        self.current_walls = Gtk.ComboBox()
 
         if current_idx is not None:
             self.option_combo.set_active(current_idx)
             self.colorscheme.set_active(current_idx)
             self.cpage.option_combo.set_active(current_idx)
             self.set_button.set_sensitive(True)
+
+    def _set_sample_file(self, path):
+        try:
+            self._sample_pixbuf = Pixbuf.new_from_file(path)
+        except Exception:
+            self._sample_pixbuf = None
+        self.sample.queue_draw()
 
     def _on_add_clicked(self, widget):
         filechooser = Gtk.FileDialog()

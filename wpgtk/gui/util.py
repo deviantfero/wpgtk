@@ -4,7 +4,7 @@ import pathlib
 
 require_version("GdkPixbuf", "2.0")
 require_version("Gtk", "4.0")
-from gi.repository import GdkPixbuf, Gtk  # noqa: E402
+from gi.repository import GdkPixbuf, Gtk, Gdk  # noqa: E402
 
 
 def get_preview_pixbuf(image_name):
@@ -62,6 +62,38 @@ def get_sample_pixbuf(sample_name):
         )
     else:
         return None
+
+
+def draw_sample(area, cr, width, height, get_pixbuf):
+    """
+    Draw a scaled pixbuf centred horizontally into a Cairo context.
+
+    Intended as a draw function for Gtk.DrawingArea.set_draw_func. Scales the
+    pixbuf to fit within the given dimensions while preserving the aspect ratio
+    then paints it aligned to the top and centred horizontally.
+
+    Parameters:
+    - area (Gtk.DrawingArea): the drawing area widget
+    - cr (cairo.Context): the Cairo context to draw into
+    - width (int): allocated width of the drawing area
+    - height (int): allocated height of the drawing area
+    - get_pixbuf (callable): called with no arguments to retrieve the current
+        GdkPixbuf.Pixbuf to draw; does nothing if it returns None
+
+    Returns:
+    """
+    pixbuf = get_pixbuf()
+    if pixbuf is None:
+        return
+    img_w = pixbuf.get_width()
+    img_h = pixbuf.get_height()
+    scale = min(width / img_w, height / img_h)
+    dest_w = max(1, int(img_w * scale))
+    dest_h = max(1, int(img_h * scale))
+    scaled = pixbuf.scale_simple(dest_w, dest_h, GdkPixbuf.InterpType.BILINEAR)
+    x = int((width - dest_w) / 2)
+    Gdk.cairo_set_source_pixbuf(cr, scaled, x, 0)
+    cr.paint()
 
 
 def set_widget_colors(button, background="#000", foreground="#fff"):

@@ -14,6 +14,7 @@ from gi import require_version
 
 require_version("Gtk", "4.0")
 from gi.repository import Gtk, Gdk, GLib  # noqa: E402
+from gi.repository.GdkPixbuf import Pixbuf  # noqa: E402
 
 # TODO: remove current_walls call, use simple list
 # TODO: only update pixbuf if parent has same color scheme
@@ -34,6 +35,7 @@ class ColorGrid(Gtk.Grid):
         self.colorgrid.set_column_homogeneous(1)
         self.colorgrid.set_row_spacing(PAD)
         self.colorgrid.set_column_spacing(PAD)
+        self.colorgrid.set_vexpand(False)
 
         self.sat_add = Gtk.Button.new_with_label("+")
         self.sat_add.set_sensitive(False)
@@ -86,7 +88,14 @@ class ColorGrid(Gtk.Grid):
                 cont += 1
 
         sample_name = os.path.join(SAMPLE_DIR, ".no_sample.sample.png")
-        self.sample = Gtk.Picture.new_for_filename(sample_name)
+        self._sample_pixbuf = None
+        self.sample = Gtk.DrawingArea()
+        self.sample.set_content_height(50)
+        self.sample.set_hexpand(True)
+        self.sample.set_vexpand(False)
+        self.sample.set_valign(Gtk.Align.START)
+        self.sample.set_draw_func(gui_util.draw_sample, lambda: self._sample_pixbuf)
+        self._set_sample_file(sample_name)
 
         self.shuffle_button = Gtk.Button(label="Shuffle colors")
         self.shuffle_button.connect("clicked", self._on_shuffle_click)
@@ -138,6 +147,13 @@ class ColorGrid(Gtk.Grid):
         self.attach(self.sat_light_grid, 0, 4, 1, 1)
         self.attach(self.done_lbl, 0, 5, 1, 1)
 
+    def _set_sample_file(self, path):
+        try:
+            self._sample_pixbuf = Pixbuf.new_from_file(path)
+        except Exception:
+            self._sample_pixbuf = None
+        self.sample.queue_draw()
+
     def render_buttons(self):
         for x, button in enumerate(self.button_list):
             if util.get_hls_val(self.color_list[x], "light") < 99:
@@ -162,8 +178,8 @@ class ColorGrid(Gtk.Grid):
         if not os.path.isfile(sample_path):
             sample.create_sample(self.color_list, sample_path)
 
-        self.sample.set_filename(sample_path)
-        self.parent.sample.set_filename(sample_path)
+        self._set_sample_file(sample_path)
+        self.parent._set_sample_file(sample_path)
 
     def _hls_change(self, widget, *gparam):
         if gparam[0] == "sat":
@@ -182,7 +198,7 @@ class ColorGrid(Gtk.Grid):
     def render_sample(self):
         sample.create_sample(self.color_list)
         sample_path = os.path.join(SAMPLE_DIR, ".tmp.sample.png")
-        self.sample.set_filename(sample_path)
+        self._set_sample_file(sample_path)
 
     def _on_ok_click(self, widget):
         color.write_colors(self.selected_file, self.color_list)
@@ -196,7 +212,7 @@ class ColorGrid(Gtk.Grid):
 
             self.done_lbl.set_text("Changes saved")
             sample_path = files.get_sample_path(self.selected_file)
-            self.parent.sample.set_filename(sample_path)
+            self.parent._set_sample_file(sample_path)
 
     def _on_auto_click(self, widget):
         self.color_list = color.auto_adjust(self.color_list)
