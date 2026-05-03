@@ -3,7 +3,7 @@ import shutil
 import os
 import logging
 
-__version__ = "6.7.0"
+__version__ = "6.7.1"
 
 
 settings = None
@@ -25,11 +25,11 @@ FORMAT_DIR = os.path.join(CACHE, "wal")
 OPT_DIR = os.path.join(WPG_DIR, "templates")
 FILE_DIC = {
     "icon-step1": os.path.join(
-        LOCAL, "icons/flattrcolor/scripts" "/replace_folder_file.sh"
+        LOCAL, "icons/flattrcolor/scripts/replace_folder_file.sh"
     ),
     "icon-step2": os.path.join(
         LOCAL,
-        "icons/flattrcolor/scripts" "/replace_script.sh",
+        "icons/flattrcolor/scripts/replace_script.sh",
     ),
 }
 
