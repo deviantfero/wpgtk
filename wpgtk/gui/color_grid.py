@@ -83,7 +83,7 @@ class ColorGrid(Gtk.Grid):
         cont = 0
         for y in range(0, 8, 2):
             for x in range(0, 4):
-                label = Gtk.Label(cont)
+                label = Gtk.Label(str(cont))
                 self.colorgrid.attach(label, x, y, 1, 1)
                 self.colorgrid.attach(self.button_list[cont], x, y + 1, 1, 1)
                 cont += 1
