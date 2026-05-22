@@ -8,12 +8,11 @@ from gi.repository import Gtk, Gdk  # noqa: E402
 
 class KeywordDialog(Gtk.Window):
     def __init__(self, parent, callback):
-        super().__init__(title="Name your keyword/value set")
+        super().__init__(title="Name your keyword/value set", modal=True)
         self.callback = callback
 
         self.set_transient_for(parent)
         self.set_default_size(200, 100)
-        self.set_modal(True)
         self.set_resizable(False)
 
         self.name_text_input = Gtk.Entry()
