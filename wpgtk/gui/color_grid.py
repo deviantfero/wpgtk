@@ -9,6 +9,7 @@ from ..data import files
 from ..data import sample
 from ..data import themer
 from . import util as gui_util
+from .color_picker_dialog import ColorPickerDialog
 
 from gi import require_version
 
@@ -256,12 +257,14 @@ class ColorGrid(Gtk.Grid):
         self.active_color_button = widget
         gcolor = Gdk.RGBA()
         gcolor.parse(widget.get_label())
-        dialog = Gtk.ColorDialog()
-        dialog.set_with_alpha(False)
-        dialog.set_title("Choose a Color")
-        dialog.choose_rgba(
-            parent=self.parent, initial_color=gcolor, callback=self._on_color_selected
-        )
+        dialog = ColorPickerDialog(self.parent, gcolor)
+        dialog.present()
+        # dialog = Gtk.ColorDialog()
+        # dialog.set_with_alpha(False)
+        # dialog.set_title("Choose a Color")
+        # dialog.choose_rgba(
+        #     parent=self.parent, initial_color=gcolor, callback=self._on_color_selected
+        # )
 
     def _on_color_selected(self, dialog, result):
         rgba = dialog.choose_rgba_finish(result)
