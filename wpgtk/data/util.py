@@ -35,14 +35,18 @@ def set_hls_val(hexv, what, val):
 def hex_to_hls(hex_string):
     """convert a hex value to hls coordinates"""
     r, g, b = hex_to_rgb(hex_string)
-    return rgb_to_hls(r, g, b)
+    # colorsys expects 0-1 ranges, but we keep the codebase convention of
+    # l in 0-255 and s in -1-0
+    h, l, s = rgb_to_hls(r / 255.0, g / 255.0, b / 255.0)
+    return (h, l * 255, -s)
 
 
 def hls_to_hex(hls):
     """convert a hls coordinate to hex code"""
     h, l, s = hls
-    r, g, b = hls_to_rgb(h, l, s)
-    rgb_int = [max(min(int(elem), 255), 0) for elem in [r, g, b]]
+    # normalize from codebase ranges (l: 0-255, s: -1-0) to colorsys ranges
+    r, g, b = hls_to_rgb(h, l / 255.0, -s)
+    rgb_int = [max(min(round(elem * 255), 255), 0) for elem in [r, g, b]]
 
     return rgb_to_hex(rgb_int)
 
