@@ -257,23 +257,14 @@ class ColorGrid(Gtk.Grid):
         self.active_color_button = widget
         gcolor = Gdk.RGBA()
         gcolor.parse(widget.get_label())
-        dialog = ColorPickerDialog(self.parent, gcolor)
-        dialog.present()
-        # dialog = Gtk.ColorDialog()
-        # dialog.set_with_alpha(False)
-        # dialog.set_title("Choose a Color")
-        # dialog.choose_rgba(
-        #     parent=self.parent, initial_color=gcolor, callback=self._on_color_selected
-        # )
 
-    def _on_color_selected(self, dialog, result):
-        rgba = dialog.choose_rgba_finish(result)
+        def on_color_picked(dialog, response, rgba):
+            if response != Gtk.ResponseType.OK or rgba is None:
+                return
 
-        if rgba:
-            r, g, b, _ = rgba
-            rgb = list(map(lambda x: round(x * 100 * 2.55), [r, g, b]))
+            r, g, b, a = rgba.red, rgba.green, rgba.blue, rgba.alpha
+            rgb = list(map(lambda x: round(x * 255), [r, g, b]))
             hex_color = pywal.util.rgb_to_hex(rgb)
-            # widget.set_label(hex_color)
 
             if util.get_hls_val(hex_color, "light") < 100:
                 fgcolor = "#FFFFFF"
@@ -290,6 +281,9 @@ class ColorGrid(Gtk.Grid):
                 if c.get_label() != self.color_list[i]:
                     self.color_list[i] = c.get_label()
             self.render_sample()
+
+        dialog = ColorPickerDialog(self.parent, gcolor, on_color_picked, self.selected_file)
+        dialog.present()
 
     def _combo_box_change(self, widget):
         self.done_lbl.set_text("")
