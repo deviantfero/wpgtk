@@ -1,6 +1,6 @@
 from gi import require_version
 from . import util
-from ..data.config import settings, write_conf
+from ..data.config import user_keywords, settings, write_conf
 from pywal import colors
 
 require_version("Gtk", "4.0")
@@ -47,9 +47,18 @@ class OptionsGrid(Gtk.Grid):
         self.backend_combo = Gtk.ComboBoxText()
         self.backend_list = colors.list_backends()
 
+        # Keyword Combo
+        self.keyword_lbl = Gtk.Label(label="Select your keywords:")
+        self.keyword_combo = Gtk.ComboBoxText()
+        self.keyword_list = list(user_keywords.sections())
+
         for elem in self.backend_list:
             self.backend_combo.append_text(elem)
+        for elem in self.keyword_list:
+            self.keyword_combo.append_text(elem)
+
         self.backend_combo.connect("changed", self._combo_box_change, "backend")
+        self.keyword_combo.connect("changed", self._combo_box_change, "keywords")
 
         # Switches
         self.gtk_switch = Gtk.Switch()
@@ -73,7 +82,9 @@ class OptionsGrid(Gtk.Grid):
         self.lbl_wallpaper = Gtk.Label(label="Set wallpaper")
 
         self.smart_sort_switch = Gtk.Switch()
-        self.smart_sort_switch.connect("notify::active", self._on_activate, "smart_sort")
+        self.smart_sort_switch.connect(
+            "notify::active", self._on_activate, "smart_sort"
+        )
         self.lbl_smart_sort = Gtk.Label(label="Use smart sort")
 
         self.auto_adjust_switch = Gtk.Switch()
@@ -143,17 +154,19 @@ class OptionsGrid(Gtk.Grid):
         self.active_grid.attach(self.backend_combo, 2, 1, 1, 1)
         self.active_grid.attach(self.color_button, 1, 2, 1, 1)
         self.active_grid.attach(self.color_combo, 2, 2, 1, 1)
+        self.active_grid.attach(self.keyword_lbl, 1, 3, 1, 1)
+        self.active_grid.attach(self.keyword_combo, 2, 3, 1, 1)
 
-        self.active_grid.attach(self.editor_lbl, 1, 3, 1, 1)
-        self.active_grid.attach(self.editor_txt, 2, 3, 1, 1)
+        self.active_grid.attach(self.editor_lbl, 1, 4, 1, 1)
+        self.active_grid.attach(self.editor_txt, 2, 4, 1, 1)
 
-        self.active_grid.attach(self.command_exe_lbl, 1, 4, 1, 1)
-        self.active_grid.attach(self.command_txt, 2, 4, 1, 1)
+        self.active_grid.attach(self.command_exe_lbl, 1, 5, 1, 1)
+        self.active_grid.attach(self.command_txt, 2, 5, 1, 1)
 
-        self.active_grid.attach(self.alpha_lbl, 1, 5, 1, 1)
-        self.active_grid.attach(self.alpha_txt, 2, 5, 1, 1)
+        self.active_grid.attach(self.alpha_lbl, 1, 6, 1, 1)
+        self.active_grid.attach(self.alpha_txt, 2, 6, 1, 1)
 
-        self.active_grid.attach(self.save_button, 1, 6, 2, 1)
+        self.active_grid.attach(self.save_button, 1, 7, 2, 1)
 
         self.attach(self.switch_grid, 1, 1, 1, 1)
         self.attach(self.active_grid, 1, 2, 1, 1)
@@ -170,6 +183,10 @@ class OptionsGrid(Gtk.Grid):
         current_backend = settings.get("backend", "wal")
         idx = self.backend_list.index(current_backend)
         self.backend_combo.set_active(idx)
+
+        current_keywords = settings.get("keywords", "default")
+        idx = self.keyword_list.index(current_keywords)
+        self.keyword_combo.set_active(idx)
 
         self.color_combo.set_active(settings.getint("active", 0))
         self.gtk_switch.set_active(settings.getboolean("gtk", True))

@@ -146,7 +146,7 @@ class KeywordGrid(Gtk.Grid):
 
     def _delete_keywords_section(self, widget):
         if self.selected_file:
-            keywords.delete_keywords_section(self.selected_file)
+            keywords._delete_keywords_section(self.selected_file)
             self.reload_section_list()
 
     def _choose_keywords_section(self, widget):
@@ -160,7 +160,7 @@ class KeywordGrid(Gtk.Grid):
     def _handle_new_keyword_section(self, response, value):
         if response == Gtk.ResponseType.OK:
             try:
-                keywords.create_keywords_section(value)
+                keywords._create_keywords_section(value)
                 self.reload_section_list(value)
             except Exception as e:
                 logging.error(str(e))
