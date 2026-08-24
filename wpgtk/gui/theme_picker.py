@@ -61,14 +61,13 @@ class MainWindow(Gtk.Window):
 
         current_idx = None
 
-        self.option_combo = Gtk.ComboBoxText()
-        self.colorscheme = Gtk.ComboBoxText()
-
-        for i, elem in enumerate(files.get_file_list()):
+        file_list = list(files.get_file_list())
+        for i, elem in enumerate(file_list):
             if elem == themer.get_current():
                 current_idx = i
-            self.option_combo.append_text(elem)
-            self.colorscheme.append_text(elem)
+
+        self.option_combo = Gtk.DropDown(model=Gtk.StringList.new(file_list))
+        self.colorscheme = Gtk.DropDown(model=Gtk.StringList.new(file_list))
 
         self.preview = Gtk.Picture.new_for_filename(image_name)
         self.preview.set_content_fit(Gtk.ContentFit.CONTAIN)
@@ -97,13 +96,13 @@ class MainWindow(Gtk.Window):
         self.add_button.connect("clicked", self._on_add_clicked)
         self.set_button.connect("clicked", self._on_set_clicked)
         self.rm_button.connect("clicked", self._on_rm_clicked)
-        self.option_combo.connect("changed", self._combo_box_change)
-        self.colorscheme.connect("changed", self._colorscheme_box_change)
+        self.option_combo.connect("notify::selected", self._combo_box_change)
+        self.colorscheme.connect("notify::selected", self._colorscheme_box_change)
 
         if current_idx is not None:
-            self.option_combo.set_active(current_idx)
-            self.colorscheme.set_active(current_idx)
-            self.cpage.option_combo.set_active(current_idx)
+            self.option_combo.set_selected(current_idx)
+            self.colorscheme.set_selected(current_idx)
+            self.cpage.option_combo.set_selected(current_idx)
             self.set_button.set_sensitive(True)
 
     def _set_sample_file(self, path):
@@ -135,15 +134,14 @@ class MainWindow(Gtk.Window):
 
             file_list = list(files.get_file_list())
             for combo in (self.option_combo, self.colorscheme, self.cpage.option_combo):
-                combo.remove_all()
-                for filename in file_list:
-                    combo.append_text(filename)
+                model = combo.get_model()
+                model.splice(0, model.get_n_items(), file_list)
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")
 
     def _on_set_clicked(self, widget):
-        x = self.option_combo.get_active()
-        y = self.colorscheme.get_active()
+        x = self.option_combo.get_selected()
+        y = self.colorscheme.get_selected()
         current_walls = files.get_file_list()
         if current_walls:
             filename = current_walls[x]
@@ -151,29 +149,28 @@ class MainWindow(Gtk.Window):
             themer.set_theme(filename, colorscheme_file)
 
     def _on_rm_clicked(self, widget):
-        x = self.option_combo.get_active()
+        x = self.option_combo.get_selected()
         current_walls = files.get_file_list()
         if current_walls:
             filename = current_walls[x]
             themer.delete_theme(filename)
             file_list = list(files.get_file_list())
             for combo in (self.option_combo, self.colorscheme, self.cpage.option_combo):
-                combo.remove_all()
-                for elem in file_list:
-                    combo.append_text(elem)
+                model = combo.get_model()
+                model.splice(0, model.get_n_items(), file_list)
 
-    def _combo_box_change(self, widget):
+    def _combo_box_change(self, widget, pspec):
         self.set_button.set_sensitive(True)
-        x = self.option_combo.get_active()
-        self.colorscheme.set_active(x)
+        x = self.option_combo.get_selected()
+        self.colorscheme.set_selected(x)
         selected_file = files.get_file_list()[x]
         filepath = os.path.join(WALL_DIR, selected_file)
 
         self.preview.set_filename(filepath)
 
-    def _colorscheme_box_change(self, widget):
-        x = self.colorscheme.get_active()
-        self.cpage.option_combo.set_active(x)
+    def _colorscheme_box_change(self, widget, pspec):
+        x = self.colorscheme.get_selected()
+        self.cpage.option_combo.set_selected(x)
 
 
 def run(args):

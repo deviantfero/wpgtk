@@ -120,10 +120,10 @@ class ColorGrid(Gtk.Grid):
 
         self.done_lbl = Gtk.Label(label="")
 
-        self.option_combo = Gtk.ComboBoxText()
-        for elem in files.get_file_list():
-            self.option_combo.append_text(elem)
-        self.option_combo.connect("changed", self._combo_box_change)
+        self.option_combo = Gtk.DropDown(
+            model=Gtk.StringList.new(list(files.get_file_list()))
+        )
+        self.option_combo.connect("notify::selected", self._combo_box_change)
 
         self.combo_grid.attach(self.option_combo, 0, 0, 3, 1)
         self.combo_grid.attach(self.reset_button, 3, 0, 1, 1)
@@ -285,9 +285,9 @@ class ColorGrid(Gtk.Grid):
         dialog = ColorPickerDialog(self.parent, gcolor, on_color_picked, self.selected_file)
         dialog.present()
 
-    def _combo_box_change(self, widget):
+    def _combo_box_change(self, widget, pspec):
         self.done_lbl.set_text("")
-        x = self.option_combo.get_active()
+        x = self.option_combo.get_selected()
 
         self.auto_button.set_sensitive(True)
         self.shuffle_button.set_sensitive(True)

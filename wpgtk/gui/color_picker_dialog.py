@@ -156,8 +156,7 @@ class ColorPickerDialog(Gtk.Window):
         pick_label.set_xalign(1.0)
         pick_label.set_width_chars(LBL_W)
 
-        self._wallpaper_combo = Gtk.ComboBoxText()
-        wallpaper_list = files.get_file_list()
+        wallpaper_list = list(files.get_file_list())
         default_idx = 0
         if self._default_wallpaper:
             for i, name in enumerate(wallpaper_list):
@@ -169,10 +168,9 @@ class ColorPickerDialog(Gtk.Window):
                 if name == themer.get_current():
                     default_idx = i
                     break
-        for name in wallpaper_list:
-            self._wallpaper_combo.append_text(name)
+        self._wallpaper_combo = Gtk.DropDown(model=Gtk.StringList.new(wallpaper_list))
         self._wallpaper_combo.set_hexpand(True)
-        self._wallpaper_combo.connect("changed", self._on_wallpaper_changed)
+        self._wallpaper_combo.connect("notify::selected", self._on_wallpaper_changed)
 
         grid.attach(pick_label, 0, row, 1, 1)
         grid.attach(self._wallpaper_combo, 1, row, 1, 1)
@@ -193,7 +191,7 @@ class ColorPickerDialog(Gtk.Window):
         row += 1
 
         # Now safe to trigger the initial load (image area already exists)
-        self._wallpaper_combo.set_active(default_idx)
+        self._wallpaper_combo.set_selected(default_idx)
 
         btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
         btn_box.set_halign(Gtk.Align.END)
@@ -278,9 +276,9 @@ class ColorPickerDialog(Gtk.Window):
         rgba.parse(self._current_hex)
         return rgba
 
-    def _on_wallpaper_changed(self, combo):
-        idx = combo.get_active()
-        if idx < 0:
+    def _on_wallpaper_changed(self, combo, pspec):
+        idx = combo.get_selected()
+        if idx == Gtk.INVALID_LIST_POSITION:
             return
         wallpaper_list = files.get_file_list()
         if 0 <= idx < len(wallpaper_list):

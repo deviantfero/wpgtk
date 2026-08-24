@@ -40,13 +40,13 @@ class KeywordGrid(Gtk.Grid):
         self.delete_button = Gtk.Button(label="Delete Set")
         self.delete_button.connect("clicked", self._delete_keywords_section)
 
-        self.sections_combo = Gtk.ComboBoxText()
-        self.sections_combo.connect("changed", self._on_section_change)
+        self.sections_combo = Gtk.DropDown(model=Gtk.StringList.new([]))
+        self.sections_combo.connect("notify::selected", self._on_section_change)
         self.reload_section_list()
 
         self.selected_file = settings.get("keywords", "default")
         idx = list(user_keywords.sections()).index(self.selected_file)
-        self.sections_combo.set_active(idx)
+        self.sections_combo.set_selected(idx)
         self.delete_button.set_sensitive(self.selected_file != "default")
         self.choose_button.set_sensitive(False)
 
@@ -110,12 +110,10 @@ class KeywordGrid(Gtk.Grid):
 
     def reload_section_list(self, active="default"):
         sections = list(user_keywords.sections())
-        self.sections_combo.remove_all()
+        model = self.sections_combo.get_model()
+        model.splice(0, model.get_n_items(), sections)
 
-        for item in sections:
-            self.sections_combo.append_text(item)
-
-        self.sections_combo.set_active(sections.index(active))
+        self.sections_combo.set_selected(sections.index(active))
 
     def reload_keyword_list(self):
         keyword_section = keywords.get_keywords_section(self.selected_file)
@@ -124,8 +122,9 @@ class KeywordGrid(Gtk.Grid):
         for k, v in keyword_section.items():
             self.liststore.append([k, v])
 
-    def _on_section_change(self, widget):
-        self.selected_file = widget.get_active_text()
+    def _on_section_change(self, widget, pspec):
+        selected_item = widget.get_selected_item()
+        self.selected_file = selected_item.get_string() if selected_item is not None else None
 
         if self.selected_file is not None:
             self.reload_keyword_list()
