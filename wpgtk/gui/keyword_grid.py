@@ -110,8 +110,7 @@ class KeywordGrid(Gtk.Grid):
 
     def reload_section_list(self, active="default"):
         sections = list(user_keywords.sections())
-        model = self.sections_combo.get_model()
-        model.splice(0, model.get_n_items(), sections)
+        util.set_dropdown_items(self.sections_combo, sections)
 
         self.sections_combo.set_selected(sections.index(active))
 
@@ -123,8 +122,7 @@ class KeywordGrid(Gtk.Grid):
             self.liststore.append([k, v])
 
     def _on_section_change(self, widget, pspec):
-        selected_item = widget.get_selected_item()
-        self.selected_file = selected_item.get_string() if selected_item is not None else None
+        self.selected_file = util.get_dropdown_text(widget)
 
         if self.selected_file is not None:
             self.reload_keyword_list()

@@ -125,6 +125,18 @@ def set_widget_colors(button, background="#000", foreground="#fff"):
     )
 
 
+def set_dropdown_items(dropdown, items):
+    """Replace the contents of a Gtk.DropDown's Gtk.StringList model."""
+    model = dropdown.get_model()
+    model.splice(0, model.get_n_items(), items)
+
+
+def get_dropdown_text(dropdown):
+    """Return the selected item's text, or None if nothing is selected."""
+    item = dropdown.get_selected_item()
+    return item.get_string() if item is not None else None
+
+
 def set_uniform_margins(widget, margin):
     """
     Set uniform margins on all sides of a widget

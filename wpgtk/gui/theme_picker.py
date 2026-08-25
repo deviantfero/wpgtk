@@ -134,8 +134,7 @@ class MainWindow(Gtk.Window):
 
             file_list = list(files.get_file_list())
             for combo in (self.option_combo, self.colorscheme, self.cpage.option_combo):
-                model = combo.get_model()
-                model.splice(0, model.get_n_items(), file_list)
+                util.set_dropdown_items(combo, file_list)
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")
 
@@ -156,8 +155,7 @@ class MainWindow(Gtk.Window):
             themer.delete_theme(filename)
             file_list = list(files.get_file_list())
             for combo in (self.option_combo, self.colorscheme, self.cpage.option_combo):
-                model = combo.get_model()
-                model.splice(0, model.get_n_items(), file_list)
+                util.set_dropdown_items(combo, file_list)
 
     def _combo_box_change(self, widget, pspec):
         self.set_button.set_sensitive(True)

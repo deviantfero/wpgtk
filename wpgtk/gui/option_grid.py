@@ -199,8 +199,7 @@ class OptionsGrid(Gtk.Grid):
 
     def _combo_box_change(self, combo, pspec, key):
         x = combo.get_selected()
-        selected_item = combo.get_selected_item()
-        item = selected_item.get_string() if selected_item is not None else None
+        item = util.get_dropdown_text(combo)
 
         if key == "active":
             settings[key] = str(x)
